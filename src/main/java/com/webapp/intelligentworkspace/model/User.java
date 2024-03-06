@@ -1,18 +1,17 @@
 package com.webapp.intelligentworkspace.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
 @Data
+@Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private  String username;
-    private  String password;
+    private String username;
+    private String password;
     private String email;
     private String numberPhone;
 

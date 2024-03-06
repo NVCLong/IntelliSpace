@@ -13,8 +13,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 @Data
 @RequiredArgsConstructor
-@NoArgsConstructor
+
 public class SecurityConfig {
+
+
 
     @Bean
     public PasswordEncoder passwordEncoder(){
