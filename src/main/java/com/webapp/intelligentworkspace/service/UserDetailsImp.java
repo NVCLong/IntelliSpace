@@ -18,6 +18,10 @@ public class UserDetailsImp implements UserDetailsService {
     @Autowired
     public UserRepository userRepository;
 
+    public UserDetailsImp(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> userList= userRepository.findUserByUsername(username);

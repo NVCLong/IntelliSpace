@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class IntelligentWorkSpaceApplication {
 
     public static void main(String[] args) {
-        System.out.println("lo");
+        System.out.println("http://localhost:8888");
 
         SpringApplication.run(IntelligentWorkSpaceApplication.class, args);
     }

@@ -79,4 +79,8 @@ public class UserService {
             return new AuthResponse("Wrong password");
         }
     }
+    public AuthResponse refreshAccessToken(String refreshToken, User user) {
+        String token=jwtService.refreshAccessToken(refreshToken, user);
+        return new AuthResponse("This is new accessToken",null, token);
+    }
 }
