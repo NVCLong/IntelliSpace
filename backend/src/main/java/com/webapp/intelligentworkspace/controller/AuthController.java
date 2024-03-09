@@ -3,7 +3,6 @@ package com.webapp.intelligentworkspace.controller;
 import com.webapp.intelligentworkspace.model.AuthResponse;
 import com.webapp.intelligentworkspace.model.User;
 import com.webapp.intelligentworkspace.service.UserService;
-import org.hibernate.annotations.MapKeyCompositeType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
