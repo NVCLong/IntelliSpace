@@ -18,6 +18,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
 @EnableWebSecurity
 @Data
@@ -31,17 +33,21 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return  http
-                .csrf(csrf->csrf.disable())
-                .authorizeHttpRequests(req-> req
-                        .requestMatchers("/auth/**").permitAll()
-                        .anyRequest().authenticated()
-                )
-                .userDetailsService(customerService)
-                .sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
+                .csrf(csrf -> csrf.disable()).userDetailsService(customerService)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling(e->e.accessDeniedHandler(
-                        (request, response, accessDeniedException) -> response.setStatus(403))
-                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
+                .exceptionHandling(e -> e.accessDeniedHandler(
+                        ((request, response, accessDeniedException) -> response.setStatus(403))
+                ))
+                .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers("/").permitAll();
+                    auth.requestMatchers("/favicon.ico").permitAll();
+                    auth.anyRequest().authenticated();
+                })
+
+                .oauth2Login(withDefaults())
+                .formLogin(withDefaults())
                 .build();
     }
 
