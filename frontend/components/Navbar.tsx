@@ -4,12 +4,18 @@ import { NAV_LINKS } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
 import Button from "./Button";
+import { useRouter } from "next/router";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleSignin = () => {
+    const router = useRouter();
+    router.push("/signin");
   };
 
   return (
@@ -47,7 +53,7 @@ const Navbar = () => {
         ))}
       </ul>
 
-      <div className="hidden lg:flexCenter">
+      <div className="hidden lg:flexCenter" onClick={handleSignin}>
         <Button
           type="button"
           title="Login"
