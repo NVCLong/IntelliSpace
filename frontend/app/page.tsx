@@ -1,3 +1,7 @@
 export default function Home() {
-  return <h1 className="text-red-300 text-bold">Hello</h1>;
+  return (
+    <div>
+      <h1>IntelliSpace</h1>
+    </div>
+  );
 }
