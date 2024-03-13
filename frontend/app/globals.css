@@ -209,7 +209,7 @@ body {
   }
 } */
 
-.signUpWrapper,
+.registerWrapper,
 .signInWrapper {
   @apply flex items-center justify-center w-full h-screen;
 }
@@ -218,23 +218,23 @@ body {
   @apply flex items-center border shadow-md rounded-lg overflow-hidden justify-center w-[20rem] mx-6 md:w-auto my-4;
 }
 
-.signUpWrapper .left,
+.registerWrapper .left,
 .signInWrapper .left {
   @apply flex-col items-center justify-center hidden md:flex;
 }
 
-.signUpWrapper .left .title,
+.registerWrapper .left .title,
 .signInWrapper .left .title {
   @apply text-2xl font-semibold;
 }
 
-.signUpWrapper .left p,
+.registerWrapper .left p,
 .signInWrapper .left p {
   @apply text-sm max-w-[90%] text-center mb-3;
 }
 
 .signInWrapper .right,
-.signUpWrapper .right {
+.registerWrapper .right {
   @apply px-4 py-4 my-4 mx-4 md:w-1/2 w-[20rem] bg-white rounded-lg;
 }
 
@@ -242,6 +242,6 @@ body {
   @apply rounded-full h-[2.5rem] w-[2.5rem] p-0 mx-2 border-gray-400;
 }
 
-.socialSignUpOptions {
+.socialRegisterOptions {
   @apply flex items-center justify-center my-3;
 }
