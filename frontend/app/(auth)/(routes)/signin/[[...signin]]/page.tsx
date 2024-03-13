@@ -71,9 +71,9 @@ const Page = () => {
                   name="username"
                   render={({ field }) => (
                     <FormItem className="mb-2 space-y-0">
-                      <FormLabel>Email</FormLabel>
+                      <FormLabel>User name</FormLabel>
                       <FormControl>
-                        <Input placeholder="admin@example.com" {...field} />
+                        <Input placeholder="Enter user name" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

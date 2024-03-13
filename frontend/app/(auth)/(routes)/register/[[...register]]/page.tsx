@@ -17,8 +17,8 @@ import { FaGithub, FaGoogle } from "react-icons/fa6";
 import Link from "next/link";
 import axios from "axios";
 import dotenv from "dotenv";
+import{useRouter} from "next/Navigation";
 
-dotenv.configDotenv({ path: "/env.local" });
 const registerSchema = z
   .object({
     username: z
@@ -30,7 +30,7 @@ const registerSchema = z
         "Name should contain only alphabets."
       ),
     email: z.string().email("Email must be valid."),
-    phone: z
+    numberPhone: z
       .string()
       .min(10, "Phone number should have at least 10 characters."),
     password: z.string().min(6, "Password Should have at least 6 characters."),
@@ -44,12 +44,13 @@ const registerSchema = z
   });
 
 const Page = () => {
+    const router= useRouter();
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       username: "",
       email: "",
-      phone: "",
+      numberPhone: "",
       password: "",
       confirmPassword: "",
     },
@@ -61,6 +62,7 @@ const Page = () => {
       values
     );
     console.log(response.data);
+    await router.push("/signin")
   }
 
   return (
@@ -124,7 +126,7 @@ const Page = () => {
                 />
                 <FormField
                   control={form.control}
-                  name="phone"
+                  name="numberPhone"
                   render={({ field }) => (
                     <FormItem className="mb-2 space-y-0">
                       <FormLabel>Phone number</FormLabel>
