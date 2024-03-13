@@ -21,7 +21,7 @@ import { NextConfig } from "next";
 dotenv.configDotenv({ path: "/env.local" });
 const signUpSchema = z
   .object({
-    name: z
+    username: z
       .string()
       .min(2, "Name should have at least 2 characters.")
       .max(50, "Name should not exceed 50 characters.")
@@ -41,127 +41,128 @@ const signUpSchema = z
   });
 
 const Page = () => {
-  const form = useForm<z.infer<typeof signUpSchema>>({
-    resolver: zodResolver(signUpSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    },
-  });
+    const form = useForm<z.infer<typeof signUpSchema>>({
+        resolver: zodResolver(signUpSchema),
+        defaultValues: {
+            username: "",
+            email: "",
+            password: "",
+            confirmPassword: "",
+        },
+    });
 
-  function onSubmit(values: z.infer<typeof signUpSchema>) {
-    const response = axios.post(`http://localhost:8888/api/auth/register`,values);
-    }`);
-    console.log(values);
-  }
-  return (
-    <>
-      <div className="signUpWrapper">
-        <div className="formWrapper">
-          <div className="left">
-            <h3 className="title">Welcome Back!</h3>
-            <p>
-              To keep connected with us please login with your personal info
-            </p>
-            <Link href={"/signin"}>
-              <Button className="px-8 transition-colors border rounded-full border-zinc-500 text-zinc-300 hover:border-zinc-200 hover:text-zinc-100">
-                Sign In
-              </Button>
-            </Link>
-          </div>
-          <div className="right">
-            <h3 className="text-2xl font-semibold text-center">
-              Register here
-            </h3>
-            <div className="socialSignUpOptions">
-              <Button variant={"outline"} className="socialFormBtn">
-                <FaGoogle className="w-5 h-5" />
-              </Button>
-              <Button variant={"outline"} className="socialFormBtn">
-                <FaFacebook className="w-5 h-5" />
-              </Button>
-              <Button variant={"outline"} className="socialFormBtn">
-                <FaGithub className="w-5 h-5" />
-              </Button>
+   async function onSubmit(values: z.infer<typeof signUpSchema>) {
+        const response =await axios.post(`http://localhost:8888/api/auth/register`, values);
+        console.log(response.data);
+    }
+
+    return (
+        <>
+            <div className="signUpWrapper">
+                <div className="formWrapper">
+                    <div className="left">
+                        <h3 className="title">Welcome Back!</h3>
+                        <p>
+                            To keep connected with us please login with your personal info
+                        </p>
+                        <Link href={"/signin"}>
+                            <Button
+                                className="px-8 transition-colors border rounded-full border-zinc-500 text-zinc-300 hover:border-zinc-200 hover:text-zinc-100">
+                                Sign In
+                            </Button>
+                        </Link>
+                    </div>
+                    <div className="right">
+                        <h3 className="text-2xl font-semibold text-center">
+                            Register here
+                        </h3>
+                        <div className="socialSignUpOptions">
+                            <Button variant={"outline"} className="socialFormBtn">
+                                <FaGoogle className="w-5 h-5"/>
+                            </Button>
+                            <Button variant={"outline"} className="socialFormBtn">
+                                <FaFacebook className="w-5 h-5"/>
+                            </Button>
+                            <Button variant={"outline"} className="socialFormBtn">
+                                <FaGithub className="w-5 h-5"/>
+                            </Button>
+                        </div>
+                        <p className="text-center">or use this option</p>
+                        <Form {...form}>
+                            <form onSubmit={form.handleSubmit(onSubmit)}>
+                                <FormField
+                                    control={form.control}
+                                    name="username"
+                                    render={({field}) => (
+                                        <FormItem className="mb-2 space-y-0">
+                                            <FormLabel>Name</FormLabel>
+                                            <FormControl>
+                                                <Input placeholder="Nguyen Duy" {...field} />
+                                            </FormControl>
+                                            <FormMessage/>
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="email"
+                                    render={({field}) => (
+                                        <FormItem className="mb-2 space-y-0">
+                                            <FormLabel>Email</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    placeholder="admin@intellispace.com"
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormMessage/>
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="password"
+                                    render={({field}) => (
+                                        <FormItem className="mb-2 space-y-0">
+                                            <FormLabel>Password</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    placeholder="********"
+                                                    type="password"
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormMessage/>
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="confirmPassword"
+                                    render={({field}) => (
+                                        <FormItem className="mb-2 space-y-0">
+                                            <FormLabel>Confirm password</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    placeholder="********"
+                                                    type="password"
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormMessage/>
+                                        </FormItem>
+                                    )}
+                                />
+                                <Button type="submit" className="w-full">
+                                    Submit
+                                </Button>
+                            </form>
+                        </Form>
+                    </div>
+                </div>
             </div>
-            <p className="text-center">or use this option</p>
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)}>
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem className="mb-2 space-y-0">
-                      <FormLabel>Name</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Nguyen Duy" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem className="mb-2 space-y-0">
-                      <FormLabel>Email</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="admin@intellispace.com"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem className="mb-2 space-y-0">
-                      <FormLabel>Password</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="********"
-                          type="password"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="confirmPassword"
-                  render={({ field }) => (
-                    <FormItem className="mb-2 space-y-0">
-                      <FormLabel>Confirm password</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="********"
-                          type="password"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <Button type="submit" className="w-full">
-                  Submit
-                </Button>
-              </form>
-            </Form>
-          </div>
-        </div>
-      </div>
-    </>
-  );
+        </>
+    );
 };
 
 export default Page;

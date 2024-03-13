@@ -15,9 +15,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa6";
 import Link from "next/link";
+import axios from "axios";
 
 const signInSchema = z.object({
-  email: z.string().email("Email must be valid."),
+  username: z.string(),
   password: z.string().min(6, "Password should have at least 6 characters."),
 });
 
@@ -25,13 +26,16 @@ const Page = () => {
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
-      email: "",
+      username: "",
       password: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof signInSchema>) {
-    console.log(values);
+   async function onSubmit(values: z.infer<typeof signInSchema>) {
+    const response = await axios.post("http://localhost:8888/api/auth/login",values)
+     localStorage.setItem("access_token", response.data.accessToken);
+     document.cookie=`refreshToken=${response.data.refreshToken}`;
+    console.log(response.data);
   }
   return (
     <>
@@ -64,7 +68,7 @@ const Page = () => {
               <form onSubmit={form.handleSubmit(onSubmit)}>
                 <FormField
                   control={form.control}
-                  name="email"
+                  name="username"
                   render={({ field }) => (
                     <FormItem className="mb-2 space-y-0">
                       <FormLabel>Email</FormLabel>
