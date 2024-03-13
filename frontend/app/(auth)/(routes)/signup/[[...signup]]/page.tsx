@@ -15,7 +15,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa6";
 import Link from "next/link";
-
+import axios from "axios";
+import dotenv from "dotenv";
+import { NextConfig } from "next";
+dotenv.configDotenv({ path: "/env.local" });
 const signUpSchema = z
   .object({
     name: z
@@ -49,6 +52,8 @@ const Page = () => {
   });
 
   function onSubmit(values: z.infer<typeof signUpSchema>) {
+    const response = axios.post(`http://localhost:8888/api/auth/register`,values);
+    }`);
     console.log(values);
   }
   return (
