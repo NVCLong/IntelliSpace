@@ -13,9 +13,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa6";
+import { FaGithub, FaGoogle } from "react-icons/fa6";
 import Link from "next/link";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 const signInSchema = z.object({
   username: z.string(),
@@ -31,33 +32,40 @@ const Page = () => {
     },
   });
 
-   async function onSubmit(values: z.infer<typeof signInSchema>) {
-    const response = await axios.post("http://localhost:8888/api/auth/login",values)
-     localStorage.setItem("access_token", response.data.accessToken);
-     document.cookie=`refreshToken=${response.data.refreshToken}`;
+  async function onSubmit(values: z.infer<typeof signInSchema>) {
+    const response = await axios.post(
+      "http://localhost:8888/api/auth/login",
+      values
+    );
+    localStorage.setItem("access_token", response.data.accessToken);
+    document.cookie = `refreshToken=${response.data.refreshToken}`;
     console.log(response.data);
   }
   return (
     <>
-      <div className="signUpWrapper">
+      <motion.div
+      initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{
+          type: "tween",
+          duration: 1,
+        }}
+       className="registerWrapper">
         <div className="formWrapper">
           <div className="left">
             <h3 className="title">Hello, friends!</h3>
             <p>Enter your personal details and start journey with us</p>
-            <Link href={"/signup"}>
-              <Button className="px-8 transition-colors border rounded-full border-zinc-500 text-zinc-300 hover:border-zinc-200 hover:text-zinc-100">
-                Sign Up
+            <Link href={"/register"}>
+              <Button className="px-8 text-gray-900 border rounded-full border-zinc-500 hover:border-gray-900 hover:font-bold hoverScale">
+                Register
               </Button>
             </Link>
           </div>
           <div className="right">
-            <h3 className="text-2xl font-semibold text-center">Sign In Here</h3>
-            <div className="socialSignUpOptions">
+            <h3 className="text-2xl font-semibold text-center">Sign in</h3>
+            <div className="socialRegisterOptions">
               <Button variant={"outline"} className="socialFormBtn">
                 <FaGoogle className="w-5 h-5" />
-              </Button>
-              <Button variant={"outline"} className="socialFormBtn">
-                <FaFacebook className="w-5 h-5" />
               </Button>
               <Button variant={"outline"} className="socialFormBtn">
                 <FaGithub className="w-5 h-5" />
@@ -65,15 +73,15 @@ const Page = () => {
             </div>
             <p className="text-center">or use this option</p>
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="flex-col flexCenter">
                 <FormField
                   control={form.control}
                   name="username"
                   render={({ field }) => (
-                    <FormItem className="mb-2 space-y-0">
-                      <FormLabel>User name</FormLabel>
+                    <FormItem className="mb-2 space-y-2">
+                      <FormLabel>Username</FormLabel>
                       <FormControl>
-                        <Input placeholder="Enter user name" {...field} />
+                        <Input placeholder="Enter username" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -83,7 +91,7 @@ const Page = () => {
                   control={form.control}
                   name="password"
                   render={({ field }) => (
-                    <FormItem className="mb-2 space-y-0">
+                    <FormItem className="mb-2 space-y-2">
                       <FormLabel>Password</FormLabel>
                       <FormControl>
                         <Input
@@ -96,14 +104,17 @@ const Page = () => {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className="w-full">
+                <Button
+                  type="submit"
+                  className="w-1/2 mt-4 border-2 border-gray-500 border-solid rounded-lg shadow-lg flexCenter hoverScale"
+                >
                   Submit
                 </Button>
               </form>
             </Form>
           </div>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 };

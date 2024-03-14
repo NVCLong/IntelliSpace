@@ -14,8 +14,8 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const router = useRouter();
   const handleSignin = () => {
-    const router = useRouter();
     router.push("/signin");
   };
 
@@ -24,7 +24,7 @@ const Navbar = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
-      className="relative z-30 w-screen py-5 shadow-md flexBetween padding-container"
+      className="relative z-30 w-screen py-5 shadow-md flexBetween padding-container backdrop-blur-md "
     >
       <Link href="/" className="hoverScale">
         <Image src="/IntelliSpace.png" alt="logo" width={40} height={40} />

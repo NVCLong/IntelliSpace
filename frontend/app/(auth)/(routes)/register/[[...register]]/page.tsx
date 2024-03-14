@@ -102,7 +102,10 @@ const Page = () => {
             </div>
             <p className="text-center">or use this option</p>
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)}>
+              <form
+                className="flex-col flexCenter"
+                onSubmit={form.handleSubmit(onSubmit)}
+              >
                 <FormField
                   control={form.control}
                   name="username"
@@ -181,7 +184,7 @@ const Page = () => {
                 />
                 <Button
                   type="submit"
-                  className="w-full transition border-2 border-gray-500 border-solid shadow-lg hover:scale-110"
+                  className="w-full border-2 border-gray-500 border-solid shadow-lg hoverScale"
                 >
                   Submit
                 </Button>
