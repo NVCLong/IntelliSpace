@@ -4,7 +4,8 @@ import { NAV_LINKS } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
 import Button from "./Button";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -19,8 +20,13 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="relative z-30 py-5 flexBetween max-container padding-container">
-      <Link href="/">
+    <motion.nav
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="relative z-30 w-screen py-5 shadow-md flexBetween padding-container"
+    >
+      <Link href="/" className="hoverScale">
         <Image src="/IntelliSpace.png" alt="logo" width={40} height={40} />
       </Link>
 
@@ -29,10 +35,13 @@ const Navbar = () => {
           isMenuOpen ? "block" : "hidden"
         }`}
       >
-        <ul className="p-4 text-black bg-white rounded shadow-lg">
+        <ul className="flex flex-col items-center p-4 text-black bg-white rounded-md shadow-lg">
           {NAV_LINKS.map((link) => (
             <li key={link.key}>
-              <Link href={link.href} className="block py-2 hover:bg-gray-200">
+              <Link
+                href={link.href}
+                className="block p-6 py-2 rounded-md hover:bg-gray-200"
+              >
                 {link.label}
               </Link>
             </li>
@@ -45,7 +54,7 @@ const Navbar = () => {
           <li key={link.key}>
             <Link
               href={link.href}
-              className="regular-16 text-gray-50 flexCenter cursor-pointer pb-1.5 transition-all hover:font-bold"
+              className="font-medium text-2xl text-neutral-800 flexCenter cursor-pointer pb-1.5 transition-all hover:font-bold"
             >
               {link.label}
             </Link>
@@ -53,7 +62,7 @@ const Navbar = () => {
         ))}
       </ul>
 
-      <div className="hidden lg:flexCenter" onClick={handleSignin}>
+      <div className="hidden hoverScale lg:flexCenter" onClick={handleSignin}>
         <Button
           type="button"
           title="Login"
@@ -63,12 +72,12 @@ const Navbar = () => {
       </div>
 
       <div
-        className="relative inline-block cursor-pointer lg:hidden"
+        className="relative inline-block cursor-pointer lg:hidden hoverScale"
         onClick={toggleMenu}
       >
         <Image src="menu-dots.svg" alt="menu" width={32} height={32} />
       </div>
-    </nav>
+    </motion.nav>
   );
 };
 

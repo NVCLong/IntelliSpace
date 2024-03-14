@@ -16,8 +16,8 @@ import { Input } from "@/components/ui/input";
 import { FaGithub, FaGoogle } from "react-icons/fa6";
 import Link from "next/link";
 import axios from "axios";
-import dotenv from "dotenv";
-import{useRouter} from "next/Navigation";
+import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 
 const registerSchema = z
   .object({
@@ -44,7 +44,7 @@ const registerSchema = z
   });
 
 const Page = () => {
-    const router= useRouter();
+  const router = useRouter();
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -62,12 +62,20 @@ const Page = () => {
       values
     );
     console.log(response.data);
-    await router.push("/signin")
+    await router.push("/signin");
   }
 
   return (
     <>
-      <div className="registerWrapper">
+      <motion.div
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{
+          type: "tween",
+          duration: 1,
+        }}
+        className="registerWrapper"
+      >
         <div className="formWrapper">
           <div className="left">
             <h3 className="title">Welcome back!</h3>
@@ -75,7 +83,7 @@ const Page = () => {
               To keep connected with us please login with your personal info
             </p>
             <Link href={"/register"}>
-              <Button className="px-8 transition-colors border rounded-full border-zinc-500 text-zinc-300 hover:border-zinc-200 hover:text-zinc-100">
+              <Button className="px-8 text-gray-900 border rounded-full border-zinc-500 hover:border-gray-900 hover:font-bold hoverScale">
                 Sign in
               </Button>
             </Link>
@@ -84,11 +92,11 @@ const Page = () => {
             <h3 className="text-2xl font-semibold text-center">
               Register here
             </h3>
-            <div className="socialRegisterOptions">
-              <Button variant={"outline"} className="socialFormBtn">
-                <FaGoogle className="w-5 h-5" />
+            <div className="socialRegisterOptions ">
+              <Button variant={"outline"} className="socialFormBtn hoverScale">
+                <FaGoogle className="w-5 h-5 " />
               </Button>
-              <Button variant={"outline"} className="socialFormBtn">
+              <Button variant={"outline"} className="socialFormBtn hoverScale">
                 <FaGithub className="w-5 h-5" />
               </Button>
             </div>
@@ -99,10 +107,10 @@ const Page = () => {
                   control={form.control}
                   name="username"
                   render={({ field }) => (
-                    <FormItem className="mb-2 space-y-0">
-                      <FormLabel>Name</FormLabel>
+                    <FormItem className="mb-2 space-y-1">
+                      <FormLabel>Username</FormLabel>
                       <FormControl>
-                        <Input placeholder="Nguyen Duy" {...field} />
+                        <Input placeholder="Your username" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -112,11 +120,11 @@ const Page = () => {
                   control={form.control}
                   name="email"
                   render={({ field }) => (
-                    <FormItem className="mb-2 space-y-0">
+                    <FormItem className="mb-2 space-y-1">
                       <FormLabel>Email</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="admin@intellispace.com"
+                          placeholder="email@intellispace.com"
                           {...field}
                         />
                       </FormControl>
@@ -128,7 +136,7 @@ const Page = () => {
                   control={form.control}
                   name="numberPhone"
                   render={({ field }) => (
-                    <FormItem className="mb-2 space-y-0">
+                    <FormItem className="mb-2 space-y-1">
                       <FormLabel>Phone number</FormLabel>
                       <FormControl>
                         <Input placeholder="Your phone number" {...field} />
@@ -141,7 +149,7 @@ const Page = () => {
                   control={form.control}
                   name="password"
                   render={({ field }) => (
-                    <FormItem className="mb-2 space-y-0">
+                    <FormItem className="mb-2 space-y-1">
                       <FormLabel>Password</FormLabel>
                       <FormControl>
                         <Input
@@ -158,7 +166,7 @@ const Page = () => {
                   control={form.control}
                   name="confirmPassword"
                   render={({ field }) => (
-                    <FormItem className="mb-2 space-y-0">
+                    <FormItem className="mb-2 space-y-1">
                       <FormLabel>Confirm password</FormLabel>
                       <FormControl>
                         <Input
@@ -171,14 +179,17 @@ const Page = () => {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className="w-full">
+                <Button
+                  type="submit"
+                  className="w-full transition border-2 border-gray-500 border-solid shadow-lg hover:scale-110"
+                >
                   Submit
                 </Button>
               </form>
             </Form>
           </div>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 };
