@@ -68,21 +68,22 @@ const Page = () => {
   return (
     <>
       <motion.div
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{
-          type: "tween",
-          duration: 1,
-        }}
-        className="registerWrapper"
+        initial={{ opacity: 0, scale: 0.5 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{
+        duration: 1,
+        delay: 0.5,
+        ease: [0, 0.71, 0.2, 1.01]
+      }}
+        className="registerWrapper "
       >
-        <div className="formWrapper">
+        <div className="formWrapper ">
           <div className="left">
             <h3 className="title">Welcome back!</h3>
             <p>
               To keep connected with us please login with your personal info
             </p>
-            <Link href={"/register"}>
+            <Link href={"/signin"}>
               <Button className="px-8 text-gray-900 border rounded-full border-zinc-500 hover:border-gray-900 hover:font-bold hoverScale">
                 Sign in
               </Button>
@@ -184,7 +185,7 @@ const Page = () => {
                 />
                 <Button
                   type="submit"
-                  className="w-full border-2 border-gray-500 border-solid shadow-lg hoverScale"
+                  className="w-1/2 mt-4 border-2 border-gray-500 border-solid rounded-lg shadow-lg flexCenter hoverScale"
                 >
                   Submit
                 </Button>

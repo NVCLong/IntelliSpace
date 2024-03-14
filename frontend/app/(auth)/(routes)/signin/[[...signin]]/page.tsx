@@ -44,14 +44,15 @@ const Page = () => {
   return (
     <>
       <motion.div
-      initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{
-          type: "tween",
-          duration: 1,
-        }}
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{
+        duration: 1,
+        delay: 0.5,
+        ease: [0, 0.71, 0.2, 1.01]
+      }}
        className="registerWrapper">
-        <div className="formWrapper">
+        <div className="formWrapper ">
           <div className="left">
             <h3 className="title">Hello, friends!</h3>
             <p>Enter your personal details and start journey with us</p>

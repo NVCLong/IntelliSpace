@@ -142,7 +142,7 @@ body {
 }
 
 @layer base {
-  :root {
+  /* :root {
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
 
@@ -172,16 +172,16 @@ body {
     --ring: 240 10% 3.9%;
 
     --radius: 0.5rem;
-  }
+  } */
 }
 
 .registerWrapper,
 .signInWrapper {
-  @apply flex items-center justify-center w-full h-screen shadow-lg;
+  @apply flex items-center justify-center mt-20 mb-36;
 }
 
 .formWrapper {
-  @apply flex items-center border shadow-lg rounded-xl overflow-hidden justify-center w-[20rem] mx-6 md:w-auto my-4;
+  @apply flex items-center border rounded-xl shadow-lg overflow-hidden justify-center w-[20rem] mx-6 md:w-auto my-4;
 }
 
 .registerWrapper .left,
