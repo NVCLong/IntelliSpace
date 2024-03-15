@@ -17,8 +17,8 @@ export default function Home() {
       <Link href="/" className="mt-24 mb-8 hoverScale">
         <Image src="/IntelliSpace.png" alt="logo" width={100} height={100} />
       </Link>
-    <h1 className="text-5xl font-bold">Welcome to IntelliSpace</h1>
-    <p className="mt-3 text-lg mb-60">
+    <h1 className="text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl">Welcome to IntelliSpace</h1>
+    <p className="mt-3 text-sm sm:text-base md:text-lg lg:text-xl mb-60">
       IntelliSpace is a platform to store data, meeting notes, and other...
     </p>
   </motion.div>

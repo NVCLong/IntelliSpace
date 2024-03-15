@@ -52,7 +52,7 @@ const Page = () => {
         ease: [0, 0.71, 0.2, 1.01]
       }}
        className="registerWrapper">
-        <div className="formWrapper ">
+        <div className="formWrapper">
           <div className="left">
             <h3 className="title">Hello, friends!</h3>
             <p>Enter your personal details and start journey with us</p>

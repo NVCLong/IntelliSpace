@@ -24,7 +24,7 @@ const Navbar = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
-      className="relative z-30 w-screen py-5 shadow-md flexBetween padding-container backdrop-blur-md "
+      className="relative z-30 w-screen py-1.5 shadow-md flexBetween padding-container backdrop-blur-md "
     >
       <Link href="/" className="hoverScale">
         <Image src="/IntelliSpace.png" alt="logo" width={40} height={40} />
@@ -35,7 +35,7 @@ const Navbar = () => {
           isMenuOpen ? "block" : "hidden"
         }`}
       >
-        <ul className="flex flex-col items-center p-4 text-black bg-white rounded-md shadow-lg">
+        <ul className="flex flex-col items-center p-4 mt-24 text-black bg-white rounded-md shadow-lg">
           {NAV_LINKS.map((link) => (
             <li key={link.key}>
               <Link
@@ -49,12 +49,12 @@ const Navbar = () => {
         </ul>
       </div>
 
-      <ul className="hidden h-full gap-12 lg:flex">
+      <ul className="hidden h-full gap-12 lg:flex" id="navBarFull">
         {NAV_LINKS.map((link) => (
           <li key={link.key}>
             <Link
               href={link.href}
-              className="font-medium ml-10 px-6 py-2 rounded-lg text-2xl text-neutral-700 flexCenter cursor-pointer pb-1.5 hover:bg-purple-200 transition hover:font-bold hover:scale-110"
+              className="font-medium ml-10 px-6 py-2 rounded-lg text-xl text-neutral-700 flexCenter cursor-pointer pb-1.5 hover:bg-purple-200 transition hover:font-bold hover:scale-110"
             >
               {link.label}
             </Link>

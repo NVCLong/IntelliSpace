@@ -16,13 +16,13 @@ const Footer = () => {
         ease: [0, 0.71, 0.2, 1.01]
       }}
     className="mt-1.5 flexCenter">
-      <div className="flex flex-col w-full max-container gap-14">
+      <div className="flex flex-col w-full padding-container max-container gap-14">
         <div className="flex flex-col items-start justify-center gap-[10%] md:flex-row">
           <Link href="/" className="mb-3">
             <Image src="/IntelliSpace.png" alt="logo" width={74} height={74}/>
           </Link>
 
-          <div className='flex flex-wrap gap-10 sm:justify-between md:flex-1'>
+          <div className='flex flex-wrap gap-2 sm:justify-between md:flex-1'>
             {FOOTER_LINKS.map((columns) => (
               <FooterColumn title={columns.title}>
                 <ul className="flex flex-col gap-4 regular-14 text-gray-30">
@@ -41,12 +41,12 @@ const Footer = () => {
                   <Link
                     href="/"
                     key={link.label}
-                    className="flex gap-2 md:flex-col lg:flex-row"
+                    className="flex gap-4 md:flex-col lg:flex-row"
                   >
-                    <p className="">
+                    <p className="whitespace-nowrap">
                       {link.label}:
                     </p>
-                    <p className="font-bold text-blue-70">
+                    <p className="font-medium whitespace-nowrap text-blue-70">
                       {link.value}
                     </p>
                   </Link>
@@ -69,9 +69,9 @@ const Footer = () => {
 
         </div>
 
-        <p className="text-center regular-14 text-gray-30">
-          <p className="mb-8 border bg-gray-20" />
-          2024 IntelliSpace | © All rights reserved </p>
+        <p className="w-full mb-6 font-medium text-center text-gray-30">
+                  © 2024 IntelliSpace | All rights reserved
+        </p>
       </div>
     </motion.footer>
   )
