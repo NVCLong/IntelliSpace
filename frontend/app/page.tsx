@@ -1,4 +1,26 @@
+"use client"
+import Image from "next/image";
+import Link from "next/link";
+import { motion } from "framer-motion";
+
 export default function Home() {
-  return <div>
-  </div>;
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{
+        duration: 1,
+        delay: 0.5,
+        ease: [0, 0.71, 0.2, 1.01]
+      }}
+    className="flex flex-col items-center">
+      <Link href="/" className="mt-24 mb-8 hoverScale">
+        <Image src="/IntelliSpace.png" alt="logo" width={100} height={100} />
+      </Link>
+    <h1 className="text-5xl font-bold">Welcome to IntelliSpace</h1>
+    <p className="mt-3 text-lg mb-60">
+      IntelliSpace is a platform to store data, meeting notes, and other...
+    </p>
+  </motion.div>
+  )
 }

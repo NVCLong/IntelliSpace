@@ -40,7 +40,7 @@ const Navbar = () => {
             <li key={link.key}>
               <Link
                 href={link.href}
-                className="block p-6 py-2 rounded-md hover:bg-gray-200"
+                className="block p-6 py-2 transition rounded-md hover:bg-purple-200 hover:font-bold hover:scale-110"
               >
                 {link.label}
               </Link>
@@ -54,7 +54,7 @@ const Navbar = () => {
           <li key={link.key}>
             <Link
               href={link.href}
-              className="font-medium ml-10 border px-6 py-2 rounded-full border-white text-2xl text-neutral-700 flexCenter cursor-pointer pb-1.5 hover:bg-purple-200 transition-all hover:font-bold"
+              className="font-medium ml-10 px-6 py-2 rounded-lg text-2xl text-neutral-700 flexCenter cursor-pointer pb-1.5 hover:bg-purple-200 transition hover:font-bold hover:scale-110"
             >
               {link.label}
             </Link>
@@ -67,7 +67,7 @@ const Navbar = () => {
           type="button"
           title="Login"
           icon="user-solid.svg"
-          variant="btn_dark_green"
+          variant="btn_dark"
         />
       </div>
 

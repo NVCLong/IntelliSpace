@@ -15,10 +15,10 @@ const Footer = () => {
         delay: 1,
         ease: [0, 0.71, 0.2, 1.01]
       }}
-    className="mb-12 flexCenter">
-      <div className="flex flex-col w-full padding-container max-container gap-14">
+    className="mt-1.5 flexCenter">
+      <div className="flex flex-col w-full max-container gap-14">
         <div className="flex flex-col items-start justify-center gap-[10%] md:flex-row">
-          <Link href="/" className="mb-10">
+          <Link href="/" className="mb-3">
             <Image src="/IntelliSpace.png" alt="logo" width={74} height={74}/>
           </Link>
 
@@ -66,10 +66,12 @@ const Footer = () => {
               </FooterColumn>
             </div>
           </div>
+
         </div>
 
-        <div className="border bg-gray-20" />
-        <p className="w-full text-center regular-14 text-gray-30">2024 IntelliSpace | © All rights reserved </p>
+        <p className="text-center regular-14 text-gray-30">
+          <p className="mb-8 border bg-gray-20" />
+          2024 IntelliSpace | © All rights reserved </p>
       </div>
     </motion.footer>
   )
