@@ -30,7 +30,7 @@ body {
     @apply px-8 py-5 text-white border-green-50 bg-green-50;
   }
   .btn_dark {
-    @apply px-5 py-3 text-white transition-all bg-indigo-500 hover:bg-black;
+    @apply px-3 py-2 text-white transition-all bg-indigo-500 hover:bg-black;
   }
   .btn_dark_green_outline {
     @apply px-8 py-5 text-white border-gray-20 bg-green-90;

@@ -54,7 +54,7 @@ const Navbar = () => {
           <li key={link.key}>
             <Link
               href={link.href}
-              className="font-medium ml-10 px-6 py-2 rounded-lg text-xl text-neutral-700 flexCenter cursor-pointer pb-1.5 hover:bg-purple-200 transition hover:font-bold hover:scale-110"
+              className="font-medium ml-10 px-6 py-2 rounded-full text-xl text-neutral-600 flexCenter cursor-pointer pb-1.5 transition hover:text-gray-900 hover:shadow-lg hoverScale"
             >
               {link.label}
             </Link>
@@ -62,7 +62,7 @@ const Navbar = () => {
         ))}
       </ul>
 
-      <div className="hidden hoverScale lg:flexCenter" onClick={handleSignin}>
+      <div className="hidden hoverScale lg:flexCenter drop-shadow-md" onClick={handleSignin}>
         <Button
           type="button"
           title="Login"
