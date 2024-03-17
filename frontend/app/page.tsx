@@ -2,9 +2,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
+    <div>
+      <Navbar />
+
     <motion.div
       initial={{ opacity: 0, scale: 0.5 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -22,5 +27,7 @@ export default function Home() {
       IntelliSpace is a platform to store data, meeting notes, and other...
     </p>
   </motion.div>
+  <Footer />
+    </div>
   )
 }
