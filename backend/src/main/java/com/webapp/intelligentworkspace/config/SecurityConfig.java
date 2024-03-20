@@ -37,6 +37,7 @@ public class SecurityConfig {
 
                 .csrf(csrf -> csrf.disable())
                 .cors(Customizer.withDefaults())
+                .oauth2Login(withDefaults())
                 .userDetailsService(customerService)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
@@ -47,8 +48,6 @@ public class SecurityConfig {
                     auth.requestMatchers("/auth/**").permitAll();
                     auth.anyRequest().authenticated();
                 })
-                .oauth2Login(withDefaults())
-                .formLogin(withDefaults())
                 .build();
     }
 

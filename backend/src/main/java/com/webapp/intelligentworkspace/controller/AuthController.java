@@ -33,8 +33,5 @@ public class AuthController {
         return ResponseEntity.ok(userService.refreshAccessToken(refreshToken, user));
     }
 
-    //    @PostMapping("auth/logout")
-//    @ResponseBody
-//    public ResponseEntity<AuthResponse> logout(@Re)
 
 }
