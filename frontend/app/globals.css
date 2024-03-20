@@ -20,20 +20,8 @@ body {
 }
 
 @layer utilities {
-  .btn_white {
-    @apply px-8 py-3 bg-white border-white text-green-50;
-  }
-  .btn_white_text {
-    @apply px-8 py-3 bg-white border-white text-gray-90;
-  }
-  .btn_green {
-    @apply px-8 py-5 text-white border-green-50 bg-green-50;
-  }
   .btn_dark {
-    @apply px-5 py-3 text-white transition-all bg-indigo-500 hover:bg-black;
-  }
-  .btn_dark_green_outline {
-    @apply px-8 py-5 text-white border-gray-20 bg-green-90;
+    @apply px-3 py-2 text-white transition-all bg-indigo-500 hover:bg-black;
   }
 
   .max-container {
@@ -146,7 +134,7 @@ body {
 
 .registerWrapper,
 .signInWrapper {
-  @apply flex items-center justify-center mt-20 mb-36;
+  @apply flex items-center justify-center mt-8 mb-8;
 }
 
 .formWrapper {

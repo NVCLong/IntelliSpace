@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import * as z from "zod";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/auth_ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
@@ -11,9 +11,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { FaGithub, FaGoogle } from "react-icons/fa6";
+} from "@/components/auth_ui/form";
+import { Input } from "@/components/auth_ui/input";
+import { FcGoogle } from "react-icons/fc";
+import { SiGithub } from "react-icons/si";
 import Link from "next/link";
 import axios from "axios";
 import { motion } from "framer-motion";
@@ -51,7 +52,7 @@ const Page = () => {
         delay: 0.5,
         ease: [0, 0.71, 0.2, 1.01]
       }}
-       className="registerWrapper">
+       className="registerWrapper drop-shadow-md">
         <div className="formWrapper">
           <div className="left">
             <h3 className="title">Hello, friends!</h3>
@@ -64,17 +65,17 @@ const Page = () => {
           </div>
           <div className="right">
             <h3 className="text-2xl font-semibold text-center">Sign in</h3>
-            <div className="socialRegisterOptions">
-              <Button variant={"outline"} className="socialFormBtn">
-                <FaGoogle className="w-5 h-5" />
+            <div className="socialRegisterOptions drop-shadow-md ">
+              <Button className="socialFormBtn hoverScale">
+                <FcGoogle className="w-10 h-10" />
               </Button>
-              <Button variant={"outline"} className="socialFormBtn">
-                <FaGithub className="w-5 h-5" />
+              <Button className="socialFormBtn hoverScale">
+                <SiGithub  className="w-10 h-10" />
               </Button>
             </div>
             <p className="text-center">or use this option</p>
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="flex-col flexCenter">
+              <form onSubmit={form.handleSubmit(onSubmit)} className="flex-col flexCenter drop-shadow-md">
                 <FormField
                   control={form.control}
                   name="username"
