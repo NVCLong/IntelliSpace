@@ -1,4 +1,4 @@
-package com.webapp.intelligentworkspace.model;
+package com.webapp.intelligentworkspace.model.response;
 
 import lombok.Data;
 
@@ -12,7 +12,7 @@ public class AuthResponse {
         this.content = content;
     }
 
-    public AuthResponse(String content, String refreshToken, String accessToken) {
+    public AuthResponse(String content, String accessToken, String refreshToken) {
         this.content = content;
         this.refreshToken = refreshToken;
         this.accessToken = accessToken;

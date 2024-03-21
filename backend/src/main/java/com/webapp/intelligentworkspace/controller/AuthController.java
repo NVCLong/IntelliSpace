@@ -1,7 +1,7 @@
 package com.webapp.intelligentworkspace.controller;
 
-import com.webapp.intelligentworkspace.model.AuthResponse;
-import com.webapp.intelligentworkspace.model.User;
+import com.webapp.intelligentworkspace.model.response.AuthResponse;
+import com.webapp.intelligentworkspace.model.entity.User;
 import com.webapp.intelligentworkspace.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

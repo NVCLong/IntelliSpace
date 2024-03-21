@@ -1,9 +1,7 @@
-package com.webapp.intelligentworkspace.model;
+package com.webapp.intelligentworkspace.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
-import java.util.List;
 
 @Entity
 @Data

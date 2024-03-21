@@ -1,33 +1,42 @@
 package com.webapp.intelligentworkspace.service;
 
-import com.webapp.intelligentworkspace.model.AuthResponse;
-import com.webapp.intelligentworkspace.model.User;
+import com.webapp.intelligentworkspace.model.entity.Storage;
+import com.webapp.intelligentworkspace.model.entity.Token;
+import com.webapp.intelligentworkspace.model.response.AuthResponse;
+import com.webapp.intelligentworkspace.model.entity.User;
+import com.webapp.intelligentworkspace.repository.TokenRepository;
 import com.webapp.intelligentworkspace.repository.UserRepository;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 import java.util.Random;
 
 @Service
 @Data
 public class UserService {
-    @Autowired
+
     private final PasswordEncoder passwordEncoder;
-    @Autowired
+
     UserRepository userRepository;
-    @Autowired
+
     JwtService jwtService;
+
+    TokenRepository tokenRepository;
+
+    StorageService storageService;
     private final AuthenticationManager authenticationManager;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager,TokenRepository tokenRepository, StorageService storageService) {
+        this.tokenRepository=tokenRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
+        this.storageService= storageService;
     }
 
     public AuthResponse createUser(User user){
@@ -42,7 +51,13 @@ public class UserService {
             newUser.setPassword(passwordEncoder.encode(user.getPassword()));
             newUser.setEmail(user.getEmail());
             newUser.setNumberPhone(user.getNumberPhone());
+            Storage storage=storageService.createStorage();
+            newUser.setStorage(storage);
             userRepository.save(newUser);
+            String token= jwtService.generateAccessToken(newUser);
+            saveToken(token,newUser);
+
+
             return new AuthResponse("Created successfully with the username "+ newUser.getUsername());
         }
     }
@@ -65,7 +80,8 @@ public class UserService {
                 if(user1 != null) {
                     String accessToken = jwtService.generateAccessToken(user1);
                     String refreshToken = jwtService.generateRefreshToken(user1);
-                    return new AuthResponse("Login successfully", accessToken, refreshToken);
+                    saveToken(accessToken, user1);
+                    return new AuthResponse("Login successfully hehe", accessToken, refreshToken);
                 }
                 else {
                     return  new AuthResponse("Login failed");
@@ -78,6 +94,32 @@ public class UserService {
             return new AuthResponse("Wrong password");
         }
     }
+
+    public void saveToken(String token,User user){
+        Token existingToken= tokenRepository.findByUser(user).orElse(null);
+        if(existingToken!= null){
+            existingToken.setToken(token);
+            tokenRepository.save(existingToken);
+            return;
+        }else {
+            Token newToken=Token.builder()
+                    .isLogout(false)
+                    .user(user)
+                    .token(token)
+                    .build();
+
+            tokenRepository.save(newToken);
+        }
+    }
+
+    public void setLogoutToken(User user){
+        Token existing = tokenRepository.findByUser(user).orElse(null);
+        if(existing != null){
+            existing.setLogout(true);
+            tokenRepository.save(existing);
+        }
+    }
+
     public AuthResponse refreshAccessToken(String refreshToken, User user) {
         String token=jwtService.refreshAccessToken(refreshToken, user);
         return new AuthResponse("This is new accessToken",null, token);

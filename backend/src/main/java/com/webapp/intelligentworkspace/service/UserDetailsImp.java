@@ -1,6 +1,6 @@
 package com.webapp.intelligentworkspace.service;
 
-import com.webapp.intelligentworkspace.model.User;
+import com.webapp.intelligentworkspace.model.entity.User;
 import com.webapp.intelligentworkspace.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

@@ -1,6 +1,6 @@
 package com.webapp.intelligentworkspace.service;
 
-import com.webapp.intelligentworkspace.model.User;
+import com.webapp.intelligentworkspace.model.entity.User;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;

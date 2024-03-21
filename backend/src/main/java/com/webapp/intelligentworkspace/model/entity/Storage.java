@@ -1,4 +1,4 @@
-package com.webapp.intelligentworkspace.model;
+package com.webapp.intelligentworkspace.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -13,7 +13,7 @@ public class Storage {
     @Column(name = "id")
     private Long id;
     @Column(name = "maxStorage")
-    private float maxStorage=1;
+    private final float maxStorage=1;
     @Column(name = "currentStorage")
     private float currentStorage;
 
