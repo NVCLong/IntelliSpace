@@ -101,6 +101,22 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.azure/azure-storage-blob -->
+        <dependency>
+            <groupId>com.azure</groupId>
+            <artifactId>azure-storage-blob</artifactId>
+            <version>12.25.2</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.azure/azure-core-http-netty -->
+        <dependency>
+            <groupId>com.azure</groupId>
+            <artifactId>azure-core-http-netty</artifactId>
+            <version>1.14.1</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>

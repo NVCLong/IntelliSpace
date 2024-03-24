@@ -37,17 +37,17 @@ public class SecurityConfig {
 
                 .csrf(csrf -> csrf.disable())
                 .cors(Customizer.withDefaults())
-                .oauth2Login(withDefaults())
+//                .oauth2Login(withDefaults())
                 .userDetailsService(customerService)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(e -> e.accessDeniedHandler(
                         ((request, response, accessDeniedException) -> response.setStatus(403))
                 ))
-                .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/auth/**").permitAll();
-                    auth.anyRequest().authenticated();
-                })
+//                .authorizeHttpRequests(auth -> {
+//                    auth.requestMatchers("/auth/**").permitAll();
+//                    auth.anyRequest().authenticated();
+//                })
                 .build();
     }
 
