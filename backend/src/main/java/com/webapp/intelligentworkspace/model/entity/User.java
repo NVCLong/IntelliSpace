@@ -17,6 +17,9 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="storageId", referencedColumnName = "id")
     private Storage storage;
-
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", username=" + username + ", email=" + email + "]";
+    }
 
 }

@@ -4,6 +4,7 @@ import com.webapp.intelligentworkspace.model.entity.Storage;
 import com.webapp.intelligentworkspace.model.entity.Token;
 import com.webapp.intelligentworkspace.model.response.AuthResponse;
 import com.webapp.intelligentworkspace.model.entity.User;
+import com.webapp.intelligentworkspace.repository.StorageRepository;
 import com.webapp.intelligentworkspace.repository.TokenRepository;
 import com.webapp.intelligentworkspace.repository.UserRepository;
 import lombok.Data;
@@ -28,15 +29,17 @@ public class UserService {
     TokenRepository tokenRepository;
 
     StorageService storageService;
+    StorageRepository storageRepository;
     private final AuthenticationManager authenticationManager;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager,TokenRepository tokenRepository, StorageService storageService) {
+    public UserService(StorageRepository storageRepository,UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager,TokenRepository tokenRepository, StorageService storageService) {
         this.tokenRepository=tokenRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
         this.storageService= storageService;
+        this.storageRepository=storageRepository;
     }
 
     public AuthResponse createUser(User user){
@@ -51,7 +54,9 @@ public class UserService {
             newUser.setPassword(passwordEncoder.encode(user.getPassword()));
             newUser.setEmail(user.getEmail());
             newUser.setNumberPhone(user.getNumberPhone());
-            Storage storage=storageService.createStorage();
+            Storage storage= new Storage();
+            storage.setCurrentStorage(0);
+            storageRepository.save(storage);
             newUser.setStorage(storage);
             userRepository.save(newUser);
             String token= jwtService.generateAccessToken(newUser);
@@ -75,6 +80,7 @@ public class UserService {
                                 user.getPassword()
                         )
                 );
+                System.out.println(user);
                 User user1= userRepository.findUserByUsername(user.getUsername()).orElse(null);
                 System.out.println(user1);
                 if(user1 != null) {
@@ -94,6 +100,7 @@ public class UserService {
             return new AuthResponse("Wrong password");
         }
     }
+
 
     public void saveToken(String token,User user){
         Token existingToken= tokenRepository.findByUser(user).orElse(null);
