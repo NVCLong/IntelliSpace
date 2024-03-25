@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { FiHome, FiFolder, FiUsers, FiStar, FiInbox, FiTrash2 } from "react-icons/fi";
-import { motion } from 'framer-motion';
 
 const Sidebar: React.FC = () => {
   const navItems = [
@@ -20,24 +19,24 @@ const Sidebar: React.FC = () => {
     <div
 
       className={`${open ? "w-60" : "w-24 p-2"
-        } z-10 flex-col h-screen  shadow-xl backdrop-blur-2xl transition-all duration-300 p-5 pt-8`}
+        } z-10 flex-col h-screen shadow-xl backdrop-blur-2xl transition-all duration-300 p-5 pt-8`}
     >
       <div className="h-full overflow-y-auto lg:block">
 
         <img
           src="/control.png"
-          className={`absolute cursor-pointer rounded-full -right-3 top-8 w-6 transition duration-200 transform hover:scale-110
+          className={`absolute cursor-pointer rounded-full -right-3 top-9 w-6 transition duration-200 transform hover:scale-110
           ${!open && "rotate-180"}`}
           alt="control_icon"
           onClick={() => setOpen(!open)}
         />
 
-        <div className="flex space-x-2 transition">
+        <div className="flex space-x-2">
           <Link href="/" >
-            <Image src="/IntelliSpace.png" alt="logo" width={30} height={30} className={`cursor-pointer duration-300 ml-7 w-8 h-8
+            <Image src="/IntelliSpace.png" alt="logo" width={30} height={30} className={`cursor-pointer ml-3 w-8 h-8
             ${!open && ""}`} />
           </Link>
-          <span className={`text-2xl font-bold transition duration-300 ${!open && "hidden transition"
+          <span className={`text-2xl font-bold ${!open && "hidden"
             }`}>IntelliDrive</span>
         </div>
 
@@ -45,14 +44,14 @@ const Sidebar: React.FC = () => {
           {navItems.map((item, index) => (
             <div
               key={index}
-              className="flex items-center p-4 mt-8 transition duration-100 ease-linear transform rounded-lg cursor-pointer focus:bg-slate-50 focus:outline-none active:bg-slate-50 hover:text-white hover:bg-white/10 focus:bg-white/10 active:bg-white/10 w-fit"
+              className="flex items-center p-4 mt-8 transition duration-100 ease-linear transform rounded-lg cursor-pointer focus:bg-slate-50 focus:outline-none active:bg-slate-50 hover:text-white focus:bg-white/10 active:bg-white/10 w-fit"
             >
               <div
                 className={`${!open ? "w-full flex justify-center" : ""
                   } transition-all duration-100`}
               >
                 <item.icon className={`${!open ? "w-6 h-6 cursor-pointer flex justify-center " : ""
-                  } transition-all duration-200 w-6 h-6`} />
+                  } transition-all duration-200 w-6 h-6 -ml-4`} />
               </div>
               <Link href={item.path}>
                 <span
