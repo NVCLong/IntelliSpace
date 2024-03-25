@@ -24,7 +24,7 @@ public class Folder {
     @ManyToOne
     @JoinColumn(name="storage_id")
     @JsonManagedReference
-    @JsonIgnore  // Exclude Storage from JSON serialization
+    @JsonIgnore
     private Storage storage;
 
     @ManyToOne

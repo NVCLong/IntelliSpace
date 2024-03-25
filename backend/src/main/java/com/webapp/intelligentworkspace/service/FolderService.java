@@ -45,10 +45,11 @@ public class FolderService {
     // find folder and it's sub folders
     public FolderResponse getSubFolderById(Long folderId, Long storageId) {
         Folder folder=folderRepository.findById(folderId).orElse(null);
+        Storage storage= storageRepository.findById(storageId).orElse(null);
         if(folder==null){
             return FolderResponse.builder()
-                    .name(null)
-                    .storage_id(storageId)
+                    .folder(null)
+                    .storage(storage)
                     .subFolders(null)
                     .status("Failed to find folder")
                     .message("Can not find the folder with the given id")
@@ -56,8 +57,8 @@ public class FolderService {
         }else {
             List<Folder> subFolders = folderRepository.findAllByParentFolderId(folderId);
             return FolderResponse.builder()
-                    .name(folder.getName())
-                    .storage_id(storageId)
+                    .folder(folder)
+                    .storage(storage)
                     .subFolders(subFolders)
                     .message("Success to find the folder")
                     .status("Success")
@@ -71,15 +72,15 @@ public class FolderService {
         if(parentFolder == null){
             return FolderResponse.builder()
                     .status("Fail")
-                    .storage_id(storageId)
-                    .storage_id(storageId)
+                    .storage(storage)
+                    .folder(null)
                     .message("Can not find root folder")
                     .build();
         }else{
             if(storage==null){
                 return FolderResponse.builder()
-                        .name(null)
-                        .storage_id(storageId)
+                        .folder(null)
+                        .storage(storage)
                         .message(" can not get the storage")
                         .status(" Failed")
                         .subFolders(null)
@@ -91,8 +92,8 @@ public class FolderService {
                 folderRepository.save(folder);
 
                 return FolderResponse.builder()
-                        .name(folder.getName())
-                        .storage_id(storageId)
+                        .folder(folder)
+                        .storage(storage)
                         .message("created successfully")
                         .status("Success")
                         .build();
@@ -113,7 +114,7 @@ public class FolderService {
             folder.setStorage(storage);
             System.out.println(folder);
             folderRepository.save(folder);
-            return  new FolderResponse(folder.getName(), storageId,null,"success","CreateRootFolder success");
+            return  new FolderResponse( storage,folder,null,"success","CreateRootFolder success");
 
         }
 

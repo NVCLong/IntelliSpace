@@ -1,5 +1,7 @@
 package com.webapp.intelligentworkspace.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,6 +18,8 @@ public class User {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="storageId", referencedColumnName = "id")
+    @JsonManagedReference
+    @JsonIgnore
     private Storage storage;
     @Override
     public String toString() {
