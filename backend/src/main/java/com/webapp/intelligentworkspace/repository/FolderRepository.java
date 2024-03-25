@@ -17,8 +17,9 @@ public interface FolderRepository extends JpaRepository<Folder,Long> {
     List<Folder> findAllByParentFolderId(Long id);
 
     @Query(value="""
-select f from Folder f  join Storage s on f.storage.id = s.id
-where f.storage.id = :storage_id and f.parentFolder = null
+select f from Folder f 
+join Storage s on s.id=f.storage.id
+where f.storage.id = :storage_id and f.parentFolder is null
 """)
     List<Folder> findAllRootFolderById(Long storage_id);
 

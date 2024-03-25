@@ -7,6 +7,7 @@ import lombok.Data;
 import java.util.List;
 
 @Builder
+@Data
 public class RootFolderResponse {
     private List<Folder> rootFolders;
     private String status;

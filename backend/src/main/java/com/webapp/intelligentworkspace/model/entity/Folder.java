@@ -1,5 +1,7 @@
 package com.webapp.intelligentworkspace.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
@@ -12,13 +14,17 @@ import java.util.List;
 public class Folder {
 
     @Id
+    @Column(name = "id")
     private Long id;
     @Column(name="isPublic", columnDefinition = "false")
     private  boolean isPublic;
     @Column(name="name")
     private  String name;
+
     @ManyToOne
     @JoinColumn(name="storage_id")
+    @JsonManagedReference
+    @JsonIgnore  // Exclude Storage from JSON serialization
     private Storage storage;
 
     @ManyToOne

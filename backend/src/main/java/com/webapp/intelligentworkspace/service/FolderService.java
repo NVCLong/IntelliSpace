@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 @Data
@@ -23,7 +24,9 @@ public class FolderService {
 
     // find all rootFolder with storage id and parent folder id
     public RootFolderResponse getRootFolders(Long storageId){
+        System.out.println(storageId);
         List<Folder> rootFolderList = folderRepository.findAllRootFolderById(storageId);
+        System.out.println(rootFolderList);
         if(rootFolderList.isEmpty()){
             return RootFolderResponse.builder()
                     .rootFolders(null)
@@ -40,11 +43,12 @@ public class FolderService {
     }
 
     // find folder and it's sub folders
-    public FolderResponse getSubFolderById(Long folderId) {
+    public FolderResponse getSubFolderById(Long folderId, Long storageId) {
         Folder folder=folderRepository.findById(folderId).orElse(null);
         if(folder==null){
             return FolderResponse.builder()
-                    .folder(null)
+                    .name(null)
+                    .storage_id(storageId)
                     .subFolders(null)
                     .status("Failed to find folder")
                     .message("Can not find the folder with the given id")
@@ -52,7 +56,8 @@ public class FolderService {
         }else {
             List<Folder> subFolders = folderRepository.findAllByParentFolderId(folderId);
             return FolderResponse.builder()
-                    .folder(folder)
+                    .name(folder.getName())
+                    .storage_id(storageId)
                     .subFolders(subFolders)
                     .message("Success to find the folder")
                     .status("Success")
@@ -66,13 +71,15 @@ public class FolderService {
         if(parentFolder == null){
             return FolderResponse.builder()
                     .status("Fail")
+                    .storage_id(storageId)
+                    .storage_id(storageId)
                     .message("Can not find root folder")
-                    .folder(null)
                     .build();
         }else{
             if(storage==null){
                 return FolderResponse.builder()
-                        .folder(null)
+                        .name(null)
+                        .storage_id(storageId)
                         .message(" can not get the storage")
                         .status(" Failed")
                         .subFolders(null)
@@ -84,7 +91,8 @@ public class FolderService {
                 folderRepository.save(folder);
 
                 return FolderResponse.builder()
-                        .folder(folder)
+                        .name(folder.getName())
+                        .storage_id(storageId)
                         .message("created successfully")
                         .status("Success")
                         .build();
@@ -96,19 +104,17 @@ public class FolderService {
     public FolderResponse createRootFolder(Folder folder, Long storageId){
         Storage storage= storageRepository.findById(storageId).orElse(null);
         if(storage==null){
-            return FolderResponse.builder()
-                    .folder(null)
-                    .message(" can not get the storage")
-                    .status(" Failed")
-                    .subFolders(null)
-                    .build();
+            System.out.println("Fail");
+            return null;
         }else{
-            return FolderResponse.builder()
-                    .folder(folder)
-                    .status(" Success")
-                    .subFolders(null)
-                    .message("Created success folder")
-                    .build();
+            Random random= new Random();
+            System.out.println("running");
+            folder.setId(random.nextLong(1,100000000));
+            folder.setStorage(storage);
+            System.out.println(folder);
+            folderRepository.save(folder);
+            return  new FolderResponse(folder.getName(), storageId,null,"success","CreateRootFolder success");
+
         }
 
     }
