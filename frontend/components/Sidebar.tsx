@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { FiHome, FiFolder, FiUsers, FiStar, FiInbox, FiTrash2 } from "react-icons/fi";
+import StorageBar from './StorageBar';
 
 const Sidebar: React.FC = () => {
   const navItems = [
@@ -63,6 +64,8 @@ const Sidebar: React.FC = () => {
               </Link>
             </div>
           ))}
+
+          <StorageBar used={50} total={100} />
         </div>
       </div>
 
