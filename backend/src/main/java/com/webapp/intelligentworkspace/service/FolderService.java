@@ -26,6 +26,8 @@ public class FolderService {
     public RootFolderResponse getRootFolders(Long storageId){
         System.out.println(storageId);
         List<Folder> rootFolderList = folderRepository.findAllRootFolderById(storageId);
+        sortFolders(rootFolderList);
+        System.out.println(rootFolderList);
         System.out.println(rootFolderList);
         if(rootFolderList.isEmpty()){
             return RootFolderResponse.builder()
@@ -56,6 +58,7 @@ public class FolderService {
                     .build();
         }else {
             List<Folder> subFolders = folderRepository.findAllByParentFolderId(folderId);
+            sortFolders(subFolders);
             return FolderResponse.builder()
                     .folder(folder)
                     .storage(storage)
@@ -66,6 +69,7 @@ public class FolderService {
         }
     }
 
+    // Create folder
     public FolderResponse createFolder(Folder folder, Long parentId, Long storageId){
         Folder parentFolder= folderRepository.findById(parentId).orElse(null);
         Storage storage= storageRepository.findById(storageId).orElse(null);
@@ -80,19 +84,22 @@ public class FolderService {
             if(storage==null){
                 return FolderResponse.builder()
                         .folder(null)
-                        .storage(storage)
+                        .storage(null)
                         .message(" can not get the storage")
                         .status(" Failed")
                         .subFolders(null)
                         .build();
             }else {
+                Random random= new Random();
                 folder.setParentFolder(parentFolder);
                 folder.setStorage(storage);
-
+                folder.setId(random.nextLong(1,1000000));
                 folderRepository.save(folder);
+                parentFolder.addSubFolder(folder);
 
                 return FolderResponse.builder()
                         .folder(folder)
+                        .parentFolder(parentFolder)
                         .storage(storage)
                         .message("created successfully")
                         .status("Success")
@@ -114,10 +121,56 @@ public class FolderService {
             folder.setStorage(storage);
             System.out.println(folder);
             folderRepository.save(folder);
-            return  new FolderResponse( storage,folder,null,"success","CreateRootFolder success");
+            return  new FolderResponse( storage,folder,null,null,"success","CreateRootFolder success");
 
         }
+    }
 
+    // Patch : update name..... for root folder
+    public FolderResponse updateRootFolder(Long folderId, Long storageId, String folderName){
+        Storage storage=storageRepository.findById(storageId).orElse(null);
+        if( storage==null ){
+            System.out.println("Fail");
+            return FolderResponse.builder()
+                    .folder(null)
+                    .storage(null)
+                    .message(" Can not find storage")
+                    .status("Fail")
+                    .build();
+        }else{
+            Folder folder1= folderRepository.findById(folderId).orElse(null);
+            if(folder1==null){
+                return FolderResponse.builder()
+                        .folder(null)
+                        .storage(storage)
+                        .message(" Can not find root folder")
+                        .status("Fail")
+                        .build();
+            }else {
+                folder1.setName(folderName);
+                folderRepository.save(folder1);
+                return FolderResponse.builder()
+                        .folder(folder1)
+                        .subFolders(folder1.getSubFolders())
+                        .status("success")
+                        .storage(storage)
+                        .message("Successfully")
+                        .build();
+            }
+        }
+    }
+
+    // bubble sorting , maybe can modify and upgrade by using merge sorting
+    private void sortFolders(List<Folder> folders) {
+        for (int i = 0; i < folders.size(); i++) {
+            for (int j = i+1; j <folders.size()-1 ; j++) {
+                if(folders.get(i).getName().compareTo(folders.get(j).getName())>0 ){
+                    Folder temp= folders.get(i);
+                    folders.set(i,folders.get(j));
+                    folders.set(j,temp);
+                }
+            }
+        }
     }
 
 }

@@ -23,4 +23,13 @@ public class Storage {
     @JsonManagedReference
     @JsonIgnore
     private User user;
+
+    @Override
+    public String toString() {
+        return "Storage{" +
+                "id=" + id +
+                ", maxStorage=" + maxStorage +
+                ", currentStorage=" + currentStorage +
+                '}';
+    }
 }

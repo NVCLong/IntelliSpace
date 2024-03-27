@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -29,9 +30,31 @@ public class Folder {
 
     @ManyToOne
     @JoinColumn(name = "parrentFolder_id")
+    @JsonManagedReference
+    @JsonIgnore
     private Folder parentFolder;
 
     @OneToMany(mappedBy="parentFolder", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    @JsonIgnore
     private List<Folder> subFolders;
 
+
+    public void addSubFolder(Folder folder) {
+        if(subFolders==null){
+            subFolders= new ArrayList<>();
+            subFolders.add(folder);
+        }else {
+            subFolders.add(folder);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Folder{" +
+                "id=" + id +
+                ", isPublic=" + isPublic +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

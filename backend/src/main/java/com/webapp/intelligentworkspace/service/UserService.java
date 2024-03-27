@@ -87,7 +87,7 @@ public class UserService {
                     String accessToken = jwtService.generateAccessToken(user1);
                     String refreshToken = jwtService.generateRefreshToken(user1);
                     saveToken(accessToken, user1);
-                    return new AuthResponse("Login successfully hehe", accessToken, refreshToken);
+                    return new AuthResponse("Login successfully hehe", accessToken, refreshToken, user1,user1.getStorage().getId());
                 }
                 else {
                     return  new AuthResponse("Login failed");

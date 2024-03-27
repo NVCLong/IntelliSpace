@@ -11,19 +11,20 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Data
+@RequestMapping("/folder")
 public class FolderController {
 
     @Autowired
     FolderService folderService;
 
-    @PostMapping(value="/folder/root_folder/create/{storageId}", produces ="application/json", consumes = "application/json")
+    @PostMapping(value="/root_folder/create/{storageId}", produces ="application/json", consumes = "application/json")
     @ResponseBody
     public ResponseEntity<FolderResponse> createRootFolder(@PathVariable("storageId") Long storageId, @RequestBody Folder folder){
         System.out.println("Creating root folder");
         return ResponseEntity.ok(folderService.createRootFolder(folder,storageId));
     }
 
-    @GetMapping(value="/folder/rootFolders/{storageId}", produces="application/json")
+    @GetMapping(value="/rootFolders/{storageId}", produces="application/json")
     @ResponseBody
     public ResponseEntity<RootFolderResponse> getRootFolder(@PathVariable("storageId") Long storageId){
         System.out.println("Retrieving root storage");
@@ -31,4 +32,23 @@ public class FolderController {
 
     }
 
+    @PatchMapping(value = "/rootFolders/{storageId}/{folderId}", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<FolderResponse> updateRootFolders(@PathVariable("storageId") Long storageId, @PathVariable("folderId") Long folderId, @RequestBody String folderName){
+        System.out.println("Updating folder");
+        return ResponseEntity.ok(folderService.updateRootFolder(folderId,storageId,folderName));
+    }
+    @PostMapping(value="/create/folder/{storageId}/{parentFolderId}",produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<FolderResponse> createFolder(@PathVariable("parentFolderId") Long parentFolderId, @PathVariable("storageId") Long storageId,@RequestBody Folder folder){
+        System.out.println("Create FOLDER");
+        return  ResponseEntity.ok(folderService.createFolder(folder,parentFolderId,storageId));
+    }
+
+    @GetMapping(value="/getFolder/{storageId}", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<FolderResponse> getFolder(@PathVariable("storageId") Long storageId,@RequestParam("folderId") Long folderId){
+        System.out.println("Getting folder ");
+        return ResponseEntity.ok(folderService.getSubFolderById(folderId,storageId));
+    }
 }
