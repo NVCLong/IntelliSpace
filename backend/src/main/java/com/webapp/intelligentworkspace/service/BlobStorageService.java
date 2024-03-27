@@ -18,9 +18,12 @@ public class BlobStorageService {
     private final String connectionString = "";
     private final String containerName = "";
 
+    private BlobServiceClient getBlobServiceClient() {
+        return new BlobServiceClientBuilder().connectionString(connectionString).buildClient();
+    }
     public String upload(MultipartFile file) {
 
-        BlobServiceClient blobServiceClient = new BlobServiceClientBuilder().connectionString(connectionString).buildClient();
+        BlobServiceClient blobServiceClient = getBlobServiceClient();
         BlobContainerClient containerClient = blobServiceClient.getBlobContainerClient(containerName);
 
         try (InputStream inputStream = file.getInputStream()) {
@@ -36,7 +39,7 @@ public class BlobStorageService {
     }
 
     public void createContainer(String userId) {
-        BlobServiceClient blobServiceClient = new BlobServiceClientBuilder().connectionString(connectionString).buildClient();
+        BlobServiceClient blobServiceClient = getBlobServiceClient();
 
         String generalFilesContainerName = userId + "-general-files";
         blobServiceClient.createBlobContainer(generalFilesContainerName);
@@ -46,7 +49,7 @@ public class BlobStorageService {
     }
 
     public void deleteContainer(String userId) {
-        BlobServiceClient blobServiceClient = new BlobServiceClientBuilder().connectionString(connectionString).buildClient();
+        BlobServiceClient blobServiceClient = getBlobServiceClient();
 
         String generalFilesContainerName = userId + "-general-files";
         blobServiceClient.deleteBlobContainer(generalFilesContainerName);
@@ -57,7 +60,7 @@ public class BlobStorageService {
 
     public void createFolderInContainer(String userId, String folderName) {
 
-        BlobServiceClient blobServiceClient = new BlobServiceClientBuilder().connectionString(connectionString).buildClient();
+        BlobServiceClient blobServiceClient = getBlobServiceClient();
         BlobContainerClient containerClient = blobServiceClient.getBlobContainerClient(userId + "-general-files");
 
         BlobClient blobClient = containerClient.getBlobClient(folderName + "/New Folder");
@@ -71,7 +74,7 @@ public class BlobStorageService {
 
     public void deleteFolderInContainer(String userId, String folderName) {
 
-        BlobServiceClient blobServiceClient = new BlobServiceClientBuilder().connectionString(connectionString).buildClient();
+        BlobServiceClient blobServiceClient = getBlobServiceClient();
         BlobContainerClient containerClient = blobServiceClient.getBlobContainerClient(userId + "-general-files");
 
         containerClient.listBlobs().stream()
@@ -80,7 +83,7 @@ public class BlobStorageService {
     }
 
     public void listFilesInFolder(String userId, String folderName) {
-        BlobServiceClient blobServiceClient = new BlobServiceClientBuilder().connectionString(connectionString).buildClient();
+        BlobServiceClient blobServiceClient = getBlobServiceClient();
         BlobContainerClient containerClient = blobServiceClient.getBlobContainerClient(userId + "-general-files");
 
         containerClient.listBlobs().stream()
