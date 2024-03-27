@@ -10,7 +10,9 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Random;
 
 @Service
@@ -127,7 +129,7 @@ public class FolderService {
     }
 
     // Patch : update name..... for root folder
-    public FolderResponse updateRootFolder(Long folderId, Long storageId, String folderName){
+    public FolderResponse updateFolder(Long folderId, Long storageId, String folderName){
         Storage storage=storageRepository.findById(storageId).orElse(null);
         if( storage==null ){
             System.out.println("Fail");
@@ -155,6 +157,59 @@ public class FolderService {
                         .status("success")
                         .storage(storage)
                         .message("Successfully")
+                        .build();
+            }
+        }
+    }
+
+    // delete folder
+    // 1. Check STORAGE
+    // + if STORAGE == null then return
+    // + if STORAGE != null then check FOLDER
+    // 2. Check FOLDER
+    // + if FOLDER == null then return
+    // + if FOLDER != null then  check FOLDER.PARENT_FOLDER
+    // 3. Check PARENT_FOLDER
+    // + if PARENT_FOLDER == null then check FOLDER.SUB_FOLDER
+    // + if PARENT_FOLDER != null then check PARENT_FOLDER delete FOLDER from its SUB_FOLDER_LIST, after deletion check FOLDER.SUB_FOLDER
+    // 4. Check SUB_FOLDER
+    // + if SUB_FOLDER == null then delete FOLDER
+    // + if SUB_FOLDER != null then SUB_FOLDER : delete all FOLDER in SUB_FOLDER_LIST, after deletion delete FOLDER
+    public FolderResponse deleteFolder(Long folderId, Long storageId){
+        Storage storage= storageRepository.findById(storageId).orElse(null);
+        // Check Storage
+        if(storage==null){
+            return  FolderResponse.builder()
+                    .message("Failed to find storage")
+                    .status("fail")
+                    .build();
+        }else {
+            Folder folder= folderRepository.findById(folderId).orElse(null);
+            // Check Folder
+            if(folder==null){
+                return FolderResponse.builder()
+                        .storage(storage)
+                        .message("Failed to find folder")
+                        .status("fail")
+                        .build();
+            }else {
+                Queue<Folder> queue = new LinkedList<>();
+                queue.add(folder);
+                while (!queue.isEmpty()) {
+                    Folder currentFolder = queue.poll();
+                    Folder parentFolder = currentFolder.getParentFolder();
+                    if(parentFolder!=null){
+                        parentFolder.getSubFolders().remove(currentFolder);
+                    }
+                    List<Folder> subFolderList= folderRepository.findAllByParentFolderId(currentFolder.getId());
+                    queue.addAll(subFolderList);
+                    folderRepository.delete(currentFolder);
+                }
+                return FolderResponse.builder()
+                        .parentFolder(null)
+                        .storage(storage)
+                        .message("success to delete folder")
+                        .status("success")
                         .build();
             }
         }
