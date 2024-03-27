@@ -15,6 +15,12 @@ const Dashboardlayout = ({ children }: { children: React.ReactNode }) => {
   const folders = [
     { id: '1', name: 'Folder 1' },
     { id: '2', name: 'Folder 2' },
+    { id: '1', name: 'Folder 1' },
+    { id: '2', name: 'Folder 2' },
+    { id: '1', name: 'Folder 1' },
+    { id: '2', name: 'Folder 2' },
+    { id: '2', name: 'Folder 2' },
+
   ];
 
   return (

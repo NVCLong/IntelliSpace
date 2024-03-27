@@ -10,10 +10,10 @@ const StorageBar: React.FC<StorageBarProps> = ({ used, total }) => {
 
     return (
         <div className="relative pt-1">
-            <div className="flex h-2 mb-4 overflow-hidden text-xs bg-gray-200 rounded">
-                <div style={{ width: `${percentage}%` }} className="flex flex-col justify-center text-center text-white bg-purple-500 shadow-none whitespace-nowrap"></div>
+            <div className="flex h-2 mb-4 overflow-hidden text-xs bg-white rounded">
+                <div style={{ width: `${percentage}%` }} className="flex flex-col justify-center text-center text-white bg-pink-500 shadow-none whitespace-nowrap"></div>
             </div>
-            <p>{`Used ${used}GB of ${total}GB`}</p>
+            <p className='sm:hidden'>{`Used ${used}GB of ${total}GB`}</p>
         </div>
     );
 };

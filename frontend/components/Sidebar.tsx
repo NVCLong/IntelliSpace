@@ -65,7 +65,10 @@ const Sidebar: React.FC = () => {
             </div>
           ))}
 
-          <StorageBar used={50} total={100} />
+          <div className={`${!open && "w-full"
+            } duration-200 `}>
+            <StorageBar used={20} total={100} />
+          </div>
         </div>
       </div>
 

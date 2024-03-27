@@ -12,10 +12,10 @@ interface FolderListProps {
 
 const FolderList: React.FC<FolderListProps> = ({ folders }) => {
     return (
-        <div className="space-y-4">
+        <div className="pl-20 space-y-4 pt-28">
             {folders.map((folder) => (
-                <div key={folder.id} className="flex items-center p-4 border rounded-md">
-                    <MdFolder size={24} />
+                <div key={folder.id} className="flex items-center p-4 border rounded-md shadow-md cursor-pointer hoverScale">
+                    <MdFolder className="text-pink-200 " size={24} />
                     <span className="ml-4">{folder.name}</span>
                 </div>
             ))}
