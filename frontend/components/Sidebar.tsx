@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { FiHome, FiFolder, FiUsers, FiStar, FiInbox, FiTrash2 } from "react-icons/fi";
+import { FiHome, FiFolder, FiUsers, FiList, FiCodesandbox, FiTrash2 } from "react-icons/fi";
 import StorageBar from './StorageBar';
 
 const Sidebar: React.FC = () => {
@@ -10,8 +10,8 @@ const Sidebar: React.FC = () => {
     { name: 'Home', path: '/', icon: FiHome },
     { name: 'Files', path: '/drive', icon: FiFolder },
     { name: 'Shared', path: '/shared', icon: FiUsers },
-    { name: 'Starred', path: '/starred', icon: FiStar },
-    { name: 'Spam', path: '/spam', icon: FiInbox },
+    { name: 'Notes', path: '/note', icon: FiList },
+    { name: 'IntelliBot', path: '/intelliBot', icon: FiCodesandbox },
     { name: 'Bin', path: '/bin', icon: FiTrash2 },
   ];
   const [open, setOpen] = useState(false);
