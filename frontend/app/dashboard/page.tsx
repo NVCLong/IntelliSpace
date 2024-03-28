@@ -1,15 +1,26 @@
-import Link from "next/link";
-import Image from "next/image";
+"use client"
+import { FiFolderPlus } from "react-icons/fi";
 
 export default function Page() {
+  const handleNewFolder = () => {
+    return () => {
+      console.log("Creating new folder");
+    };
+  };
+
   return (
     <>
-      <div>
-        <div className="relative pl-0 mt-10 ml-0">
-          <Link href="/" >
-            <Image src="/IntelliSpace.png" alt="logo" width={30} height={30} className="w-8 h-8 ml-3 cursor-pointer" />
-          </Link>
+      <div className="">
+        <div className="mt-10 -ml-36 ">
+          <button
+            className="flex items-center px-4 py-2 text-gray-600 bg-white border rounded-full shadow-md cursor-pointer hoverScale"
+            onClick={handleNewFolder()}
+          >
+            <FiFolderPlus size={24} />
+            <span className="ml-4 font-semibold">Create folder</span>
+          </button>
         </div>
+
       </div>
     </>
   )

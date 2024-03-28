@@ -12,7 +12,7 @@ interface FolderListProps {
 
 const FolderList: React.FC<FolderListProps> = ({ folders }) => {
     return (
-        <div className="pl-20 space-y-4 pt-28">
+        <div className="pl-16 space-y-4 pt-28">
             {folders.map((folder) => (
                 <div key={folder.id} className="flex items-center p-4 bg-white border rounded-md shadow-md cursor-pointer hoverScale">
                     <MdFolder className="text-blue-400" size={24} />
