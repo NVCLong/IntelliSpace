@@ -40,6 +40,15 @@ public class Folder {
     private List<Folder> subFolders;
 
 
+    // many many
+    // spring open ai
+    // files
+
+
+
+
+
+
     public void addSubFolder(Folder folder) {
         if(subFolders==null){
             subFolders= new ArrayList<>();
