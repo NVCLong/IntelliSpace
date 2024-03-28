@@ -20,7 +20,7 @@ public class AuthController {
         return ResponseEntity.ok(userService.createUser(user));
     }
 
-    @PostMapping("/auth/login")
+    @PostMapping(value = "/auth/login", produces = "application/json")
     @ResponseBody
     public ResponseEntity<AuthResponse> login(@RequestBody User user) {
         System.out.println(user);

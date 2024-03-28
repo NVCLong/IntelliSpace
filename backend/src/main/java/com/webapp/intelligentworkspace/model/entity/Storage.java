@@ -1,5 +1,7 @@
 package com.webapp.intelligentworkspace.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -18,5 +20,16 @@ public class Storage {
     private float currentStorage;
 
     @OneToOne(mappedBy = "storage")
+    @JsonManagedReference
+    @JsonIgnore
     private User user;
+
+    @Override
+    public String toString() {
+        return "Storage{" +
+                "id=" + id +
+                ", maxStorage=" + maxStorage +
+                ", currentStorage=" + currentStorage +
+                '}';
+    }
 }
