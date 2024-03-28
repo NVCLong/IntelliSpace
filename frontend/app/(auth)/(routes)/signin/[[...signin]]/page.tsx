@@ -18,7 +18,7 @@ import { SiGithub } from "react-icons/si";
 import Link from "next/link";
 import axios from "axios";
 import { motion } from "framer-motion";
-import { useSession, signIn, signOut } from 'next-auth/react';
+
 
 
 const signInSchema = z.object({
@@ -34,7 +34,6 @@ const Page = () => {
       password: "",
     },
   });
-  const { data, status } = useSession();
 
   async function onSubmit(values: z.infer<typeof signInSchema>) {
     const response = await axios.post(
@@ -70,12 +69,7 @@ const Page = () => {
             <h3 className="text-2xl font-semibold text-center">Sign in</h3>
             <div className="socialRegisterOptions drop-shadow-md ">
               <Button className="socialFormBtn hoverScale">
-                <FcGoogle className="w-10 h-10" onClick={() => {
-                  signIn('google')
-                  console.log(data?.user?.email);
-                  }
-                }
-                  />
+                <FcGoogle className="w-10 h-10"/>
               </Button>
               <Button className="socialFormBtn hoverScale">
                 <SiGithub  className="w-10 h-10"/>
