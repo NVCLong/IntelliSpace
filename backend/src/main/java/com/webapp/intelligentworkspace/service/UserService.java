@@ -127,6 +127,51 @@ public class UserService {
         }
     }
 
+    public AuthResponse loginWithOauth(String email, String name){
+        User user= userRepository.findUserByUsername(name).orElse(null);
+        if( user == null ){
+            return registerWithOauth(email, name);
+        }else{
+            System.out.println("Login with OAuth");
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            name,
+                            name
+                    )
+            );
+            System.out.println(user);
+            User user1= userRepository.findUserByUsername(user.getUsername()).orElse(null);
+            System.out.println(user1);
+            if(user1 != null) {
+                String accessToken = jwtService.generateAccessToken(user1);
+                String refreshToken = jwtService.generateRefreshToken(user1);
+                saveToken(accessToken, user1);
+                return new AuthResponse("Login successfully hehe", accessToken, refreshToken, user1,user1.getStorage().getId());
+            }
+            else {
+                return  new AuthResponse("Login failed");
+            }
+        }
+    }
+
+    private AuthResponse registerWithOauth(String email, String name){
+        User newUser = new User();
+        Random random = new Random();
+        newUser.setId(random.nextInt(0,100000000));
+        newUser.setUsername(name);
+        newUser.setPassword(passwordEncoder.encode(name));
+        newUser.setEmail(email);
+        Storage storage= new Storage();
+        storage.setCurrentStorage(0);
+        storageRepository.save(storage);
+        newUser.setStorage(storage);
+        userRepository.save(newUser);
+        String token= jwtService.generateAccessToken(newUser);
+        saveToken(token,newUser);
+        String refreshToken= jwtService.generateAccessToken(newUser);
+        return  new AuthResponse("Login Success",token,refreshToken,newUser, newUser.getStorage().getId());
+    }
+
     public AuthResponse refreshAccessToken(String refreshToken, User user) {
         String token=jwtService.refreshAccessToken(refreshToken, user);
         return new AuthResponse("This is new accessToken",null, token);

@@ -33,5 +33,12 @@ public class AuthController {
         return ResponseEntity.ok(userService.refreshAccessToken(refreshToken, user));
     }
 
+    @GetMapping("/auth/oauth2/login")
+    @ResponseBody
+    public ResponseEntity<AuthResponse> signInWithOauth2(@RequestParam("name") String name, @RequestParam("email") String email ){
+        System.out.println("Login with oauth2");
+        return ResponseEntity.ok(userService.loginWithOauth(email,name));
+    }
+
 
 }
