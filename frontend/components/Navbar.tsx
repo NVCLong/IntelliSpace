@@ -31,9 +31,8 @@ const Navbar = () => {
       </Link>
 
       <div
-        className={`absolute right-5 mt-36 transform translate-x-2 lg:hidden ${
-          isMenuOpen ? "block" : "hidden"
-        }`}
+        className={`absolute right-5 mt-36 transform translate-x-2 lg:hidden ${isMenuOpen ? "block" : "hidden"
+          }`}
       >
         <ul className="flex flex-col items-center p-4 mt-24 text-black bg-white rounded-md shadow-lg">
           {NAV_LINKS.map((link) => (
@@ -54,7 +53,7 @@ const Navbar = () => {
           <li key={link.key}>
             <Link
               href={link.href}
-              className="font-medium ml-10 px-6 py-2 rounded-full text-xl text-neutral-600 flexCenter cursor-pointer pb-1.5 transition hover:text-gray-900 hover:shadow-lg hoverScale"
+              className="relative font-semibold ml-10 px-6 py-2 rounded-md text-xl text-neutral-600 flex cursor-pointer pb-1.5 transition hover:text-gray-900 duration-200 after:block after:content-[''] after:absolute after:h-[3px] after:bg-gray-900 after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-200 after:origin-center"
             >
               {link.label}
             </Link>
