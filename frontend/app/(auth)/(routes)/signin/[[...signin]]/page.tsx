@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import * as z from "zod";
 import { Button } from "@/components/auth_ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,6 +19,10 @@ import Link from "next/link";
 import axios from "axios";
 import { motion } from "framer-motion";
 
+import {GoogleLogin, GoogleOAuthProvider, useGoogleLogin} from "@react-oauth/google";
+import {jwtDecode} from "jwt-decode";
+import {CustomButton} from "@/app/(auth)/(routes)/signin/[[...signin]]/CustomButton";
+
 
 
 const signInSchema = z.object({
@@ -34,6 +38,10 @@ const Page = () => {
       password: "",
     },
   });
+  const [trigger, setTrigger]= useState(false)
+  // const { triggerGoogleLogin } = useContext(GoogleLoginContext);\
+  const loginRef = useRef();
+
 
   async function onSubmit(values: z.infer<typeof signInSchema>) {
     const response = await axios.post(
@@ -68,9 +76,9 @@ const Page = () => {
           <div className="right">
             <h3 className="text-2xl font-semibold text-center">Sign in</h3>
             <div className="socialRegisterOptions drop-shadow-md ">
-              <Button className="socialFormBtn hoverScale">
-                <FcGoogle className="w-10 h-10"/>
-              </Button>
+              <GoogleOAuthProvider clientId="470811894525-o22pdoqo14q0f6r91140rno6grdr5eqs.apps.googleusercontent.com">
+                <CustomButton/>
+              </GoogleOAuthProvider>
               <Button className="socialFormBtn hoverScale">
                 <SiGithub  className="w-10 h-10"/>
               </Button>
@@ -122,5 +130,7 @@ const Page = () => {
     </>
   );
 };
+
+
 
 export default Page;
