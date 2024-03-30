@@ -38,9 +38,7 @@ const Page = () => {
       password: "",
     },
   });
-  const [trigger, setTrigger]= useState(false)
-  // const { triggerGoogleLogin } = useContext(GoogleLoginContext);\
-  const loginRef = useRef();
+
 
 
   async function onSubmit(values: z.infer<typeof signInSchema>) {
@@ -76,9 +74,9 @@ const Page = () => {
           <div className="right">
             <h3 className="text-2xl font-semibold text-center">Sign in</h3>
             <div className="socialRegisterOptions drop-shadow-md ">
-              <Button className="socialFormBtn hoverScale">
-                <FcGoogle className="w-10 h-10" />
-              </Button>
+              <GoogleOAuthProvider clientId="470811894525-o22pdoqo14q0f6r91140rno6grdr5eqs.apps.googleusercontent.com">
+                <CustomButton/>
+              </GoogleOAuthProvider>
               <Button className="socialFormBtn hoverScale">
                 <SiGithub  className="w-10 h-10" />
               </Button>
