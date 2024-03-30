@@ -25,8 +25,9 @@ const Dashboardlayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className="flex">
-      <NextTopLoader color="#000" showSpinner={false} />
+      <NextTopLoader color="#BF40BF" showSpinner={false} easing="ease" />
       <Sidebar />
+
       <FolderList folders={folders} />
       {children}
     </div>

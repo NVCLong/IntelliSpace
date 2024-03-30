@@ -11,8 +11,8 @@ export const metadata: Metadata = {
 const RegisterLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
+      <NextTopLoader color="#BF40BF" showSpinner={false} easing="ease" />
       <Navbar />
-      <NextTopLoader color="#000" showSpinner={false} />
       {children}
       <Footer />
     </>

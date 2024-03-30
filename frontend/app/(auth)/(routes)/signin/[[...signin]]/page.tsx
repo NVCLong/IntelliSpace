@@ -1,5 +1,5 @@
 "use client";
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React from "react";
 import * as z from "zod";
 import { Button } from "@/components/auth_ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -55,14 +55,14 @@ const Page = () => {
   return (
     <>
       <motion.div
-      initial={{ opacity: 0, scale: 0.5 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{
-        duration: 1,
-        delay: 0.5,
-        ease: [0, 0.71, 0.2, 1.01]
-      }}
-       className="registerWrapper drop-shadow-md">
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{
+          duration: 1,
+          delay: 0.5,
+          ease: [0, 0.71, 0.2, 1.01]
+        }}
+        className="registerWrapper drop-shadow-md">
         <div className="formWrapper">
           <div className="left">
             <h3 className="title">Hello, friends!</h3>
@@ -76,11 +76,11 @@ const Page = () => {
           <div className="right">
             <h3 className="text-2xl font-semibold text-center">Sign in</h3>
             <div className="socialRegisterOptions drop-shadow-md ">
-              <GoogleOAuthProvider clientId="470811894525-o22pdoqo14q0f6r91140rno6grdr5eqs.apps.googleusercontent.com">
-                <CustomButton/>
-              </GoogleOAuthProvider>
               <Button className="socialFormBtn hoverScale">
-                <SiGithub  className="w-10 h-10"/>
+                <FcGoogle className="w-10 h-10" />
+              </Button>
+              <Button className="socialFormBtn hoverScale">
+                <SiGithub  className="w-10 h-10" />
               </Button>
             </div>
             <p className="text-center">or use this option</p>
@@ -130,7 +130,5 @@ const Page = () => {
     </>
   );
 };
-
-
 
 export default Page;

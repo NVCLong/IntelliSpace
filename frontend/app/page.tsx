@@ -4,13 +4,14 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import NextTopLoader from "nextjs-toploader";
 
 
 export default function Home() {
   return (
     <div>
+      <NextTopLoader color="#BF40BF" showSpinner={false} easing="ease" />
       <Navbar />
-
       <motion.div
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
