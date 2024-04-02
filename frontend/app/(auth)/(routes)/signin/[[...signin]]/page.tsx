@@ -74,7 +74,7 @@ const Page = () => {
           <div className="right">
             <h3 className="text-2xl font-semibold text-center">Sign in</h3>
             <div className="socialRegisterOptions drop-shadow-md ">
-              <GoogleOAuthProvider clientId="470811894525-o22pdoqo14q0f6r91140rno6grdr5eqs.apps.googleusercontent.com">
+              <GoogleOAuthProvider clientId="221707522416-c5ac904abilmbldbpq7m75t0kpekigjm.apps.googleusercontent.com">
                 <CustomButton/>
               </GoogleOAuthProvider>
               <Button className="socialFormBtn hoverScale">

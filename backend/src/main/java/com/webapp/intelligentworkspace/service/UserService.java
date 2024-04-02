@@ -106,6 +106,7 @@ public class UserService {
         Token existingToken= tokenRepository.findByUser(user).orElse(null);
         if(existingToken!= null){
             existingToken.setToken(token);
+            existingToken.setLogout(false);
             tokenRepository.save(existingToken);
             return;
         }else {
@@ -119,13 +120,6 @@ public class UserService {
         }
     }
 
-    public void setLogoutToken(User user){
-        Token existing = tokenRepository.findByUser(user).orElse(null);
-        if(existing != null){
-            existing.setLogout(true);
-            tokenRepository.save(existing);
-        }
-    }
 
     public AuthResponse loginWithOauth(String email, String name){
         User user= userRepository.findUserByUsername(name).orElse(null);
@@ -172,8 +166,30 @@ public class UserService {
         return  new AuthResponse("Login Success",token,refreshToken,newUser, newUser.getStorage().getId());
     }
 
-    public AuthResponse refreshAccessToken(String refreshToken, User user) {
+    public AuthResponse refreshAccessToken(String refreshToken, Integer userId) {
+        User user= userRepository.findUserById(userId).orElse(null);
+        if(user==null){
+            return new AuthResponse("Not found user", null, null);
+        }
         String token=jwtService.refreshAccessToken(refreshToken, user);
-        return new AuthResponse("This is new accessToken",null, token);
+        saveToken(token, user);
+        return new AuthResponse("This is new accessToken",token,null );
+    }
+
+    public void logOut(Integer userId){
+        User user= userRepository.findUserById(userId).orElse(null);
+        if(user==null){
+            System.out.println("Do not have user");
+            return;
+        }else {
+            Token token = tokenRepository.findByUser(user).orElse(null);
+            if(token!=null){
+                token.setLogout(true);
+                tokenRepository.save(token);
+            }else {
+                System.out.println("Can not have the token");
+                return;
+            }
+        }
     }
 }
