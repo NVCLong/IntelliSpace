@@ -17,8 +17,13 @@ public class BlobStorageController {
     }
 
     @PostMapping("/upload")
-    public String uploadFile(@RequestParam("file") MultipartFile file) {
-        return blobStorageService.upload(file);
+    public String uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("userId") String userId) {
+        return blobStorageService.upload(file, userId);
+    }
+
+    @PostMapping("/delete")
+    public String deleteFile(@RequestParam("userId") String userId, @RequestParam("fileName") String fileName) {
+        return blobStorageService.delete(userId, fileName);
     }
 
     @PostMapping("/createContainer")
@@ -43,7 +48,7 @@ public class BlobStorageController {
 
     @PostMapping("/listFiles")
     public void listFiles(@RequestParam("userId") String userId, @RequestParam("folderName") String folderName) {
-        blobStorageService.listFilesInFolder(userId, folderName);
+        blobStorageService.listFilesInFolder(userId);
     }
 
 }
