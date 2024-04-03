@@ -19,6 +19,12 @@ import Link from "next/link";
 import axios from "axios";
 import { motion } from "framer-motion";
 
+import {GoogleLogin, GoogleOAuthProvider, useGoogleLogin} from "@react-oauth/google";
+import {jwtDecode} from "jwt-decode";
+import {CustomButton} from "@/app/(auth)/(routes)/signin/[[...signin]]/CustomButton";
+
+
+
 const signInSchema = z.object({
   username: z.string(),
   password: z.string().min(6, "Password should have at least 6 characters."),
@@ -32,6 +38,8 @@ const Page = () => {
       password: "",
     },
   });
+
+
 
   async function onSubmit(values: z.infer<typeof signInSchema>) {
     const response = await axios.post(
@@ -66,11 +74,11 @@ const Page = () => {
           <div className="right">
             <h3 className="text-2xl font-semibold text-center">Sign in</h3>
             <div className="socialRegisterOptions drop-shadow-md ">
+              <GoogleOAuthProvider clientId="221707522416-c5ac904abilmbldbpq7m75t0kpekigjm.apps.googleusercontent.com">
+                <CustomButton/>
+              </GoogleOAuthProvider>
               <Button className="socialFormBtn hoverScale">
-                <FcGoogle className="w-10 h-10" />
-              </Button>
-              <Button className="socialFormBtn hoverScale">
-                <SiGithub className="w-10 h-10" />
+                <SiGithub  className="w-10 h-10" />
               </Button>
             </div>
             <p className="text-center">or use this option</p>

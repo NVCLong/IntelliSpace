@@ -27,10 +27,25 @@ public class AuthController {
         return ResponseEntity.ok(userService.login(user));
     }
 
-    @PostMapping("/auth/refreshAccessToken")
+    @GetMapping("/auth/oauth2/login")
     @ResponseBody
-    public ResponseEntity<AuthResponse> refreshAccessToken(@RequestBody User user, String refreshToken) {
-        return ResponseEntity.ok(userService.refreshAccessToken(refreshToken, user));
+    public ResponseEntity<AuthResponse> signInWithOauth2(@RequestParam("name") String name, @RequestParam("email") String email ){
+        System.out.println("Login with oauth2");
+        return ResponseEntity.ok(userService.loginWithOauth(email,name));
+    }
+
+    @GetMapping("/auth/logout/{userId}")
+    @ResponseBody
+    public ResponseEntity<String> logout(@PathVariable("userId") Integer userId){
+        userService.logOut(userId);
+        return ResponseEntity.ok("Log out Successfully");
+    }
+
+    @GetMapping("/auth/newAccessToken")
+    @ResponseBody
+    public ResponseEntity<AuthResponse> newAccessToken(@RequestParam("userId") Integer userId, @RequestParam("refreshToken") String refreshToken){
+        System.out.println(refreshToken);
+        return  ResponseEntity.ok(userService.refreshAccessToken(refreshToken, userId));
     }
 
 

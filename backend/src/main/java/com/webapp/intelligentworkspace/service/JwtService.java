@@ -1,6 +1,8 @@
 package com.webapp.intelligentworkspace.service;
 
+import com.webapp.intelligentworkspace.model.entity.Token;
 import com.webapp.intelligentworkspace.model.entity.User;
+import com.webapp.intelligentworkspace.repository.TokenRepository;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,8 +18,12 @@ import java.util.function.Function;
 
 public class JwtService {
     private final String secretKey="f241085f6e34a99c4da1501d55025d8a7d06b1eaababb3531220aff24c211693";
+    private TokenRepository tokenRepository;
 
 
+    public JwtService(TokenRepository tokenRepository) {
+        this.tokenRepository = tokenRepository;
+    }
 
     // get all claims in the token
     public <T> T extractClaim(String token, Function<Claims, T> resolver){
@@ -35,8 +41,9 @@ public class JwtService {
 
     // check the token is Valid
     public boolean isValid(String token, UserDetails user){
+        Token token1= tokenRepository.findByToken(token).orElse(null);
         String username= extractUsername( token);
-        return username.equals(user.getUsername())&!isExpired(token);
+        return username.equals(user.getUsername())&!isExpired(token)&& !token1.isLogout;
     }
 
 

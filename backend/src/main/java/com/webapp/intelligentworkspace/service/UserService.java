@@ -106,6 +106,7 @@ public class UserService {
         Token existingToken= tokenRepository.findByUser(user).orElse(null);
         if(existingToken!= null){
             existingToken.setToken(token);
+            existingToken.setLogout(false);
             tokenRepository.save(existingToken);
             return;
         }else {
@@ -119,16 +120,76 @@ public class UserService {
         }
     }
 
-    public void setLogoutToken(User user){
-        Token existing = tokenRepository.findByUser(user).orElse(null);
-        if(existing != null){
-            existing.setLogout(true);
-            tokenRepository.save(existing);
+
+    public AuthResponse loginWithOauth(String email, String name){
+        User user= userRepository.findUserByUsername(name).orElse(null);
+        if( user == null ){
+            return registerWithOauth(email, name);
+        }else{
+            System.out.println("Login with OAuth");
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            name,
+                            name
+                    )
+            );
+            System.out.println(user);
+            User user1= userRepository.findUserByUsername(user.getUsername()).orElse(null);
+            System.out.println(user1);
+            if(user1 != null) {
+                String accessToken = jwtService.generateAccessToken(user1);
+                String refreshToken = jwtService.generateRefreshToken(user1);
+                saveToken(accessToken, user1);
+                return new AuthResponse("Login successfully hehe", accessToken, refreshToken, user1,user1.getStorage().getId());
+            }
+            else {
+                return  new AuthResponse("Login failed");
+            }
         }
     }
 
-    public AuthResponse refreshAccessToken(String refreshToken, User user) {
+    private AuthResponse registerWithOauth(String email, String name){
+        User newUser = new User();
+        Random random = new Random();
+        newUser.setId(random.nextInt(0,100000000));
+        newUser.setUsername(name);
+        newUser.setPassword(passwordEncoder.encode(name));
+        newUser.setEmail(email);
+        Storage storage= new Storage();
+        storage.setCurrentStorage(0);
+        storageRepository.save(storage);
+        newUser.setStorage(storage);
+        userRepository.save(newUser);
+        String token= jwtService.generateAccessToken(newUser);
+        saveToken(token,newUser);
+        String refreshToken= jwtService.generateAccessToken(newUser);
+        return  new AuthResponse("Login Success",token,refreshToken,newUser, newUser.getStorage().getId());
+    }
+
+    public AuthResponse refreshAccessToken(String refreshToken, Integer userId) {
+        User user= userRepository.findUserById(userId).orElse(null);
+        if(user==null){
+            return new AuthResponse("Not found user", null, null);
+        }
         String token=jwtService.refreshAccessToken(refreshToken, user);
-        return new AuthResponse("This is new accessToken",null, token);
+        saveToken(token, user);
+        return new AuthResponse("This is new accessToken",token,null );
+    }
+
+    public void logOut(Integer userId){
+        User user= userRepository.findUserById(userId).orElse(null);
+        if(user==null){
+            System.out.println("Do not have user");
+            return;
+        }else {
+            Token token = tokenRepository.findByUser(user).orElse(null);
+            if(token!=null){
+                token.setLogout(true);
+                tokenRepository.save(token);
+            }else {
+                System.out.println("Can not have the token");
+                return;
+            }
+        }
     }
 }
