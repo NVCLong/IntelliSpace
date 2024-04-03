@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/IntelliSpace.iml" filepath="$PROJECT_DIR$/.idea/IntelliSpace.iml" />
-      <module fileurl="file://$PROJECT_DIR$/backend/IntelligentWorkSpace.iml" filepath="$PROJECT_DIR$/backend/IntelligentWorkSpace.iml" />
     </modules>
   </component>
 </project>
