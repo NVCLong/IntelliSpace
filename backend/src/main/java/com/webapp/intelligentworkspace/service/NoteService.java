@@ -64,4 +64,29 @@ public class NoteService {
             return note;
         }
     }
+
+    public Note updateNote(Long noteId, Note updatedNote){
+        Note note= noteRepository.findById(noteId).orElse(null);
+        if( note== null){
+            // case do not find note
+            return null;
+        }else{
+            note.setContent(updatedNote.getContent());
+            return noteRepository.save(note);
+        }
+    }
+
+    public void deleteNote(Long noteId){
+        noteRepository.deleteById(noteId);
+    }
+
+    public Note sumarizeNote(Long noteId){
+        Note note= noteRepository.findById(noteId).orElse(null);
+        if( note == null){
+            return null;
+        }
+        //
+
+        return  note;
+    }
 }
