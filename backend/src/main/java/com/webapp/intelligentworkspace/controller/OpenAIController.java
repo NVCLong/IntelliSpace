@@ -1,7 +1,7 @@
 package com.webapp.intelligentworkspace.controller;
 
 
-import com.webapp.intelligentworkspace.model.openai.ChatRequest;
+import com.webapp.intelligentworkspace.model.request.ChatRequest;
 import com.webapp.intelligentworkspace.service.OpenAIService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,4 +1,4 @@
-package com.webapp.intelligentworkspace.model.openai;
+package com.webapp.intelligentworkspace.model.response;
 
 import lombok.Data;
 
