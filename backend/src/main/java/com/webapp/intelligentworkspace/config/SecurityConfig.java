@@ -39,10 +39,10 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
 //                .oauth2Login(withDefaults())
                 .userDetailsService(customerService)
-                .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/auth/**").permitAll();
-                    auth.anyRequest().authenticated();
-                })
+//                .authorizeHttpRequests(auth -> {
+//                    auth.requestMatchers("/auth/**").permitAll();
+//                    auth.anyRequest().authenticated();
+//                })
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(e -> e.accessDeniedHandler(
