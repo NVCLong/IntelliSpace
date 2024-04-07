@@ -1,23 +1,26 @@
-import {useGoogleLogin} from "@react-oauth/google";
-import {Button} from "@/components/auth_ui/button";
-import {FcGoogle} from "react-icons/fc";
-import React, {useState} from "react";
+import { useGoogleLogin } from "@react-oauth/google";
+import { Button } from "@/components/auth_ui/button";
+import { FcGoogle } from "react-icons/fc";
+import React from "react";
 import axios from "axios";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 
 
-export  const CustomButton= ()=>{
+export const CustomButton = () => {
     const router = useRouter();
-    const login= useGoogleLogin({
-        onSuccess:async codeResponse => {
+    const login = useGoogleLogin({
+        onSuccess: async codeResponse => {
             console.log(codeResponse)
-            const response= await axios.get(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${codeResponse.access_token}`)
+            const response = await axios.get(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${codeResponse.access_token}`)
             console.log(response.data)
             const loginResponse = await axios.get(`http://localhost:8888/api/auth/oauth2/login?name=${response.data.family_name}&email=${response.data.email}`);
             console.log(loginResponse.data)
             localStorage.setItem("access_token", loginResponse.data.accessToken);
             document.cookie = `refreshToken=${loginResponse.data.refreshToken}`;
-            router.push("/dashboard")
+            localStorage.setItem("userId", loginResponse.data.user.id);
+            router.push("/dashboard", {
+
+            })
         },
         prompt: "select_account",
         onError: () => {
@@ -25,8 +28,8 @@ export  const CustomButton= ()=>{
         }
     })
 
-    return(
-        <Button className="socialFormBtn hoverScale" onClick={()=>{
+    return (
+        <Button className="socialFormBtn hoverScale" onClick={() => {
             login();
         }}>
             <FcGoogle className="w-10 h-10" />
