@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 
 const Sidebar: React.FC = () => {
   const router = useRouter();
-  const clearCookies = () => document.cookie.split(';').forEach(c => document.cookie = c.replace(/^ +/, '').replace(/=.*/, `=;expires=${new Date().toUTCString()};path=/`));
+  const clearCookies = () => document.cookie.split(';').forEach(c => document.cookie = c.replace(/^ +/, '').replace(/=.*/, `=;expires=${new Date().toUTCString()}; path=/`));
   const handleLogout = async () => {
     const userId = localStorage.getItem('userId')
     console.log(userId)
@@ -37,6 +37,7 @@ const Sidebar: React.FC = () => {
       }
     }
   ];
+
   const [open, setOpen] = useState(false);
 
   return (
@@ -66,9 +67,8 @@ const Sidebar: React.FC = () => {
 
         <div className="p-4 space-y-2 overflow-hidden">
           {navItems.map((item, index) => (
-            <Link href={item.path}>
+            <Link key={index} href={item.path}>
               <div
-                key={index}
                 className="flex items-center p-4 mt-8 transition duration-100 ease-linear transform rounded-lg cursor-pointer focus:bg-slate-50 focus:outline-none active:bg-slate-50 hover:text-white focus:bg-white/10 active:bg-white/10 w-fit"
               >
                 <div
@@ -86,8 +86,8 @@ const Sidebar: React.FC = () => {
                 </span>
               </div>
             </Link>
-
           ))}
+
 
           <div className={`${!open && "w-full"
             } duration-200 `}>
