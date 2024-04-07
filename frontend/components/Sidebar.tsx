@@ -69,7 +69,7 @@ const Sidebar: React.FC = () => {
           {navItems.map((item, index) => (
             <Link key={index} href={item.path}>
               <div
-                className="flex items-center p-4 mt-8 transition duration-100 ease-linear transform rounded-lg cursor-pointer focus:bg-slate-50 focus:outline-none active:bg-slate-50 hover:text-white focus:bg-white/10 active:bg-white/10 w-fit"
+                className="flex items-center p-4 mt-2.5 transition duration-100 ease-linear transform rounded-lg cursor-pointer focus:bg-slate-50 focus:outline-none active:bg-slate-50 hover:text-white focus:bg-white/10 active:bg-white/10 w-fit "
               >
                 <div
                   className={`${!open ? "w-full flex justify-center" : ""
@@ -80,7 +80,7 @@ const Sidebar: React.FC = () => {
                 </div>
                 <span
                   className={`${!open && "hidden"
-                    } relative pl-3 duration-200 after:block after:content-[''] after:absolute after:h-[3px] after:bg-purple-400 after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-200 after:origin-center`}
+                    } relative pl-3 font-semibold duration-100 after:block after:content-[''] after:absolute after:h-[3px] after:bg-purple-400 after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-200 after:origin-center`}
                 >
                   {item.name}
                 </span>
@@ -88,10 +88,9 @@ const Sidebar: React.FC = () => {
             </Link>
           ))}
 
-
-          <div className={`${!open && "w-full"
-            } duration-200 `}>
-            <StorageBar used={20} total={100} />
+          <div className={`${!open && "w-full "
+            } duration-200`}>
+            <StorageBar used={20} total={100} open={open} />
           </div>
         </div>
       </div>
