@@ -49,6 +49,13 @@ const Page = () => {
     localStorage.setItem("userId", response.data.user.id);
     console.log(response.data);
   }
+
+  const ResponseFolder = await axios.post("http://localhost:8888/api/folder/rootFolders/{storageId}"
+  );
+  localStorage.setItem("storageId", ResponseFolder.data.storageId);
+
+
+
   return (
     <>
       <motion.div

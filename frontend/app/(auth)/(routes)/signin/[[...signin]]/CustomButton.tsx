@@ -18,6 +18,9 @@ export const CustomButton = () => {
             localStorage.setItem("access_token", loginResponse.data.accessToken);
             document.cookie = `refreshToken=${loginResponse.data.refreshToken}`;
             localStorage.setItem("userId", loginResponse.data.user.id);
+
+
+
             router.push("/dashboard", {
 
             })
