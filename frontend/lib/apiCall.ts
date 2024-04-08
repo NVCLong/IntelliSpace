@@ -27,3 +27,16 @@ export const getHeader=async ()=>{
         "Content-Type": "application/json"
     }
 }
+
+export const getRootFolder=async ()=>{
+    // @ts-ignore
+    let header= await  getHeader();
+    try {
+        const response = await api.get("url", {
+            headers: header
+        })
+        return response.data
+    }catch (e){
+        console.log(e)
+    }
+}

@@ -45,7 +45,7 @@ public class AuthController {
     @ResponseBody
     public ResponseEntity<AuthResponse> newAccessToken(@RequestParam("userId") Integer userId, @CookieValue(name = "refreshToken") String refreshToken){
         System.out.println("Start re-generate");
-        System.out.println(refreshToken);
+        System.out.println("refreshToken "+refreshToken);
         return  ResponseEntity.ok(userService.refreshAccessToken(refreshToken, userId));
     }
 
