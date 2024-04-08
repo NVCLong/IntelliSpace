@@ -4,16 +4,14 @@ import NextTopLoader from "nextjs-toploader";
 import Sidebar from "@/components/Sidebar";
 import FolderList from "@/components/FolderList";
 
-
-
-
 export const metadata: Metadata = {
   title: "Dashboard | IntelliSpace",
   description: "IntelliSpace Dashboard for all your needs",
 };
 
-
 const Dashboardlayout = ({ children }: { children: React.ReactNode }) => {
+
+
   const folders = [
     { id: '1', name: 'Folder 1' },
     { id: '2', name: 'Folder 2' },
@@ -29,7 +27,6 @@ const Dashboardlayout = ({ children }: { children: React.ReactNode }) => {
     { id: '12', name: 'Folder 1' },
     { id: '13', name: 'Folder 2' },
     { id: '14', name: 'Folder 2' },
-
   ];
 
 
@@ -37,7 +34,6 @@ const Dashboardlayout = ({ children }: { children: React.ReactNode }) => {
     <div className="flex">
       <NextTopLoader color="#BF40BF" showSpinner={false} easing="ease" />
       <Sidebar />
-
       <FolderList folders={folders} />
       {children}
     </div>

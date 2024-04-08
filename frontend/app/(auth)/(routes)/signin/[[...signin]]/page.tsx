@@ -47,7 +47,6 @@ const Page = () => {
     localStorage.setItem("access_token", response.data.accessToken);
     document.cookie = `refreshToken=${response.data.refreshToken}`;
     localStorage.setItem("userId", response.data.user.id);
-    console.log(response.data);
   }
 
   // const ResponseFolder = await axios.get("http://localhost:8888/api/folder/rootFolders/{storageId}"
@@ -83,9 +82,9 @@ const Page = () => {
               <GoogleOAuthProvider clientId="221707522416-c5ac904abilmbldbpq7m75t0kpekigjm.apps.googleusercontent.com">
                 <CustomButton />
               </GoogleOAuthProvider>
-              <Button className="socialFormBtn hoverScale">
+              {/* <Button className="socialFormBtn hoverScale">
                 <SiGithub className="w-10 h-10" />
-              </Button>
+              </Button> */}
             </div>
             <p className="text-center">or use this option</p>
             <Form {...form}>
@@ -120,9 +119,13 @@ const Page = () => {
                     </FormItem>
                   )}
                 />
+
+                <Link href={"/forget"}>
+                  <span className="text-gray-500 hover:underline">Forget password?</span>
+                </Link>
                 <Button
                   type="submit"
-                  className="w-1/2 mt-4 border-2 border-gray-500 border-solid rounded-lg shadow-lg flexCenter hoverScale"
+                  className="w-1/2 mt-4 border-2 border-gray-800 border-solid rounded-lg shadow-lg flexCenter hoverScale"
                 >
                   Submit
                 </Button>

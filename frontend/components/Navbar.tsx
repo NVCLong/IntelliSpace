@@ -3,7 +3,6 @@ import { useState } from "react";
 import { NAV_LINKS } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
-import Button from "./Button";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { FiUser, FiMenu } from "react-icons/fi";
@@ -62,7 +61,7 @@ const Navbar = () => {
         ))}
       </ul>
 
-      <div className="gap-2 px-4 py-2 bg-blue-400 rounded-full cursor-pointer lg:flex sm:hidden hoverScale drop-shadow-md flexCenter bold-16 " onClick={handleSignin}>
+      <div className="hidden gap-2 px-4 py-2 bg-blue-400 rounded-full cursor-pointer lg:flex sm:hidden hoverScale drop-shadow-md flexCenter bold-16 " onClick={handleSignin}>
         <div className="text-white fill-current ">
           <FiUser size={20} />
         </div>
@@ -73,7 +72,7 @@ const Navbar = () => {
         className="relative inline-block p-1 bg-blue-400 rounded-md shadow lg:hidden drop-shadow-xl"
         onClick={toggleMenu}
       >
-        <div className="text-gray-800 fill-current hover:text-white">
+        <div className="text-white cursor-pointer fill-current hover:text-gray-300">
           <FiMenu size={40} />
         </div>
       </div>
