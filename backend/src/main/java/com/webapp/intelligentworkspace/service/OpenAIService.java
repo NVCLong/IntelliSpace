@@ -45,7 +45,8 @@ public class OpenAIService {
     }
 
     public String summarizeNote(String note){
-        ChatRequest chatRequest= new ChatRequest(openAiModel,note);
+        String prompt = "sumarize "+ note;
+        ChatRequest chatRequest= new ChatRequest(openAiModel,prompt);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

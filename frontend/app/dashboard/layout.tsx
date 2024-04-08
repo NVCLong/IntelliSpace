@@ -1,7 +1,9 @@
+
 import type { Metadata } from "next";
 import NextTopLoader from "nextjs-toploader";
 import Sidebar from "@/components/Sidebar";
 import FolderList from "@/components/FolderList";
+
 
 
 
@@ -29,6 +31,7 @@ const Dashboardlayout = ({ children }: { children: React.ReactNode }) => {
     { id: '14', name: 'Folder 2' },
 
   ];
+
 
   return (
     <div className="flex">

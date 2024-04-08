@@ -41,9 +41,8 @@ public class JwtService {
 
     // check the token is Valid
     public boolean isValid(String token, UserDetails user){
-        Token token1= tokenRepository.findByToken(token).orElse(null);
         String username= extractUsername( token);
-        return username.equals(user.getUsername())&!isExpired(token)&& !token1.isLogout;
+        return username.equals(user.getUsername())&!isExpired(token);
     }
 
 
@@ -92,7 +91,7 @@ public class JwtService {
                 .subject(user.getUsername())
                 .id(user.getId().toString())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis()+ 60*60*1000))
+                .expiration(new Date(System.currentTimeMillis()+ 20*1000))
                 .signWith(getSignKeys())
                 .compact();
     }

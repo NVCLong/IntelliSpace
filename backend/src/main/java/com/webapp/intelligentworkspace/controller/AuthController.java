@@ -43,7 +43,8 @@ public class AuthController {
 
     @GetMapping("/auth/newAccessToken")
     @ResponseBody
-    public ResponseEntity<AuthResponse> newAccessToken(@RequestParam("userId") Integer userId, @RequestParam("refreshToken") String refreshToken){
+    public ResponseEntity<AuthResponse> newAccessToken(@RequestParam("userId") Integer userId, @CookieValue(name = "refreshToken") String refreshToken){
+        System.out.println("Start re-generate");
         System.out.println(refreshToken);
         return  ResponseEntity.ok(userService.refreshAccessToken(refreshToken, userId));
     }
