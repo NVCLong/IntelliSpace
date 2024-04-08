@@ -22,6 +22,10 @@ import { motion } from "framer-motion";
 import { GoogleLogin, GoogleOAuthProvider, useGoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import { CustomButton } from "@/app/(auth)/(routes)/signin/[[...signin]]/CustomButton";
+import {router} from "next/client";
+import { useRouter } from "next/navigation";
+import {useDispatch} from "react-redux";
+import { setStorageID } from '../../../../../lib/features/todos/storageSlice';
 
 
 
@@ -31,6 +35,8 @@ const signInSchema = z.object({
 });
 
 const Page = () => {
+  const router = useRouter();
+  const dispatch= useDispatch();
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -47,6 +53,9 @@ const Page = () => {
     localStorage.setItem("access_token", response.data.accessToken);
     document.cookie = `refreshToken=${response.data.refreshToken}`;
     localStorage.setItem("userId", response.data.user.id);
+    console.log(response.data);
+    dispatch(setStorageID(response.data.storageId));
+    router.push("/dashboard");
   }
 
   // const ResponseFolder = await axios.get("http://localhost:8888/api/folder/rootFolders/{storageId}"
