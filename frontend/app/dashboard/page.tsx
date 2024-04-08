@@ -1,28 +1,36 @@
 "use client";
-import {useEffect} from "react";
-import {getHeader} from "@/lib/apiCall";
-import { useRouter } from 'next/router';
-import { connect } from 'react-redux';
-import {RootState} from "@reduxjs/toolkit/query";
-import {useAppSelector} from "../../lib/store"
+import { useEffect } from "react";
+
+import { useAppSelector } from "../../lib/store";
+import { getAllRootFolder } from "@/lib/apiCall";
+import { get } from "http";
+import { useState } from "react";
+import FolderList from "@/components/FolderList";
 
 export default function Page() {
+  const [folderList, setFolderList] = useState([]);
   // @ts-ignore
   const storageID: string | null = useAppSelector(
-      (state) => state.storageSlice.storageID
+    (state) => state.storageSlice.storageID
   );
-  console.log(storageID)
 
   useEffect(() => {
-
     if (storageID !== null) {
-      console.log("storage id : "+storageID)
+      console.log("storage id : " + storageID);
+      const response = getAllRootFolder(storageID)
+        .then((value) => {
+          setFolderList(value.rootFolders);
+          console.log(value);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+      console.log(response);
     }
-    getHeader();
-
-  }, []);
+  });
   return (
     <>
+      <FolderList folders={folderList} />
     </>
-  )
+  );
 }
