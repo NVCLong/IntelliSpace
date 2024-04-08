@@ -173,6 +173,7 @@ public class UserService {
         }
         Token userRefreshToken= tokenRepository.findByToken(refreshToken).orElse(null);
         if(jwtService.isExpired(refreshToken)){
+            logOut(userId);
             return new AuthResponse("Log out", null, null );
         }
         String token=jwtService.refreshAccessToken(userRefreshToken.getToken(), user);
