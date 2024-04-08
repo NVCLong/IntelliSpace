@@ -4,10 +4,18 @@ import { FcGoogle } from "react-icons/fc";
 import React from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import {useSelector} from "react-redux";
+import { useDispatch } from 'react-redux';
+import { setStorageID } from '../../../../../lib/features/todos/storageSlice';
+import {AppDispatch} from "../../../../../lib/store"; // Import storage actions
+
 
 
 export const CustomButton = () => {
     const router = useRouter();
+    const  dispatch=useDispatch<AppDispatch>();
+
+
     const login = useGoogleLogin({
         onSuccess: async codeResponse => {
             console.log(codeResponse)
@@ -18,12 +26,9 @@ export const CustomButton = () => {
             localStorage.setItem("access_token", loginResponse.data.accessToken);
             document.cookie = `refreshToken=${loginResponse.data.refreshToken}`;
             localStorage.setItem("userId", loginResponse.data.user.id);
-
-
-
-            router.push("/dashboard", {
-
-            })
+            console.log(loginResponse.data.storageId)
+            dispatch(setStorageID(loginResponse.data.storageId));
+            router.push("/dashboard");
         },
         prompt: "select_account",
         onError: () => {

@@ -180,6 +180,11 @@ public class UserService {
         return new AuthResponse("This is new accessToken",token,refreshToken );
     }
 
+
+    public void resetPassword(){
+
+    }
+
     public void logOut(Integer userId){
         User user= userRepository.findUserById(userId).orElse(null);
         if(user==null){
