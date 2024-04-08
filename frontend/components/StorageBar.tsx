@@ -1,11 +1,13 @@
+"use client"
 import React from 'react';
 
 interface StorageBarProps {
     used: number;
     total: number;
+    open: boolean;
 }
 
-const StorageBar: React.FC<StorageBarProps> = ({ used, total }) => {
+const StorageBar: React.FC<StorageBarProps> = ({ used, total, open }) => {
     const percentage = Math.round((used / total) * 100);
 
     return (
@@ -13,9 +15,14 @@ const StorageBar: React.FC<StorageBarProps> = ({ used, total }) => {
             <div className="flex h-2 mb-4 overflow-hidden text-xs bg-white rounded">
                 <div style={{ width: `${percentage}%` }} className="flex flex-col justify-center text-center text-white bg-pink-500 shadow-none whitespace-nowrap"></div>
             </div>
-            <p className='sm:hidden'>{`Used ${used}GB of ${total}GB`}</p>
+            {!open &&
+                <p className='font-semibold'>{`${percentage}%`}</p>
+            }
+            {open &&
+                <p className='font-semibold'>{`Used ${used}GB of ${total}GB`}</p>
+            }
+
         </div>
     );
 };
-
 export default StorageBar;

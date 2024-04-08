@@ -59,7 +59,7 @@ public class UserService {
             storageRepository.save(storage);
             newUser.setStorage(storage);
             userRepository.save(newUser);
-            String token= jwtService.generateAccessToken(newUser);
+            String token= jwtService.generateRefreshToken(newUser);
             saveToken(token,newUser);
 
 
@@ -86,7 +86,7 @@ public class UserService {
                 if(user1 != null) {
                     String accessToken = jwtService.generateAccessToken(user1);
                     String refreshToken = jwtService.generateRefreshToken(user1);
-                    saveToken(accessToken, user1);
+                    saveToken(refreshToken, user1);
                     return new AuthResponse("Login successfully hehe", accessToken, refreshToken, user1,user1.getStorage().getId());
                 }
                 else {
@@ -139,7 +139,7 @@ public class UserService {
             if(user1 != null) {
                 String accessToken = jwtService.generateAccessToken(user1);
                 String refreshToken = jwtService.generateRefreshToken(user1);
-                saveToken(accessToken, user1);
+                saveToken(refreshToken, user1);
                 return new AuthResponse("Login successfully hehe", accessToken, refreshToken, user1,user1.getStorage().getId());
             }
             else {
@@ -160,7 +160,7 @@ public class UserService {
         storageRepository.save(storage);
         newUser.setStorage(storage);
         userRepository.save(newUser);
-        String token= jwtService.generateAccessToken(newUser);
+        String token= jwtService.generateRefreshToken(newUser);
         saveToken(token,newUser);
         String refreshToken= jwtService.generateAccessToken(newUser);
         return  new AuthResponse("Login Success",token,refreshToken,newUser, newUser.getStorage().getId());
@@ -171,9 +171,13 @@ public class UserService {
         if(user==null){
             return new AuthResponse("Not found user", null, null);
         }
-        String token=jwtService.refreshAccessToken(refreshToken, user);
-        saveToken(token, user);
-        return new AuthResponse("This is new accessToken",token,null );
+        Token userRefreshToken= tokenRepository.findByToken(refreshToken).orElse(null);
+        if(jwtService.isExpired(refreshToken)){
+            logOut(userId);
+            return new AuthResponse("Log out", null, null );
+        }
+        String token=jwtService.refreshAccessToken(userRefreshToken.getToken(), user);
+        return new AuthResponse("This is new accessToken",token,refreshToken );
     }
 
     public void logOut(Integer userId){

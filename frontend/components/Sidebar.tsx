@@ -2,18 +2,42 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { FiHome, FiFolder, FiUsers, FiList, FiCodesandbox, FiTrash2 } from "react-icons/fi";
+import { FiHome, FiFolder, FiUsers, FiList, FiCodesandbox, FiTrash2, FiLogOut } from "react-icons/fi";
 import StorageBar from './StorageBar';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+
 
 const Sidebar: React.FC = () => {
+  const router = useRouter();
+  const clearCookies = () => document.cookie.split(';').forEach(c => document.cookie = c.replace(/^ +/, '').replace(/=.*/, `=;expires=${new Date().toUTCString()}; path=/`));
+  const handleLogout = async () => {
+    const userId = localStorage.getItem('userId')
+    console.log(userId)
+    const response = await axios.get(`http://localhost:8888/api/auth/logout/${userId}`)
+    console.log(response.data);
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('userId');
+    // document.cookie = 'cookieName=refreshToken; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    clearCookies();
+  }
+
+
   const navItems = [
-    { name: 'Home', path: '/', icon: FiHome },
-    { name: 'Files', path: '/drive', icon: FiFolder },
-    { name: 'Shared', path: '/shared', icon: FiUsers },
-    { name: 'Notes', path: '/note', icon: FiList },
-    { name: 'IntelliBot', path: '/intelliBot', icon: FiCodesandbox },
-    { name: 'Bin', path: '/bin', icon: FiTrash2 },
+    { name: 'Home', path: '/', icon: FiHome, onClick: () => { } },
+    { name: 'Files', path: '/drive', icon: FiFolder, onClick: () => { } },
+    { name: 'Shared', path: '/shared', icon: FiUsers, onClick: () => { } },
+    { name: 'Notes', path: '/note', icon: FiList, onClick: () => { } },
+    { name: 'IntelliBot', path: '/intelliBot', icon: FiCodesandbox, onClick: () => { } },
+    { name: 'Bin', path: '/bin', icon: FiTrash2, onClick: () => { } },
+    {
+      name: 'Logout', path: '/', icon: FiLogOut, onClick: () => {
+        console.log("logout")
+        handleLogout()
+      }
+    }
   ];
+
   const [open, setOpen] = useState(false);
 
   return (
@@ -43,31 +67,30 @@ const Sidebar: React.FC = () => {
 
         <div className="p-4 space-y-2 overflow-hidden">
           {navItems.map((item, index) => (
-            <div
-              key={index}
-              className="flex items-center p-4 mt-8 transition duration-100 ease-linear transform rounded-lg cursor-pointer focus:bg-slate-50 focus:outline-none active:bg-slate-50 hover:text-white focus:bg-white/10 active:bg-white/10 w-fit"
-            >
+            <Link key={index} href={item.path}>
               <div
-                className={`${!open ? "w-full flex justify-center" : ""
-                  } transition-all duration-100`}
+                className="flex items-center p-4 mt-2.5 transition duration-100 ease-linear transform rounded-lg cursor-pointer focus:bg-slate-50 focus:outline-none active:bg-slate-50 hover:text-white focus:bg-white/10 active:bg-white/10 w-fit "
               >
-                <item.icon className={`${!open ? "w-6 h-6 cursor-pointer flex justify-center " : ""
-                  } transition-all duration-200 w-6 h-6 -ml-4`} />
-              </div>
-              <Link href={item.path}>
+                <div
+                  className={`${!open ? "w-full flex justify-center" : ""
+                    } transition-all duration-100`}
+                >
+                  <item.icon className={`${!open ? "w-6 h-6 cursor-pointer flex justify-center " : ""
+                    } transition-all duration-200 w-6 h-6 -ml-4`} onClick={item.onClick} />
+                </div>
                 <span
                   className={`${!open && "hidden"
-                    } relative pl-3 duration-200 after:block after:content-[''] after:absolute after:h-[3px] after:bg-purple-400 after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-200 after:origin-center`}
+                    } relative pl-3 font-semibold duration-100 after:block after:content-[''] after:absolute after:h-[3px] after:bg-purple-400 after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-200 after:origin-center`}
                 >
                   {item.name}
                 </span>
-              </Link>
-            </div>
+              </div>
+            </Link>
           ))}
 
-          <div className={`${!open && "w-full"
-            } duration-200 `}>
-            <StorageBar used={20} total={100} />
+          <div className={`${!open && "w-full "
+            } duration-200`}>
+            <StorageBar used={20} total={100} open={open} />
           </div>
         </div>
       </div>

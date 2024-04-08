@@ -19,9 +19,9 @@ import Link from "next/link";
 import axios from "axios";
 import { motion } from "framer-motion";
 
-import {GoogleLogin, GoogleOAuthProvider, useGoogleLogin} from "@react-oauth/google";
-import {jwtDecode} from "jwt-decode";
-import {CustomButton} from "@/app/(auth)/(routes)/signin/[[...signin]]/CustomButton";
+import { GoogleLogin, GoogleOAuthProvider, useGoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
+import { CustomButton } from "@/app/(auth)/(routes)/signin/[[...signin]]/CustomButton";
 
 
 
@@ -39,8 +39,6 @@ const Page = () => {
     },
   });
 
-
-
   async function onSubmit(values: z.infer<typeof signInSchema>) {
     const response = await axios.post(
       "http://localhost:8888/api/auth/login",
@@ -48,8 +46,16 @@ const Page = () => {
     );
     localStorage.setItem("access_token", response.data.accessToken);
     document.cookie = `refreshToken=${response.data.refreshToken}`;
+    localStorage.setItem("userId", response.data.user.id);
     console.log(response.data);
   }
+
+  // const ResponseFolder = await axios.get("http://localhost:8888/api/folder/rootFolders/{storageId}"
+  // );
+  // localStorage.setItem("storageId", ResponseFolder.data.storageId);
+
+
+
   return (
     <>
       <motion.div
@@ -75,10 +81,10 @@ const Page = () => {
             <h3 className="text-2xl font-semibold text-center">Sign in</h3>
             <div className="socialRegisterOptions drop-shadow-md ">
               <GoogleOAuthProvider clientId="221707522416-c5ac904abilmbldbpq7m75t0kpekigjm.apps.googleusercontent.com">
-                <CustomButton/>
+                <CustomButton />
               </GoogleOAuthProvider>
               <Button className="socialFormBtn hoverScale">
-                <SiGithub  className="w-10 h-10" />
+                <SiGithub className="w-10 h-10" />
               </Button>
             </div>
             <p className="text-center">or use this option</p>
