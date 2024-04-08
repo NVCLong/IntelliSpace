@@ -1,4 +1,4 @@
- "use client"
+"use client"
 import { FOOTER_CONTACT_INFO, FOOTER_LINKS, SOCIALS } from '@/constants'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -8,33 +8,32 @@ import { motion } from 'framer-motion'
 const Footer = () => {
   return (
     <motion.footer
-    initial={{ opacity: 0, scale: 0.5 }}
+      initial={{ opacity: 0, scale: 0.5 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{
         duration: 1,
         delay: 1,
         ease: [0, 0.71, 0.2, 1.01]
       }}
-    className="mt-1.5 flexCenter">
+      className="mt-1.5 flexCenter">
       <div className="flex flex-col w-full padding-container max-container gap-14">
         <div className="flex flex-col items-start justify-center gap-[10%] md:flex-row">
           <Link href="/" className="mb-3">
-            <Image src="/IntelliSpace.png" alt="logo" width={74} height={74}/>
+            <Image src="/IntelliSpace.png" alt="logo" width={74} height={74} />
           </Link>
 
           <div className='flex flex-wrap gap-2 sm:justify-between md:flex-1'>
-            {FOOTER_LINKS.map((columns) => (
-              <FooterColumn title={columns.title}>
+            {FOOTER_LINKS.map((columns, index) => (
+              <FooterColumn title={columns.title} key={index}>
                 <ul className="flex flex-col gap-4 regular-14 text-gray-30">
-                  {columns.links.map((link) => (
-                    <Link href="/" key={link}>
+                  {columns.links.map((link, linkIndex) => (
+                    <Link href="/" key={linkIndex}>
                       {link}
                     </Link>
                   ))}
                 </ul>
               </FooterColumn>
             ))}
-
             <div className="flex flex-col gap-5">
               <FooterColumn title={FOOTER_CONTACT_INFO.title}>
                 {FOOTER_CONTACT_INFO.links.map((link) => (
@@ -59,7 +58,7 @@ const Footer = () => {
                 <ul className="flex gap-4 regular-14 text-gray-30">
                   {SOCIALS.links.map((link) => (
                     <Link href="/" key={link}>
-                      <Image src={link} alt="logo" width={26} height={26} />
+                      <Image src={link} alt="logo" width={26} height={26} className="w-full h-auto" />
                     </Link>
                   ))}
                 </ul>
@@ -70,7 +69,7 @@ const Footer = () => {
         </div>
 
         <p className="w-full mb-6 font-medium text-center text-gray-30">
-                  © 2024 IntelliSpace | All rights reserved
+          © 2024 IntelliSpace | All rights reserved
         </p>
       </div>
     </motion.footer>

@@ -50,9 +50,9 @@ const Page = () => {
     console.log(response.data);
   }
 
-  const ResponseFolder = await axios.post("http://localhost:8888/api/folder/rootFolders/{storageId}"
-  );
-  localStorage.setItem("storageId", ResponseFolder.data.storageId);
+  // const ResponseFolder = await axios.get("http://localhost:8888/api/folder/rootFolders/{storageId}"
+  // );
+  // localStorage.setItem("storageId", ResponseFolder.data.storageId);
 
 
 

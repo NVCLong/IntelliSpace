@@ -6,6 +6,7 @@ import Link from "next/link";
 import Button from "./Button";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { FiUser, FiMenu } from "react-icons/fi";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -61,21 +62,22 @@ const Navbar = () => {
         ))}
       </ul>
 
-      <div className="hidden hoverScale lg:flexCenter drop-shadow-md" onClick={handleSignin}>
-        <Button
-          type="button"
-          title="Login"
-          icon="user-solid.svg"
-          variant="btn_dark"
-        />
+      <div className="gap-2 px-4 py-2 bg-blue-400 rounded-full cursor-pointer lg:flex sm:hidden hoverScale drop-shadow-md flexCenter bold-16 " onClick={handleSignin}>
+        <div className="text-white fill-current ">
+          <FiUser size={20} />
+        </div>
+        <span className="font-semibold text-white md:block">Login</span>
       </div>
 
       <div
-        className="relative inline-block cursor-pointer lg:hidden hoverScale"
+        className="relative inline-block p-1 bg-blue-400 rounded-md shadow lg:hidden drop-shadow-xl"
         onClick={toggleMenu}
       >
-        <Image src="menu-dots.svg" alt="menu" width={32} height={32} />
+        <div className="text-gray-800 fill-current hover:text-white">
+          <FiMenu size={40} />
+        </div>
       </div>
+
     </motion.nav>
   );
 };
