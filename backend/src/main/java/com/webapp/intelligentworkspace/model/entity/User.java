@@ -30,6 +30,8 @@ public class User {
     @JsonIgnore
     private Bin bin;
 
+    private Long resetCode;
+
     @Override
     public String toString() {
         return "User [id=" + id + ", username=" + username + ", email=" + email + "]";

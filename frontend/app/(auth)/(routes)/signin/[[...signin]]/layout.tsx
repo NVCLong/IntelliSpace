@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 const SignInLayout = ({ children }: { children: React.ReactNode }) => {
-  return (
+return (
     <>
       <NextTopLoader color="#BF40BF" showSpinner={false} easing="ease" />
       <Navbar />

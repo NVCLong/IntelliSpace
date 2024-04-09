@@ -31,8 +31,9 @@ public class UserService {
     StorageService storageService;
     StorageRepository storageRepository;
     private final AuthenticationManager authenticationManager;
+    EmailSenderService emailSenderService;
 
-    public UserService(StorageRepository storageRepository,UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager,TokenRepository tokenRepository, StorageService storageService) {
+    public UserService(StorageRepository storageRepository,UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager,TokenRepository tokenRepository, StorageService storageService, EmailSenderService emailSenderService) {
         this.tokenRepository=tokenRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -40,6 +41,7 @@ public class UserService {
         this.authenticationManager = authenticationManager;
         this.storageService= storageService;
         this.storageRepository=storageRepository;
+        this.emailSenderService= emailSenderService;
     }
 
     public AuthResponse createUser(User user){
@@ -180,6 +182,11 @@ public class UserService {
         return new AuthResponse("This is new accessToken",token,refreshToken );
     }
 
+
+    public void resetPassword(){
+
+    }
+
     public void logOut(Integer userId){
         User user= userRepository.findUserById(userId).orElse(null);
         if(user==null){
@@ -195,5 +202,19 @@ public class UserService {
                 return;
             }
         }
+    }
+
+    public void sendEmail(String email){
+        User user= userRepository.findUserByEmail(email).orElse(null);
+        if( user == null){
+            System.out.println("Can not find user by user Email");
+            return;
+        }
+        Random random= new Random();
+        user.setResetCode(random.nextLong(1000000,99999999));
+        Long resetCode= user.getResetCode();
+        String subject = "Reset Password OTP Code ";
+        emailSenderService.sendEmail(email,subject,resetCode.toString());
+
     }
 }

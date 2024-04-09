@@ -70,12 +70,12 @@ const Page = () => {
     <>
       <motion.div
         initial={{ opacity: 0, scale: 0.5 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{
-        duration: 1,
-        delay: 0.5,
-        ease: [0, 0.71, 0.2, 1.01]
-      }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{
+          duration: 1,
+          delay: 0.5,
+          ease: [0, 0.71, 0.2, 1.01]
+        }}
         className="registerWrapper drop-shadow-md"
       >
         <div className="formWrapper ">
@@ -99,7 +99,7 @@ const Page = () => {
                 <FcGoogle className="w-10 h-10" />
               </Button>
               <Button className="socialFormBtn hoverScale">
-                <SiGithub  className="w-10 h-10" />
+                <SiGithub className="w-10 h-10" />
               </Button>
             </div>
             <p className="text-center">or use this option</p>
