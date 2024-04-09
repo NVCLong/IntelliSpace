@@ -13,6 +13,7 @@ public class AuthController {
     @Autowired
     UserService userService;
 
+
     @PostMapping("/auth/register")
     @ResponseBody
     public ResponseEntity<AuthResponse> register(@RequestBody User user) {
@@ -49,5 +50,11 @@ public class AuthController {
         return  ResponseEntity.ok(userService.refreshAccessToken(refreshToken, userId));
     }
 
-
+    @PostMapping(value="/auth/resetPassword", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<String> sendMailResetCode(@RequestBody User user){
+        System.out.println("Sending code to email");
+        userService.sendEmail(user.getEmail());
+        return ResponseEntity.ok("Send success");
+    }
 }

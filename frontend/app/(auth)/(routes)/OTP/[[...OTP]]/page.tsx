@@ -33,11 +33,11 @@ const Page = () => {
 
   async function onSubmit(values: z.infer<typeof registerSchema>) {
     const response = await axios.post(
-      `http://localhost:8888/api/auth/forget`,
+      `http://localhost:8888/api/auth/resetPassword`,
       values
     );
     console.log(response.data);
-    await router.push("/forget");
+    router.push("/forget");
   }
 
   return (

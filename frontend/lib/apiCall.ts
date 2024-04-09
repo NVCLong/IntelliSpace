@@ -47,3 +47,15 @@ export const createRootFolder= async (storageId: string)=>{
     console.log(e)
   }
 }
+
+export const sendMailPassword= async (email:string)=>{
+  try{
+    let user={
+      email: email
+    }
+    const response = await  api.post(`/auth/resetPassword`, user )
+    return response.data
+  }catch (e) {
+    console.log(e)
+  }
+}
