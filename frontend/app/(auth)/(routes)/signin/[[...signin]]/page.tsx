@@ -25,7 +25,7 @@ import { CustomButton } from "@/app/(auth)/(routes)/signin/[[...signin]]/CustomB
 import {router} from "next/client";
 import { useRouter } from "next/navigation";
 import {useDispatch} from "react-redux";
-import { setStorageID } from '../../../../../lib/features/todos/storageSlice';
+import { setStorageID } from '@/lib/features/todos/storageSlice';
 
 
 
@@ -91,9 +91,9 @@ const Page = () => {
               <GoogleOAuthProvider clientId="221707522416-c5ac904abilmbldbpq7m75t0kpekigjm.apps.googleusercontent.com">
                 <CustomButton />
               </GoogleOAuthProvider>
-              <Button className="socialFormBtn hoverScale">
+              {/* <Button className="socialFormBtn hoverScale">
                 <SiGithub className="w-10 h-10" />
-              </Button>
+              </Button> */}
             </div>
             <p className="text-center">or use this option</p>
             <Form {...form}>
@@ -128,9 +128,13 @@ const Page = () => {
                     </FormItem>
                   )}
                 />
+
+                <Link href={"/forget"}>
+                  <span className="text-gray-500 hover:underline">Forget password?</span>
+                </Link>
                 <Button
                   type="submit"
-                  className="w-1/2 mt-4 border-2 border-gray-500 border-solid rounded-lg shadow-lg flexCenter hoverScale"
+                  className="w-1/2 mt-4 border-2 border-gray-800 border-solid rounded-lg shadow-lg flexCenter hoverScale"
                 >
                   Submit
                 </Button>

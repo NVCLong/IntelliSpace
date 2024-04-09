@@ -3,14 +3,13 @@ import NextTopLoader from "nextjs-toploader";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-
 export const metadata: Metadata = {
-  title: "Sign in | IntelliSpace",
-  description: "Sign in to your IntelliSpace account",
+  title: "OTP | IntelliSpace",
+  description: "OTP to reset your password.",
 };
 
-const SignInLayout = ({ children }: { children: React.ReactNode }) => {
-return (
+const RegisterLayout = ({ children }: { children: React.ReactNode }) => {
+  return (
     <>
       <NextTopLoader color="#BF40BF" showSpinner={false} easing="ease" />
       <Navbar />
@@ -20,4 +19,4 @@ return (
   );
 };
 
-export default SignInLayout;
+export default RegisterLayout;
