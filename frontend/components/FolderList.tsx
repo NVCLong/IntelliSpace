@@ -18,6 +18,8 @@ const FolderList: React.FC<FolderListProps> = ({ folders }) => {
             console.log("Creating new folder");
         }
     }
+
+    // tach cai create folder thanh 1 component
     return (
         <div>
             <div className="mt-24 ml-20">
