@@ -17,6 +17,10 @@ import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { useDispatch } from 'react-redux';
+import { setEmail } from '@/lib/features/todos/emailSlice';
+import {AppDispatch} from "@/lib/store";
+
 
 const registerSchema = z
   .object({
@@ -24,6 +28,7 @@ const registerSchema = z
   })
 
 const Page = () => {
+  const  dispatch=useDispatch<AppDispatch>();
   const router = useRouter();
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
@@ -37,8 +42,9 @@ const Page = () => {
       `http://localhost:8888/api/auth/resetPassword`,
       values
     );
+    dispatch(setEmail(values.email))
     console.log(response.data);
-    router.push("/forget");
+    router.push("/OTP");
   }
 
   return (

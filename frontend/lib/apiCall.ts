@@ -60,3 +60,4 @@ export const sendMailPassword= async (email:string)=>{
     console.log(e)
   }
 }
+

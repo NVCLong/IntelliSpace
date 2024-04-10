@@ -17,27 +17,42 @@ import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import {useAppSelector} from "@/lib/store";
+import { setEmail } from '@/lib/features/todos/emailSlice';
+import {AppDispatch} from "@/lib/store";
+import {useDispatch} from "react-redux";
+
 
 const registerSchema = z.object({
-  email: z.string().email("Email must be valid."),
+  otp: z.string(),
 });
 
 const Page = () => {
+  const  dispatch=useDispatch<AppDispatch>();
+  const email: string | null = useAppSelector(
+      (state) => state.emailSlice.email
+  );
   const router = useRouter();
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      email: "",
+      otp: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof registerSchema>) {
+    const request={
+      email: email,
+      otp: values.otp
+    }
+    console.log(values)
     const response = await axios.post(
-      `http://localhost:8888/api/auth/resetPassword`,
-      values
+      `http://localhost:8888/api/auth/checkOtp`,
+      request
     );
     console.log(response.data);
-    router.push("/forget");
+    dispatch(setEmail(email))
+    // router.push("/changePassword");
   }
 
   return (
@@ -66,26 +81,31 @@ const Page = () => {
             </h3>
             <Form {...form}>
               <form
-                className="flex-col flexCenter drop-shadow-md"
-                onSubmit={form.handleSubmit(onSubmit)}
+                  className="flex-col flexCenter drop-shadow-md"
+                  onSubmit={form.handleSubmit(onSubmit)}
               >
+
                 <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem className="mb-2 space-y-1">
-                      <FormLabel>Enter OTP</FormLabel>
-                      <FormControl>
-                        <Input placeholder="OTP code" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
+                    control={form.control}
+                    name="otp"
+                    render={({ field }) => (
+                        <FormItem className="mb-2 space-y-1">
+                          <FormLabel>OTP code</FormLabel>
+                          <FormControl>
+                            <Input
+                                placeholder="Enter OTP"
+                                {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                    )}
                 />
 
+
                 <Button
-                  type="submit"
-                  className="w-1/2 mt-4 mb-10 border-2 border-gray-500 border-solid rounded-lg shadow-lg flexCenter hoverScale"
+                    type="submit"
+                    className="w-1/2 mt-4 mb-10 border-2 border-gray-500 border-solid rounded-lg shadow-lg flexCenter hoverScale"
                 >
                   Submit
                 </Button>

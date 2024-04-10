@@ -6,8 +6,8 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import {useSelector} from "react-redux";
 import { useDispatch } from 'react-redux';
-import { setStorageID } from '../../../../../lib/features/todos/storageSlice';
-import {AppDispatch} from "../../../../../lib/store"; // Import storage actions
+import { setStorageID } from '@/lib/features/todos/storageSlice';
+import {AppDispatch} from "@/lib/store"; // Import storage actions
 
 
 export const CustomButton = () => {

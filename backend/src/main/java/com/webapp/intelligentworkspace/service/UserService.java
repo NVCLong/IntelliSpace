@@ -2,8 +2,10 @@ package com.webapp.intelligentworkspace.service;
 
 import com.webapp.intelligentworkspace.model.entity.Storage;
 import com.webapp.intelligentworkspace.model.entity.Token;
+import com.webapp.intelligentworkspace.model.request.OTPRequest;
 import com.webapp.intelligentworkspace.model.response.AuthResponse;
 import com.webapp.intelligentworkspace.model.entity.User;
+import com.webapp.intelligentworkspace.model.response.OtpResponse;
 import com.webapp.intelligentworkspace.repository.StorageRepository;
 import com.webapp.intelligentworkspace.repository.TokenRepository;
 import com.webapp.intelligentworkspace.repository.UserRepository;
@@ -14,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
+import java.util.Objects;
 import java.util.Random;
 
 @Service
@@ -211,10 +214,35 @@ public class UserService {
             return;
         }
         Random random= new Random();
-        user.setResetCode(random.nextLong(1000000,99999999));
+        user.setResetCode(random.nextLong(10000,99999));
+        userRepository.save(user);
         Long resetCode= user.getResetCode();
         String subject = "Reset Password OTP Code ";
         emailSenderService.sendEmail(email,subject,resetCode.toString());
 
     }
+
+    public OtpResponse checkOtp(OTPRequest otpRequest){
+        User user= userRepository.findUserByEmail(otpRequest.getEmail()).orElse(null);
+        if(user== null){
+            return  new OtpResponse("Do not have user", false);
+        }
+
+        if(Objects.equals(otpRequest.getOtp(), user.getResetCode())){
+            return new OtpResponse("Valid code", true);
+        }else {
+            return new OtpResponse("Invalid Code", false);
+        }
+    }
+
+    public AuthResponse resetPassword(User request){
+        User user = userRepository.findUserByEmail(request.getEmail()).orElse(null);
+        if(user==null){
+            return new AuthResponse("Not valid user");
+        }
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        userRepository.save(user);
+        return  new AuthResponse("Change Success");
+    }
+
 }

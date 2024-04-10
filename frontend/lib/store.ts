@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import storageSlice from "@/lib/features/todos/storageSlice";
 import {TypedUseSelectorHook, useSelector} from "react-redux";
+import emailSlice from "@/lib/features/todos/emailSlice";
 
 
 export const store =  configureStore({
   reducer: {
-    storageSlice
+    storageSlice,
+    emailSlice
   }
 });
 
