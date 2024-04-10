@@ -34,6 +34,7 @@ public class UserDetailsImp implements UserDetailsService {
         ArrayList<GrantedAuthority> authorityArrayList= new ArrayList<>();
         authorityArrayList.add(new SimpleGrantedAuthority("user"));
         // can improve the admin site by assgin the role admin for special user
+        System.out.println("Success");
         return new org.springframework.security.core.userdetails.User(username,password,authorityArrayList);
     }
 }

@@ -74,6 +74,7 @@ public class UserService {
 
     public AuthResponse login(User user){
         System.out.println("Login phase started");
+        System.out.println(user);
         if(userRepository.findUserByUsername(user.getUsername()).isEmpty()){
             return new AuthResponse("Do not register with this user name");
         }else {
@@ -85,7 +86,7 @@ public class UserService {
                                 user.getPassword()
                         )
                 );
-                System.out.println(user);
+                System.out.println("user: "+user);
                 User user1= userRepository.findUserByUsername(user.getUsername()).orElse(null);
                 System.out.println(user1);
                 if(user1 != null) {
@@ -101,7 +102,6 @@ public class UserService {
                 System.out.println("error");
                 System.out.println(e);
             }
-
             return new AuthResponse("Wrong password");
         }
     }
@@ -242,7 +242,8 @@ public class UserService {
         }
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         userRepository.save(user);
-        return  new AuthResponse("Change Success");
+        System.out.println(user);
+        return  new AuthResponse("Change Succes");
     }
 
 }
