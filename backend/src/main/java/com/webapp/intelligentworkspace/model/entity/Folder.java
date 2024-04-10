@@ -8,6 +8,7 @@ import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="folders")
@@ -17,7 +18,7 @@ public class Folder {
     @Id
     @Column(name = "id")
     private Long id;
-    @Column(name="isPublic", columnDefinition = "false")
+    @Column(name="is_public", columnDefinition = "false")
     private  boolean isPublic;
     @Column(name="name")
     private  String name;
@@ -29,7 +30,7 @@ public class Folder {
     private Storage storage;
 
     @ManyToOne
-    @JoinColumn(name = "parrentFolder_id")
+    @JoinColumn(name = "parrent_folder_id")
     @JsonManagedReference
     @JsonIgnore
     private Folder parentFolder;
@@ -39,6 +40,14 @@ public class Folder {
     @JsonIgnore
     private List<Folder> subFolders;
 
+    @ManyToMany(mappedBy = "folder")
+    private Set<File> files;
+
+    @ManyToMany
+    @JoinTable(
+            name = "files",
+            joinColumns = @JoinColumn(name = "id"),
+            inverseJoinColumns = @JoinColumn(name = "id"))
 
     // many many
     // spring open ai
