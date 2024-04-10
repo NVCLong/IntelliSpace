@@ -55,7 +55,7 @@ const Page = () => {
     );
     console.log(response.data);
 
-    // router.push("/changePassword");
+    router.push("/resetPassword");
   }
 
   return (
