@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { MdFolder } from "react-icons/md";
-import { NewFolder } from "@/components/NewFolder";
 
 interface Folder {
   id: string;
@@ -15,7 +14,7 @@ interface FolderListProps {
 const FolderList: React.FC<FolderListProps> = ({ folders }) => {
   return (
     <div className="">
-      <NewFolder />
+
       <div className="grid grid-cols-1 pt-10 pl-20 mt-0 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-7">
         {folders.map((folder) => (
           <div

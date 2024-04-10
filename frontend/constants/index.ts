@@ -22,7 +22,7 @@ export const FOOTER_CONTACT_INFO = {
   title: "Contact Us",
   links: [
     { label: "Admin officer", value: "(+84) 986 404 189" },
-    { label: "Email officer", value: "office@intellispace.com" },
+    { label: "Email officer", value: "intellispace.contact@gmail.com" },
   ],
 };
 

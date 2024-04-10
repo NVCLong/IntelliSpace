@@ -5,10 +5,11 @@ import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import NextTopLoader from "nextjs-toploader";
-
+import { NextUIProvider } from "@nextui-org/react";
 
 export default function Home() {
   return (
+    <NextUIProvider>
     <div>
       <NextTopLoader color="#BF40BF" showSpinner={false} easing="ease" />
       <Navbar />
@@ -32,5 +33,8 @@ export default function Home() {
       </motion.div>
       <Footer />
     </div>
+    </NextUIProvider>
   )
+
 }
+

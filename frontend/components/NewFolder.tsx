@@ -12,11 +12,15 @@ import {
   Input,
 } from "@nextui-org/react";
 
-export const NewFolder = () => {
-  const handleNewFolder = () => {
-    return () => {};
-  };
+export const NewFolder = (storageID) => {
+
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const handleSubmit = () => {
+     const response = createRootFolder(storageID)
+     console.log(response)
+    console.log(storageID)
+
+  }
 
   return (
     <div className="mt-24 ml-20">
@@ -26,7 +30,7 @@ export const NewFolder = () => {
         onPress={onOpen}
       >
         <FiFolderPlus size={24} />
-        <span className="ml-4 font-semibold md:block">Create folder</span>
+        <span className="ml-0 font-semibold md:block">Create folder</span>
       </Button>
 
       <Modal
@@ -38,12 +42,12 @@ export const NewFolder = () => {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">Log in</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">Create folder</ModalHeader>
 
               <ModalBody>
                 <Input
                   autoFocus
-                  label="Folder name"
+
                   placeholder="Enter folder name"
                   variant="bordered"
                 />
@@ -53,7 +57,10 @@ export const NewFolder = () => {
                 <Button color="danger" variant="flat" onPress={onClose}>
                   Close
                 </Button>
-                <Button color="primary" onPress={onClose}>
+                <Button color="primary" onPress= {() => {
+                  handleSubmit();
+                  onClose();
+                }}>
                   Submit
                 </Button>
               </ModalFooter>

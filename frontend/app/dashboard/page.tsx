@@ -7,6 +7,8 @@ import { useState } from "react";
 import FolderList from "@/components/FolderList";
 import {useDispatch} from "react-redux";
 import { setStorageID } from '@/lib/features/todos/storageSlice';
+import { NewFolder } from "@/components/NewFolder";
+
 
 export default function Page() {
   const  dispatch=useDispatch<AppDispatch>();
@@ -35,6 +37,7 @@ export default function Page() {
   });
   return (
     <>
+      <NewFolder storageID={storageID}/>
       {folderList !== null && (
           <FolderList folders={folderList} />
       )}
