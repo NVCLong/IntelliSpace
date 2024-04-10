@@ -11,7 +11,7 @@ import { NewFolder } from "@/components/NewFolder";
 
 
 export default function Page() {
-  const  dispatch=useDispatch<AppDispatch>();
+  const  dispatch = useDispatch<AppDispatch>();
   const [folderList, setFolderList] = useState([]);
   // @ts-ignore
   const storageID: string | null = useAppSelector(
@@ -23,7 +23,7 @@ export default function Page() {
       dispatch(setStorageID(storageID))
     }
     if (storageID !== null) {
-      console.log("storage id : " + storageID);
+      // console.log("storage id : " + storageID);
       const response = getAllRootFolder(storageID)
         .then((value) => {
           setFolderList(value.rootFolders);

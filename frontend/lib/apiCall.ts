@@ -38,13 +38,17 @@ export const getAllRootFolder = async (storageId: string) => {
   }
 };
 
-export const createRootFolder = async (storageId: string)=>{
+export const createRootFolder = async (storageId: string, folder: Object)=>{
   try{
-
-    const response= await api.post(`/folder/root_folder/create/${storageId}`,{
-      headers: getHeader()
-    })
+    console.log(storageId)
+    const response = await api.post(`/folder/root_folder/create/${storageId}`,
+    folder,
+    {
+      headers: await getHeader()
+    },
+  )
     console.log("API CALLLLLL")
+
     console.log(response.data)
     return response.data;
 

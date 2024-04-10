@@ -13,14 +13,25 @@ import {
 } from "@nextui-org/react";
 
 export const NewFolder = (storageID) => {
-
+  const [folderName, setFolderName] = React.useState("");
+  const handleInput = (e) => {
+    setFolderName(e.target.value);
+  }
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
   const handleSubmit = () => {
-     const response = createRootFolder(storageID)
+
+    const request = {
+      name : folderName
+    }
+     const response = createRootFolder(storageID.storageID, request)
+
      console.log(response)
-    console.log(storageID)
+    // console.log(storageID)
+
 
   }
+
 
   return (
     <div className="mt-24 ml-20">
@@ -47,9 +58,10 @@ export const NewFolder = (storageID) => {
               <ModalBody>
                 <Input
                   autoFocus
-
+                  value={folderName}
                   placeholder="Enter folder name"
                   variant="bordered"
+                  onChange={handleInput}
                 />
               </ModalBody>
 
