@@ -11,6 +11,7 @@ import { NewFolder } from "@/components/NewFolder";
 
 
 export default function Page() {
+  const storageID_temp:string | null  = localStorage.getItem("storageID")
   const  dispatch = useDispatch<AppDispatch>();
   const [folderList, setFolderList] = useState([]);
   // @ts-ignore
@@ -20,11 +21,14 @@ export default function Page() {
 
   useEffect(() => {
     if (storageID != null) {
+      // localStorage.setItem("storageID", storageID)
+
       dispatch(setStorageID(storageID))
     }
-    if (storageID !== null) {
-      // console.log("storage id : " + storageID);
-      const response = getAllRootFolder(storageID)
+    // if (storageID !== null)
+      // {
+      console.log(storageID_temp)
+      const response = getAllRootFolder(storageID_temp)
         .then((value) => {
           setFolderList(value.rootFolders);
           console.log(value);
@@ -33,14 +37,14 @@ export default function Page() {
           console.log(e);
         });
       console.log(response);
-    }
-  });
+    // }
+  }
+  , [storageID]
+);
   return (
     <>
-      <NewFolder storageID={storageID}/>
-      {folderList !== null && (
-          <FolderList folders={folderList} />
-      )}
+      <NewFolder storageID={storageID_temp} />
+      {folderList !== null && <FolderList folders={folderList} />}
     </>
   );
 }

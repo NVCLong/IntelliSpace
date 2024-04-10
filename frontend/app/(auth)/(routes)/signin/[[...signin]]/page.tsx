@@ -91,9 +91,7 @@ const Page = () => {
               <GoogleOAuthProvider clientId="221707522416-c5ac904abilmbldbpq7m75t0kpekigjm.apps.googleusercontent.com">
                 <CustomButton />
               </GoogleOAuthProvider>
-              {/* <Button className="socialFormBtn hoverScale">
-                <SiGithub className="w-10 h-10" />
-              </Button> */}
+
             </div>
             <p className="text-center">or use this option</p>
             <Form {...form}>

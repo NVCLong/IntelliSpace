@@ -27,6 +27,11 @@ export const CustomButton = () => {
             localStorage.setItem("userId", loginResponse.data.user.id);
             console.log(loginResponse.data.storageId)
             dispatch(setStorageID(loginResponse.data.storageId));
+                  localStorage.setItem(
+                    "storageID",
+                    loginResponse.data.storageId
+                  );
+
             router.push("/dashboard");
         },
         prompt: "select_account",

@@ -47,8 +47,7 @@ export const NewFolder = (storageID) => {
       <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-        placement="auto"
-        className="flex"
+        placement="center"
       >
         <ModalContent>
           {(onClose) => (
@@ -72,6 +71,7 @@ export const NewFolder = (storageID) => {
                 <Button color="primary" onPress= {() => {
                   handleSubmit();
                   onClose();
+                  window.location.reload();
                 }}>
                   Submit
                 </Button>
