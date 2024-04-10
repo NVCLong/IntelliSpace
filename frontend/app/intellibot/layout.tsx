@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import NextTopLoader from "nextjs-toploader";
 import Sidebar from "@/components/Sidebar";
-import FolderList from "@/components/FolderList";
 
 export const metadata: Metadata = {
-  title: "Dashboard | IntelliSpace",
-  description: "IntelliSpace Dashboard for all your needs",
+  title: "IntelliBot | IntelliSpace",
+  description: "IntelliSpace AI chatbot",
 };
 
 const Dashboardlayout = ({ children }: { children: React.ReactNode }) => {
@@ -13,7 +12,6 @@ const Dashboardlayout = ({ children }: { children: React.ReactNode }) => {
     <div className="flex">
       <NextTopLoader color="#BF40BF" showSpinner={false} easing="ease" />
       <Sidebar />
-
       {children}
     </div>
   );

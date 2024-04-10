@@ -38,7 +38,6 @@ export default function Page() {
       {folderList !== null && (
           <FolderList folders={folderList} />
       )}
-
     </>
   );
 }
