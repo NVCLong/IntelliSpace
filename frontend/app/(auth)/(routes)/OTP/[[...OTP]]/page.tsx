@@ -45,13 +45,16 @@ const Page = () => {
       email: email,
       otp: values.otp
     }
+    if (email != null) {
+      dispatch(setEmail(email))
+    }
     console.log(values)
     const response = await axios.post(
       `http://localhost:8888/api/auth/checkOtp`,
       request
     );
     console.log(response.data);
-    dispatch(setEmail(email))
+
     // router.push("/changePassword");
   }
 
