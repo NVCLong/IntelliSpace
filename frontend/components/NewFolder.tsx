@@ -20,18 +20,14 @@ export const NewFolder = (storageID) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const handleSubmit = () => {
-
     const request = {
       name : folderName
     }
      const response = createRootFolder(storageID.storageID, request)
 
      console.log(response)
-    // console.log(storageID)
 
-
-  }
-
+  };
 
   return (
     <div className="mt-24 ml-20">
@@ -58,9 +54,9 @@ export const NewFolder = (storageID) => {
                 <Input
                   autoFocus
                   value={folderName}
+                  onChange={handleInput}
                   placeholder="Enter folder name"
                   variant="bordered"
-                  onChange={handleInput}
                 />
               </ModalBody>
 
@@ -68,8 +64,8 @@ export const NewFolder = (storageID) => {
                 <Button color="danger" variant="flat" onPress={onClose}>
                   Close
                 </Button>
-                <Button color="primary" onPress= {() => {
-                  handleSubmit();
+                <Button color="primary" onPress= {(e) => {
+                  handleSubmit(e);
                   onClose();
                   window.location.reload();
                 }}>

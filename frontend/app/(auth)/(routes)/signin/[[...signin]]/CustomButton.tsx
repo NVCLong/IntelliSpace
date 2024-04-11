@@ -25,6 +25,7 @@ export const CustomButton = () => {
             localStorage.setItem("access_token", loginResponse.data.accessToken);
             document.cookie = `refreshToken=${loginResponse.data.refreshToken}`;
             localStorage.setItem("userId", loginResponse.data.user.id);
+            localStorage.setItem("storageID",loginResponse.data.storageId);
             console.log(loginResponse.data.storageId)
             dispatch(setStorageID(loginResponse.data.storageId));
                   localStorage.setItem(

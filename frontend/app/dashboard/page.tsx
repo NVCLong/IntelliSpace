@@ -18,33 +18,40 @@ export default function Page() {
   const storageID: string | null = useAppSelector(
     (state) => state.storageSlice.storageID
   );
+  const [isFetch, setIsFetch] = useState(true);
+
+  const handleFetchData=async ()=>{
+      // if (isFetch) return; // Prevent redundant fetches
+
+      try {
+          const response = await getAllRootFolder(storageID_temp);
+          setFolderList(response.rootFolders);
+          setIsFetch(false); // Mark fetching complete
+          console.log(response);
+      } catch (error) {
+          console.error(error);
+      }
+
+  }
+    const handleNewFolderCreated = (b:boolean) => {
+        setIsFetch(b); // Trigger data fetching when a new folder is created
+    };
+
+
 
   useEffect(() => {
-    if (storageID != null) {
-      // localStorage.setItem("storageID", storageID)
-
-      dispatch(setStorageID(storageID))
-    }
-    // if (storageID !== null)
-      // {
-      console.log(storageID_temp)
-      const response = getAllRootFolder(storageID_temp)
-        .then((value) => {
-          setFolderList(value.rootFolders);
-          console.log(value);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-      console.log(response);
+    // if (storageID != null) {
+    //   // localStorage.setItem("storageID", storageID)
+    //   dispatch(setStorageID(storageID))
     // }
+    handleFetchData();
   }
-  , [storageID]
+  , [isFetch]
 );
   return (
     <>
-      <NewFolder storageID={storageID_temp} />
-      {folderList !== null && <FolderList folders={folderList} />}
+      <NewFolder storageID={storageID_temp}  />
+      {folderList !== null && <FolderList folders={folderList}  />}
     </>
   );
 }

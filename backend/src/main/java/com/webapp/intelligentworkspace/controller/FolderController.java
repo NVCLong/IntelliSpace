@@ -34,14 +34,16 @@ public class FolderController {
 
     @PatchMapping(value = "/update/{storageId}/{folderId}", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<FolderResponse> updateRootFolders(@PathVariable("storageId") Long storageId, @PathVariable("folderId") Long folderId, @RequestBody String folderName){
+    public ResponseEntity<FolderResponse> updateRootFolders(@PathVariable("storageId") Long storageId, @PathVariable("folderId") Long folderId, @RequestBody Folder folder){
         System.out.println("Updating folder");
-        return ResponseEntity.ok(folderService.updateFolder(folderId,storageId,folderName));
+
+        return ResponseEntity.ok(folderService.updateFolder(folderId,storageId,folder.getName()));
     }
     @PostMapping(value="/create/folder/{storageId}/{parentFolderId}",produces = "application/json")
     @ResponseBody
     public ResponseEntity<FolderResponse> createFolder(@PathVariable("parentFolderId") Long parentFolderId, @PathVariable("storageId") Long storageId,@RequestBody Folder folder){
         System.out.println("Create FOLDER");
+
         return  ResponseEntity.ok(folderService.createFolder(folder,parentFolderId,storageId));
     }
 
@@ -56,6 +58,7 @@ public class FolderController {
     @ResponseBody
     public ResponseEntity<FolderResponse> deleteFolder(@PathVariable ("storageId") Long storageId,@RequestParam("folderId") Long folderId){
         System.out.println("Deleting folder ");
+        System.out.println(folderId);
         return ResponseEntity.ok(folderService.deleteFolder(folderId,storageId));
     }
 }

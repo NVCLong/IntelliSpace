@@ -91,7 +91,7 @@ public class JwtService {
                 .subject(user.getUsername())
                 .id(user.getId().toString())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis()+ 20*1000))
+                .expiration(new Date(System.currentTimeMillis()+ 60*1000))
                 .signWith(getSignKeys())
                 .compact();
     }

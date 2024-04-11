@@ -53,6 +53,7 @@ const Page = () => {
     localStorage.setItem("access_token", response.data.accessToken);
     document.cookie = `refreshToken=${response.data.refreshToken}`;
     localStorage.setItem("userId", response.data.user.id);
+    localStorage.setItem("storageID", response.data.storageId);
     console.log(response.data);
     dispatch(setStorageID(response.data.storageId));
     router.push("/dashboard");

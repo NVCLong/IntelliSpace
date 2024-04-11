@@ -1,5 +1,7 @@
 import { jwtDecode, JwtPayload } from "jwt-decode";
 import axios from "axios";
+import {Simulate} from "react-dom/test-utils";
+import error = Simulate.error;
 
 
 export const api = axios.create({
@@ -13,6 +15,7 @@ export const getHeader = async () => {
   const decoded: JwtPayload = jwtDecode(accessToken); // Type assertion for decoded data
   // @ts-ignore
   const isExpired = Date.now() >= decoded.exp * 1000; // Check expiration in milliseconds
+  console.log(isExpired)
   if (isExpired) {
     const userId = localStorage.getItem("userId");
     const response = await api.get(`/auth/newAccessToken?userId=${userId}`);
@@ -47,7 +50,6 @@ export const createRootFolder = async (storageId: string, folder: Object)=>{
       headers: await getHeader()
     },
   )
-    console.log("API CALLLLLL")
 
     console.log(response.data)
     return response.data;
@@ -67,5 +69,36 @@ export const sendMailPassword= async (email:string)=>{
   }catch (e) {
     console.log(e)
   }
+}
+
+export const deleteFolder = async (storageId: string, folderId: number) => {
+  try {
+    const headers = await getHeader(); // Getting headers asynchronously
+    const response = await api.delete(`/folder/delete/${storageId}?folderId=${folderId}`, {
+      headers: headers,
+    });
+
+    console.log("Folder deleted successfully:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting folder:", error);
+
+    throw error; // Rethrowing the error for further handling
+  }
+};
+export  const updateFolder= async (storageId: string, folderId: string, newFolder: object)=>{
+  try {
+    const  headers= await getHeader();
+    // @ts-ignore
+    const response = await api.patch(`/folder/update/${storageId}/${folderId}`,newFolder,{
+      headers:headers
+    })
+    return response.data
+  }catch (error) {
+    console.error("Error deleting folder:", error);
+
+    throw error; // Rethrowing the error for further handling
+  }
+
 }
 
