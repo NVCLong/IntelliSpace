@@ -14,7 +14,7 @@ import {
 
 export const NewFolder = (storageID) => {
   const [folderName, setFolderName] = React.useState("");
-  const handleInput = (e) => {
+  const handleInput = (e: { target: { value: React.SetStateAction<string>; }; }) => {
     setFolderName(e.target.value);
   }
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -65,7 +65,7 @@ export const NewFolder = (storageID) => {
                   Close
                 </Button>
                 <Button color="primary" onPress= {(e) => {
-                  handleSubmit(e);
+                  handleSubmit();
                   onClose();
                   window.location.reload();
                 }}>

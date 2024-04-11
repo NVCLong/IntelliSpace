@@ -26,6 +26,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders }) => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [folderName,setFolderName]=useState('');
     const  storageId= localStorage.getItem("storageID")
+    const [currentFolderId, setCurrenFolderId]=useState('');
 
     const handleDelete=(folderId:number)=>{
        // @ts-ignore
@@ -34,7 +35,10 @@ const FolderList: React.FC<FolderListProps> = ({ folders }) => {
             console.log(response)
         }
     }
-    const handleInput = (e) => {
+    const handleChangeFolder=(folderId)=>{
+        setCurrenFolderId(folderId);
+    }
+    const handleInput = (e: { target: { value: React.SetStateAction<string>; }; }) => {
         setFolderName(e.target.value);
     }
     const handleUpdate= (folderId: string)=>{
@@ -56,8 +60,11 @@ const FolderList: React.FC<FolderListProps> = ({ folders }) => {
         {folders.map((folder) => (
             <>
           <div
-            key={folder.id}
-            onClick={onOpen}
+              key={folder.id}
+            onClick={()=>{
+                handleChangeFolder(folder.id)
+                onOpen()
+            }}
             className="flex items-center p-4 bg-white border rounded-md shadow-md cursor-pointer hoverScale"
           >
             <MdFolder className="text-blue-400" size={24} />
@@ -86,7 +93,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders }) => {
 
                       <ModalFooter>
                           <Button color="danger" variant="flat" onPress={()=>{
-                              handleDelete(Number.parseInt(folder.id))
+                              handleDelete(Number.parseInt(currentFolderId))
                               onClose();
                               setTimeout(()=>{
                                   window.location.reload();
@@ -102,7 +109,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders }) => {
                               Open
                           </Button>
                           <Button color="primary" onPress= {(e) => {
-                              handleUpdate(folder.id)
+                              handleUpdate(currentFolderId)
                               window.location.reload();
                           }}>
                               Edit
