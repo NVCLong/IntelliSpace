@@ -102,3 +102,17 @@ export  const updateFolder= async (storageId: string, folderId: string, newFolde
 
 }
 
+export  const openFolder= async (storageId: string | null, folderId: string)=>{
+  try {
+    const  headers= await getHeader();
+    const response= await api.get(`/folder/getFolder/${storageId}?folderId=${folderId}`,{
+      headers: headers
+    } )
+
+    return response.data
+
+  }catch (e) {
+    console.error("Error :", e)
+    throw e;
+  }
+}

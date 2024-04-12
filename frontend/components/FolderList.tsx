@@ -11,7 +11,7 @@ import {
     ModalHeader,
     useDisclosure
 } from "@nextui-org/react";
-import {deleteFolder, updateFolder} from "@/lib/apiCall";
+import {deleteFolder, openFolder, updateFolder} from "@/lib/apiCall";
 
 interface Folder {
   id: string;
@@ -35,7 +35,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders }) => {
             console.log(response)
         }
     }
-    const handleChangeFolder=(folderId)=>{
+    const handleChangeFolder=(folderId:string)=>{
         setCurrenFolderId(folderId);
     }
     const handleInput = (e: { target: { value: React.SetStateAction<string>; }; }) => {
@@ -49,6 +49,11 @@ const FolderList: React.FC<FolderListProps> = ({ folders }) => {
         if(storageId!==null) {
             const response = updateFolder(storageId, folderId, newFolder)
             console.log(response)
+        }
+    }
+    const handleOpen=async (folderId:string)=>{
+        if(storageId!==null){
+            localStorage.setItem("folderId",folderId);
         }
     }
 
@@ -103,6 +108,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders }) => {
                               Delete
                           </Button>
                           <Button color="primary" onPress= {(e) => {
+                              handleOpen(currentFolderId);
                               onClose();
                               window.location.reload();
                           }}>
@@ -119,13 +125,11 @@ const FolderList: React.FC<FolderListProps> = ({ folders }) => {
               )}
           </ModalContent>
       </Modal>
+
         </>
         ))}
       </div>
-
-
     </div>
-
 
   );
 };
