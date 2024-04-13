@@ -22,6 +22,16 @@ public class User {
     @JsonManagedReference
     @JsonIgnore
     private Storage storage;
+
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="binId",referencedColumnName = "id")
+    @JsonManagedReference
+    @JsonIgnore
+    private Bin bin;
+
+    private Long resetCode;
+
     @Override
     public String toString() {
         return "User [id=" + id + ", username=" + username + ", email=" + email + "]";

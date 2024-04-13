@@ -17,9 +17,12 @@ public class NoteService {
 
     private final UserRepository userRepository;
 
-    public NoteService(NoteRepository noteRepository, UserRepository userRepository) {
+    private final OpenAIService openAIService;
+
+    public NoteService(NoteRepository noteRepository, UserRepository userRepository,OpenAIService openAIService) {
         this.noteRepository = noteRepository;
         this.userRepository = userRepository;
+        this.openAIService= openAIService;
     }
 
     public List<Note>  getALlNotesByUserId(Integer userId){
@@ -86,7 +89,12 @@ public class NoteService {
             return null;
         }
         //
-
+        String content=openAIService.summarizeNote(note.getContent());
+        System.out.println(content);
+        note.setContent(content);
+        noteRepository.save(note);
         return  note;
     }
+
+
 }

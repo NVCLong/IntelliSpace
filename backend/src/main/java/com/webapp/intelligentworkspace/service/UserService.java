@@ -2,8 +2,10 @@ package com.webapp.intelligentworkspace.service;
 
 import com.webapp.intelligentworkspace.model.entity.Storage;
 import com.webapp.intelligentworkspace.model.entity.Token;
+import com.webapp.intelligentworkspace.model.request.OTPRequest;
 import com.webapp.intelligentworkspace.model.response.AuthResponse;
 import com.webapp.intelligentworkspace.model.entity.User;
+import com.webapp.intelligentworkspace.model.response.OtpResponse;
 import com.webapp.intelligentworkspace.repository.StorageRepository;
 import com.webapp.intelligentworkspace.repository.TokenRepository;
 import com.webapp.intelligentworkspace.repository.UserRepository;
@@ -14,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
+import java.util.Objects;
 import java.util.Random;
 
 @Service
@@ -31,8 +34,9 @@ public class UserService {
     StorageService storageService;
     StorageRepository storageRepository;
     private final AuthenticationManager authenticationManager;
+    EmailSenderService emailSenderService;
 
-    public UserService(StorageRepository storageRepository,UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager,TokenRepository tokenRepository, StorageService storageService) {
+    public UserService(StorageRepository storageRepository,UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager,TokenRepository tokenRepository, StorageService storageService, EmailSenderService emailSenderService) {
         this.tokenRepository=tokenRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -40,6 +44,7 @@ public class UserService {
         this.authenticationManager = authenticationManager;
         this.storageService= storageService;
         this.storageRepository=storageRepository;
+        this.emailSenderService= emailSenderService;
     }
 
     public AuthResponse createUser(User user){
@@ -59,7 +64,7 @@ public class UserService {
             storageRepository.save(storage);
             newUser.setStorage(storage);
             userRepository.save(newUser);
-            String token= jwtService.generateAccessToken(newUser);
+            String token= jwtService.generateRefreshToken(newUser);
             saveToken(token,newUser);
 
 
@@ -86,7 +91,7 @@ public class UserService {
                 if(user1 != null) {
                     String accessToken = jwtService.generateAccessToken(user1);
                     String refreshToken = jwtService.generateRefreshToken(user1);
-                    saveToken(accessToken, user1);
+                    saveToken(refreshToken, user1);
                     return new AuthResponse("Login successfully hehe", accessToken, refreshToken, user1,user1.getStorage().getId());
                 }
                 else {
@@ -139,7 +144,7 @@ public class UserService {
             if(user1 != null) {
                 String accessToken = jwtService.generateAccessToken(user1);
                 String refreshToken = jwtService.generateRefreshToken(user1);
-                saveToken(accessToken, user1);
+                saveToken(refreshToken, user1);
                 return new AuthResponse("Login successfully hehe", accessToken, refreshToken, user1,user1.getStorage().getId());
             }
             else {
@@ -160,7 +165,7 @@ public class UserService {
         storageRepository.save(storage);
         newUser.setStorage(storage);
         userRepository.save(newUser);
-        String token= jwtService.generateAccessToken(newUser);
+        String token= jwtService.generateRefreshToken(newUser);
         saveToken(token,newUser);
         String refreshToken= jwtService.generateAccessToken(newUser);
         return  new AuthResponse("Login Success",token,refreshToken,newUser, newUser.getStorage().getId());
@@ -171,9 +176,18 @@ public class UserService {
         if(user==null){
             return new AuthResponse("Not found user", null, null);
         }
-        String token=jwtService.refreshAccessToken(refreshToken, user);
-        saveToken(token, user);
-        return new AuthResponse("This is new accessToken",token,null );
+        Token userRefreshToken= tokenRepository.findByToken(refreshToken).orElse(null);
+        if(jwtService.isExpired(refreshToken)){
+            logOut(userId);
+            return new AuthResponse("Log out", null, null );
+        }
+        String token=jwtService.refreshAccessToken(userRefreshToken.getToken(), user);
+        return new AuthResponse("This is new accessToken",token,refreshToken );
+    }
+
+
+    public void resetPassword(){
+
     }
 
     public void logOut(Integer userId){
@@ -192,4 +206,43 @@ public class UserService {
             }
         }
     }
+
+    public void sendEmail(String email){
+        User user= userRepository.findUserByEmail(email).orElse(null);
+        if( user == null){
+            System.out.println("Can not find user by user Email");
+            return;
+        }
+        Random random= new Random();
+        user.setResetCode(random.nextLong(10000,99999));
+        userRepository.save(user);
+        Long resetCode= user.getResetCode();
+        String subject = "Reset Password OTP Code ";
+        emailSenderService.sendEmail(email,subject,resetCode.toString());
+
+    }
+
+    public OtpResponse checkOtp(OTPRequest otpRequest){
+        User user= userRepository.findUserByEmail(otpRequest.getEmail()).orElse(null);
+        if(user== null){
+            return  new OtpResponse("Do not have user", false);
+        }
+
+        if(Objects.equals(otpRequest.getOtp(), user.getResetCode())){
+            return new OtpResponse("Valid code", true);
+        }else {
+            return new OtpResponse("Invalid Code", false);
+        }
+    }
+
+    public AuthResponse resetPassword(User request){
+        User user = userRepository.findUserByEmail(request.getEmail()).orElse(null);
+        if(user==null){
+            return new AuthResponse("Not valid user");
+        }
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        userRepository.save(user);
+        return  new AuthResponse("Change Success");
+    }
+
 }

@@ -3,9 +3,9 @@ import { useState } from "react";
 import { NAV_LINKS } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
-import Button from "./Button";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { FiUser, FiMenu } from "react-icons/fi";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -31,9 +31,8 @@ const Navbar = () => {
       </Link>
 
       <div
-        className={`absolute right-5 mt-36 transform translate-x-2 lg:hidden ${
-          isMenuOpen ? "block" : "hidden"
-        }`}
+        className={`absolute right-5 mt-36 transform translate-x-2 lg:hidden ${isMenuOpen ? "block" : "hidden"
+          }`}
       >
         <ul className="flex flex-col items-center p-4 mt-24 text-black bg-white rounded-md shadow-lg">
           {NAV_LINKS.map((link) => (
@@ -54,7 +53,7 @@ const Navbar = () => {
           <li key={link.key}>
             <Link
               href={link.href}
-              className="font-medium ml-10 px-6 py-2 rounded-full text-xl text-neutral-600 flexCenter cursor-pointer pb-1.5 transition hover:text-gray-900 hover:shadow-lg hoverScale"
+              className="relative font-semibold ml-10 px-6 py-2 rounded-md text-xl text-neutral-600 flex cursor-pointer pb-1.5 transition hover:text-gray-900 duration-200 after:block after:content-[''] after:absolute after:h-[3px] after:bg-gray-900 after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-200 after:origin-center"
             >
               {link.label}
             </Link>
@@ -62,21 +61,22 @@ const Navbar = () => {
         ))}
       </ul>
 
-      <div className="hidden hoverScale lg:flexCenter drop-shadow-md" onClick={handleSignin}>
-        <Button
-          type="button"
-          title="Login"
-          icon="user-solid.svg"
-          variant="btn_dark"
-        />
+      <div className="hidden gap-2 px-4 py-2 bg-blue-400 rounded-full cursor-pointer lg:flex sm:hidden hoverScale drop-shadow-md flexCenter bold-16 " onClick={handleSignin}>
+        <div className="text-white fill-current ">
+          <FiUser size={20} />
+        </div>
+        <span className="font-semibold text-white md:block">Login</span>
       </div>
 
       <div
-        className="relative inline-block cursor-pointer lg:hidden hoverScale"
+        className="relative inline-block p-1 bg-blue-400 rounded-md shadow lg:hidden drop-shadow-xl"
         onClick={toggleMenu}
       >
-        <Image src="menu-dots.svg" alt="menu" width={32} height={32} />
+        <div className="text-white cursor-pointer fill-current hover:text-gray-300">
+          <FiMenu size={40} />
+        </div>
       </div>
+
     </motion.nav>
   );
 };

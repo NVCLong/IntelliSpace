@@ -26,6 +26,7 @@ public class OpenAIController {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity <ChatRequest> requestEntity = new HttpEntity<>(request, headers);
+        System.out.println(request);
         return openAIService.chat(requestEntity, openAiModel);
     }
 }
