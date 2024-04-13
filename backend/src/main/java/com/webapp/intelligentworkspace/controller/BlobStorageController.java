@@ -16,8 +16,8 @@ public class BlobStorageController {
         this.blobStorageService = blobStorageService;
     }
 
-    @PostMapping(value = "/upload/{userId}")
-    public String uploadFile(@RequestParam("file") MultipartFile file, @PathVariable("userId") String userId) {
+    @PostMapping(value = "/upload/{userId}/{storageId}")
+    public String uploadFile(@RequestParam("file") MultipartFile file, @PathVariable("userId") Integer userId) {
         return blobStorageService.upload(file, userId);
     }
 

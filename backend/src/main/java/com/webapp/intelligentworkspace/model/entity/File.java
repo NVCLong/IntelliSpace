@@ -1,6 +1,8 @@
 package com.webapp.intelligentworkspace.model.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,17 +34,16 @@ public class File {
 
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "storage_id")
+    @JsonManagedReference
+    @JsonIgnore
+    private Storage storage;
 
-//    @ManyToOne
-//    @JoinColumn(name = "parent_folder_id")
-//    private Folder parentFolder;
 
 
     @ManyToOne
-    @JoinColumns({
-            @JoinColumn(name = "parent_folder_id", referencedColumnName = "id")
-    })
-    private Folder parentFolder;
+    @JoinColumn(name = "folder_id", referencedColumnName = "id")
+    @JsonManagedReference
+    @JsonIgnore
+    private Folder folder;
 }

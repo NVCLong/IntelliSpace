@@ -47,7 +47,9 @@ public class Folder {
     @JsonIgnore
     private List<Folder> subFolders;
 
-    @OneToMany(mappedBy = "parentFolder", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "folder", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    @JsonIgnore
     private Set<File> files = new HashSet<>();
 
     // Removed the @ManyToMany relationship with File

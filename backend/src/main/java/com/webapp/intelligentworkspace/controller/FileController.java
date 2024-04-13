@@ -17,14 +17,14 @@ public class FileController {
         this.fileService = fileService;
     }
 
-    @PostMapping(value = "/upload/{userId}/{folderId}", produces = "multipart/form-data")
-    public String uploadFileToFolder(@RequestParam("file") MultipartFile file, @PathVariable("userId") String userId, @PathVariable("folderId") Long folderId) {
-        return fileService.uploadFile(file, userId, folderId);
+    @PostMapping(value = "/upload/{userId}/{folderId}/{storageId}", produces = "multipart/form-data")
+    public String uploadFileToFolder(@RequestParam("file") MultipartFile file, @PathVariable("userId") Integer userId, @PathVariable("folderId") Long folderId, @PathVariable("storageId") Long storageId) {
+        return fileService.uploadFile(file, storageId , folderId, userId);
     }
 
     @DeleteMapping(value = "/delete/{fileId}", produces = "application/json")
-    public String deleteFile(@PathVariable("fileId") Long fileId) {
-        return fileService.deleteFile(fileId);
+    public String deleteFile(@PathVariable("fileId") Long fileId, @RequestParam("userId") Integer userId ) {
+        return fileService.deleteFile(fileId, userId);
     }
 
     @GetMapping(value = "/list/{folderId}", produces = "application/json")
