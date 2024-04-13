@@ -12,7 +12,7 @@ import {
   Input,
 } from "@nextui-org/react";
 
-export const NewFolder = (storageID) => {
+export const NewFolder = (storageID:any) => {
   const [folderName, setFolderName] = React.useState("");
   const folderId=localStorage.getItem("folderId")
   const handleInput = (e: { target: { value: React.SetStateAction<string>; }; }) => {
