@@ -78,7 +78,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders,parentFolderId}) => {
             className="flex items-center p-4 bg-white border rounded-md shadow-md cursor-pointer hoverScale"
           >
             <MdFolder className="text-blue-400" size={24} />
-            <span className="ml-4">{folder.id}</span>
+            <span className="ml-4">{folder.name}</span>
           </div>
 
             <Modal

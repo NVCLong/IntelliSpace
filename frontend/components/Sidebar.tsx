@@ -26,6 +26,9 @@ const Sidebar: React.FC = () => {
     console.log(response.data);
     localStorage.removeItem('access_token');
     localStorage.removeItem('userId');
+    localStorage.removeItem("storageID")
+    localStorage.removeItem("folderId")
+    localStorage.removeItem("parentFolder")
     // document.cookie = 'cookieName=refreshToken; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     clearCookies();
   }
