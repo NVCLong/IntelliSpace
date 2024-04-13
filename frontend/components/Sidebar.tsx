@@ -2,7 +2,15 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { FiHome, FiFolder, FiUsers, FiList, FiCodesandbox, FiTrash2, FiLogOut } from "react-icons/fi";
+import {
+  FiHome,
+  FiFolder,
+  FiVideo,
+  FiList,
+  FiCodesandbox,
+  FiTrash2,
+  FiLogOut,
+} from "react-icons/fi";
 import StorageBar from './StorageBar';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
@@ -24,18 +32,26 @@ const Sidebar: React.FC = () => {
 
 
   const navItems = [
-    { name: 'Home', path: '/', icon: FiHome, onClick: () => { } },
-    { name: 'Files', path: '/drive', icon: FiFolder, onClick: () => { } },
-    { name: 'Shared', path: '/shared', icon: FiUsers, onClick: () => { } },
-    { name: 'Notes', path: '/note', icon: FiList, onClick: () => { } },
-    { name: 'IntelliBot', path: '/intelliBot', icon: FiCodesandbox, onClick: () => { } },
-    { name: 'Bin', path: '/bin', icon: FiTrash2, onClick: () => { } },
+    { name: "Home", path: "/", icon: FiHome, onClick: () => {} },
     {
-      name: 'Logout', path: '/', icon: FiLogOut, onClick: () => {
-        console.log("logout")
-        handleLogout()
-      }
-    }
+      name: "IntelliBot",
+      path: "/intelliBot",
+      icon: FiCodesandbox,
+      onClick: () => {},
+    },
+    { name: "Files", path: "/drive", icon: FiFolder, onClick: () => {} },
+    { name: "Meeting", path: "/meet", icon: FiVideo, onClick: () => {} },
+    { name: "Notes", path: "/note", icon: FiList, onClick: () => {} },
+    { name: "Bin", path: "/bin", icon: FiTrash2, onClick: () => {} },
+    {
+      name: "Logout",
+      path: "/",
+      icon: FiLogOut,
+      onClick: () => {
+        console.log("logout");
+        handleLogout();
+      },
+    },
   ];
 
   const [open, setOpen] = useState(false);

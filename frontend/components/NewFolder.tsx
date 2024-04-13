@@ -38,14 +38,14 @@ export const NewFolder = (storageID) => {
   };
 
   return (
-    <div className="mt-24 ml-20">
+    <div className="mt-24 ml-5">
         <Button
             className="flex items-center px-4 py-2 text-gray-600 bg-white border rounded-full shadow-md cursor-pointer hoverScale"
             color="primary"
             onPress={onOpen}
         >
             <FiFolderPlus size={24} />
-            <span className="ml-0 font-semibold md:block">Create folder</span>
+            <span className="ml-2 font-bold md:block">New folder</span>
         </Button>
 
       <Modal

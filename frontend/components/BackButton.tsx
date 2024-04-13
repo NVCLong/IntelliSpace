@@ -1,8 +1,6 @@
 import React from "react";
-import { RiArrowGoBackFill } from "react-icons/ri";
-import {openFolder} from "@/lib/apiCall";
-import {FiFolderPlus} from "react-icons/fi";
-import {Button} from "@nextui-org/react";
+import { FiArrowLeftCircle } from "react-icons/fi";
+
 
 export const BackButton=()=>{
     const storageId= localStorage.getItem("storageID")
@@ -22,12 +20,12 @@ export const BackButton=()=>{
         <>
             <div className="mt-24 ml-20">
             <button
-                className="flex items-center px-4 py-2 text-gray-600 bg-white border rounded-full shadow-md cursor-pointer hoverScale"
+                className="flex items-center px-2 py-2 text-gray-600 bg-white border rounded-full shadow-md cursor-pointer hoverScale"
                 color="primary"
                 onClick={handleCallBack}
             >
-                <RiArrowGoBackFill size={24} />
-                <span className="ml-0 font-semibold md:block">Back</span>
+                <FiArrowLeftCircle size={24} />
+                {/* <span className="font-bold md:block"></span> */}
             </button>
             </div>
         </>

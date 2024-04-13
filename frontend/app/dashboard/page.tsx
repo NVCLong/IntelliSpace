@@ -77,10 +77,8 @@ export default function Page() {
   // @ts-ignore
     return (
     <>
-
-        <NewFolder storageID={storageID_temp}  />
         <BackButton   />
-
+        <NewFolder storageID={storageID_temp}  />
         <div>
         {folderList !== null && <FolderList folders={folderList}  parentFolderId={parentFolder.parentFolderId} />}
         </div>
