@@ -3,66 +3,60 @@ package com.webapp.intelligentworkspace.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name="folders")
+@Table(name = "folders")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Folder {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Column(name="is_public", columnDefinition = "false")
-    private  boolean isPublic;
-    @Column(name="name")
-    private  String name;
+
+    @Column(name = "is_public", columnDefinition = "false")
+    private boolean isPublic;
+
+    @Column(name = "name")
+    private String name;
 
     @ManyToOne
-    @JoinColumn(name="storage_id")
+    @JoinColumn(name = "storage_id")
     @JsonManagedReference
     @JsonIgnore
     private Storage storage;
 
     @ManyToOne
-    @JoinColumn(name = "parrent_folder_id")
+    @JoinColumn(name = "parent_folder_id")
     @JsonManagedReference
     @JsonIgnore
     private Folder parentFolder;
 
-    @OneToMany(mappedBy="parentFolder", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "parentFolder", cascade = CascadeType.ALL)
     @JsonManagedReference
     @JsonIgnore
     private List<Folder> subFolders;
 
-    @ManyToMany(mappedBy = "folder")
-    private Set<File> files;
+    @OneToMany(mappedBy = "parentFolder", cascade = CascadeType.ALL)
+    private Set<File> files = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(
-            name = "files",
-            joinColumns = @JoinColumn(name = "id"),
-            inverseJoinColumns = @JoinColumn(name = "id"))
-
-    // many many
-    // spring open ai
-    // files
-
-
-
-
-
+    // Removed the @ManyToMany relationship with File
 
     public void addSubFolder(Folder folder) {
-        if(subFolders==null){
-            subFolders= new ArrayList<>();
+        if (subFolders == null) {
+            subFolders = new ArrayList<>();
             subFolders.add(folder);
-        }else {
+        } else {
             subFolders.add(folder);
         }
     }
@@ -74,5 +68,14 @@ public class Folder {
                 ", isPublic=" + isPublic +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    public void addFile(File fileEntity) {
+        if (files == null) {
+            files = new HashSet<>();
+            files.add(fileEntity);
+        } else {
+            files.add(fileEntity);
+        }
     }
 }
