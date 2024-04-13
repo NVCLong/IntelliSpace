@@ -50,6 +50,7 @@ public class FolderService {
     public FolderResponse getSubFolderById(Long folderId, Long storageId) {
         Folder folder=folderRepository.findById(folderId).orElse(null);
         Storage storage= storageRepository.findById(storageId).orElse(null);
+
         if(folder==null){
             return FolderResponse.builder()
                     .folder(null)
@@ -60,10 +61,15 @@ public class FolderService {
                     .build();
         }else {
             List<Folder> subFolders = folderRepository.findAllByParentFolderId(folderId);
+            Folder parentFolder = null;
+            if(folder.getParentFolder() != null) {
+                parentFolder= folderRepository.findById(folder.getParentFolder().getId()).orElse(null);
+            }
             sortFolders(subFolders);
             return FolderResponse.builder()
                     .folder(folder)
                     .storage(storage)
+                    .parentFolder(parentFolder)
                     .subFolders(subFolders)
                     .message("Success to find the folder")
                     .status("Success")

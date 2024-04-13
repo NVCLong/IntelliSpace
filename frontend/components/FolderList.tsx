@@ -19,10 +19,12 @@ interface Folder {
 }
 
 interface FolderListProps {
-  folders: Folder[];
+  folders: Folder[],
+  parentFolderId: string
 }
 
-const FolderList: React.FC<FolderListProps> = ({ folders }) => {
+// @ts-ignore
+const FolderList: React.FC<FolderListProps> = ({ folders,parentFolderId}) => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [folderName,setFolderName]=useState('');
     const  storageId= localStorage.getItem("storageID")
@@ -52,8 +54,11 @@ const FolderList: React.FC<FolderListProps> = ({ folders }) => {
         }
     }
     const handleOpen=async (folderId:string)=>{
+        // localStorage.setItem("parentFolderId",parentFolderId);
+        // console.log(parentFolderId)
         if(storageId!==null){
             localStorage.setItem("folderId",folderId);
+            // localStorage.setItem("parentFolderId",parentFolderId)
         }
     }
 
@@ -73,7 +78,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders }) => {
             className="flex items-center p-4 bg-white border rounded-md shadow-md cursor-pointer hoverScale"
           >
             <MdFolder className="text-blue-400" size={24} />
-            <span className="ml-4">{folder.name}</span>
+            <span className="ml-4">{folder.id}</span>
           </div>
 
             <Modal

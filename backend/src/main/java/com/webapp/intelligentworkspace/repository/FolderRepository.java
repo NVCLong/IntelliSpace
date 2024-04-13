@@ -24,5 +24,7 @@ where f.storage.id = :storage_id and f.parentFolder is null
 """)
     List<Folder> findAllRootFolderById(Long storage_id);
 
+    Optional<Folder> findBySubFolders(Folder subFolder);
+
     Folder findByParentFolder(Folder parentFolder);
 }
