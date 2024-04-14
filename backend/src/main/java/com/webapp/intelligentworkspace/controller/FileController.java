@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import static org.springframework.util.MimeTypeUtils.IMAGE_JPEG_VALUE;
@@ -26,8 +27,8 @@ public class FileController {
         this.blobStorageService = blobStorageService;
     }
 
-    @PostMapping(value = "/upload/{userId}/{folderId}/{storageId}", produces = "multipart/form-data")
-    public String uploadFileToFolder(@RequestParam("file") MultipartFile file, @PathVariable("userId") Integer userId, @PathVariable("folderId") Long folderId, @PathVariable("storageId") Long storageId) {
+    @PostMapping(value = "/upload/{userId}/{folderId}/{storageId}", consumes = "multipart/form-data", produces = "application/json")
+    public String uploadFileToFolder(@RequestParam("file") MultipartFile file, @PathVariable("userId") Integer userId, @PathVariable("folderId") Long folderId, @PathVariable("storageId") Long storageId)throws SQLException, IOException {
         return fileService.uploadFile(file, storageId , folderId, userId);
     }
 

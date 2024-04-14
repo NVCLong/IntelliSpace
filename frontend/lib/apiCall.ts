@@ -26,7 +26,7 @@ export const getHeader = async () => {
   accessToken = localStorage.getItem("access_token");
   return {
     Authorization: `Bearer ${accessToken}`,
-    "Content-Type": "application/json",
+    // "Content-Type": "application/json",
   };
 };
 
@@ -132,5 +132,23 @@ export const createFolder= async (storageId:string, parentFolderId:string, newFo
 
   }catch (e) {
     console.log(e)
+  }
+}
+
+export const uploadFile= async (userId:string,folderId:string,storaegId:string,file: string | Blob)=>{
+  try {
+    console.log("upload file ")
+    console.log(file)
+    const form= new FormData()
+    form.append("file",file)
+
+    const header= await  getHeader();
+    const  response= await api.post(`/file/upload/${userId}/${folderId}/${storaegId}`,form,{
+      headers: header
+    })
+    return response.data
+  }catch (e) {
+    console.error(e)
+    throw e;
   }
 }

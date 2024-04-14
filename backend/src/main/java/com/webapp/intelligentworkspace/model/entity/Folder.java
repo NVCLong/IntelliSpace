@@ -3,9 +3,7 @@ package com.webapp.intelligentworkspace.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -14,7 +12,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "folders")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Folder {
@@ -37,7 +36,7 @@ public class Folder {
     private Storage storage;
 
     @ManyToOne
-    @JoinColumn(name = "parent_folder_id")
+    @JoinColumn(name = "parrentFolder_id")
     @JsonManagedReference
     @JsonIgnore
     private Folder parentFolder;

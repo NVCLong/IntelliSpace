@@ -30,7 +30,6 @@ public class FolderService {
         List<Folder> rootFolderList = folderRepository.findAllRootFolderById(storageId);
         sortFolders(rootFolderList);
         System.out.println(rootFolderList);
-        System.out.println(rootFolderList);
         if(rootFolderList.isEmpty()){
             return RootFolderResponse.builder()
                     .rootFolders(null)

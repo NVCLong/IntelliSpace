@@ -10,6 +10,7 @@ import { setStorageID } from '@/lib/features/todos/storageSlice';
 import { NewFolder } from "@/components/NewFolder";
 import {string} from "zod";
 import {BackButton} from "@/components/BackButton";
+import {UploadFile} from "@/components/UploadFile";
 
 
 export default function Page() {
@@ -79,6 +80,7 @@ export default function Page() {
     <>
         <BackButton   />
         <NewFolder storageID={storageID_temp}  />
+        <UploadFile />
         <div>
         {folderList !== null && <FolderList folders={folderList}  parentFolderId={parentFolder.parentFolderId} />}
         </div>
