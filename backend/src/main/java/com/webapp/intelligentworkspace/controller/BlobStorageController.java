@@ -31,10 +31,6 @@ public class BlobStorageController {
         return blobStorageService.delete(userId, fileName);
     }
 
-    @PostMapping(value = "/createContainer")
-    public void createContainer(@RequestParam("userId") String userId) {
-        blobStorageService.createContainer(userId);
-    }
 
     @PostMapping(value = "/deleteContainer")
     public void deleteContainer(@RequestParam("userId") String userId) {

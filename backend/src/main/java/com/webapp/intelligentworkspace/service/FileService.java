@@ -61,7 +61,7 @@ public class FileService {
             folder.addFile(fileEntity);
             folderRepository.save(folder);
 
-//            storageService.updateCapacity(user.getStorage().getId(), file.getSize());
+            storageService.updateCapacity(storageId, file.getSize());
 
             return "Uploaded Successfully, file saved in the database";
         } catch (Exception e) {
