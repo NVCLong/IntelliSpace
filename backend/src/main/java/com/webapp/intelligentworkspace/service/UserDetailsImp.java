@@ -24,16 +24,18 @@ public class UserDetailsImp implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> userList= userRepository.findUserByUsername(username);
+        Optional<User> userList = userRepository.findUserByUsername(username);
         System.out.println(userList);
-        if(userList.isEmpty()){
-            throw new UsernameNotFoundException("Can not find user by username "+username);
+        if (userList.isEmpty()) {
+            throw new UsernameNotFoundException("Can not find user by username " + username);
         }
-        username= userList.get().getUsername();
-        String password= userList.get().getPassword();
-        ArrayList<GrantedAuthority> authorityArrayList= new ArrayList<>();
+
+        String foundUsername = userList.get().getUsername();
+        String password = userList.get().getPassword();
+
+        ArrayList<GrantedAuthority> authorityArrayList = new ArrayList<>();
         authorityArrayList.add(new SimpleGrantedAuthority("user"));
         // can improve the admin site by assgin the role admin for special user
-        return new org.springframework.security.core.userdetails.User(username,password,authorityArrayList);
+        return new org.springframework.security.core.userdetails.User(foundUsername, password, authorityArrayList);
     }
 }
