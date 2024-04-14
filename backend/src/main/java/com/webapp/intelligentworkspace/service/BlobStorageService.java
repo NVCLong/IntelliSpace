@@ -12,6 +12,7 @@ import com.azure.storage.blob.BlobClient;
 import com.azure.storage.blob.BlobContainerClient;
 import com.azure.storage.blob.BlobServiceClient;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -22,7 +23,7 @@ public class BlobStorageService {
     BlobServiceClient blobServiceClient;
 
     public String upload(MultipartFile file, Integer userId) {
-        BlobContainerClient containerClient = blobServiceClient.getBlobContainerClient(userId.toString());
+        BlobContainerClient containerClient =getContainer(userId);
 
         try (InputStream inputStream = file.getInputStream()) {
             BlobClient blobClient = containerClient.getBlobClient(file.getOriginalFilename());
@@ -44,6 +45,16 @@ public class BlobStorageService {
         return "Deleted Successfully";
     }
 
+    public byte[]  getFile(String filename,Integer userId){
+        BlobContainerClient blobContainerClient= blobServiceClient.getBlobContainerClient(userId.toString());
+        System.out.println(filename);
+        BlobClient blobClient= blobContainerClient.getBlobClient(filename);
+        ByteArrayOutputStream outputStream= new ByteArrayOutputStream();
+        blobClient.downloadStream(outputStream);
+        final byte[] bytes=outputStream.toByteArray();
+        return bytes;
+    }
+
 
     public ResponseEntity<InputStreamResource> download(String userId, String fileName) {
         BlobContainerClient containerClient = blobServiceClient.getBlobContainerClient(userId);
@@ -56,9 +67,15 @@ public class BlobStorageService {
                 .body(resource);
     }
 
-    public void createContainer(String userId) {
+    public BlobContainerClient getContainer(Integer userId) {
+        BlobContainerClient blobContainerClient= blobServiceClient.getBlobContainerClient(userId.toString());
 
-        blobServiceClient.createBlobContainer(userId);
+        if(blobContainerClient.exists()){
+            return  blobContainerClient;
+        }else {
+            blobServiceClient.createBlobContainer(userId.toString());
+            return  blobServiceClient.getBlobContainerClient(userId.toString());
+        }
     }
 
     public void deleteContainer(String userId) {
