@@ -12,6 +12,7 @@ import com.azure.storage.blob.BlobClient;
 import com.azure.storage.blob.BlobContainerClient;
 import com.azure.storage.blob.BlobServiceClient;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -56,15 +57,14 @@ public class BlobStorageService {
     }
 
 
-    public ResponseEntity<InputStreamResource> download(String userId, String fileName) {
-        BlobContainerClient containerClient = blobServiceClient.getBlobContainerClient(userId);
+    public ByteArrayOutputStream download(Integer userId, String fileName) {
+        BlobContainerClient containerClient = blobServiceClient.getBlobContainerClient(userId.toString());
         BlobClient blobClient = containerClient.getBlobClient(fileName);
-        BlobInputStream blobIS = blobClient.openInputStream();
-        InputStreamResource resource = new InputStreamResource(blobIS);
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        blobClient.download(os);
 
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + fileName)
-                .body(resource);
+
+        return os;
     }
 
     public BlobContainerClient getContainer(Integer userId) {

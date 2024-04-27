@@ -1,12 +1,17 @@
 package com.webapp.intelligentworkspace.controller;
 
+import com.azure.core.annotation.Get;
 import com.webapp.intelligentworkspace.model.entity.File;
 import com.webapp.intelligentworkspace.service.BlobStorageService;
 import com.webapp.intelligentworkspace.service.FileService;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -32,10 +37,22 @@ public class FileController {
         return fileService.uploadFile(file, storageId , folderId, userId);
     }
 
-    @GetMapping(value = "/download/{userId}/{filename}", produces ={IMAGE_PNG_VALUE, IMAGE_JPEG_VALUE} )
+    @GetMapping(value = "/read/{userId}/{filename}", produces ={IMAGE_PNG_VALUE, IMAGE_JPEG_VALUE} )
     public ResponseEntity<byte[]> getPhoto(@PathVariable("filename") String filename, @PathVariable("userId") Integer userId) throws IOException {
         System.out.println(filename);
         return ResponseEntity.ok(blobStorageService.getFile(filename, userId));
+    }
+//
+    @GetMapping("/download/{userId}/{filename}")
+    public ResponseEntity<byte[]> downloadFile(@PathVariable("userId") Integer userId, @PathVariable("filename") String filename ){
+        System.out.println(filename);
+        String contentType = "application/octet-stream";
+        String headerValue = "attachment; filename=\"" +filename + "\"";
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, headerValue)
+                .body(blobStorageService.download(userId,filename).toByteArray());
     }
 
     @DeleteMapping(value = "/delete/{fileId}", produces = "application/json")

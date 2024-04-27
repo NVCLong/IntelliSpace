@@ -21,10 +21,10 @@ public class BlobStorageController {
         return blobStorageService.upload(file, userId);
     }
 
-    @GetMapping(value = "/download/{userId}/{fileName}")
-    public ResponseEntity<InputStreamResource> downloadFile(@PathVariable("userId") String userId, @PathVariable("fileName") String fileName) {
-        return blobStorageService.download(userId, fileName);
-    }
+//    @GetMapping(value = "/download/{userId}/{fileName}")
+//    public ResponseEntity<InputStreamResource> downloadFile(@PathVariable("userId") Integer userId, @PathVariable("fileName") String fileName) {
+//        return blobStorageService.download(userId, fileName);
+//    }
 
     @DeleteMapping(value = "/delete/{userId}/{fileName}")
     public String delete(@PathVariable("userId") String userId, @PathVariable("fileName") String fileName) {
