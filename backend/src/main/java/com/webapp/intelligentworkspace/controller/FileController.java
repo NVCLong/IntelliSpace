@@ -1,6 +1,7 @@
 package com.webapp.intelligentworkspace.controller;
 
 import com.azure.core.annotation.Get;
+import com.azure.core.annotation.Patch;
 import com.webapp.intelligentworkspace.model.entity.File;
 import com.webapp.intelligentworkspace.service.BlobStorageService;
 import com.webapp.intelligentworkspace.service.FileService;
@@ -11,13 +12,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.*;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-import static org.springframework.util.MimeTypeUtils.IMAGE_JPEG_VALUE;
-import static org.springframework.util.MimeTypeUtils.IMAGE_PNG_VALUE;
+import static org.springframework.util.MimeTypeUtils.*;
 
 @RestController
 @RequestMapping("/file")
@@ -37,11 +38,32 @@ public class FileController {
         return fileService.uploadFile(file, storageId , folderId, userId);
     }
 
-    @GetMapping(value = "/read/{userId}/{filename}", produces ={IMAGE_PNG_VALUE, IMAGE_JPEG_VALUE} )
-    public ResponseEntity<byte[]> getPhoto(@PathVariable("filename") String filename, @PathVariable("userId") Integer userId) throws IOException {
+    @GetMapping(value = "/read/{userId}/{filename}" )
+    public ResponseEntity<byte[]> getFile(@PathVariable("filename") String filename, @PathVariable("userId") Integer userId, @RequestParam("fileId") Long fileId) throws IOException {
         System.out.println(filename);
-        return ResponseEntity.ok(blobStorageService.getFile(filename, userId));
+        if(filename.contains(".png")){
+            return ResponseEntity.status(200)
+                    .contentType(MediaType.valueOf("image/png"))
+                    .body(fileService.getFileData(filename, userId,fileId));
+        } else if (filename.contains(".jpeg")) {
+            return ResponseEntity.status(200)
+                    .contentType(MediaType.valueOf("image/jpeg"))
+                    .body(fileService.getFileData(filename, userId,fileId));
+        }else if (filename.contains(".txt")) {
+            return ResponseEntity.status(200)
+                    .contentType(MediaType.TEXT_PLAIN)
+                    .body(fileService.getFileData(filename, userId,fileId));
+        } else if (filename.contains(".docx")) {
+            return ResponseEntity.status(200)
+                    .contentType(MediaType.valueOf("application/octet-stream"))
+                    .body(fileService.getFileData(filename, userId,fileId));
+        }else {
+            return null;
+        }
     }
+
+
+
 //
     @GetMapping("/download/{userId}/{filename}")
     public ResponseEntity<byte[]> downloadFile(@PathVariable("userId") Integer userId, @PathVariable("filename") String filename ){
@@ -69,4 +91,16 @@ public class FileController {
     public String renameFile(@PathVariable("fileId") Long fileId, @PathVariable String newFileName) {
         return fileService.renameFile(fileId, newFileName);
     }
+
+    @PatchMapping(value = "/softDelete")
+    public String moveToTrash(@RequestParam("fileId") Long fileId) {
+        fileService.moveToTrash(fileId);
+        return "Success";
+    }
+
+    @GetMapping("/trash/{storageId}")
+    public ResponseEntity<List<File>> getFileFromTrash(@PathVariable("storageId") Long storageId) {
+        return ResponseEntity.ok(fileService.getFileInBin(storageId));
+    }
+
 }

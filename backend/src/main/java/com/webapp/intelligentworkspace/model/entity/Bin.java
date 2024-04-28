@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "bins")
@@ -20,6 +22,10 @@ public class Bin {
     @JsonManagedReference
     @JsonIgnore
     private User user;
+
+
+
+
 
     public Bin() {
 

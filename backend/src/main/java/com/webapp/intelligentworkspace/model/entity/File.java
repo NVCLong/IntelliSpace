@@ -44,4 +44,7 @@ public class File {
     @JsonManagedReference
     @JsonIgnore
     private Folder folder;
+
+   @Column(name = "isDeleted")
+    private Boolean isDeleted;
 }

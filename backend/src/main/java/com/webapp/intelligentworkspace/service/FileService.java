@@ -47,7 +47,6 @@ public class FileService {
             if (uploadResult != null) {
                 return uploadResult;
             }
-
             File fileEntity = new File();
 
             fileEntity.setFile_name(file.getOriginalFilename());
@@ -55,6 +54,7 @@ public class FileService {
             fileEntity.setSize(file.getSize());
             fileEntity.setFolder(folder);
             fileEntity.setStorage(storage);
+            fileEntity.setIsDeleted(false);
 
             fileRepository.save(fileEntity);
 
@@ -83,6 +83,14 @@ public class FileService {
         }
     }
 
+    public byte[] getFileData(String fileName, Integer userId, Long fileId) {
+        File file = fileRepository.findById(fileId).orElseThrow(() -> new RuntimeException("File not found"));
+        if(file.getIsDeleted()){
+            return null;
+        }
+        return blobStorageService.getFile(fileName,userId);
+    }
+
     public List<File> listFilesInFolder(Long folderId) {
         Folder folder = folderRepository.findById(folderId).orElseThrow(() -> new RuntimeException("Folder not found"));
         return new ArrayList<>(folder.getFiles());
@@ -98,6 +106,28 @@ public class FileService {
             e.printStackTrace();
             return "Failed to rename file";
         }
+    }
+
+    // soft delete == move to bin
+
+    public void moveToTrash(Long fileId){
+        File file = fileRepository.findById(fileId).orElseThrow(() -> new RuntimeException("File not found"));
+        if(file.getIsDeleted()){
+            return;
+        }else {
+            System.out.println("set false");
+            file.setIsDeleted(true);
+            fileRepository.save(file);
+        }
+    }
+
+    public List<File> getFileInBin(Long storageId){
+        Storage storage = storageRepository.findById(storageId).orElseThrow(() -> new RuntimeException("Storage not found"));
+        if(storage==null){
+            return null;
+        }
+
+        else return fileRepository.findByStorageAndIsDeletedIsTrue(storage);
     }
 
 }
