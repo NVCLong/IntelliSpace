@@ -21,7 +21,9 @@ public class StorageService {
     // update a current capacity in storage when user upload file in
 
     public StorageResponse updateCapacity(Long storageId,float fileSize){
-        if(fileSize>1.0){
+        System.out.println(fileSize);
+        fileSize= fileSize/1000000;
+        if(fileSize >1.0){
             System.out.println("File is over the maximum storage");
             return StorageResponse.builder().storage(null).message("File is over the maximum value").status(false).build();
         }else {

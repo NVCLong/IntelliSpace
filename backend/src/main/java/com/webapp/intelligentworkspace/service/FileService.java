@@ -60,6 +60,7 @@ public class FileService {
 
             folder.addFile(fileEntity);
             folderRepository.save(folder);
+            System.out.println(file.getSize());
 
             storageService.updateCapacity(storageId, file.getSize());
 

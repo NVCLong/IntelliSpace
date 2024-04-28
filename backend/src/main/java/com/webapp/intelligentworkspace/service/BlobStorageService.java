@@ -63,7 +63,6 @@ public class BlobStorageService {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         blobClient.download(os);
 
-
         return os;
     }
 
