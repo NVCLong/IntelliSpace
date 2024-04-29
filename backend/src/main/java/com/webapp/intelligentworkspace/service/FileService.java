@@ -115,8 +115,9 @@ public class FileService {
         if(file.getIsDeleted()){
             return;
         }else {
-            System.out.println("set false");
+            System.out.println("set true to move to bin");
             file.setIsDeleted(true);
+            file.setFolder(null);
             fileRepository.save(file);
         }
     }
@@ -126,7 +127,6 @@ public class FileService {
         if(storage==null){
             return null;
         }
-
         else return fileRepository.findByStorageAndIsDeletedIsTrue(storage);
     }
 

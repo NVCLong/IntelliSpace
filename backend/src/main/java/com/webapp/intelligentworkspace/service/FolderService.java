@@ -1,9 +1,11 @@
 package com.webapp.intelligentworkspace.service;
 
+import com.webapp.intelligentworkspace.model.entity.File;
 import com.webapp.intelligentworkspace.model.entity.Folder;
 import com.webapp.intelligentworkspace.model.entity.Storage;
 import com.webapp.intelligentworkspace.model.response.FolderResponse;
 import com.webapp.intelligentworkspace.model.response.RootFolderResponse;
+import com.webapp.intelligentworkspace.repository.FileRepository;
 import com.webapp.intelligentworkspace.repository.FolderRepository;
 import com.webapp.intelligentworkspace.repository.StorageRepository;
 import lombok.Data;
@@ -22,7 +24,17 @@ public class FolderService {
     private FolderRepository folderRepository;
     @Autowired
     private StorageRepository storageRepository;
+    @Autowired
+    private FileRepository fileRepository;
 
+    private FileService fileService;
+
+    public FolderService(FolderRepository folderRepository, StorageRepository storageRepository, FileRepository fileRepository, FileService fileService) {
+        this.folderRepository = folderRepository;
+        this.storageRepository = storageRepository;
+        this.fileRepository = fileRepository;
+        this.fileService = fileService;
+    }
 
     // find all rootFolder with storage id and parent folder id
     public RootFolderResponse getRootFolders(Long storageId){
@@ -60,6 +72,8 @@ public class FolderService {
                     .build();
         }else {
             List<Folder> subFolders = folderRepository.findAllByParentFolderId(folderId);
+            List<File> files= fileRepository.findByFolderAndIsDeletedIsFalse(folder);
+            System.out.println(files.toString());
             Folder parentFolder = null;
             if(folder.getParentFolder() != null) {
                 parentFolder= folderRepository.findById(folder.getParentFolder().getId()).orElse(null);
@@ -72,6 +86,7 @@ public class FolderService {
                     .subFolders(subFolders)
                     .message("Success to find the folder")
                     .status("Success")
+                    .files(files)
                     .build();
         }
     }
@@ -128,8 +143,7 @@ public class FolderService {
             folder.setStorage(storage);
             System.out.println(folder);
             folderRepository.save(folder);
-            return  new FolderResponse( storage,folder,null,null,"success","CreateRootFolder success");
-
+            return  new FolderResponse( storage,folder,null,null,"success","CreateRootFolder success",null);
         }
     }
 
@@ -207,8 +221,15 @@ public class FolderService {
                         parentFolder.getSubFolders().remove(currentFolder);
                     }
                     List<Folder> subFolderList= folderRepository.findAllByParentFolderId(currentFolder.getId());
+                    List<File> fileList= fileRepository.findByFolderAndIsDeletedIsFalse(currentFolder);
+                    System.out.println(fileList);
+                    for (File f:fileList){
+                        System.out.println("File id: "+f.getId());
+                        fileService.moveToTrash(f.getId());
+                    }
                     queue.addAll(subFolderList);
                     folderRepository.delete(currentFolder);
+
                 }
                 return FolderResponse.builder()
                         .parentFolder(null)
