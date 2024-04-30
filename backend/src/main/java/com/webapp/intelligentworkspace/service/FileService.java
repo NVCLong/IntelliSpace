@@ -111,6 +111,7 @@ public class FileService {
     // soft delete == move to bin
 
     public void moveToTrash(Long fileId){
+        System.out.println("move to trash folder with id : "+fileId);
         File file = fileRepository.findById(fileId).orElseThrow(() -> new RuntimeException("File not found"));
         if(file.getIsDeleted()){
             return;
