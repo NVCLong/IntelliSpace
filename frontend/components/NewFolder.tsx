@@ -27,7 +27,6 @@ export const NewFolder = (storageID:any) => {
     if (folderId== null) {
         console.log("create  folder")
         const response = createRootFolder(storageID.storageID, request)
-
         console.log(response)
     }else{
         console.log("create in sub folder")

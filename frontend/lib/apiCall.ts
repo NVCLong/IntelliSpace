@@ -120,7 +120,7 @@ export  const openFolder= async (storageId: string | null, folderId: string)=>{
 export const createFolder= async (storageId:string, parentFolderId:string, newFolder:object)=>{
   try{
     console.log("storaeg Id"+storageId)
-    const response = await api.post(`/folder/create/folder/${storageId}/${parentFolderId}`,
+    const response = await api.post(`/folder/create/${storageId}/${parentFolderId}`,
         newFolder,
         {
           headers: await getHeader()
