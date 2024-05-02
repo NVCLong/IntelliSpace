@@ -13,7 +13,6 @@ const Dashboardlayout = ({ children }: { children: React.ReactNode }) => {
     <div className="flex">
       <NextTopLoader color="#BF40BF" showSpinner={false} easing="ease" />
       <Sidebar />
-
       {children}
     </div>
   );

@@ -75,13 +75,13 @@ const Sidebar: React.FC = () => {
           onClick={() => setOpen(!open)}
         />
 
-        <div className="flex space-x-2">
+        <div className="flex flex-col space-x-2">
           <Link href="/" >
-            <Image src="/IntelliSpace.png" alt="logo" width={30} height={30} className={`cursor-pointer ml-3 w-8 h-8
+            <Image src="/IntelliSpace.png" alt="logo" width={30} height={30} className={`cursor-pointer ml-3 transition-none
             ${!open && ""}`} />
+            <div className={`text-xl font-bold ml-2 ${!open && "hidden"
+            }`}>IntelliDrive</div>
           </Link>
-          <span className={`text-2xl font-bold ${!open && "hidden"
-            }`}>IntelliDrive</span>
         </div>
 
         <div className="p-4 space-y-2 overflow-hidden">

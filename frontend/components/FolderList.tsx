@@ -25,7 +25,11 @@ interface FolderListProps {
 
 // @ts-ignore
 const FolderList: React.FC<FolderListProps> = ({ folders,parentFolderId}) => {
+
+
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const [backdrop, setBackdrop] = React.useState("blur");
+
     const [folderName,setFolderName]=useState('');
     const  storageId= localStorage.getItem("storageID")
     const [currentFolderId, setCurrenFolderId]=useState('');
@@ -53,89 +57,101 @@ const FolderList: React.FC<FolderListProps> = ({ folders,parentFolderId}) => {
             console.log(response)
         }
     }
-    const handleOpen=async (folderId:string)=>{
-        // localStorage.setItem("parentFolderId",parentFolderId);
-        // console.log(parentFolderId)
-        if(storageId!==null){
-            localStorage.setItem("folderId",folderId);
-            // localStorage.setItem("parentFolderId",parentFolderId)
-        }
+    const handleOpen = async (folderId: string) => {
+      onOpen();
+      if (storageId !== null) {
+        localStorage.setItem("folderId", folderId);
+      }
     }
 
 
   return (
-    <div className="-ml-60 mt-28">
-
-      <div className="grid grid-cols-1 pt-10 pl-20 mt-0 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-7">
+    <div className="mt-32 -ml-96">
+      <div className="grid grid-cols-1 pt-10 pl-10 mt-0 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-7">
         {folders.map((folder) => (
-            <>
-          <div
+          <>
+            <div
               key={folder.id}
-            onClick={()=>{
-                handleChangeFolder(folder.id)
-                onOpen()
-            }}
-            className="flex items-center p-4 bg-white border rounded-md shadow-md cursor-pointer hoverScale"
-          >
-            <MdFolder className="text-blue-400" size={24} />
-            <span className="ml-4">{folder.name}</span>
-          </div>
+              onClick={() => {
+                handleChangeFolder(folder.id);
+                onOpen();
+              }}
+              className="flex items-center p-2 bg-white border rounded-md shadow-md cursor-pointer hoverScale"
+            >
+              <MdFolder className="text-blue-400" size={24} />
+              <span className="ml-4 truncate">{folder.name}</span>
+            </div>
 
             <Modal
-            isOpen={isOpen}
-            onOpenChange={onOpenChange}
-            placement="center">
-          <ModalContent>
-              {(onClose) => (
+              backdrop="blur"
+              isOpen={isOpen}
+              onOpenChange={onOpenChange}
+              placement="center"
+            >
+              <ModalContent>
+                {(onClose) => (
                   <>
-                      <ModalHeader className="flex flex-col gap-1">Folder Options</ModalHeader>
+                    <ModalHeader className="flex flex-col gap-1">
+                      Folder options
+                    </ModalHeader>
 
-                      <ModalBody>
-                          <p> If you want to change folder name please fill in the blank</p>
-                          <Input
-                              autoFocus
-                              value={folderName}
-                              onChange={handleInput}
-                              placeholder="Enter folder name"
-                              variant="bordered"
-                          />
-                      </ModalBody>
+                    <ModalBody>
+                      <p>
+                        {" "}
+                        If you want to change folder name please fill in the
+                        blank
+                      </p>
+                      <Input
+                        autoFocus
+                        value={folderName}
+                        onChange={handleInput}
+                        placeholder="Enter folder name"
+                        variant="bordered"
+                      />
+                    </ModalBody>
 
-                      <ModalFooter>
-                          <Button color="danger" variant="flat" onPress={()=>{
-                              handleDelete(Number.parseInt(currentFolderId))
-                              onClose();
-                              setTimeout(()=>{
-                                  window.location.reload();
-                              },2000)
-
-                          }}>
-                              Delete
-                          </Button>
-                          <Button color="primary" onPress= {(e) => {
-                              handleOpen(currentFolderId);
-                              onClose();
-                              window.location.reload();
-                          }}>
-                              Open
-                          </Button>
-                          <Button color="primary" onPress= {(e) => {
-                              handleUpdate(currentFolderId)
-                              window.location.reload();
-                          }}>
-                              Edit
-                          </Button>
-                      </ModalFooter>
+                    <ModalFooter>
+                      <Button
+                        color="danger"
+                        variant="flat"
+                        onPress={() => {
+                          handleDelete(Number.parseInt(currentFolderId));
+                          onClose();
+                          setTimeout(() => {
+                            window.location.reload();
+                          }, 2000);
+                        }}
+                      >
+                        Delete
+                      </Button>
+                      <Button
+                        color="primary"
+                        onPress={(e) => {
+                          handleOpen(currentFolderId, "blur");
+                          onClose();
+                          window.location.reload();
+                        }}
+                      >
+                        Open
+                      </Button>
+                      <Button
+                        color="primary"
+                        onPress={(e) => {
+                          handleUpdate(currentFolderId);
+                          window.location.reload();
+                        }}
+                      >
+                        Edit
+                      </Button>
+                    </ModalFooter>
                   </>
-              )}
-          </ModalContent>
-      </Modal>
-
-        </>
+                )}
+              </ModalContent>
+            </Modal>
+          </>
         ))}
       </div>
     </div>
-
   );
 };
 

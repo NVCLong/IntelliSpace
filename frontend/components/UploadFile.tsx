@@ -1,5 +1,5 @@
 import React from "react";
-import { FiFolderPlus } from "react-icons/fi";
+import { FiArrowUpCircle } from "react-icons/fi";
 import {createFolder, createRootFolder, uploadFile} from "@/lib/apiCall";
 import {
     Modal,
@@ -39,7 +39,7 @@ export const UploadFile = () => {
     const handleSubmit =async  () => {
 
         if (folderId!== null && file !==null) {
-            console.log("create  folder")
+            console.log("create folder")
             // @ts-ignore
             const response = await uploadFile(userId,folderId,storageId,file.file )
 
@@ -57,8 +57,8 @@ export const UploadFile = () => {
                 color="primary"
                 onPress={onOpen}
             >
-                <FiFolderPlus size={24} />
-                <span className="ml-2 font-bold md:block">Upload File</span>
+                <FiArrowUpCircle size={24} />
+                <span className="font-semibold md:block">Upload file</span>
             </Button>
 
             <Modal

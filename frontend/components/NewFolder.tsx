@@ -25,7 +25,7 @@ export const NewFolder = (storageID:any) => {
       name : folderName
     }
     if (folderId== null) {
-        console.log("create  folder")
+        console.log("create folder")
         const response = createRootFolder(storageID.storageID, request)
 
         console.log(response)
@@ -45,7 +45,7 @@ export const NewFolder = (storageID:any) => {
             onPress={onOpen}
         >
             <FiFolderPlus size={24} />
-            <span className="ml-2 font-bold md:block">New folder</span>
+            <span className="font-semibold md:block">New folder</span>
         </Button>
 
       <Modal
