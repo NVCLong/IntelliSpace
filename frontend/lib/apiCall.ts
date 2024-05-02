@@ -119,8 +119,8 @@ export  const openFolder= async (storageId: string | null, folderId: string)=>{
 
 export const createFolder= async (storageId:string, parentFolderId:string, newFolder:object)=>{
   try{
-    console.log("storage Id"+storageId)
-    const response = await api.post(`/folder/create/folder/${storageId}/${parentFolderId}`,
+    console.log("storaeg Id"+storageId)
+    const response = await api.post(`/folder/create/${storageId}/${parentFolderId}`,
         newFolder,
         {
           headers: await getHeader()
@@ -135,7 +135,7 @@ export const createFolder= async (storageId:string, parentFolderId:string, newFo
   }
 }
 
-export const uploadFile= async (userId:string,folderId:string,storageId:string,file: string | Blob)=>{
+export const uploadFile= async (userId:string,folderId:string,storaegId:string,file: string | Blob)=>{
   try {
     console.log("upload file ")
     console.log(file)
@@ -143,7 +143,7 @@ export const uploadFile= async (userId:string,folderId:string,storageId:string,f
     form.append("file",file)
 
     const header= await  getHeader();
-    const  response= await api.post(`/file/upload/${userId}/${folderId}/${storageId}`,form,{
+    const  response= await api.post(`/file/upload/${userId}/${folderId}/${storaegId}`,form,{
       headers: header
     })
     return response.data

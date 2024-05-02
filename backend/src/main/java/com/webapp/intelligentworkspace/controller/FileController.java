@@ -77,9 +77,9 @@ public class FileController {
                 .body(blobStorageService.download(userId,filename).toByteArray());
     }
 
-    @DeleteMapping(value = "/delete/{fileId}", produces = "application/json")
-    public String deleteFile(@PathVariable("fileId") Long fileId, @RequestParam("userId") Integer userId ) {
-        return fileService.deleteFile(fileId, userId);
+    @DeleteMapping(value = "/delete/{fileId}/{storageId}", produces = "application/json")
+    public String deleteFile(@PathVariable("fileId") Long fileId, @RequestParam("userId") Integer userId, @PathVariable("storageId") Long storageId ) {
+        return fileService.deleteFile(fileId, userId, storageId);
     }
 
     @GetMapping(value = "/list/{folderId}", produces = "application/json")

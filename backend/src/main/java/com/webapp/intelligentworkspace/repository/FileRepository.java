@@ -16,4 +16,6 @@ public interface FileRepository extends JpaRepository<File, Long> {
 
 
     List<File> findByFolderAndIsDeletedIsFalse(Folder folder);
+
+    List<File> findByFolder_IdAndIsDeletedIsFalse(Long id);
 }

@@ -32,18 +32,22 @@ public class FolderController {
 
     }
 
+
     @PatchMapping(value = "/update/{storageId}/{folderId}", produces = "application/json")
     @ResponseBody
     public ResponseEntity<FolderResponse> updateRootFolders(@PathVariable("storageId") Long storageId, @PathVariable("folderId") Long folderId, @RequestBody String folderName){
         System.out.println("Updating folder");
         return ResponseEntity.ok(folderService.updateFolder(folderId,storageId,folderName));
     }
-    @PostMapping(value="/create/folder/{storageId}/{parentFolderId}",produces = "application/json")
+
+
+    @PostMapping(value="/create/{storageId}/{parentFolderId}",produces = "application/json")
     @ResponseBody
     public ResponseEntity<FolderResponse> createFolder(@PathVariable("parentFolderId") Long parentFolderId, @PathVariable("storageId") Long storageId,@RequestBody Folder folder){
         System.out.println("Create FOLDER");
         return  ResponseEntity.ok(folderService.createFolder(folder,parentFolderId,storageId));
     }
+
 
     @GetMapping(value="/getFolder/{storageId}", produces = "application/json")
     @ResponseBody
@@ -51,6 +55,7 @@ public class FolderController {
         System.out.println("Getting folder ");
         return ResponseEntity.ok(folderService.getSubFolderById(folderId,storageId));
     }
+
 
     @DeleteMapping(value="/delete/{storageId}", produces = "application/json")
     @ResponseBody

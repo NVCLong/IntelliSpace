@@ -12,10 +12,7 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.Random;
+import java.util.*;
 
 @Service
 @Data
@@ -212,7 +209,10 @@ public class FolderService {
                         .status("fail")
                         .build();
             }else {
+                List<File> files= fileRepository.findByFolderAndIsDeletedIsFalse(folder);
                 Queue<Folder> queue = new LinkedList<>();
+//                Queue<File> fileQueue= new LinkedList<>();
+//                fileQueue.addAll(files);
                 queue.add(folder);
                 while (!queue.isEmpty()) {
                     Folder currentFolder = queue.poll();
@@ -221,16 +221,19 @@ public class FolderService {
                         parentFolder.getSubFolders().remove(currentFolder);
                     }
                     List<Folder> subFolderList= folderRepository.findAllByParentFolderId(currentFolder.getId());
-                    List<File> fileList= fileRepository.findByFolderAndIsDeletedIsFalse(currentFolder);
+                    System.out.println("Looking for all files in folder: "+ currentFolder.getName() +" with id: "+ currentFolder.getId());
+                    List<File> fileList = findFilesRecursively(currentFolder);
                     System.out.println(fileList);
-                    for (File f:fileList){
-                        System.out.println("File id: "+f.getId());
-                        fileService.moveToTrash(f.getId());
+                    if(!fileList.isEmpty()) {
+                        for (File f : fileList) {
+                            System.out.println("File id: " + f.getId());
+                            fileService.moveToTrash(f.getId());
+                        }
                     }
                     queue.addAll(subFolderList);
                     folderRepository.delete(currentFolder);
-
                 }
+
                 return FolderResponse.builder()
                         .parentFolder(null)
                         .storage(storage)
@@ -239,6 +242,22 @@ public class FolderService {
                         .build();
             }
         }
+    }
+
+    private List<File> findFilesRecursively(Folder folder) {
+        List<File> allFiles = new ArrayList<>();
+
+        // Fetch files for the current folder
+        List<File> directFiles = fileRepository.findByFolderAndIsDeletedIsFalse(folder);
+        allFiles.addAll(directFiles);
+
+        // Get subfolders and recurse
+        List<Folder> subFolders = folderRepository.findAllByParentFolderId(folder.getId());
+        for (Folder subFolder : subFolders) {
+            allFiles.addAll(findFilesRecursively(subFolder));
+        }
+
+        return allFiles;
     }
 
     // bubble sorting , maybe can modify and upgrade by using merge sorting
