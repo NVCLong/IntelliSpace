@@ -5,6 +5,7 @@ import {getAllRootFolder, openFolder} from "@/lib/apiCall";
 import { get } from "http";
 import { useState } from "react";
 import FolderList from "@/components/FolderList";
+import FileList from "@/components/FileList";
 import {useDispatch} from "react-redux";
 import { setStorageID } from '@/lib/features/todos/storageSlice';
 import { NewFolder } from "@/components/NewFolder";
@@ -26,8 +27,10 @@ export default function Page() {
     (state) => state.storageSlice.storageID
   );
   const [isFetch, setIsFetch] = useState(true);
+  const [fileList, setFileList] = useState([]);
 
-  const handleFetchData=async ()=>{
+
+  const handleFetchData = async ()=>{
       // if (isFetch) return; // Prevent redundant fetches
       if(folderId===null) {
           try {
@@ -48,11 +51,14 @@ export default function Page() {
               if(response.parentFolder==null){
                 setFolderList(response.subFolders);
                 setIsFetch(false);
+                setFileList(response.files);
+
                   localStorage.setItem("parentFolder","0");
                 // setParentFolder({parentFolderId:"0"});
               }else{
                   setFolderList(response.subFolders)
                   setIsFetch(false)
+                  setFileList(response.files)
                   // setParentFolder({parentFolderId: response.parentFolder.id})
                   localStorage.setItem("parentFolder",response.parentFolder.id);
 
@@ -83,6 +89,10 @@ export default function Page() {
         <UploadFile />
         <div>
         {folderList !== null && <FolderList folders={folderList}  parentFolderId={parentFolder.parentFolderId} />}
+        </div>
+
+        <div>
+          {fileList !== null && <FileList files={fileList}/>}
         </div>
     </>
   );

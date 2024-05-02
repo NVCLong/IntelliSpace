@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -14,6 +14,8 @@ import {
 import StorageBar from './StorageBar';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import { getCapacity } from '../lib/apiCall';
+import { set } from 'zod';
 
 
 const Sidebar: React.FC = () => {
@@ -58,6 +60,23 @@ const Sidebar: React.FC = () => {
   ];
 
   const [open, setOpen] = useState(false);
+
+  const [used, setUsed] = useState(0);
+  const [total, setTotal] = useState(0);
+
+  const  handleStorageUsed = async () => {
+    const storageId = localStorage.getItem("storageID")
+    const storageUsed = await getCapacity(storageId)
+    setUsed(storageUsed.storage.currentStorage)
+    setTotal(storageUsed.storage.maxStorage)
+    // console.log(storageUsed.storage);
+    // console.log(storageUsed.storage);
+  }
+
+  useEffect(() => {
+    handleStorageUsed()
+  }, [])
+
 
   return (
     <div
@@ -109,7 +128,7 @@ const Sidebar: React.FC = () => {
 
           <div className={`${!open && "w-full "
             } duration-200`}>
-            <StorageBar used={20} total={100} open={open} />
+            <StorageBar used={used} total={total} open={open} />
           </div>
         </div>
       </div>

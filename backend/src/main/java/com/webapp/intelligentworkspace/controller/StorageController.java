@@ -16,7 +16,7 @@ public class StorageController {
     }
 
     @GetMapping("/currentCapacity")
-    public ResponseEntity<StorageResponse> currentCapacity(@RequestParam Long storageId) {
+    public ResponseEntity<StorageResponse> currentCapacity(@RequestParam("storageId") Long storageId) {
         return ResponseEntity.ok(storageService.getCurrentStorage(storageId));
     }
 }

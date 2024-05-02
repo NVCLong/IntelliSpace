@@ -102,7 +102,7 @@ export  const updateFolder= async (storageId: string, folderId: string, newFolde
 
 }
 
-export  const openFolder= async (storageId: string | null, folderId: string)=>{
+export  const openFolder = async (storageId: string | null, folderId: string)=>{
   try {
     const  headers= await getHeader();
     const response= await api.get(`/folder/getFolder/${storageId}?folderId=${folderId}`,{
@@ -117,7 +117,7 @@ export  const openFolder= async (storageId: string | null, folderId: string)=>{
   }
 }
 
-export const createFolder= async (storageId:string, parentFolderId:string, newFolder:object)=>{
+export const createFolder = async (storageId:string, parentFolderId:string, newFolder:object)=>{
   try{
     console.log("storaeg Id"+storageId)
     const response = await api.post(`/folder/create/${storageId}/${parentFolderId}`,
@@ -135,7 +135,7 @@ export const createFolder= async (storageId:string, parentFolderId:string, newFo
   }
 }
 
-export const uploadFile= async (userId:string,folderId:string,storaegId:string,file: string | Blob)=>{
+export const uploadFile = async (userId:string,folderId:string,storageId:string,file: string | Blob)=>{
   try {
     console.log("upload file ")
     console.log(file)
@@ -143,12 +143,31 @@ export const uploadFile= async (userId:string,folderId:string,storaegId:string,f
     form.append("file",file)
 
     const header= await  getHeader();
-    const  response= await api.post(`/file/upload/${userId}/${folderId}/${storaegId}`,form,{
+    const  response= await api.post(`/file/upload/${userId}/${folderId}/${storageId}`,form,{
       headers: header
     })
     return response.data
   }catch (e) {
     console.error(e)
     throw e;
+  }
+}
+
+
+export const getCapacity = async (storageId:number)=>{
+  try {
+    const header = await getHeader();
+    const response = await api.get(`/storage/currentCapacity?storageId=${storageId}`,{
+      headers: header
+    });
+    console.log(response.data)
+
+    return response.data;
+
+
+
+  } catch (error) {
+    console.log(error)
+
   }
 }

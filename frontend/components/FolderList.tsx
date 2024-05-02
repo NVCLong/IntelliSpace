@@ -25,8 +25,6 @@ interface FolderListProps {
 
 // @ts-ignore
 const FolderList: React.FC<FolderListProps> = ({ folders,parentFolderId}) => {
-
-
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [backdrop, setBackdrop] = React.useState("blur");
 

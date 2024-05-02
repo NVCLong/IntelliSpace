@@ -17,6 +17,11 @@ module.exports = {
     },
     extend: {
       colors: {
+        danger: {
+              DEFAULT: "#b61920",
+              // foreground: "#000000",
+            },
+
         green: {
           50: "#30AF5B",
           90: "#292C27",
@@ -36,6 +41,9 @@ module.exports = {
         },
         yellow: {
           50: "#FEC601",
+        },
+        red: {
+          50: "#b61920",
         },
       },
       border: "hsl(var(--border))",
