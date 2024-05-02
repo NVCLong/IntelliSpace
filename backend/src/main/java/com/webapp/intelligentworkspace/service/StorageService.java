@@ -11,11 +11,12 @@ public class StorageService {
     @Autowired
     private StorageRepository storageRepository;
 
-    public Storage createStorage(){
-        Storage newStorage = new Storage();
-        newStorage.setCurrentStorage(0);
-        System.out.println("Create storage successfully");
-        return storageRepository.save(newStorage);
+    public StorageResponse getCurrentStorage(Long storageId){
+        Storage storage = storageRepository.findById(storageId).orElse(null);
+        return StorageResponse.builder()
+                .storage(storage)
+                .message("Success")
+                .status(true).build();
     }
 
     // update a current capacity in storage when user upload file in

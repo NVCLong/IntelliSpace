@@ -5,6 +5,7 @@ import com.webapp.intelligentworkspace.model.entity.File;
 import com.webapp.intelligentworkspace.model.entity.Folder;
 import com.webapp.intelligentworkspace.model.entity.Storage;
 import com.webapp.intelligentworkspace.model.entity.User;
+import com.webapp.intelligentworkspace.model.response.StorageResponse;
 import com.webapp.intelligentworkspace.repository.FileRepository;
 import com.webapp.intelligentworkspace.repository.FolderRepository;
 import com.webapp.intelligentworkspace.repository.StorageRepository;
@@ -39,9 +40,12 @@ public class FileService {
 
     public String uploadFile(MultipartFile file, Long storageId, Long folderId, Integer userId) {
         try {
-            Storage storage = storageRepository.findById(storageId).orElseThrow(() -> new RuntimeException("User not found"));
+            Storage storage = storageRepository.findById(storageId).orElseThrow(() -> new RuntimeException("Storage not found"));
             Folder folder = folderRepository.findById(folderId).orElseThrow(() -> new RuntimeException("Folder not found"));
-
+            StorageResponse storageResponse= storageService.updateCapacity(storageId,file.getSize());
+            if(storageResponse.isStatus()==false) {
+                return storageResponse.getMessage();
+            }
             // Use the BlobStorageService's upload method
             String uploadResult = blobStorageService.upload(file, userId);
             if (uploadResult != null) {
@@ -60,10 +64,6 @@ public class FileService {
 
             folder.addFile(fileEntity);
             folderRepository.save(folder);
-            System.out.println(file.getSize());
-
-            storageService.updateCapacity(storageId, file.getSize());
-
             return "Uploaded Successfully, file saved in the database";
         } catch (Exception e) {
             e.printStackTrace();
@@ -71,11 +71,13 @@ public class FileService {
         }
     }
 
-    public String deleteFile(Long fileId, Integer userId) {
+    public String deleteFile(Long fileId, Integer userId,Long storageId) {
         try {
             File file = fileRepository.findById(fileId).orElseThrow(() -> new RuntimeException("File not found"));
             blobStorageService.delete(userId.toString(), file.getFile_name());
+            storageService.deleteCapacity(storageId, file.getSize());
             fileRepository.delete(file);
+
             return "Deleted Successfully";
         } catch (Exception e) {
             e.printStackTrace();
