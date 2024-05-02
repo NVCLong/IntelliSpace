@@ -44,9 +44,6 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
   // }
   console.log(files)
 
-  // const fileExtension = file.file_name.split(".")[1]
-  //         console.log(fileExtension)
-
   return (
     <div className="mt-36 -ml-96">
       <div className="grid grid-cols-1 pt-10 mt-0 -pl-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-7">
@@ -60,6 +57,7 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
                 <CardHeader className="px-0 pt-2 pb-0 flexCenter">
                 <h4 className="font-bold truncate text-large">{file.file_name}</h4>
                 </CardHeader>
+                {file.file_name.split(".")[1].toLowerCase() === 'png' ? (
                 <Image
                   alt="image file icon"
                   className="object-none"
@@ -67,6 +65,28 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
                   width={300}
                   height={300}
                 />
+                  ) : file.file_name.split(".")[1].toLowerCase() === 'txt' ?(
+                        <Image
+                            alt="image file icon"
+                            className="object-none"
+                            src="/txtIcon.png"
+                            width={300}
+                            height={300}
+                        />
+                  ): file.file_name.split(".")[1].toLowerCase() === 'docx' ?(
+                    <Image
+                        alt="image file icon"
+                        className="object-none"
+                        src="/docxIcon.png"
+                        width={300}
+                        height={300}
+                    />
+                  ): (
+                    <div className="{/* Styles for unknown file type */}">
+                      Unsupported File Type
+                    </div>
+                )
+                }
                 <CardFooter className="flexCenter  before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-md rounded-small bottom-1 w-[calc(80%_-_0px)] shadow-large ml-1 z-10">
                   <Button className="text-white bg-red-600/70 hoverScale text-tiny" variant="flat" color="danger" radius="sm" size="sm">
                     Delete

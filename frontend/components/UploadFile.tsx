@@ -86,8 +86,8 @@ export const UploadFile = () => {
                                 </Button>
                                 <Button color="primary" onPress= {(e) => {
                                     handleSubmit();
-                                    // onClose();
-                                    // window.location.reload();
+                                    onClose();
+                                    window.location.reload();
                                 }}>
                                     Submit
                                 </Button>
