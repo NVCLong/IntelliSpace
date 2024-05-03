@@ -71,7 +71,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders,parentFolderId}) => {
 
 
   return (
-    <div className="mt-32 -ml-96">
+    <div className="pr-10 mt-32 mr-10 -ml-96">
       <div className="grid grid-cols-1 pt-10 pl-10 mt-0 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-7">
         {folders.map((folder) => (
           <ContextMenu>
@@ -118,7 +118,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders,parentFolderId}) => {
               <div
                 key={folder.id}
                 onClick={() => {
-                  handleOpen(currentFolderId);
+                  handleOpen(folder.id);
                   window.location.reload();
                 }}
                 className="flex items-center p-2 bg-white border rounded-md shadow-md cursor-pointer hoverScale"

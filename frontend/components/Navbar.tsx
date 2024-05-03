@@ -65,7 +65,7 @@ const Navbar = () => {
       </ul>
 
       <div
-        className="hidden gap-2 px-4 py-2 bg-blue-400 rounded-full cursor-pointer lg:flex sm:hidden hoverScale drop-shadow-md flexCenter bold-16 "
+        className="hidden gap-2 px-4 py-2 bg-blue-400 rounded-full cursor-pointer lg:flex md:flex sm:hidden hoverScale drop-shadow-md flexCenter bold-16 "
         onClick={handleSignin}
       >
         {isLoading && (

@@ -8,9 +8,14 @@ import NextTopLoader from "nextjs-toploader";
 import { NextUIProvider } from "@nextui-org/react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 
 export default function Home() {
+    const router = useRouter();
+  const handleSignin = () => {
+    router.push("/signin");
+  };
   return (
     <NextUIProvider>
       <div>
@@ -48,7 +53,9 @@ export default function Home() {
             <br /> to store and manage your data, meeting notes, and other
             information.
           </p>
-          <Button className="shadow-lg animate-pulse animate-infinite animate-duration-1000 animate-ease-in-out text-md">
+          <Button
+            className="shadow-lg animate-pulse animate-infinite animate-duration-1000 animate-ease-in-out text-md"
+            onClick={handleSignin}>
             <ChevronRight className="mr-2 w-7 h-7" /> Getting started
           </Button>
         </motion.div>

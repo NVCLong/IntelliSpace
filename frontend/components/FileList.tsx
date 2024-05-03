@@ -56,7 +56,7 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
 
   return (
     <div className="mt-36 -ml-96">
-      <div className="grid grid-cols-1 pt-10 mt-0 -pl-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-7">
+      <div className="grid grid-cols-1 pt-10 mt-0 -pl-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-7 ">
         {files.map((file) => (
           <ContextMenu>
             <ContextMenuTrigger>
@@ -83,7 +83,11 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
                   </ContextMenuLabel>
                 </ContextMenuItem>
               </ContextMenuContent>
-              <Card isFooterBlurred radius="lg" className="border-none">
+              <Card
+                isFooterBlurred
+                radius="lg"
+                className="border-none hover:animate-shine"
+              >
                 {file.file_name.split(".")[1].toLowerCase() === "png" ? (
                   <Image
                     alt="image file icon"
