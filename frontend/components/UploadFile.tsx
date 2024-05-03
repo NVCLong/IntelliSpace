@@ -1,6 +1,6 @@
 import React from "react";
 import { FiArrowUpCircle } from "react-icons/fi";
-import {createFolder, createRootFolder, uploadFile} from "@/lib/apiCall";
+import { uploadFile} from "@/lib/apiCall";
 import {
     Modal,
     ModalContent,
@@ -11,7 +11,6 @@ import {
     useDisclosure,
     Input,
 } from "@nextui-org/react";
-import {signOut} from "next-auth/react";
 
 export const UploadFile = () => {
     const [file, setFile] = React.useState({

@@ -6,9 +6,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { FiUser, FiMenu } from "react-icons/fi";
+import NextTopLoader from "nextjs-toploader";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -31,8 +33,9 @@ const Navbar = () => {
       </Link>
 
       <div
-        className={`absolute right-5 mt-36 transform translate-x-2 lg:hidden ${isMenuOpen ? "block" : "hidden"
-          }`}
+        className={`absolute right-5 mt-36 transform translate-x-2 lg:hidden ${
+          isMenuOpen ? "block" : "hidden"
+        }`}
       >
         <ul className="flex flex-col items-center p-4 mt-24 text-black bg-white rounded-md shadow-lg">
           {NAV_LINKS.map((link) => (
@@ -61,7 +64,13 @@ const Navbar = () => {
         ))}
       </ul>
 
-      <div className="hidden gap-2 px-4 py-2 bg-blue-400 rounded-full cursor-pointer lg:flex sm:hidden hoverScale drop-shadow-md flexCenter bold-16 " onClick={handleSignin}>
+      <div
+        className="hidden gap-2 px-4 py-2 bg-blue-400 rounded-full cursor-pointer lg:flex sm:hidden hoverScale drop-shadow-md flexCenter bold-16 "
+        onClick={handleSignin}
+      >
+        {isLoading && (
+          <NextTopLoader color="#BF40BF" showSpinner={false} easing="ease" />
+        )}
         <div className="text-white fill-current ">
           <FiUser size={20} />
         </div>
@@ -76,7 +85,6 @@ const Navbar = () => {
           <FiMenu size={40} />
         </div>
       </div>
-
     </motion.nav>
   );
 };
