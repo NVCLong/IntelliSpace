@@ -26,7 +26,10 @@ export default function Home() {
           }}
           className="flex flex-col items-center space-y-5 mb-36"
         >
-          <Link href="/" className="mt-24 hoverScale">
+          <Link
+            href="/"
+            className="mt-24 hoverScale animate-fade-right animate-once animate-delay-300 animate-ease-in-out"
+          >
             <Image
               src="/IntelliSpace.png"
               alt="logo"
@@ -34,7 +37,7 @@ export default function Home() {
               height={100}
             />
           </Link>
-          <h1 className="text-lg font-medium sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl">
+          <h1 className="text-lg font-medium sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl ">
             Welcome to
           </h1>
           <h1 className="text-3xl font-black sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl">
@@ -45,7 +48,7 @@ export default function Home() {
             <br /> to store and manage your data, meeting notes, and other
             information.
           </p>
-          <Button className="animate-pulse animate-infinite animate-duration-1000 animate-ease-in-out text-md">
+          <Button className="shadow-lg animate-pulse animate-infinite animate-duration-1000 animate-ease-in-out text-md">
             <ChevronRight className="mr-2 w-7 h-7" /> Getting started
           </Button>
         </motion.div>
