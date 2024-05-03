@@ -87,9 +87,9 @@ public class FileService {
 
     public byte[] getFileData(String fileName, Integer userId, Long fileId) {
         File file = fileRepository.findById(fileId).orElseThrow(() -> new RuntimeException("File not found"));
-        if(file.getIsDeleted()){
-            return null;
-        }
+//        if(file.getIsDeleted()){
+//            return null;
+//        }
         return blobStorageService.getFile(fileName,userId);
     }
 
