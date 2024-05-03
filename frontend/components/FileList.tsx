@@ -47,26 +47,6 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
     try {
       const fileData = await getFile(fileId, fileName, userId);
       console.log(fileData)
-      const fileExtension= fileName.split(".")[1].toLowerCase();
-      // let fileBlob: Blob;
-      //
-      // switch (fileExtension) {
-      //   case "png":
-      //     fileBlob = new Blob([fileData], { type: 'image/png' });
-      //     break;
-      //   case "jpeg":
-      //     fileBlob = new Blob([fileData], { type: 'image/jpeg' });
-      //     break;
-      //   case "txt":
-      //     fileBlob = new Blob([fileData], { type: 'text/plain' });
-      //     break;
-      //   case "docx":
-      //     fileBlob = new Blob([fileData], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
-      //     break;
-      //   default:
-      //     throw new Error('Unsupported file type');
-      // }
-
       // @ts-ignore
       const url = window.URL.createObjectURL(fileData);
       const link = document.createElement('a');
