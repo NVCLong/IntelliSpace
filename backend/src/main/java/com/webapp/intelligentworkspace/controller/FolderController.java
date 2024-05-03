@@ -35,9 +35,9 @@ public class FolderController {
 
     @PatchMapping(value = "/update/{storageId}/{folderId}", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<FolderResponse> updateRootFolders(@PathVariable("storageId") Long storageId, @PathVariable("folderId") Long folderId, @RequestBody String folderName){
+    public ResponseEntity<FolderResponse> updateRootFolders(@PathVariable("storageId") Long storageId, @PathVariable("folderId") Long folderId, @RequestBody Folder folder){
         System.out.println("Updating folder");
-        return ResponseEntity.ok(folderService.updateFolder(folderId,storageId,folderName));
+        return ResponseEntity.ok(folderService.updateFolder(folderId,storageId,folder.getName()));
     }
 
 
