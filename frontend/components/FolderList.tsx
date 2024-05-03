@@ -13,6 +13,14 @@ import {
 } from "@nextui-org/react";
 import {deleteFolder, openFolder, updateFolder} from "@/lib/apiCall";
 
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuLabel,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu";
+
 interface Folder {
   id: string;
   name: string;
@@ -26,7 +34,6 @@ interface FolderListProps {
 // @ts-ignore
 const FolderList: React.FC<FolderListProps> = ({ folders,parentFolderId}) => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const [backdrop, setBackdrop] = React.useState("blur");
 
     const [folderName,setFolderName]=useState('');
     const  storageId= localStorage.getItem("storageID")
@@ -67,20 +74,62 @@ const FolderList: React.FC<FolderListProps> = ({ folders,parentFolderId}) => {
     <div className="mt-32 -ml-96">
       <div className="grid grid-cols-1 pt-10 pl-10 mt-0 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-7">
         {folders.map((folder) => (
-          <>
-            <div
-              key={folder.id}
-              onClick={() => {
-                handleChangeFolder(folder.id);
-                onOpen();
-              }}
-              className="flex items-center p-2 bg-white border rounded-md shadow-md cursor-pointer hoverScale"
-            >
-              <MdFolder className="text-blue-400" size={24} />
-              <span className="ml-4 truncate">{folder.name}</span>
-            </div>
+          <ContextMenu>
+            <ContextMenuTrigger>
+              <ContextMenuContent className="w-64 bg-slate-200 ">
+                {/* <ContextMenuItem
+                  className="hover:bg-slate-600 "
+                  onClick={(e) => {
+                    handleOpen(currentFolderId);
+                    window.location.reload();
+                  }}
+                >
+                  <ContextMenuLabel className="hover:text-white">
+                    Open
+                  </ContextMenuLabel>
+                </ContextMenuItem> */}
 
-            <Modal
+                <ContextMenuItem
+                  className="hover:bg-slate-600 "
+                  onClick={(e) => {
+                    handleUpdate(currentFolderId);
+                    window.location.reload();
+                  }}
+                >
+                  <ContextMenuLabel className="hover:text-white">
+                    Edit
+                  </ContextMenuLabel>
+                </ContextMenuItem>
+
+                <ContextMenuItem
+                  className="hover:bg-slate-600"
+                  onClick={() => {
+                    handleDelete(Number.parseInt(currentFolderId));
+                    setTimeout(() => {
+                      window.location.reload();
+                    }, 2000);
+                  }}
+                >
+                  <ContextMenuLabel className="hover:text-white">
+                    Delete
+                  </ContextMenuLabel>
+                </ContextMenuItem>
+              </ContextMenuContent>
+              <div
+                key={folder.id}
+                onClick={() => {
+                  handleOpen(currentFolderId);
+                  window.location.reload();
+                }}
+                className="flex items-center p-2 bg-white border rounded-md shadow-md cursor-pointer hoverScale"
+              >
+                <MdFolder className="text-blue-400" size={24} />
+                <span className="ml-4 truncate">{folder.name}</span>
+              </div>
+            </ContextMenuTrigger>
+          </ContextMenu>
+
+          /* <Modal
               backdrop="blur"
               isOpen={isOpen}
               onOpenChange={onOpenChange}
@@ -145,8 +194,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders,parentFolderId}) => {
                   </>
                 )}
               </ModalContent>
-            </Modal>
-          </>
+            </Modal> */
         ))}
       </div>
     </div>

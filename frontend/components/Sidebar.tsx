@@ -44,7 +44,6 @@ const Sidebar: React.FC = () => {
       icon: FiCodesandbox,
       onClick: () => {},
     },
-    { name: "Files", path: "/drive", icon: FiFolder, onClick: () => {} },
     { name: "Meeting", path: "/meet", icon: FiVideo, onClick: () => {} },
     { name: "Notes", path: "/note", icon: FiList, onClick: () => {} },
     { name: "Bin", path: "/bin", icon: FiTrash2, onClick: () => {} },

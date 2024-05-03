@@ -1,19 +1,19 @@
 "use client";
 import React, { useState } from "react";
-import { MdFolder } from "react-icons/md";
 import {
   Button,
-  Input,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  useDisclosure,
 } from "@nextui-org/react";
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
-import {deleteFolder, getFile, openFolder, softDelete, updateFolder} from "@/lib/apiCall";
+import {getFile, softDelete} from "@/lib/apiCall";
 import {Image} from "@nextui-org/react";
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuLabel,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu";
+
 
 
 interface File {
@@ -30,13 +30,7 @@ interface FileListProps {
 
 // @ts-ignore
 const FileList: React.FC<FileListProps> = ({ files }) => {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  // const [backdrop, setBackdrop] = React.useState("blur");
   const userId= localStorage.getItem("userId")
-
-  const [fileName, setFileName] = useState("");
-  const storageId = localStorage.getItem("storageID");
-  const [currentFolderId, setCurrenFolderId] = useState("");
 
   const handleMoveToTrash = async (fileId: string) => {
      const data= await softDelete(fileId);
@@ -64,60 +58,69 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
     <div className="mt-36 -ml-96">
       <div className="grid grid-cols-1 pt-10 mt-0 -pl-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-7">
         {files.map((file) => (
-          <>
-              <Card
-                isFooterBlurred
-                radius="lg"
-                className="border-none"
-              >
-                <CardHeader className="px-0 pt-2 pb-0 flexCenter">
-                <h4 className="font-bold truncate text-large">{file.file_name}</h4>
-                </CardHeader>
-                {file.file_name.split(".")[1].toLowerCase() === 'png' ? (
-                <Image
-                  alt="image file icon"
-                  className="object-none"
-                  src="/imageIcon.png"
-                  width={300}
-                  height={300}
-                />
-                  ) : file.file_name.split(".")[1].toLowerCase() === 'txt' ?(
-                        <Image
-                            alt="image file icon"
-                            className="object-none"
-                            src="/txtIcon.png"
-                            width={300}
-                            height={300}
-                        />
-                  ): file.file_name.split(".")[1].toLowerCase() === 'docx' ?(
-                    <Image
-                        alt="image file icon"
-                        className="object-none"
-                        src="/docxIcon.png"
-                        width={300}
-                        height={300}
-                    />
-                  ): (
-                    <div className="{/* Styles for unknown file type */}">
-                      Unsupported File Type
-                    </div>
-                )
-                }
-                <CardFooter className="flexCenter  before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-md rounded-small bottom-1 w-[calc(80%_-_0px)] shadow-large ml-1 z-10">
-                  <Button className="text-white bg-red-600/70 hoverScale text-tiny" variant="flat" color="danger" radius="sm" size="sm" onClick={()=>{
-                    handleMoveToTrash(file.id)
-                    window.location.reload()
-                  }}>
-                    Delete
-                  </Button>
-                  <Button className="text-white hoverScale text-tiny bg-black/20" variant="flat" color="default" radius="sm" size="sm" onClick={()=>{
-                    handleDownload(file.id,file.file_name);
-                  }}>
+          <ContextMenu>
+            <ContextMenuTrigger>
+              <ContextMenuContent className="w-64 bg-slate-200 ">
+                <ContextMenuItem
+                  className="hover:bg-slate-600 "
+                  onClick={() => {
+                    handleDownload(file.id, file.file_name);
+                  }}
+                >
+                  <ContextMenuLabel className="hover:text-white">
                     Download
-                  </Button>
+                  </ContextMenuLabel>
+                </ContextMenuItem>
+                <ContextMenuItem
+                  className="hover:bg-slate-600 "
+                  onClick={() => {
+                    handleMoveToTrash(file.id);
+                    window.location.reload();
+                  }}
+                >
+                  <ContextMenuLabel className="hover:text-white">
+                    Delete
+                  </ContextMenuLabel>
+                </ContextMenuItem>
+              </ContextMenuContent>
+              <Card isFooterBlurred radius="lg" className="border-none">
+                {file.file_name.split(".")[1].toLowerCase() === "png" ? (
+                  <Image
+                    alt="image file icon"
+                    className=""
+                    src="/imageIcon.png"
+                    width={300}
+                    height={300}
+                  />
+                ) : file.file_name.split(".")[1].toLowerCase() === "txt" ? (
+                  <Image
+                    alt="image file icon"
+                    className=""
+                    src="/txtIcon.png"
+                    width={300}
+                    height={300}
+                  />
+                ) : file.file_name.split(".")[1].toLowerCase() === "docx" ? (
+                  <Image
+                    alt="image file icon"
+                    className=""
+                    src="/docxIcon.png"
+                    width={300}
+                    height={300}
+                  />
+                ) : (
+                  <div className="{/* Styles for unknown file type */}">
+                    Unsupported File Type
+                  </div>
+                )}
+                <CardFooter className="flexCenter  before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-md rounded-small bottom-1 w-[calc(100%_-_8px)] shadow-large ml-1 z-10">
+                  <h4 className="font-semibold text-white truncate text-small">
+                    {file.file_name}
+                  </h4>
                 </CardFooter>
               </Card>
-          </>
+            </ContextMenuTrigger>
+          </ContextMenu>
         ))}
       </div>
     </div>

@@ -69,13 +69,13 @@ export const UploadFile = () => {
                 <ModalContent>
                     {(onClose) => (
                         <>
-                            <ModalHeader className="flex flex-col gap-1">Upload File</ModalHeader>
+                            <ModalHeader className="flex flex-col gap-1">Upload file</ModalHeader>
 
                             <ModalBody>
                                 <Input
                                     type="file"
                                     onChange={handleFileChange}
-                                    placeholder="Choose File"
+                                    placeholder="Choose file"
                                     variant="bordered"
                                 />
                             </ModalBody>
