@@ -3,6 +3,7 @@ import axios from "axios";
 import {Simulate} from "react-dom/test-utils";
 import error = Simulate.error;
 import {h} from "preact";
+import exp from "constants";
 
 
 export const api = axios.create({
@@ -198,5 +199,34 @@ export const getFile= async (fileId:string,fileName:string,userId:string|null)=>
   }catch (e){
     console.log(e)
     throw e
+  }
+}
+
+
+export const deletedFile= async (storageId:string)=>{
+  try {
+    const header = await getHeader();
+    const response = await api.get(`file/trash/${storageId}`,{
+      headers: header,
+    });
+    console.log(response.data)
+    return response.data;
+  } catch (error) {
+    console.log(error)
+
+  }
+}
+
+export const deletePermanently = async (fileId:string, storageId:string, userId:string)=>{
+  try {
+    const header= await getHeader();
+    const response= await api.delete(`file/delete/${fileId}/${storageId}?userId=${userId}`,{
+      headers: header
+    })
+    return response.data
+
+  } catch (error) {
+    console.log(error)
+
   }
 }

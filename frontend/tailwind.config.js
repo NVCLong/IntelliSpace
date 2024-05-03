@@ -2,9 +2,9 @@ const { nextui } = require("@nextui-org/react");
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
@@ -18,9 +18,9 @@ module.exports = {
     extend: {
       colors: {
         danger: {
-              DEFAULT: "#b61920",
-              // foreground: "#000000",
-            },
+          DEFAULT: "#b61920",
+          // foreground: "#000000",
+        },
 
         green: {
           50: "#30AF5B",
@@ -82,7 +82,5 @@ module.exports = {
     },
   },
   darkMode: "class",
-  plugins:
-    [require("tailwindcss-animate"),
-    nextui(),],
+  plugins: [require("tailwindcss-animate"), nextui()],
 };

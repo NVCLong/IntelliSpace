@@ -4,8 +4,8 @@ import {AppDispatch, useAppSelector} from "@/lib/store";
 import {getAllRootFolder, openFolder} from "@/lib/apiCall";
 import { get } from "http";
 import { useState } from "react";
-import FolderList from "@/components/FolderList";
-import FileList from "@/components/FileList";
+import FolderList from "@/components/list/FolderList";
+import FileList from "@/components/list/FileList";
 import {useDispatch} from "react-redux";
 import { setStorageID } from '@/lib/features/todos/storageSlice';
 import { NewFolder } from "@/components/NewFolder";
@@ -16,10 +16,10 @@ import {UploadFile} from "@/components/UploadFile";
 
 export default function Page() {
   const storageID_temp:string | null  = localStorage.getItem("storageID")
-    const folderId: string|null= localStorage.getItem('folderId');
+    const folderId: string|null = localStorage.getItem('folderId');
     const  dispatch = useDispatch<AppDispatch>();
     const [folderList, setFolderList] = useState([]);
-    const [parentFolder, setParentFolder]=useState({
+    const [parentFolder, setParentFolder] = useState({
         parentFolderId: ""
     })
   // @ts-ignore
@@ -84,12 +84,16 @@ export default function Page() {
         <BackButton   />
         <NewFolder storageID={storageID_temp}  />
         <UploadFile />
+
+        <div className="mt-48 -ml-96">
         <div>
         {folderList !== null && <FolderList folders={folderList}  parentFolderId={parentFolder.parentFolderId} />}
         </div>
 
         <div>
           {fileList !== null && <FileList files={fileList}/>}
+        </div>
+
         </div>
     </>
   );

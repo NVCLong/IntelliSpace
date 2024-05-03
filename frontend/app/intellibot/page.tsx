@@ -4,7 +4,7 @@ import { AppDispatch, useAppSelector } from "@/lib/store";
 import { getAllRootFolder } from "@/lib/apiCall";
 import { get } from "http";
 import { useState } from "react";
-import FolderList from "@/components/FolderList";
+import FolderList from "@/components/list/FolderList";
 import { useDispatch } from "react-redux";
 import { setStorageID } from "@/lib/features/todos/storageSlice";
 

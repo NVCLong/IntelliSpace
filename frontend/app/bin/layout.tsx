@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import NextTopLoader from "nextjs-toploader";
 import Sidebar from "@/components/Sidebar";
-import FolderList from "@/components/list/FolderList";
+import FolderList from "@/components/listDeleted/FolderList";
 
 export const metadata: Metadata = {
-  title: "Dashboard | IntelliSpace",
-  description: "IntelliSpace Dashboard for all your needs",
+  title: "Bin | IntelliSpace",
+  description: "Deleted files and folders in IntelliSpace.",
 };
 
 const Dashboardlayout = ({ children }: { children: React.ReactNode }) => {
