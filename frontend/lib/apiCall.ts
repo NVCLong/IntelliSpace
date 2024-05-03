@@ -90,6 +90,7 @@ export const deleteFolder = async (storageId: string, folderId: number) => {
 export  const updateFolder= async (storageId: string, folderId: string, newFolder: object)=>{
   try {
     const  headers= await getHeader();
+    console.log(newFolder)
     // @ts-ignore
     const response = await api.patch(`/folder/update/${storageId}/${folderId}`,newFolder,{
       headers:headers

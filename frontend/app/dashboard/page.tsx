@@ -53,7 +53,6 @@ export default function Page() {
                 setFileList(response.files);
 
                   localStorage.setItem("parentFolder","0");
-                // setParentFolder({parentFolderId:"0"});
               }else{
                   setFolderList(response.subFolders)
                   setIsFetch(false)
