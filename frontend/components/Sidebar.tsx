@@ -38,6 +38,7 @@ const Sidebar: React.FC = () => {
 
   const navItems = [
     { name: "Home", path: "/", icon: FiHome, onClick: () => {} },
+    { name: "Files", path: "/dashboard", icon: FiFolder, onClick: () => {} },
     {
       name: "IntelliBot",
       path: "/intelliBot",
