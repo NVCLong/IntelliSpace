@@ -1,24 +1,23 @@
 package com.webapp.intelligentworkspace.controller;
 
-import com.azure.core.annotation.Get;
-import com.azure.core.annotation.Patch;
 import com.webapp.intelligentworkspace.model.entity.File;
 import com.webapp.intelligentworkspace.service.BlobStorageService;
 import com.webapp.intelligentworkspace.service.FileService;
-import org.springframework.core.io.InputStreamResource;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.tika.detect.DefaultDetector;
+import org.apache.tika.detect.Detector;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.*;
-import java.io.ByteArrayOutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-import static org.springframework.util.MimeTypeUtils.*;
+import org.apache.tika.mime.MediaType;
 
 @RestController
 @RequestMapping("/file")
@@ -38,29 +37,36 @@ public class FileController {
         return fileService.uploadFile(file, storageId , folderId, userId);
     }
 
-    @GetMapping(value = "/read/{userId}/{filename}" )
+    @GetMapping(value = "/read/{userId}/{filename}")
     public ResponseEntity<byte[]> getFile(@PathVariable("filename") String filename, @PathVariable("userId") Integer userId, @RequestParam("fileId") Long fileId) throws IOException {
         System.out.println(filename);
+        String headerValue = "attachment; filename=\"" +filename + "\"";
         if(filename.contains(".png")){
             return ResponseEntity.status(200)
-                    .contentType(MediaType.valueOf("image/png"))
+                    .contentType(MediaType.IMAGE_PNG)
+                    .header(HttpHeaders.CONTENT_DISPOSITION, headerValue)
                     .body(fileService.getFileData(filename, userId,fileId));
         } else if (filename.contains(".jpeg")) {
             return ResponseEntity.status(200)
-                    .contentType(MediaType.valueOf("image/jpeg"))
+                    .contentType(MediaType.IMAGE_JPEG)
+                    .header(HttpHeaders.CONTENT_DISPOSITION, headerValue)
                     .body(fileService.getFileData(filename, userId,fileId));
         }else if (filename.contains(".txt")) {
             return ResponseEntity.status(200)
                     .contentType(MediaType.TEXT_PLAIN)
+                    .header(HttpHeaders.CONTENT_DISPOSITION, headerValue)
                     .body(fileService.getFileData(filename, userId,fileId));
         } else if (filename.contains(".docx")) {
             return ResponseEntity.status(200)
-                    .contentType(MediaType.valueOf("application/octet-stream"))
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .header(HttpHeaders.CONTENT_DISPOSITION, headerValue)
                     .body(fileService.getFileData(filename, userId,fileId));
         }else {
             return null;
         }
     }
+
+
 
 
 

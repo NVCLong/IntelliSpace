@@ -12,7 +12,7 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
-import { deleteFolder, openFolder, updateFolder } from "@/lib/apiCall";
+import {deleteFolder, getFile, openFolder, softDelete, updateFolder} from "@/lib/apiCall";
 import {Image} from "@nextui-org/react";
 
 
@@ -32,17 +32,53 @@ interface FileListProps {
 const FileList: React.FC<FileListProps> = ({ files }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   // const [backdrop, setBackdrop] = React.useState("blur");
+  const userId= localStorage.getItem("userId")
 
   const [fileName, setFileName] = useState("");
   const storageId = localStorage.getItem("storageID");
   const [currentFolderId, setCurrenFolderId] = useState("");
 
-  const handleDelete = (folderId: number) => {};
+  const handleMoveToTrash = async (fileId: string) => {
+     const data= await softDelete(fileId);
+     console.log(data)
+  };
 
-  // const handleDownload = async (folderId: string) => {
+  const handleDownload = async (fileId: string,fileName:string) => {
+    try {
+      const fileData = await getFile(fileId, fileName, userId);
+      console.log(fileData)
+      const fileExtension= fileName.split(".")[1].toLowerCase();
+      // let fileBlob: Blob;
+      //
+      // switch (fileExtension) {
+      //   case "png":
+      //     fileBlob = new Blob([fileData], { type: 'image/png' });
+      //     break;
+      //   case "jpeg":
+      //     fileBlob = new Blob([fileData], { type: 'image/jpeg' });
+      //     break;
+      //   case "txt":
+      //     fileBlob = new Blob([fileData], { type: 'text/plain' });
+      //     break;
+      //   case "docx":
+      //     fileBlob = new Blob([fileData], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+      //     break;
+      //   default:
+      //     throw new Error('Unsupported file type');
+      // }
 
-  // }
-  console.log(files)
+      // @ts-ignore
+      const url = window.URL.createObjectURL(fileData);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', fileName);
+      document.body.appendChild(link);
+      link.click();
+    }catch (e){
+      throw  e
+    }
+  }
+
 
   return (
     <div className="mt-36 -ml-96">
@@ -88,10 +124,15 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
                 )
                 }
                 <CardFooter className="flexCenter  before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-md rounded-small bottom-1 w-[calc(80%_-_0px)] shadow-large ml-1 z-10">
-                  <Button className="text-white bg-red-600/70 hoverScale text-tiny" variant="flat" color="danger" radius="sm" size="sm">
+                  <Button className="text-white bg-red-600/70 hoverScale text-tiny" variant="flat" color="danger" radius="sm" size="sm" onClick={()=>{
+                    handleMoveToTrash(file.id)
+                    window.location.reload()
+                  }}>
                     Delete
                   </Button>
-                  <Button className="text-white hoverScale text-tiny bg-black/20" variant="flat" color="default" radius="sm" size="sm">
+                  <Button className="text-white hoverScale text-tiny bg-black/20" variant="flat" color="default" radius="sm" size="sm" onClick={()=>{
+                    handleDownload(file.id,file.file_name);
+                  }}>
                     Download
                   </Button>
                 </CardFooter>

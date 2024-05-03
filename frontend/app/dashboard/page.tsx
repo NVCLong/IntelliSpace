@@ -47,7 +47,6 @@ export default function Page() {
           try{
               console.log("{Fetching in subfolder")
               const response = await openFolder(storageID_temp, folderId);
-              console.log( response)
               if(response.parentFolder==null){
                 setFolderList(response.subFolders);
                 setIsFetch(false);
@@ -63,7 +62,6 @@ export default function Page() {
                   localStorage.setItem("parentFolder",response.parentFolder.id);
 
               }
-              console.log(response);
           }catch (e) {
               console.error(e)
           }

@@ -2,6 +2,7 @@ import { jwtDecode, JwtPayload } from "jwt-decode";
 import axios from "axios";
 import {Simulate} from "react-dom/test-utils";
 import error = Simulate.error;
+import {h} from "preact";
 
 
 export const api = axios.create({
@@ -83,7 +84,7 @@ export const deleteFolder = async (storageId: string, folderId: number) => {
   } catch (error) {
     console.error("Error deleting folder:", error);
 
-    throw error; // Rethrowing the error for further handling
+    throw error;
   }
 };
 export  const updateFolder= async (storageId: string, folderId: string, newFolder: object)=>{
@@ -97,7 +98,7 @@ export  const updateFolder= async (storageId: string, folderId: string, newFolde
   }catch (error) {
     console.error("Error deleting folder:", error);
 
-    throw error; // Rethrowing the error for further handling
+    throw error;
   }
 
 }
@@ -158,16 +159,43 @@ export const getCapacity = async (storageId:number)=>{
   try {
     const header = await getHeader();
     const response = await api.get(`/storage/currentCapacity?storageId=${storageId}`,{
-      headers: header
+      headers: header,
+
     });
     console.log(response.data)
 
     return response.data;
 
-
-
   } catch (error) {
     console.log(error)
 
+  }
+}
+
+export const softDelete= async (fileId:string)=>{
+  try {
+    console.log(fileId)
+    const header= await getHeader();
+    const response= await api.patch(`/file/softDelete?fileId=${fileId}`,{},{
+      headers: header
+    })
+    return response.data
+  }catch (e){
+    console.log(e)
+    throw  e;
+  }
+}
+
+export const getFile= async (fileId:string,fileName:string,userId:string|null)=>{
+  try {
+    const header= await  getHeader();
+    const response= await  api.get(`file/read/${userId}/${fileName}?fileId=${fileId}`,{
+      headers:header,
+      responseType: 'blob'
+    })
+    return response.data
+  }catch (e){
+    console.log(e)
+    throw e
   }
 }
