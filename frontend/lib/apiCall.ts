@@ -157,7 +157,7 @@ export const uploadFile = async (userId:string,folderId:string,storageId:string,
 }
 
 
-export const getCapacity = async (storageId:number)=>{
+export const getCapacity = async (storageId:string|null)=>{
   try {
     const header = await getHeader();
     const response = await api.get(`/storage/currentCapacity?storageId=${storageId}`,{
@@ -217,16 +217,44 @@ export const deletedFile= async (storageId:string)=>{
   }
 }
 
-export const deletePermanently = async (fileId:string, storageId:string, userId:string)=>{
+export const deletePermanently = async (fileId:number, storageId:number, userId:number)=>{
   try {
     const header= await getHeader();
     const response= await api.delete(`file/delete/${fileId}/${storageId}?userId=${userId}`,{
       headers: header
     })
+    console.log(response)
     return response.data
 
   } catch (error) {
     console.log(error)
 
   }
+}
+export const createNote=async (userId:string |null,note:object)=>{
+  try {
+    const header= await getHeader();
+    const  response= await  api.post(`note/create/${userId}`,note, {
+      headers:header
+    })
+    console.log(response)
+    return response.data;
+
+  }catch (e){
+    console.log(e)
+    throw e
+  }
+}
+
+export const getAllNotes=async (userId:string|null)=>{
+ try {
+   console.log(userId)
+   const header= await  getHeader();
+   const response= await  api.get(`/note/${userId}`,{
+     headers:header
+   })
+   return response.data;
+ }catch (e){
+   console.log(e)
+ }
 }

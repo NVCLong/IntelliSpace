@@ -25,7 +25,7 @@ public class NoteController {
         return ResponseEntity.ok(noteService.createNote(userId,note));
     }
 
-    @GetMapping(value = "/{userId}", consumes = "application/json", produces = "application/json")
+    @GetMapping(value = "/{userId}", produces = "application/json")
     @ResponseBody
     public ResponseEntity<List<Note>> getALlNote(@PathVariable("userId") Integer userId){
         System.out.println("Getting All notes");

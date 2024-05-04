@@ -84,6 +84,7 @@ public class FileController {
 
     @DeleteMapping(value = "/delete/{fileId}/{storageId}", produces = "application/json")
     public String deleteFile(@PathVariable("fileId") Long fileId, @RequestParam("userId") Integer userId, @PathVariable("storageId") Long storageId ) {
+        System.out.println("running Passing");
         return fileService.deleteFile(fileId, userId, storageId);
     }
 

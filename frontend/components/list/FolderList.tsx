@@ -63,7 +63,6 @@ const FolderList: React.FC<FolderListProps> = ({ folders,parentFolderId}) => {
         }
     }
     const handleOpen = async (folderId: string) => {
-      onOpen();
       if (storageId !== null) {
         localStorage.setItem("folderId", folderId);
       }
