@@ -6,10 +6,10 @@ import {
   FiHome,
   FiFolder,
   FiVideo,
-  FiList,
   FiCodesandbox,
   FiTrash2,
   FiLogOut,
+  FiPaperclip,
 } from "react-icons/fi";
 import StorageBar from './StorageBar';
 import axios from 'axios';
@@ -46,7 +46,7 @@ const Sidebar: React.FC = () => {
       onClick: () => {},
     },
     { name: "Meeting", path: "/meet", icon: FiVideo, onClick: () => {} },
-    { name: "Notes", path: "/note", icon: FiList, onClick: () => {} },
+    { name: "Notes", path: "/note", icon: FiPaperclip, onClick: () => {} },
     { name: "Bin", path: "/bin", icon: FiTrash2, onClick: () => {} },
     {
       name: "Logout",

@@ -42,7 +42,7 @@ export default function Page() {
   // @ts-ignore
     return (
         <>
-            <NewNote  userId={userId}/>
+            <NewNote userId={userId}/>
             <div className="mt-10 ml-16">
                 <div>
                     {noteList !== null && <NoteList notes={noteList}/>}

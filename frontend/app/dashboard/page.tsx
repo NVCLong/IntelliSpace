@@ -73,23 +73,25 @@ export default function Page() {
 );
   // @ts-ignore
     return (
-    <>
-        <BackButton   />
-        <NewFolder storageID={storageID_temp}  />
+      <>
+        <BackButton />
+        <NewFolder storageID={storageID_temp} />
         <UploadFile />
 
         <div className="mt-48 -ml-72">
-        <div>
-        {folderList !== null && <FolderList folders={folderList}  parentFolderId={parentFolder.parentFolderId} />}
+          <div>
+            {folderList !== null && (
+              <FolderList
+                folders={folderList}
+                parentFolderId={parentFolder.parentFolderId}
+              />
+            )}
+          </div>
+
+          <div className="">
+            {fileList !== null && <FileList files={fileList} />}
+          </div>
         </div>
-
-        <div>
-          {fileList !== null && <FileList files={fileList}/>}
-        </div>
-
-
-
-        </div>
-    </>
-  );
+      </>
+    );
 }

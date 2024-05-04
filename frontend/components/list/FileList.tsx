@@ -54,8 +54,8 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
   }
 
   return (
-    <div className="flex flex-col overflow-hidden sm:py-12">
-      <div className="w-full max-w-screen-xl mx-auto">
+    <div className="relative flex flex-col overflow-hidden sm:py-12">
+      <div className="w-full max-w-screen-xl px-4 mx-auto">
         <div className="grid w-full gap-6 sm:grid-cols-2 xl:grid-cols-4">
           {files.map((file) => (
             <ContextMenu>

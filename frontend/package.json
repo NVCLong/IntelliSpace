@@ -12,6 +12,7 @@
     "@hookform/resolvers": "^3.3.4",
     "@nextui-org/card": "^2.0.28",
     "@nextui-org/react": "^2.2.10",
+    "@phosphor-icons/react": "^2.1.5",
     "@radix-ui/react-context-menu": "^2.1.5",
     "@radix-ui/react-slot": "^1.0.2",
     "@react-oauth/google": "^0.12.1",
