@@ -14,9 +14,15 @@ import {
 
 export const NewNote = (userId:any) => {
     const [noteContent, setNoteContent] = React.useState("");
+    const [noteTitle, setNoteTitle] = React.useState("");
 
-    const handleInput = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+    const handleInputTitle = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+        setNoteTitle(e.target.value);
+    }
+
+    const handleInputContent = (e: { target: { value: React.SetStateAction<string>; }; }) => {
         setNoteContent(e.target.value);
+        window.location.reload();
     }
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -51,15 +57,15 @@ export const NewNote = (userId:any) => {
                 <ModalBody>
                   <Input
                     autoFocus
-                    value={noteContent}
-                    onChange={handleInput}
+                    value={noteTitle}
+                    onChange={handleInputTitle}
                     placeholder="Enter note title"
                     variant="underlined"
                   />
                   <Input
 
                     value={noteContent}
-                    onChange={handleInput}
+                    onChange={handleInputContent}
                     placeholder="Enter note content"
                     variant="bordered"
                   />

@@ -26,21 +26,30 @@ const NoteList: React.FC<NoteListProps>=({notes})=>{
 
     return (
       <>
-        <div className="relative flex flex-col justify-center p-6 overflow-hidden sm:py-12">
+        <div className="relative flex flex-col justify-center py-6 overflow-hidden bg-gray- sm:py-12">
           <div className="w-full max-w-screen-xl px-4 mx-auto">
             <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
               {notes.map((note) => (
-                <Card className="max-w-[340px]">
+                <Card className="hoverScale max-w-[340px] mt-16">
                   <CardHeader className="justify-between">
                     <div className="flex gap-5">
                       <UserCircle size={30} />
 
                       <div className="flex flex-col items-start justify-center gap-1">
-                        <h4 className="font-semibold leading-none text-small text-default-600">
+                        <h4 className="mr-4 font-semibold leading-none text-small text-default-600">
                           Note
                         </h4>
                       </div>
                     </div>
+                    <Button
+                      className="text-white bg-red-400"
+                      color="danger"
+                      radius="full"
+                      size="sm"
+                      variant="bordered"
+                      onPress={handleDelete}>
+                      Delete
+                    </Button>
                     <Button
                       className={
                         isDone
@@ -56,8 +65,8 @@ const NoteList: React.FC<NoteListProps>=({notes})=>{
                       {isDone ? "Done" : "Processing"}
                     </Button>
                   </CardHeader>
-                  <CardBody className="px-3 py-0 text-small text-default-400">
-                    <p>{note.content}</p>
+                  <CardBody className="text-small text-default-600 ">
+                    <p className="p-2">{note.content}</p>
                   </CardBody>
                 </Card>
               ))}

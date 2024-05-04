@@ -258,3 +258,5 @@ export const getAllNotes=async (userId:string|null)=>{
    console.log(e)
  }
 }
+
+
