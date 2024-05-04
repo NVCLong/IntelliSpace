@@ -27,12 +27,11 @@ export default function Page() {
 
   const handleFetchData = async ()=>{
           try {
-              console.log("Fetching in root folder")
               // @ts-ignore
               const response = await deletedFile(storageID_temp);
               setFileList(response);
               // setIsFetch(false); // Mark fetching complete
-              console.log(response);
+
           } catch (error) {
               console.error(error);
           }
@@ -41,7 +40,7 @@ export default function Page() {
   useEffect(() => {
     handleFetchData();
   }
-  , []
+  , [fileList]
 );
   // @ts-ignore
     return (

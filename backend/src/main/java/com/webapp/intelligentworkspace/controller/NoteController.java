@@ -61,5 +61,12 @@ public class NoteController {
         return ResponseEntity.ok(noteService.sumarizeNote(noteId));
     }
 
+    @PatchMapping("/updateStatus")
+    @ResponseBody
+    public ResponseEntity<Note> updateStatus(@RequestParam("noteId") Long noteId){
+        System.out.println("Update status");
+        return ResponseEntity.ok(noteService.updateStatus(noteId));
+    }
+
 
 }
