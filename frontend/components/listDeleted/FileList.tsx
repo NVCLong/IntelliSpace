@@ -38,9 +38,8 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
 
   const handleDownload = async (fileId: string,fileName:string) => {
     try {
-      console.log(fileId)
       const fileData = await getFile(fileId, fileName, userId);
-      console.log(fileData)
+
       // @ts-ignore
       const url = window.URL.createObjectURL(fileData);
       const link = document.createElement('a');

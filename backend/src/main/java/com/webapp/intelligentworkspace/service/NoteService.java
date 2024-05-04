@@ -59,10 +59,23 @@ public class NoteService {
             return null;
         }else{
             Note note= Note.builder()
+                    .title(request.getTitle())
+                    .status(false)
                     .content(request.getContent())
                     .user(user)
                     .build();
 
+            noteRepository.save(note);
+            return note;
+        }
+    }
+
+    public Note updateStatus(Long noteId){
+        Note note= noteRepository.findById(noteId).orElse(null);
+        if(note== null){
+            return null;
+        }else {
+            note.setStatus(false);
             noteRepository.save(note);
             return note;
         }

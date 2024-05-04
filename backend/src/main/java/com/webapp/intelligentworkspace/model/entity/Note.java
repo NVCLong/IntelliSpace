@@ -21,7 +21,11 @@ public class Note {
     @Column(name = "id")
     private Long id;
 
+    private String title;
+
     private String content;
+
+    private boolean status;
 
     @ManyToOne
     @JoinColumn(name="user_id")
