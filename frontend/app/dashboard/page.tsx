@@ -2,14 +2,11 @@
 import { useEffect } from "react";
 import {AppDispatch, useAppSelector} from "@/lib/store";
 import {getAllRootFolder, openFolder} from "@/lib/apiCall";
-import { get } from "http";
 import { useState } from "react";
 import FolderList from "@/components/list/FolderList";
 import FileList from "@/components/list/FileList";
 import {useDispatch} from "react-redux";
-import { setStorageID } from '@/lib/features/todos/storageSlice';
 import { NewFolder } from "@/components/NewFolder";
-import {string} from "zod";
 import {BackButton} from "@/components/BackButton";
 import {UploadFile} from "@/components/UploadFile";
 
@@ -70,10 +67,6 @@ export default function Page() {
 
 
   useEffect(() => {
-    // if (storageID != null) {
-    //   // localStorage.setItem("storageID", storageID)
-    //   dispatch(setStorageID(storageID))
-    // }
     handleFetchData();
   }
   , [isFetch]
@@ -85,7 +78,7 @@ export default function Page() {
         <NewFolder storageID={storageID_temp}  />
         <UploadFile />
 
-        <div className="mt-48 -ml-96">
+        <div className="mt-48 -ml-72">
         <div>
         {folderList !== null && <FolderList folders={folderList}  parentFolderId={parentFolder.parentFolderId} />}
         </div>
@@ -93,6 +86,8 @@ export default function Page() {
         <div>
           {fileList !== null && <FileList files={fileList}/>}
         </div>
+
+
 
         </div>
     </>
