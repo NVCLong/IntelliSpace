@@ -259,4 +259,42 @@ export const getAllNotes=async (userId:string|null)=>{
  }
 }
 
+export const changeNoteStatus=async (noteId: string|null)=>{
+  try{
+    const header= await getHeader();
+    const response= await api.patch(`note/updateStatus?noteId=${noteId}`,{},{
+      headers: header
+    })
+    return response.data
+  }catch(e){
+    console.log(e)
+    throw e
+  }
+}
+
+export const deleteNote= async (noteId: string|null)=>{
+  try {
+    const header= await getHeader();
+    const response= await  api.delete(`note/delete/${noteId}`,{
+      headers:header
+    })
+    return response.data
+  }catch (e){
+    console.log(e)
+    throw e
+  }
+}
+export const summarizeNote= async (noteId: string|null)=>{
+  try {
+    const header= await getHeader();
+    const response= await  api.patch(`note/sumarize/${noteId}`,{},{
+      headers:header
+    })
+    return response.data
+  }catch (e){
+    console.log(e)
+    throw e
+  }
+}
+
 

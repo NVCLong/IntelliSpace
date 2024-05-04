@@ -54,10 +54,11 @@ public class NoteController {
         return ResponseEntity.ok("Delete successfully");
     }
 
-    @GetMapping(value="/sumarize/{noteId}")
+    @PatchMapping(value="/sumarize/{noteId}")
     @ResponseBody
     public ResponseEntity<Note> sumarizeNote(@PathVariable("noteId") Long noteId){
-        System.out.println("sumarize note");
+        System.out.println("Sumarize note");
+        System.out.println(noteId);
         return ResponseEntity.ok(noteService.sumarizeNote(noteId));
     }
 

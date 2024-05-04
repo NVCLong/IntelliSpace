@@ -21,10 +21,13 @@ public class Note {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "title")
     private String title;
 
+    @Column(name = "content")
     private String content;
 
+    @Column(name = "status")
     private boolean status;
 
     @ManyToOne

@@ -45,7 +45,7 @@ public class OpenAIService {
     }
 
     public String summarizeNote(String note){
-        String prompt = "sumarize "+ note;
+        String prompt = "sumarize this note with the total characters < 255  "+ note;
         ChatRequest chatRequest= new ChatRequest(openAiModel,prompt);
 
         HttpHeaders headers = new HttpHeaders();

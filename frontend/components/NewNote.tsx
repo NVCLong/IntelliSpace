@@ -22,12 +22,12 @@ export const NewNote = (userId:any) => {
 
     const handleInputContent = (e: { target: { value: React.SetStateAction<string>; }; }) => {
         setNoteContent(e.target.value);
-        window.location.reload();
     }
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     const handleSubmit =async () => {
         const request = {
+            title: noteTitle,
             content : noteContent
         }
         console.log("create note")
@@ -80,7 +80,7 @@ export const NewNote = (userId:any) => {
                     onPress={(e) => {
                       handleSubmit();
                       onClose();
-                      // window.location.reload();
+                      window.location.reload();
                     }}
                   >
                     Submit
