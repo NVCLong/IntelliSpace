@@ -66,6 +66,7 @@ const Sidebar: React.FC = () => {
 
   const  handleStorageUsed = async () => {
     const storageId = localStorage.getItem("storageID")
+
     const storageUsed = await getCapacity(storageId)
     setUsed(storageUsed.storage.currentStorage)
     setTotal(storageUsed.storage.maxStorage)

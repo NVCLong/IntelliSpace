@@ -29,9 +29,9 @@ interface FileListProps {
 // @ts-ignore
 const FileList: React.FC<FileListProps> = ({ files }) => {
   const userId = localStorage.getItem("userId")
-  const storageId = localStorage.getItem("storageId")
+  const storageId = localStorage.getItem("storageID")
 
-  const handleDelete = async (fileId:string, storageId:string, userId:string) => {
+  const handleDelete = async (fileId:number, storageId:number, userId:number) => {
      const data = await deletePermanently(fileId, storageId, userId);
      console.log(data)
   };
@@ -76,7 +76,7 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
                     onClick={() => {
                       // @ts-ignore
                       handleDelete(file.id, storageId, userId);
-                      window.location.reload();
+                      // window.location.reload();
                     }}
                   >
                     <ContextMenuLabel className="hover:text-white">

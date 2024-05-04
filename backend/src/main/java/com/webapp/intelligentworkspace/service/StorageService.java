@@ -51,6 +51,7 @@ public class StorageService {
         if(storage==null){
             return StorageResponse.builder().storage(null).message("Can not find the storage").status(false).build();
         }else{
+            fileSize= fileSize/1000000;
             float currentCapacity= storage.getCurrentStorage()-fileSize;
             storage.setCurrentStorage(currentCapacity);
             storageRepository.save(storage);
