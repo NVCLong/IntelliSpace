@@ -62,6 +62,22 @@
   @apply transition hover:scale-110;
 }
 
+.fixed-card-size {
+  width: 150px;
+  height: 150px;
+}
+
+.fixed-icon-size {
+  width: 30px;
+  height: 30px;
+}
+
+.max-w-13ch {
+    max-width: 13ch;
+  }
+
+
+
 @layer utilities {
   .btn_dark {
     @apply px-3 py-2 text-white transition-all bg-indigo-500 hover:bg-black;

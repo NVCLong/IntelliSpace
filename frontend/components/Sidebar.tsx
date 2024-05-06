@@ -115,7 +115,7 @@ const Sidebar: React.FC = () => {
                     } transition-all duration-100`}
                 >
                   <item.icon className={`${!open ? "w-6 h-6 cursor-pointer flex justify-center " : ""
-                    } transition-all duration-200 w-6 h-6 -ml-4`} onClick={item.onClick} />
+                    } transition-all duration-100 w-6 h-6 -ml-4`} onClick={item.onClick} />
                 </div>
                 <span
                   className={`${!open && "hidden"

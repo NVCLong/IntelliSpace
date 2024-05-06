@@ -1,20 +1,12 @@
 "use client";
-import React, { useState } from "react";
-import {
-  Button,
-} from "@nextui-org/react";
-import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
-import {getFile, softDelete} from "@/lib/apiCall";
-import {Image} from "@nextui-org/react";
-import {
-  ContextMenu,
-  ContextMenuContent,
-  ContextMenuItem,
-  ContextMenuLabel,
-  ContextMenuTrigger,
-} from "@/components/ui/context-menu";
+import React, { useState } from 'react';
 
-
+import {
+    ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuLabel, ContextMenuTrigger
+} from '@/components/ui/context-menu';
+import { getFile, softDelete } from '@/lib/apiCall';
+import { Card, CardBody, CardFooter, CardHeader } from '@nextui-org/card';
+import { Button, Image } from '@nextui-org/react';
 
 interface File {
   id: string;
@@ -54,9 +46,9 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
   }
 
   return (
-    <div className="relative flex flex-col overflow-hidden sm:py-12">
+    <div className="relative flex flex-col overflow-hidden sm:py-12 sm:px-12">
       <div className="w-full max-w-screen-xl px-4 mx-auto">
-        <div className="grid w-full gap-6 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="grid w-full gap-9 xl:grid-cols-6 sm:grid-cols-4">
           {files.map((file) => (
             <ContextMenu>
               <ContextMenuTrigger>
@@ -86,8 +78,8 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
 
                 <Card
                   isFooterBlurred={true}
-                  isHoverable={true} radius="lg"
-                  className="border-none hoverScale"
+                  radius="lg"
+                  className="border-none hoverScale fixed-card-size"
                 >
                   {file.file_name.split(".")[1].toLowerCase() === "png" ? (
                     <Image

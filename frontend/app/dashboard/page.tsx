@@ -9,6 +9,7 @@ import {useDispatch} from "react-redux";
 import { NewFolder } from "@/components/NewFolder";
 import {BackButton} from "@/components/BackButton";
 import {UploadFile} from "@/components/UploadFile";
+import {motion} from "framer-motion";
 
 
 export default function Page() {
@@ -73,12 +74,22 @@ export default function Page() {
 );
   // @ts-ignore
     return (
-      <>
+      <motion.div
+      initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{
+            duration: 1,
+            delay: 0.5,
+            ease: [0, 0.71, 0.2, 1.01],
+          }}
+          className="flex flex-col"
+      >
+        <div className="flex flex-row">
         <BackButton />
         <NewFolder storageID={storageID_temp} />
         <UploadFile />
-
-        <div className="mt-48 -ml-72">
+        </div>
+        <div className="ml-32">
           <div>
             {folderList !== null && (
               <FolderList
@@ -87,11 +98,11 @@ export default function Page() {
               />
             )}
           </div>
+        </div>
 
-          <div className="">
+          <div className="ml-20 -mt-5">
             {fileList !== null && <FileList files={fileList} />}
           </div>
-        </div>
-      </>
+      </motion.div>
     );
 }
