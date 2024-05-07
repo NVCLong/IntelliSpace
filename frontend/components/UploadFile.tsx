@@ -86,7 +86,10 @@ export const UploadFile = () => {
                                 <Button color="primary" onPress= {(e) => {
                                     handleSubmit();
                                     onClose();
-                                    window.location.reload();
+                                    setTimeout(()=>{
+                                        window.location.reload();
+
+                                    }, 2000)
                                 }}>
                                     Submit
                                 </Button>

@@ -81,7 +81,7 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
                   radius="lg"
                   className="border-none hoverScale fixed-card-size"
                 >
-                  {file.file_name.split(".")[1].toLowerCase() === "png" ? (
+                  {file.file_name.split(".")[1].toLowerCase() === "png" || file.file_name.split(".")[1].toLowerCase() === "jpg"  ? (
                     <Image
                       alt="image file icon"
                       className=""
