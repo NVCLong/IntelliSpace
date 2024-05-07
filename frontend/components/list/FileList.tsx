@@ -5,8 +5,9 @@ import {
     ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuLabel, ContextMenuTrigger
 } from '@/components/ui/context-menu';
 import { getFile, softDelete } from '@/lib/apiCall';
-import { Card, CardBody, CardFooter, CardHeader } from '@nextui-org/card';
-import { Button, Image } from '@nextui-org/react';
+import { Card,CardFooter } from '@nextui-org/card';
+import { Image } from '@nextui-org/react';
+import { FiDownloadCloud, FiTrash2 } from "react-icons/fi";
 
 interface File {
   id: string;
@@ -54,24 +55,28 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
               <ContextMenuTrigger>
                 <ContextMenuContent className="bg-white rounded-lg w-30">
                   <ContextMenuItem
-                    className="hover:bg-slate-300 "
+                    className="hover:bg-slate-600 "
                     onClick={() => {
                       handleDownload(file.id, file.file_name);
                     }}
                   >
-                    <ContextMenuLabel>
+                    <ContextMenuLabel className="flex hover:text-white">
+                        <FiDownloadCloud size={20} className="mr-2"/>
+
                       Download
                     </ContextMenuLabel>
                   </ContextMenuItem>
                   <hr className="h-px bg-gray-200 border-0"></hr>
                   <ContextMenuItem
-                    className="hover:bg-slate-300 "
+                    className="hover:bg-slate-600 "
                     onClick={() => {
                       handleMoveToTrash(file.id);
                       window.location.reload();
                     }}
                   >
-                    <ContextMenuLabel>
+                    <ContextMenuLabel className="flex hover:text-white">
+                    <FiTrash2 size={20} className="mr-2"/>
+
                       Delete
                     </ContextMenuLabel>
                   </ContextMenuItem>

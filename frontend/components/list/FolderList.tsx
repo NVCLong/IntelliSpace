@@ -20,6 +20,7 @@ import {
   ContextMenuLabel,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
+import { FiTrash2, FiEdit3 } from "react-icons/fi";
 
 interface Folder {
   id: string;
@@ -76,7 +77,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
         <div className="grid gap-6 sm:grid-cols-4 xl:grid-cols-6">
           {folders.map((folder) => (
             <div key={folder.id}>
-              <ContextMenu >
+              <ContextMenu>
                 <ContextMenuTrigger>
                   <ContextMenuContent className="bg-white rounded-lg w-30">
                     <ContextMenuItem
@@ -86,8 +87,9 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
                         onOpen();
                       }}
                     >
-                      <ContextMenuLabel className="hover:text-white">
-                        Edit
+                      <ContextMenuLabel className="flex hover:text-white">
+                        <FiEdit3 size={20} className="mr-2"/>
+                        Rename
                       </ContextMenuLabel>
                     </ContextMenuItem>
                     <hr className="h-px bg-gray-200 border-0"></hr>
@@ -100,7 +102,8 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
                         }, 2000);
                       }}
                     >
-                      <ContextMenuLabel className="hover:text-white">
+                      <ContextMenuLabel className="flex hover:text-white">
+                        <FiTrash2 size={20} className="mr-2"/>
                         Delete
                       </ContextMenuLabel>
                     </ContextMenuItem>

@@ -3,7 +3,7 @@ const { nextui } = require("@nextui-org/react");
 module.exports = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
@@ -21,10 +21,9 @@ module.exports = {
           DEFAULT: "#b61920",
           // foreground: "#000000",
         },
-        secondary:{
+        secondary: {
           DEFAULT: "#ccdfff",
         },
-
 
         green: {
           50: "#30AF5B",

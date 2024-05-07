@@ -77,7 +77,7 @@ const Page = () => {
         }}
         className="registerWrapper drop-shadow-md">
         <div className="formWrapper">
-          <div className="left">
+          <div className="space-y-5 left">
             <h3 className="title">Hello, friends!</h3>
             <p>Enter your personal details and start journey with us</p>
             <Link href={"/register"}>

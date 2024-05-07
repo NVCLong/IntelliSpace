@@ -8,6 +8,8 @@ import {
   Avatar,
   Button,
 } from "@nextui-org/react";
+
+
 interface Note {
   id: string;
   content: string;
