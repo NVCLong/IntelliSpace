@@ -74,7 +74,7 @@ export const NewFolder = (storageID:any) => {
                 <Button color="primary" onPress= {(e) => {
                   handleSubmit();
                   onClose();
-                  window.location.reload();
+                  // window.location.reload();
                 }}>
                   Submit
                 </Button>

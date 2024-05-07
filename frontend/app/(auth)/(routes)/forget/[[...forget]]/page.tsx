@@ -43,7 +43,7 @@ const Page = () => {
       values
     );
     dispatch(setEmail(values.email))
-    console.log(response.data);
+    // console.log(response.data);
     router.push("/OTP");
   }
 

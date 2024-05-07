@@ -48,12 +48,12 @@ const Page = () => {
     if (email != null) {
       dispatch(setEmail(email))
     }
-    console.log(values)
+    // console.log(values)
     const response = await axios.post(
       `http://localhost:8888/api/auth/checkOtp`,
       request
     );
-    console.log(response.data);
+    // console.log(response.data);
 
     router.push("/resetPassword");
   }

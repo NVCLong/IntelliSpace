@@ -7,6 +7,7 @@ import { useState } from "react";
 import FolderList from "@/components/list/FolderList";
 import { useDispatch } from "react-redux";
 import { setStorageID } from "@/lib/features/todos/storageSlice";
+import Chat from "@/components/Chat"
 
 export default function Page() {
   const dispatch = useDispatch<AppDispatch>();
@@ -33,5 +34,8 @@ export default function Page() {
   //     console.log(response);
   //   }
   // });
-  return <></>;
+  return <>
+      <Chat/>
+
+  </>;
 }

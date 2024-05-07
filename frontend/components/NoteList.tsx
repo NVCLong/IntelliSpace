@@ -1,105 +1,172 @@
 "use client";
-import React from "react";
-import {Card, CardHeader, CardBody, CardFooter, Avatar, Button} from "@nextui-org/react";
+import React, { useEffect } from "react";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Avatar,
+  Button,
+} from "@nextui-org/react";
 interface Note {
-    id: string;
-    content:string;
-    title:string;
-    status:boolean;
+  id: string;
+  content: string;
+  title: string;
+  status: boolean;
 }
-import {UserCircle} from "@phosphor-icons/react";
-import {changeNoteStatus, deleteNote, summarizeNote} from "@/lib/apiCall";
+import { UserCircle } from "@phosphor-icons/react";
+import {
+  changeNoteStatus,
+  deleteNote,
+  summarizeNote,
+  updateNote,
+} from "@/lib/apiCall";
+import TextareaAutosize from "react-textarea-autosize";
+import { FiEdit3 } from "react-icons/fi";
+import { set } from 'zod';
 
 interface NoteListProps {
-    notes: Note[];
+  notes: Note[];
 }
-const NoteList: React.FC<NoteListProps>=({notes})=>{
 
+const NoteList: React.FC<NoteListProps> = ({ notes }) => {
+  const [content, setContent] = React.useState("");
+  const [title, setTitle] = React.useState("");
+  const [updatedNote, setUpdatedNote] = React.useState({
+       content:"",
+       title:"",
+  });
 
-    const userId = localStorage.getItem("userId")
+  const userId = localStorage.getItem("userId");
 
-    const handleDelete=async (noteId:string|null)=>{
-        await deleteNote(noteId);
-        window.location.reload();
-    }
+  const handleDelete = async (noteId: string | null) => {
+    await deleteNote(noteId);
+    // window.location.reload();
+  };
+  // @ts-ignore
+  const handleInput = async (e) => {
+   const {name, value}= e.target
+    setUpdatedNote({
+      ...updatedNote,
+      [name]:value
+    })
+    console.log(updatedNote)
 
-    const handleSummarize=async (noteId:string|null)=>{
-        const response= await summarizeNote(noteId);
-        window.location.reload();
-    }
-    const handleChangeStatus=async (noteId: string|null)=>{
-        await changeNoteStatus(noteId);
-        window.location.reload()
-    }
+  };
 
+  const handleUpdate = async (noteId: string | null) => {
+    await updateNote(noteId, updatedNote);
+    window.location.reload();
+  };
 
-    return (
-      <>
-        <div className="relative flex flex-col justify-center py-6 overflow-hidden bg-gray- sm:py-12">
-          <div className="w-full max-w-screen-xl px-4 mx-auto">
-            <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
-              {notes.map((note) => (
-                <Card className="hoverScale max-w-[340px] mt-16">
-                  <CardHeader className="justify-between">
-                    <div className="flex gap-5">
-                      <UserCircle size={30} />
+  const handleSummarize = async (noteId: string | null) => {
+    const response = await summarizeNote(noteId);
+    window.location.reload();
+  };
+  const handleChangeStatus = async (noteId: string | null) => {
+    await changeNoteStatus(noteId);
+    window.location.reload();
+  };
 
-                      <div className="flex flex-col items-start justify-center gap-1">
-                        <h4 className="mr-4 font-semibold leading-none text-small text-default-600">
-                          Note
-                        </h4>
-                      </div>
+  // useEffect(()=>{
+
+  // },[])
+  return (
+    <>
+      <div className="flex flex-col p-3 overflow-hidden sm:py-12">
+        <div className="w-full max-w-screen-xl mx-auto">
+          <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-2">
+            {notes.map((note) => (
+              <Card className="border-transparent border-3 hover:border-red-200 hover:border-3">
+                <CardHeader className="justify-between">
+                  <div className="gap-5 flexCenter">
+                    <UserCircle size={30} />
+                    <div className="flex flex-col items-start justify-center gap-1">
+                      <TextareaAutosize
+                      name="title"
+                        defaultValue={note.title}
+                        maxRows={1}
+                        cacheMeasurements
+                        onChange={handleInput}
+                        className="mr-4 font-semibold leading-none border-transparent resize-none text-small text-default-600 border-3 hover:border-red-200 hover:border-3"
+                      ></TextareaAutosize>
                     </div>
-                    <Button
-                      className="text-white bg-red-400"
-                      color="danger"
-                      radius="full"
-                      size="sm"
-                      variant="bordered"
-                      onPress={()=>{
-                          handleDelete(note.id)
-                      }}>
-                      Delete
-                    </Button>
-                      <Button
-                          className="text-white bg-amber-200"
-                          color="success"
-                          radius="full"
-                          size="sm"
-                          variant="bordered"
-                          onPress={()=>{
-                              handleSummarize(note.id)
-                          }}>
-                          Summarize
-                      </Button>
-                    <Button
-                      className={
-                        note.status
-                          ? "bg-green-50 text-foreground border-default-200"
-                          : ""
-                      }
-                      color="primary"
-                      radius="full"
-                      size="sm"
-                      variant={note.status ? "bordered" : "solid"}
-                      onPress={()=>{
-                          handleChangeStatus(note.id)
-                      }
-                      }
-                    >
-                      {note.status ? "Done" : "Processing"}
-                    </Button>
-                  </CardHeader>
-                  <CardBody className="text-small text-default-600 ">
-                    <p className="p-2">{note.content}</p>
-                  </CardBody>
-                </Card>
-              ))}
-            </div>
+                  </div>
+                </CardHeader>
+
+                <CardBody className="p-4 space-y-3 text-small text-default-600">
+                  <TextareaAutosize
+                    minRows={6}
+                    maxRows={10}
+                    name="content"
+                    cacheMeasurements
+                    defaultValue={note.content}
+                    onChange={handleInput}
+                    className="p-2 border-2 border-gray-300 rounded-lg resize-none"
+                  ></TextareaAutosize>
+                  <Button
+                    className="text-white bg-gray-400 shadow-md"
+                    color="danger"
+                    radius="full"
+                    size="sm"
+                    variant="flat"
+                    onPress={() => {
+                      handleUpdate(note.id);
+                    }}
+                  >
+                    Update
+                  </Button>
+                </CardBody>
+
+                <CardFooter className="flex justify-between space-x-3">
+                  <Button
+                    className="text-white bg-red-400 shadow-md"
+                    color="danger"
+                    radius="full"
+                    size="sm"
+                    variant="flat"
+                    onPress={() => {
+                      handleDelete(note.id);
+                    }}
+                  >
+                    Delete
+                  </Button>
+                  <Button
+                    className="text-white bg-purple-400 shadow-md"
+                    color="secondary"
+                    radius="full"
+                    size="sm"
+                    variant="flat"
+                    onPress={() => {
+                      handleSummarize(note.id);
+                    }}
+                  >
+                    Summarize
+                  </Button>
+                  <Button
+                    className={
+                      note.status
+                        ? "bg-green-50 text-foreground border-default-200 shadow-md"
+                        : "shadow-md"
+                    }
+                    color="primary"
+                    radius="full"
+                    size="sm"
+                    variant={note.status ? "flat" : "flat"}
+                    onPress={() => {
+                      handleChangeStatus(note.id);
+                    }}
+                  >
+                    {note.status ? "Done" : "Processing"}
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
           </div>
         </div>
-      </>
-    );
-}
+      </div>
+    </>
+  );
+};
 
-export default NoteList
+export default NoteList;

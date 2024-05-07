@@ -297,4 +297,19 @@ export const summarizeNote= async (noteId: string|null)=>{
   }
 }
 
+export const updateNote = async (noteId: string | null, updatedNote: object) => {
+  try {
+    const header = await getHeader();
+    console.log(updatedNote)
+    const response = await api.patch(`note/update/${noteId}`, updatedNote, {
+      headers: header
+    })
+    console.log(response.data)
+    return response.data
 
+
+  } catch (error) {
+    console.log(error)
+
+  }
+}

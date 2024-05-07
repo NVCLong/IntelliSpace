@@ -62,7 +62,7 @@ const Page = () => {
       `http://localhost:8888/api/auth/register`,
       values
     );
-    console.log(response.data);
+    // console.log(response.data);
     await router.push("/signin");
   }
 

@@ -21,6 +21,10 @@ module.exports = {
           DEFAULT: "#b61920",
           // foreground: "#000000",
         },
+        secondary:{
+          DEFAULT: "#ccdfff",
+        },
+
 
         green: {
           50: "#30AF5B",

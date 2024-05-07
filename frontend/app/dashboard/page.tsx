@@ -32,12 +32,12 @@ export default function Page() {
       // if (isFetch) return; // Prevent redundant fetches
       if(folderId===null) {
           try {
-              console.log("Fetching in root folder")
+              // console.log("Fetching in root folder")
               // @ts-ignore
               const response = await getAllRootFolder(storageID_temp);
               setFolderList(response.rootFolders);
               setIsFetch(false); // Mark fetching complete
-              console.log(response);
+              // console.log(response);
           } catch (error) {
               console.error(error);
           }
@@ -46,7 +46,7 @@ export default function Page() {
               console.log("{Fetching in subfolder")
               const response = await openFolder(storageID_temp, folderId);
               if(response.parentFolder==null){
-                  console.log(response)
+                  // console.log(response)
                 setFolderList(response.subFolders);
                 setIsFetch(false);
                 setFileList(response.files);
@@ -56,7 +56,7 @@ export default function Page() {
                   setFolderList(response.subFolders)
                   setIsFetch(false)
                   setFileList(response.files)
-                  console.log(response)
+                  // console.log(response)
                   // setParentFolder({parentFolderId: response.parentFolder.id})
                   localStorage.setItem("parentFolder",response.parentFolder.id);
 
@@ -72,7 +72,7 @@ export default function Page() {
   useEffect(() => {
     handleFetchData();
   }
-  , [isFetch]
+  , [folderList, fileList]
 );
   // @ts-ignore
     return (

@@ -8,7 +8,7 @@ interface StorageBarProps {
 }
 
 const StorageBar: React.FC<StorageBarProps> = ({ used, total, open }) => {
-    console.log(typeof used, typeof total)
+    // console.log(typeof used, typeof total)
     const percentage = Math.round((used / total) * 100);
 
 

@@ -21,12 +21,12 @@ export const CustomButton = () => {
             const response = await axios.get(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${codeResponse.access_token}`)
             // console.log(response.data)
             const loginResponse = await axios.get(`http://localhost:8888/api/auth/oauth2/login?name=${response.data.family_name}&email=${response.data.email}`);
-            console.log(loginResponse.data)
+            // console.log(loginResponse.data)
             localStorage.setItem("access_token", loginResponse.data.accessToken);
             document.cookie = `refreshToken=${loginResponse.data.refreshToken}`;
             localStorage.setItem("userId", loginResponse.data.user.id);
             localStorage.setItem("storageID",loginResponse.data.storageId);
-            console.log(loginResponse.data.storageId)
+            // console.log(loginResponse.data.storageId)
             dispatch(setStorageID(loginResponse.data.storageId));
                   localStorage.setItem(
                     "storageID",

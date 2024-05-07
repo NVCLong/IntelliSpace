@@ -75,8 +75,8 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
       <div className="w-full max-w-screen-xl mx-auto">
         <div className="grid gap-6 sm:grid-cols-4 xl:grid-cols-6">
           {folders.map((folder) => (
-            <>
-              <ContextMenu>
+            <div key={folder.id}>
+              <ContextMenu >
                 <ContextMenuTrigger>
                   <ContextMenuContent className="w-64 bg-slate-200 ">
                     <ContextMenuItem
@@ -165,7 +165,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
                   )}
                 </ModalContent>
               </Modal>
-            </>
+            </div>
           ))}
         </div>
       </div>
