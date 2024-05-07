@@ -7,6 +7,22 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { FiUser, FiMenu } from "react-icons/fi";
 import NextTopLoader from "nextjs-toploader";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button"
+
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -77,14 +93,31 @@ const Navbar = () => {
         <span className="font-semibold text-white md:block">Login</span>
       </div>
 
-      <div
+      {/* <div
         className="relative inline-block p-1 bg-blue-400 rounded-md shadow lg:hidden drop-shadow-xl"
         onClick={toggleMenu}
       >
         <div className="text-white cursor-pointer fill-current hover:text-gray-300">
           <FiMenu size={40} />
         </div>
-      </div>
+      </div> */}
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild onClick={toggleMenu}>
+          <Button variant="destructive">
+            <FiMenu size={40}/>
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-20">
+          {NAV_LINKS.map((link) => (
+            <DropdownMenuItem
+              key={link.key}
+              className="font-semibold hover:bg-white/80"
+            >
+              <Link href={link.href}>{link.label}</Link>
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
     </motion.nav>
   );
 };
