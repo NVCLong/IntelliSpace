@@ -114,8 +114,10 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
                     }}
                     className="flex items-center w-40 p-3 bg-white rounded-md shadow-md cursor-pointer h-15 hoverScale"
                   >
-                    <MdFolder className="block text-blue-400 fixed-icon-size" />
-                    <span className="ml-3 truncate  max-w-[13ch]">
+                    <div className="flex-shrink-0">
+                      <MdFolder className="text-blue-400 fixed-icon-size" />
+                    </div>
+                    <span className="ml-3 truncate max-w-[13ch]">
                       {folder.name}
                     </span>
                   </div>
