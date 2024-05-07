@@ -1,7 +1,6 @@
 "use client"
 import { createContext, useState } from "react";
-
-// import { runChat } from "@/libs/gemini";
+import {sendPrompt} from "@/lib/apiCall";
 
 type ChatContextProps = {
   sendPrompt: (prompt: string) => Promise<void>;
@@ -34,7 +33,6 @@ export const ChatContext = createContext<ChatContextProps>({
 });
 
 export const ChatContextProvider = ({ children }: React.PropsWithChildren) => {
-  const [prevPrompts, setPrevPrompts] = useState<string[]>([]);
   const [recentPrompt, setRecentPrompt] = useState<string>("");
   const [prompt, setPrompt] = useState<string>("");
   const [isPending, setIsPending] = useState<boolean>(false);
@@ -49,45 +47,16 @@ export const ChatContextProvider = ({ children }: React.PropsWithChildren) => {
   };
 
   const handleSendPrompt = async (prompt: string) => {
-    //call API here
     setIsGenerating(true);
     setIsPending(true);
     setRecentPrompt(prompt);
     setShowResult(true);
 
-    setPrevPrompts((prev) => [...prev.filter((p) => p !== prompt), prompt]);
-
-    // const { data, error } = await runChat(prompt);
-    let formattedResponse = "";
-
-    // if (error) {
-    //   setOutput(`<span class="text-red-500">${error}</span>`);
-    //   setIsPending(false);
-    //   setIsGenerating(false);
-    //   setShowResult(true);
-
-    //   return;
-    // }
-
-    // data!.split("**").forEach((word, idx) => {
-    //   if (idx === 0 || idx % 2 === 0) {
-    //     formattedResponse += word;
-    //   } else {
-    //     formattedResponse += `<strong>${word}</strong>`;
-    //   }
-    // });
-
-    formattedResponse = formattedResponse.split("*").join("<br />");
-
-    setOutput("");
+    // console.log(prompt)
+    const promptResponse = await sendPrompt(prompt);
+    // console.log(promptResponse)
+    setOutput(promptResponse);
     setIsPending(false);
-
-    await Promise.all(
-      formattedResponse
-        .split(" ")
-        .map((word, idx) => simulateTypingEffect(idx, word + " "))
-    );
-
     setPrompt("");
     setIsGenerating(false);
   };
@@ -104,11 +73,9 @@ export const ChatContextProvider = ({ children }: React.PropsWithChildren) => {
     <ChatContext.Provider
       value={{
         sendPrompt: handleSendPrompt,
-        setPrevPrompts,
         setRecentPrompt,
         setPrompt,
         startNewChat: handleNewChat,
-        prevPrompts,
         recentPrompt,
         prompt,
         isPending,

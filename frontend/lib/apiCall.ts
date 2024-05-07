@@ -17,7 +17,7 @@ export const getHeader = async () => {
   const decoded: JwtPayload = jwtDecode(accessToken); // Type assertion for decoded data
   // @ts-ignore
   const isExpired = Date.now() >= decoded.exp * 1000; // Check expiration in milliseconds
-  console.log(isExpired)
+  // console.log(isExpired)
   if (isExpired) {
     const userId = localStorage.getItem("userId");
     const response = await api.get(`/auth/newAccessToken?userId=${userId}`);
@@ -75,7 +75,7 @@ export const sendMailPassword= async (email:string)=>{
 
 export const deleteFolder = async (storageId: string, folderId: number) => {
   try {
-    const headers = await getHeader(); // Getting headers asynchronously
+    const headers = await getHeader();
     const response = await api.delete(`/folder/delete/${storageId}?folderId=${folderId}`, {
       headers: headers,
     });
@@ -317,14 +317,15 @@ export const updateNote = async (noteId: string | null, updatedNote: object) => 
 
 export const sendPrompt = async (prompt: string) => {
   try {
-    const response = await api.post("/chat/sendPrompt", { prompt }, {
-      headers: await getHeader(),
+    console.log(prompt)
+    const header =  await getHeader()
+    const response = await api.post("openai/chat", { prompt }, {
+      headers: header,
     });
-
+    console.log(response.data)
     return response.data;
   } catch (error) {
     console.error("Error sending prompt:", error);
-
     throw error;
   }
 }

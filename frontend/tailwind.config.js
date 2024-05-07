@@ -8,6 +8,11 @@ module.exports = {
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    fontFamily: {
+      sans: ["Poppins"],
+      serif: ["Noto Sans"],
+      display: ["Poppins"],
+    },
     container: {
       center: true,
       padding: "2rem",

@@ -96,9 +96,9 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
                     <ContextMenuItem
                       className="hover:bg-slate-600"
                       onClick={() => {
-                        handleDelete(Number.parseInt(currentFolderId));
+                        handleDelete(Number.parseInt(folder.id));
                         setTimeout(() => {
-                          window.location.reload();
+                          // window.location.reload();
                         }, 2000);
                       }}
                     >
@@ -127,7 +127,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
                 </ContextMenuTrigger>
               </ContextMenu>
               <Modal
-                backdrop="blur"
+
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
                 placement="center"
@@ -158,7 +158,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
                           color="primary"
                           onPress={(e) => {
                             handleUpdate(currentFolderId);
-                            window.location.reload();
+                            // window.location.reload();
                           }}
                         >
                           Edit
