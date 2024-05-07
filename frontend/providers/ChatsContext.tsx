@@ -49,6 +49,7 @@ export const ChatContextProvider = ({ children }: React.PropsWithChildren) => {
   };
 
   const handleSendPrompt = async (prompt: string) => {
+    //call API here
     setIsGenerating(true);
     setIsPending(true);
     setRecentPrompt(prompt);

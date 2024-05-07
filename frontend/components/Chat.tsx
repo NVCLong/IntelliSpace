@@ -65,8 +65,8 @@ const Chat = () => {
 												? 'animate-spin'
 												: 'rotate-0 [animation-play-state:pause]'
 									}`}
-									src='/gemini.svg'
-									alt='gemini icon'
+									src='/icon.ico'
+									alt='IntelliBot icon'
 								/>
 							</div>
 

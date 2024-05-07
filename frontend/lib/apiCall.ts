@@ -313,3 +313,18 @@ export const updateNote = async (noteId: string | null, updatedNote: object) => 
 
   }
 }
+
+
+export const sendPrompt = async (prompt: string) => {
+  try {
+    const response = await api.post("/chat/sendPrompt", { prompt }, {
+      headers: await getHeader(),
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Error sending prompt:", error);
+
+    throw error;
+  }
+}

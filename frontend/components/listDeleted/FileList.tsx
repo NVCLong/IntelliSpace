@@ -53,32 +53,32 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
   }
 
   return (
-    <div className="relative flex flex-col justify-center py-6 overflow-hidden sm:py-12">
+    <div className="relative flex flex-col overflow-hidden sm:py-12 sm:px-12">
       <div className="w-full max-w-screen-xl px-4 mx-auto">
-        <div className="grid w-full gap-6 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="grid w-full gap-9 xl:grid-cols-6 sm:grid-cols-4">
           {files.map((file) => (
             <ContextMenu>
               <ContextMenuTrigger>
-                <ContextMenuContent className="w-64 bg-slate-200 ">
+                <ContextMenuContent className="bg-white rounded-lg w-30">
                   <ContextMenuItem
-                    className="hover:bg-slate-600 "
+                    className="hover:bg-slate-300"
                     onClick={() => {
                       handleDownload(file.id, file.file_name);
                     }}
                   >
-                    <ContextMenuLabel className="hover:text-white">
+                    <ContextMenuLabel>
                       Download
                     </ContextMenuLabel>
                   </ContextMenuItem>
                   <ContextMenuItem
-                    className="hover:bg-slate-600 "
+                    className="hover:bg-slate-300"
                     onClick={() => {
                       // @ts-ignore
                       handleDelete(file.id, storageId, userId);
                       // window.location.reload();
                     }}
                   >
-                    <ContextMenuLabel className="hover:text-white">
+                    <ContextMenuLabel>
                       Delete permanently
                     </ContextMenuLabel>
                   </ContextMenuItem>
@@ -86,10 +86,12 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
 
                 <Card
                   isFooterBlurred={true}
-                  isHoverable={true} radius="lg"
+                  isHoverable={true}
+                  radius="lg"
                   className="border-none hoverScale"
                 >
-                  {file.file_name.split(".")[1].toLowerCase() === "png" || file.file_name.split(".")[1].toLowerCase() === "jpg"  ? (
+                  {file.file_name.split(".")[1].toLowerCase() === "png" ||
+                  file.file_name.split(".")[1].toLowerCase() === "jpg" ? (
                     <Image
                       alt="image file icon"
                       className=""
