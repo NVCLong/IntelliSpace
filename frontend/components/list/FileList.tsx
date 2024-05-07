@@ -52,25 +52,26 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
           {files.map((file) => (
             <ContextMenu>
               <ContextMenuTrigger>
-                <ContextMenuContent className="w-64 bg-slate-200 ">
+                <ContextMenuContent className="bg-white rounded-lg w-30">
                   <ContextMenuItem
-                    className="hover:bg-slate-600 "
+                    className="hover:bg-slate-300 "
                     onClick={() => {
                       handleDownload(file.id, file.file_name);
                     }}
                   >
-                    <ContextMenuLabel className="hover:text-white">
+                    <ContextMenuLabel>
                       Download
                     </ContextMenuLabel>
                   </ContextMenuItem>
+                  <hr className="h-px bg-gray-200 border-0"></hr>
                   <ContextMenuItem
-                    className="hover:bg-slate-600 "
+                    className="hover:bg-slate-300 "
                     onClick={() => {
                       handleMoveToTrash(file.id);
                       window.location.reload();
                     }}
                   >
-                    <ContextMenuLabel className="hover:text-white">
+                    <ContextMenuLabel>
                       Delete
                     </ContextMenuLabel>
                   </ContextMenuItem>
@@ -81,10 +82,10 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
                   radius="lg"
                   className="border-none hoverScale fixed-card-size"
                 >
-                  {file.file_name.split(".")[1].toLowerCase() === "png" || file.file_name.split(".")[1].toLowerCase() === "jpg"  ? (
+                  {file.file_name.split(".")[1].toLowerCase() === "png" ||
+                  file.file_name.split(".")[1].toLowerCase() === "jpg" ? (
                     <Image
                       alt="image file icon"
-                      className=""
                       src="/imageIcon.png"
                       width={300}
                       height={300}

@@ -78,7 +78,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
             <div key={folder.id}>
               <ContextMenu >
                 <ContextMenuTrigger>
-                  <ContextMenuContent className="w-64 bg-slate-200 ">
+                  <ContextMenuContent className="bg-white rounded-lg w-30">
                     <ContextMenuItem
                       className="hover:bg-slate-600 "
                       onClick={(e) => {
@@ -90,7 +90,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
                         Edit
                       </ContextMenuLabel>
                     </ContextMenuItem>
-
+                    <hr className="h-px bg-gray-200 border-0"></hr>
                     <ContextMenuItem
                       className="hover:bg-slate-600"
                       onClick={() => {

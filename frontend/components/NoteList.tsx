@@ -102,10 +102,10 @@ const NoteList: React.FC<NoteListProps> = ({ notes }) => {
                     cacheMeasurements
                     defaultValue={note.content}
                     onChange={handleInput}
-                    className="p-2 border-2 border-gray-300 rounded-lg resize-none"
+                    className="p-2 border-2 border-gray-200 rounded-lg resize-none"
                   ></TextareaAutosize>
                   <Button
-                    className="text-white bg-gray-400 shadow-md"
+                    className="bg-gray-300 shadow-md text-foreground"
                     color="danger"
                     radius="full"
                     size="sm"
@@ -116,11 +116,12 @@ const NoteList: React.FC<NoteListProps> = ({ notes }) => {
                   >
                     Update
                   </Button>
+
                 </CardBody>
 
                 <CardFooter className="flex justify-between space-x-3">
                   <Button
-                    className="text-white bg-red-400 shadow-md"
+                    className="bg-red-300 shadow-md text-foreground"
                     color="danger"
                     radius="full"
                     size="sm"
@@ -132,7 +133,7 @@ const NoteList: React.FC<NoteListProps> = ({ notes }) => {
                     Delete
                   </Button>
                   <Button
-                    className="text-white bg-purple-400 shadow-md"
+                    className="bg-purple-300 shadow-md text-foreground"
                     color="secondary"
                     radius="full"
                     size="sm"
