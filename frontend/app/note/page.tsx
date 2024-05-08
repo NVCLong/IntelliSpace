@@ -35,7 +35,7 @@ export default function Page() {
   useEffect(() => {
     handleFetchData();
   }
-  , []
+  , [noteList]
 );
   // @ts-ignore
     return (

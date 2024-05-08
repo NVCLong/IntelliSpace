@@ -1,11 +1,11 @@
-import type { Metadata } from "next";
-import NextTopLoader from "nextjs-toploader";
-import Sidebar from "@/components/SideBar";
+import type { Metadata } from 'next'
+import NextTopLoader from 'nextjs-toploader'
+import Sidebar from '@/components/SideBar'
 
 export const metadata: Metadata = {
-  title: "Dashboard | IntelliSpace",
-  description: "IntelliSpace Dashboard for all your needs",
-};
+  title: 'Dashboard | IntelliSpace',
+  description: 'IntelliSpace Dashboard for all your needs'
+}
 
 const Dashboardlayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -14,7 +14,7 @@ const Dashboardlayout = ({ children }: { children: React.ReactNode }) => {
       <Sidebar />
       {children}
     </div>
-  );
-};
+  )
+}
 
-export default Dashboardlayout;
+export default Dashboardlayout

@@ -68,6 +68,7 @@ export default function Page() {
     handleFetchData()
   }, [folderList, fileList])
   // @ts-ignore
+
   return (
     <div className="flex flex-col">
       <div className="flex flex-row">

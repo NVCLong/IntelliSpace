@@ -102,24 +102,24 @@ const SideBar: React.FC = () => {
           onClick={() => setOpen(!open)}
         />
 
-        <div className="flex flex-col space-x-2 ">
-          <Link href="/">
+        <div className="flex flex-shrink-0 space-x-2">
+          <a href="/">
             <Image
               src="/IntelliSpace.png"
               alt="logo"
               width={30}
               height={30}
-              className={`cursor-pointer ml-3 transition-none
+              className={`cursor-pointer ml-3 transition-full
             ${!open && ''}`}
             />
-            <h4
-              className={`text-xl font-bold ml-2 flex-shrink-0 flex ${
-                !open && 'hidden'
-              }`}
-            >
-              IntelliDrive
-            </h4>
-          </Link>
+          </a>
+          <span
+            className={`text-xl font-bold ml-2 flex-shrink-0 flex ${
+              !open && 'hidden'
+            }`}
+          >
+            IntelliDrive
+          </span>
         </div>
 
         <div className="p-4 space-y-2 overflow-hidden">
