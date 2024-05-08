@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import NextTopLoader from "nextjs-toploader";
-import Sidebar from "@/components/Sidebar";
-import FolderList from "@/components/list/FolderList";
+import Sidebar from "@/components/SideBar";
 
 export const metadata: Metadata = {
   title: "Dashboard | IntelliSpace",

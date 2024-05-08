@@ -1,12 +1,8 @@
-import {
-  Loader,
-  SendHorizonal,
-  UserRound,
-} from "lucide-react";
-import { useContext } from "react";
-import { ChatContext } from "@/providers";
-import { UserCircle } from "@phosphor-icons/react";
-import { FiCodesandbox } from "react-icons/fi";
+import { Loader, SendHorizonal, UserRound } from 'lucide-react'
+import { useContext } from 'react'
+import { ChatContext } from '@/providers'
+import { UserCircle } from '@phosphor-icons/react'
+import { FiCodesandbox } from 'react-icons/fi'
 
 const Chat = () => {
   const {
@@ -17,25 +13,23 @@ const Chat = () => {
     isPending,
     isGenerating,
     output,
-    showResult,
-  } = useContext(ChatContext);
+    showResult
+  } = useContext(ChatContext)
 
   const handleSendPrompt = () => {
-    sendPrompt(prompt);
-  };
+    sendPrompt(prompt)
+  }
 
   return (
     <div className="relative h-screen flex-1 pb-[15vh]">
       <div className="mx-auto max-w-[55rem]">
         {!showResult ? (
           <div className="no-scrollbar h-[calc(100vh-5.25rem)] overflow-y-scroll px-[5%] pb-40">
-
             <div className="flex p-5 text-4xl font-semibold my-14">
-			<FiCodesandbox />
+              <FiCodesandbox />
               <div className="ml-2">
                 <span className="">
-                  Hi, I'm{" "}
-                  <span className="italic font-bold">IntelliBot</span>
+                  Hi, I'm <span className="italic font-bold">IntelliBot</span>
                   <br />
                   How can I help you today?
                 </span>
@@ -45,14 +39,14 @@ const Chat = () => {
         ) : (
           <div className="no-scrollbar h-[calc(100vh-5.25rem)] overflow-y-scroll px-[5%] pb-40">
             <div className="flex items-center gap-5 my-10">
-              <div className="grid w-10 h-10 rounded-full place-items-center bg-brand-100">
+              <div className="grid w-10 h-10 rounded-full shadow-md place-items-center bg-brand-100">
                 <UserCircle
-                  size={32}
+                  size={40}
                   weight="duotone"
                   className="text-brand-300"
                 />
               </div>
-              <p className="p-2 px-4 font-serif font-medium rounded-xl border-1 bg-white/40">
+              <p className="p-2 px-4 font-serif font-medium shadow-lg rounded-xl border-1 bg-white/40">
                 {recentPrompt}
               </p>
             </div>
@@ -60,12 +54,12 @@ const Chat = () => {
             <div className="flex items-start gap-5">
               <div className="grid h-10 min-w-10 place-items-center">
                 <img
-                  className={`-mt-[0.5625rem] aspect-square w-7 duration-500 ${
+                  className={`-mt-[0.5625rem] aspect-square w-10 shadow-md duration-500 rounded-full h-10  ${
                     isPending
-                      ? "animate-pulse"
+                      ? 'animate-pulse'
                       : isGenerating
-                      ? "animate-spin"
-                      : "rotate-0 [animation-play-state:pause]"
+                        ? 'animate-spin'
+                        : 'rotate-0 [animation-play-state:pause]'
                   }`}
                   src="/icon.ico"
                   alt="IntelliBot icon"
@@ -88,7 +82,7 @@ const Chat = () => {
                 </div>
               ) : (
                 <p
-                  className="font-medium leading-[1.8] font-serif rounded-xl border-1 bg-purple-200/30 p-2 px-4 "
+                  className="font-medium leading-[1.8] font-serif rounded-xl border-1 bg-purple-200/30 p-2 px-4 shadow-lg"
                   dangerouslySetInnerHTML={{ __html: output }}
                 />
               )}
@@ -97,12 +91,12 @@ const Chat = () => {
         )}
 
         <div className="absolute bottom-0 mx-auto w-full max-w-[55rem] px-5 pt-4 backdrop-blur-sm">
-          <div className="flex items-center justify-between gap-5 px-5 py-3 bg-gray-200 rounded-full">
+          <div className="flex items-center justify-between gap-5 px-5 py-3 bg-gray-200 rounded-full shadow-lg">
             <input
               onChange={(e) => {
-                setPrompt(e.target.value);
+                setPrompt(e.target.value)
               }}
-              onKeyDown={(e) => e.key === "Enter" && handleSendPrompt()}
+              onKeyDown={(e) => e.key === 'Enter' && handleSendPrompt()}
               className="flex-1 font-serif text-black bg-transparent border-none outline-none"
               type="text"
               placeholder="Enter a prompt here"
@@ -125,13 +119,13 @@ const Chat = () => {
             </div>
           </div>
 
-          <p className="mx-auto my-2 text-xs text-center text-gray-500 sm:text-sm">
+          <p className="mx-auto my-2 text-xs text-center text-gray-500 sm:text-sm ">
             IntelliBot's accuracy varies. Always verify.
           </p>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Chat;
+export default Chat

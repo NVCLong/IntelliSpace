@@ -18,7 +18,7 @@ import { getCapacity } from '../lib/apiCall';
 import { set } from 'zod';
 
 
-const Sidebar: React.FC = () => {
+const SideBar: React.FC = () => {
   const router = useRouter();
   const clearCookies = () => document.cookie.split(';').forEach(c => document.cookie = c.replace(/^ +/, '').replace(/=.*/, `=;expires=${new Date().toUTCString()}; path=/`));
   const handleLogout = async () => {
@@ -151,4 +151,4 @@ const Sidebar: React.FC = () => {
   );
 };
 
-export default Sidebar;
+export default SideBar;

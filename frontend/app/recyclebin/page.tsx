@@ -1,7 +1,6 @@
 "use client";
 import { useEffect } from "react";
 import {AppDispatch, useAppSelector} from "@/lib/store";
-import {getAllRootFolder, openFolder} from "@/lib/apiCall";
 import { useState } from "react";
 import FileList from "@/components/listDeleted/FileList";
 import {useDispatch} from "react-redux";
@@ -13,10 +12,10 @@ export default function Page() {
   const storageID_temp:string | null  = localStorage.getItem("storageID")
     const folderId: string|null= localStorage.getItem('folderId');
     const  dispatch = useDispatch<AppDispatch>();
-    const [folderList, setFolderList] = useState([]);
-    const [parentFolder, setParentFolder]=useState({
-        parentFolderId: ""
-    })
+    // const [folderList, setFolderList] = useState([]);
+    // const [parentFolder, setParentFolder]=useState({
+    //     parentFolderId: ""
+    // })
   // @ts-ignore
   const storageID: string | null = useAppSelector(
     (state) => state.storageSlice.storageID
