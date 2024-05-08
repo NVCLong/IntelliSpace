@@ -37,7 +37,7 @@ const Chat = () => {
             </div>
           </div>
         ) : (
-          <div className="no-scrollbar h-[calc(100vh-5.25rem)] overflow-y-scroll px-[5%] pb-40">
+          <div className="no-scrollbar h-[calc(100vh-5.25rem)]  px-[5%] pb-40">
             <div className="flex items-center gap-5 my-10">
               <div className="grid w-10 h-10 rounded-full shadow-md place-items-center bg-brand-100">
                 <UserCircle
