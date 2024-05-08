@@ -71,7 +71,7 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
                     className="hover:bg-slate-600 "
                     onClick={() => {
                       handleMoveToTrash(file.id);
-                      window.location.reload();
+                      // window.location.reload();
                     }}
                   >
                     <ContextMenuLabel className="flex hover:text-white">

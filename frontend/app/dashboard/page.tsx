@@ -43,7 +43,7 @@ export default function Page() {
           }
       }else {
           try{
-              console.log("{Fetching in subfolder")
+              // console.log("{Fetching in subfolder")
               const response = await openFolder(storageID_temp, folderId);
               if(response.parentFolder==null){
                   // console.log(response)

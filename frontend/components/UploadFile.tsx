@@ -41,7 +41,9 @@ export const UploadFile = () => {
             console.log("create folder")
             // @ts-ignore
             const response = await uploadFile(userId,folderId,storageId,file.file )
-
+            if (response.toLowerCase().includes("is not enough")) {
+                alert(response);
+            }
             console.log(response)
         }else {
             console.log("file is null")
@@ -71,11 +73,10 @@ export const UploadFile = () => {
                             <ModalHeader className="flex flex-col gap-1">Upload file</ModalHeader>
 
                             <ModalBody>
-                                <Input
+                                <input
                                     type="file"
                                     onChange={handleFileChange}
                                     placeholder="Choose file"
-                                    variant="bordered"
                                 />
                             </ModalBody>
 
@@ -86,10 +87,6 @@ export const UploadFile = () => {
                                 <Button color="primary" onPress= {(e) => {
                                     handleSubmit();
                                     onClose();
-                                    setTimeout(()=>{
-                                        window.location.reload();
-
-                                    }, 2000)
                                 }}>
                                     Submit
                                 </Button>

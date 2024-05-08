@@ -13,8 +13,7 @@ import {
   FormMessage,
 } from "@/components/auth_ui/form";
 import { Input } from "@/components/auth_ui/input";
-import { FcGoogle } from "react-icons/fc";
-import { SiGithub } from "react-icons/si";
+;
 import Link from "next/link";
 import axios from "axios";
 import { motion } from "framer-motion";

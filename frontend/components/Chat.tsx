@@ -28,7 +28,7 @@ const Chat = () => {
     <div className="relative h-screen flex-1 pb-[15vh]">
       <div className="mx-auto max-w-[55rem]">
         {!showResult ? (
-          <div className="no-scrollbar h-[calc(100vh-5.25rem)] overflow-y-scroll px-[5%] pb-40">
+          <div className="no-scrollbar h-[calc(100vh-5.25rem)]  px-[5%] pb-40">
 
             <div className="flex p-5 text-4xl font-semibold my-14">
 			<FiCodesandbox />
@@ -43,7 +43,7 @@ const Chat = () => {
             </div>
           </div>
         ) : (
-          <div className="no-scrollbar h-[calc(100vh-5.25rem)] overflow-y-scroll px-[5%] pb-40">
+          <div className="no-scrollbar h-[calc(100vh-5.25rem)]  px-[5%] pb-40">
             <div className="flex items-center gap-5 my-10">
               <div className="grid w-10 h-10 rounded-full place-items-center bg-brand-100">
                 <UserCircle

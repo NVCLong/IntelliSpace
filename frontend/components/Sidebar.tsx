@@ -41,7 +41,7 @@ const Sidebar: React.FC = () => {
     { name: "Files", path: "/dashboard", icon: FiFolder, onClick: () => {} },
     {
       name: "IntelliBot",
-      path: "/intelliBot",
+      path: "/intellibot",
       icon: FiCodesandbox,
       onClick: () => {},
     },
