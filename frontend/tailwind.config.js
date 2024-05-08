@@ -3,11 +3,16 @@ const { nextui } = require("@nextui-org/react");
 module.exports = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    fontFamily: {
+      sans: ["Poppins"],
+      serif: ["Noto Sans"],
+      display: ["Poppins"],
+    },
     container: {
       center: true,
       padding: "2rem",
@@ -20,6 +25,9 @@ module.exports = {
         danger: {
           DEFAULT: "#b61920",
           // foreground: "#000000",
+        },
+        secondary: {
+          DEFAULT: "#ccdfff",
         },
 
         green: {

@@ -13,8 +13,7 @@ import {
   FormMessage,
 } from "@/components/auth_ui/form";
 import { Input } from "@/components/auth_ui/input";
-import { FcGoogle } from "react-icons/fc";
-import { SiGithub } from "react-icons/si";
+;
 import Link from "next/link";
 import axios from "axios";
 import { motion } from "framer-motion";
@@ -54,7 +53,7 @@ const Page = () => {
     document.cookie = `refreshToken=${response.data.refreshToken}`;
     localStorage.setItem("userId", response.data.user.id);
     localStorage.setItem("storageID", response.data.storageId);
-    console.log(response.data);
+    // console.log(response.data);
     dispatch(setStorageID(response.data.storageId));
     router.push("/dashboard");
   }
@@ -77,7 +76,7 @@ const Page = () => {
         }}
         className="registerWrapper drop-shadow-md">
         <div className="formWrapper">
-          <div className="left">
+          <div className="space-y-5 left">
             <h3 className="title">Hello, friends!</h3>
             <p>Enter your personal details and start journey with us</p>
             <Link href={"/register"}>

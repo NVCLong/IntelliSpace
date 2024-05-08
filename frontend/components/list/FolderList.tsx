@@ -20,6 +20,7 @@ import {
   ContextMenuLabel,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
+import { FiTrash2, FiEdit3 } from "react-icons/fi";
 
 interface Folder {
   id: string;
@@ -71,14 +72,14 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
   };
 
   return (
-    <div className="flex flex-col p-6 overflow-hidden sm:py-12">
+    <div className="flex flex-col p-3 overflow-hidden sm:py-12">
       <div className="w-full max-w-screen-xl mx-auto">
-        <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="grid gap-6 sm:grid-cols-4 xl:grid-cols-6">
           {folders.map((folder) => (
-            <>
+            <div key={folder.id}>
               <ContextMenu>
                 <ContextMenuTrigger>
-                  <ContextMenuContent className="w-64 bg-slate-200 ">
+                  <ContextMenuContent className="bg-white rounded-lg w-30">
                     <ContextMenuItem
                       className="hover:bg-slate-600 "
                       onClick={(e) => {
@@ -86,21 +87,23 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
                         onOpen();
                       }}
                     >
-                      <ContextMenuLabel className="hover:text-white">
-                        Edit
+                      <ContextMenuLabel className="flex hover:text-white">
+                        <FiEdit3 size={20} className="mr-2"/>
+                        Rename
                       </ContextMenuLabel>
                     </ContextMenuItem>
-
+                    <hr className="h-px bg-gray-200 border-0"></hr>
                     <ContextMenuItem
                       className="hover:bg-slate-600"
                       onClick={() => {
-                        handleDelete(Number.parseInt(currentFolderId));
+                        handleDelete(Number.parseInt(folder.id));
                         setTimeout(() => {
-                          window.location.reload();
+                          // window.location.reload();
                         }, 2000);
                       }}
                     >
-                      <ContextMenuLabel className="hover:text-white">
+                      <ContextMenuLabel className="flex hover:text-white">
+                        <FiTrash2 size={20} className="mr-2"/>
                         Delete
                       </ContextMenuLabel>
                     </ContextMenuItem>
@@ -112,16 +115,19 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
                       handleOpen(folder.id);
                       window.location.reload();
                     }}
-                    className="flex items-center p-2 bg-white border rounded-md shadow-md cursor-pointer hoverScale"
+                    className="flex items-center w-40 p-3 bg-white rounded-md shadow-md cursor-pointer h-15 hoverScale"
                   >
-                    <MdFolder className="text-blue-400" size={24} />
-                    <p className="ml-3 truncate">{folder.name}</p>
+                    <div className="flex-shrink-0">
+                      <MdFolder className="text-blue-400 fixed-icon-size" />
+                    </div>
+                    <span className="ml-3 truncate max-w-[13ch]">
+                      {folder.name}
+                    </span>
                   </div>
-
                 </ContextMenuTrigger>
               </ContextMenu>
               <Modal
-                backdrop="blur"
+
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
                 placement="center"
@@ -152,7 +158,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
                           color="primary"
                           onPress={(e) => {
                             handleUpdate(currentFolderId);
-                            window.location.reload();
+                            // window.location.reload();
                           }}
                         >
                           Edit
@@ -162,7 +168,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
                   )}
                 </ModalContent>
               </Modal>
-            </>
+            </div>
           ))}
         </div>
       </div>

@@ -7,6 +7,22 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { FiUser, FiMenu } from "react-icons/fi";
 import NextTopLoader from "nextjs-toploader";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button"
+
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,7 +34,9 @@ const Navbar = () => {
 
   const router = useRouter();
   const handleSignin = () => {
-    router.push("/signin");
+    setIsLoading(true)
+    router.push("/signin")
+    setIsLoading(false)
   };
 
   return (
@@ -65,25 +83,40 @@ const Navbar = () => {
       </ul>
 
       <div
-        className="hidden gap-2 px-4 py-2 bg-blue-400 rounded-full cursor-pointer lg:flex md:flex sm:hidden hoverScale drop-shadow-md flexCenter bold-16 "
+        id="loginButton"
+        className="hidden gap-2 px-4 py-2 bg-blue-500 rounded-full cursor-pointer hover:bg-blue-600 lg:flex md:flex sm:hidden hoverScale drop-shadow-md flexCenter bold-16"
         onClick={handleSignin}
       >
-        {isLoading && (
+        {isLoading ? (
           <NextTopLoader color="#BF40BF" showSpinner={false} easing="ease" />
+        ) : (
+          <>
+            <div className="text-white fill-current">
+              <FiUser size={20} />
+            </div>
+            <span className="font-semibold text-white md:block">Login</span>
+          </>
         )}
-        <div className="text-white fill-current ">
-          <FiUser size={20} />
-        </div>
-        <span className="font-semibold text-white md:block">Login</span>
       </div>
 
-      <div
-        className="relative inline-block p-1 bg-blue-400 rounded-md shadow lg:hidden drop-shadow-xl"
-        onClick={toggleMenu}
-      >
-        <div className="text-white cursor-pointer fill-current hover:text-gray-300">
-          <FiMenu size={40} />
-        </div>
+      <div className="lg:hidden">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild onClick={toggleMenu}>
+            <Button variant="destructive">
+              <FiMenu size={40} />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-20">
+            {NAV_LINKS.map((link) => (
+              <DropdownMenuItem
+                key={link.key}
+                className="font-semibold hover:bg-white/80"
+              >
+                <Link href={link.href}>{link.label}</Link>
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </motion.nav>
   );

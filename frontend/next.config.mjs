@@ -1,8 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
-    API: "http://localhost:8888/api",
+    API: 'http://localhost:8888/api'
   },
-};
+  experimental: {
+    forceSwcTransforms: true
+  }
+}
 
-export default nextConfig;
+export default nextConfig

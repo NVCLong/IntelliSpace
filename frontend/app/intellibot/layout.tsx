@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import NextTopLoader from "nextjs-toploader";
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/SideBar";
+import { ChatContextProvider } from "@/providers";
 
 export const metadata: Metadata = {
   title: "IntelliBot | IntelliSpace",
@@ -12,7 +13,7 @@ const Dashboardlayout = ({ children }: { children: React.ReactNode }) => {
     <div className="flex">
       <NextTopLoader color="#BF40BF" showSpinner={false} easing="ease" />
       <Sidebar />
-      {children}
+      <ChatContextProvider>{children}</ChatContextProvider>
     </div>
   );
 };

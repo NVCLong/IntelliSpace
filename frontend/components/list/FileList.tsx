@@ -1,20 +1,13 @@
 "use client";
-import React, { useState } from "react";
-import {
-  Button,
-} from "@nextui-org/react";
-import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
-import {getFile, softDelete} from "@/lib/apiCall";
-import {Image} from "@nextui-org/react";
-import {
-  ContextMenu,
-  ContextMenuContent,
-  ContextMenuItem,
-  ContextMenuLabel,
-  ContextMenuTrigger,
-} from "@/components/ui/context-menu";
+import React, { useState } from 'react';
 
-
+import {
+    ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuLabel, ContextMenuTrigger
+} from '@/components/ui/context-menu';
+import { getFile, softDelete } from '@/lib/apiCall';
+import { Card,CardFooter } from '@nextui-org/card';
+import { Image } from '@nextui-org/react';
+import { FiDownloadCloud, FiTrash2 } from "react-icons/fi";
 
 interface File {
   id: string;
@@ -54,31 +47,36 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
   }
 
   return (
-    <div className="relative flex flex-col overflow-hidden sm:py-12">
+    <div className="relative flex flex-col overflow-hidden sm:py-12 sm:px-12">
       <div className="w-full max-w-screen-xl px-4 mx-auto">
-        <div className="grid w-full gap-6 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="grid w-full gap-9 xl:grid-cols-6 sm:grid-cols-4">
           {files.map((file) => (
             <ContextMenu>
               <ContextMenuTrigger>
-                <ContextMenuContent className="w-64 bg-slate-200 ">
+                <ContextMenuContent className="bg-white rounded-lg w-30">
                   <ContextMenuItem
                     className="hover:bg-slate-600 "
                     onClick={() => {
                       handleDownload(file.id, file.file_name);
                     }}
                   >
-                    <ContextMenuLabel className="hover:text-white">
+                    <ContextMenuLabel className="flex hover:text-white">
+                        <FiDownloadCloud size={20} className="mr-2"/>
+
                       Download
                     </ContextMenuLabel>
                   </ContextMenuItem>
+                  <hr className="h-px bg-gray-200 border-0"></hr>
                   <ContextMenuItem
                     className="hover:bg-slate-600 "
                     onClick={() => {
                       handleMoveToTrash(file.id);
-                      window.location.reload();
+                      // window.location.reload();
                     }}
                   >
-                    <ContextMenuLabel className="hover:text-white">
+                    <ContextMenuLabel className="flex hover:text-white">
+                    <FiTrash2 size={20} className="mr-2"/>
+
                       Delete
                     </ContextMenuLabel>
                   </ContextMenuItem>
@@ -86,13 +84,13 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
 
                 <Card
                   isFooterBlurred={true}
-                  isHoverable={true} radius="lg"
-                  className="border-none hoverScale"
+                  radius="lg"
+                  className="border-none hoverScale fixed-card-size"
                 >
-                  {file.file_name.split(".")[1].toLowerCase() === "png" ? (
+                  {file.file_name.split(".")[1].toLowerCase() === "png" ||
+                  file.file_name.split(".")[1].toLowerCase() === "jpg" ? (
                     <Image
                       alt="image file icon"
-                      className=""
                       src="/imageIcon.png"
                       width={300}
                       height={300}
