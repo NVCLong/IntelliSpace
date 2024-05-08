@@ -12,6 +12,10 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.*;
+import javax.crypto.spec.SecretKeySpec;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 @Service
@@ -25,6 +29,7 @@ public class FolderService {
     private FileRepository fileRepository;
 
     private FileService fileService;
+    private  final String base64EncodedKey = "9fWSwatmHu2KQwLoDA1rSQ==";
 
     public FolderService(FolderRepository folderRepository, StorageRepository storageRepository, FileRepository fileRepository, FileService fileService) {
         this.folderRepository = folderRepository;
@@ -258,6 +263,54 @@ public class FolderService {
         }
 
         return allFiles;
+    }
+
+    //hash code the string contain folderId and user storageId
+    public String generateShareCode(Long folderId, Long storageId) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+        Folder folder= folderRepository.findById(folderId).orElse(null);
+        if(folder==null){
+            return null;
+        }
+        setPublic(folder);
+        byte[] decodedKey= Base64.getDecoder().decode(base64EncodedKey);
+        SecretKey key= new SecretKeySpec(decodedKey,"AES");
+
+        String privateInformation= folderId+"."+storageId;
+
+        Cipher cipher= Cipher.getInstance("AES");
+        cipher.init(Cipher.ENCRYPT_MODE,key);
+        byte[] encryptedBytes= cipher.doFinal(privateInformation.getBytes());
+        String enodeString=Base64.getEncoder().encodeToString(encryptedBytes);
+        System.out.println("Encode String: "+ enodeString);
+        return  enodeString;
+    }
+
+    public FolderResponse getShareFolder(String privateShareCode) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+        byte[] decodedKey= Base64.getDecoder().decode(base64EncodedKey);
+        SecretKey key= new SecretKeySpec(decodedKey,"AES");
+
+        Cipher cipher= Cipher.getInstance("AES");
+        cipher.init(Cipher.DECRYPT_MODE,key);
+        byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(privateShareCode));
+        String decryptedString= new String(decryptedBytes);
+        System.out.println(decryptedString);
+
+        long folderId= Long.parseLong(decryptedString.split("\\.")[0]);
+        long storageId= Long.parseLong(decryptedString.split("\\.")[1]);
+        return  getSubFolderById(folderId,storageId);
+    }
+
+    private void setPublic(Folder folder){
+        Queue<Folder> queue = new LinkedList<>();
+        queue.add(folder);
+        while (!queue.isEmpty()){
+            System.out.println("Running");
+            Folder currentFolder = queue.poll();
+            List<Folder> subFolder= folderRepository.findAllByParentFolderId(currentFolder.getId());
+            queue.addAll(subFolder);
+            currentFolder.setPublic(true);
+            folderRepository.save(currentFolder);
+        }
     }
 
     // bubble sorting , maybe can modify and upgrade by using merge sorting
