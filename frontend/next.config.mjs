@@ -4,7 +4,7 @@ const nextConfig = {
     API: 'http://localhost:8888/api'
   },
   experimental: {
-    forceSwcTransforms: true
+    forceSwcTransforms: false
   }
 }
 
