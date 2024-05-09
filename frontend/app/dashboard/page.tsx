@@ -28,22 +28,25 @@ export default function Page() {
 
   const handleFetchData = async () => {
     // if (isFetch) return; // Prevent redundant fetches
-    if (folderId === null) {
+    if (folderId === null && folderId !== undefined) {
       try {
         // console.log("Fetching in root folder")
         // @ts-ignore
-        const response = await getAllRootFolder(storageID_temp)
-        setFolderList(response.rootFolders)
-        setIsFetch(false) // Mark fetching complete
+        const response = await getAllRootFolder(storageID_temp);
+        setFolderList(response.rootFolders);
+        setIsFetch(false); // Mark fetching complete
         // console.log(response);
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
     } else {
       try {
-        console.log('{Fetching in subfolder')
-        const response = await openFolder(storageID_temp, folderId)
-        if (response.parentFolder == null && parentFolder.parentFolderId == null) {
+        console.log("{Fetching in subfolder");
+        const response = await openFolder(storageID_temp, folderId);
+        if (
+          response.parentFolder == null &&
+          parentFolder.parentFolderId == null
+        ) {
           // console.log(response)
           setFolderList(response.subFolders);
           setIsFetch(false);
@@ -59,7 +62,7 @@ export default function Page() {
           localStorage.setItem("parentFolder", response.parentFolder.id);
         }
       } catch (e) {
-        console.error(e)
+        console.error(e);
       }
     }
   }
