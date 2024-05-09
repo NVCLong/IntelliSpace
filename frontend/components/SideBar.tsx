@@ -61,7 +61,7 @@ const SideBar: React.FC = () => {
       path: "/",
       icon: FiLogOut,
       onClick: () => {
-        console.log("logout");
+        // console.log("logout");
         handleLogout();
       },
     },
