@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import Navbar from "@/components/Navbar";
+import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import NextTopLoader from "nextjs-toploader";
 import { NextUIProvider } from "@nextui-org/react";
@@ -20,7 +20,7 @@ export default function Home() {
     <NextUIProvider>
       <div>
         <NextTopLoader color="#BF40BF" showSpinner={false} easing="ease" />
-        <Navbar />
+        <NavBar />
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
