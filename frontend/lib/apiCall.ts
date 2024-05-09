@@ -4,6 +4,7 @@ import { Simulate } from 'react-dom/test-utils'
 import error = Simulate.error
 import { h } from 'preact'
 import exp from 'constants'
+import { headers } from 'next/headers'
 
 export const api = axios.create({
   baseURL: 'http://localhost:8888/api',
@@ -394,5 +395,22 @@ export const sendPrompt = async (prompt: string) => {
   } catch (error) {
     console.error('Error sending prompt:', error)
     throw error
+  }
+}
+
+export const getSharedFolder = async (code:string | null) =>{
+  try {
+    console.log(code)
+    const header = await getHeader();
+    const response = await api.post(`folder/shared`,
+      {sharedCode: code}, {headers: header}
+    )
+    console.log(response.data)
+    return response.data
+
+  }
+  catch (e)
+  {
+    console.log(e)
   }
 }
