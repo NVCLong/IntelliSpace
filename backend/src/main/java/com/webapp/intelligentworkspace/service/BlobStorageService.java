@@ -1,9 +1,5 @@
 package com.webapp.intelligentworkspace.service;
 
-import com.azure.storage.blob.specialized.BlobInputStream;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,7 +8,6 @@ import com.azure.storage.blob.BlobClient;
 import com.azure.storage.blob.BlobContainerClient;
 import com.azure.storage.blob.BlobServiceClient;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,8 +18,8 @@ public class BlobStorageService {
     @Autowired
     BlobServiceClient blobServiceClient;
 
-    public String upload(MultipartFile file, Integer userId) {
-        BlobContainerClient containerClient =getContainer(userId);
+    public String upload(MultipartFile file, Long storageId) {
+        BlobContainerClient containerClient = getContainer(storageId);
 
         try (InputStream inputStream = file.getInputStream()) {
             BlobClient blobClient = containerClient.getBlobClient(file.getOriginalFilename());
@@ -39,26 +34,26 @@ public class BlobStorageService {
 
     }
 
-    public String delete(String userId, String fileName) {
-        BlobContainerClient containerClient = blobServiceClient.getBlobContainerClient(userId);
+    public String delete(String storageId, String fileName) {
+        BlobContainerClient containerClient = blobServiceClient.getBlobContainerClient(storageId);
         BlobClient blobClient = containerClient.getBlobClient(fileName);
         blobClient.delete();
         return "Deleted Successfully";
     }
 
-    public byte[]  getFile(String filename,Integer userId){
-        BlobContainerClient blobContainerClient= blobServiceClient.getBlobContainerClient(userId.toString());
+    public byte[] getFile(String filename, Long storageId) {
+        BlobContainerClient blobContainerClient = blobServiceClient.getBlobContainerClient(storageId.toString());
         System.out.println(filename);
-        BlobClient blobClient= blobContainerClient.getBlobClient(filename);
-        ByteArrayOutputStream outputStream= new ByteArrayOutputStream();
+        BlobClient blobClient = blobContainerClient.getBlobClient(filename);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         blobClient.downloadStream(outputStream);
-        final byte[] bytes=outputStream.toByteArray();
+        final byte[] bytes = outputStream.toByteArray();
         return bytes;
     }
 
 
-    public ByteArrayOutputStream download(Integer userId, String fileName) {
-        BlobContainerClient containerClient = blobServiceClient.getBlobContainerClient(userId.toString());
+    public ByteArrayOutputStream download(Long storageId, String fileName) {
+        BlobContainerClient containerClient = blobServiceClient.getBlobContainerClient(storageId.toString());
         BlobClient blobClient = containerClient.getBlobClient(fileName);
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         blobClient.download(os);
@@ -66,20 +61,20 @@ public class BlobStorageService {
         return os;
     }
 
-    public BlobContainerClient getContainer(Integer userId) {
-        BlobContainerClient blobContainerClient= blobServiceClient.getBlobContainerClient(userId.toString());
+    public BlobContainerClient getContainer(Long storageId) {
+        BlobContainerClient blobContainerClient = blobServiceClient.getBlobContainerClient(storageId.toString());
 
-        if(blobContainerClient.exists()){
-            return  blobContainerClient;
-        }else {
-            blobServiceClient.createBlobContainer(userId.toString());
-            return  blobServiceClient.getBlobContainerClient(userId.toString());
+        if (blobContainerClient.exists()) {
+            return blobContainerClient;
+        } else {
+            blobServiceClient.createBlobContainer(storageId.toString());
+            return blobServiceClient.getBlobContainerClient(storageId.toString());
         }
     }
 
-    public void deleteContainer(String userId) {
+    public void deleteContainer(Long storageId) {
 
-        blobServiceClient.deleteBlobContainer(userId);
+        blobServiceClient.deleteBlobContainer(String.valueOf(storageId));
     }
 
 }

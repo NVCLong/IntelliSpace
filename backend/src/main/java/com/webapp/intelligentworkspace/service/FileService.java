@@ -38,23 +38,23 @@ public class FileService {
         this.blobStorageService = blobStorageService;
     }
 
-    public String uploadFile(MultipartFile file, Long storageId, Long folderId, Integer userId) {
+    public String uploadFile(MultipartFile file, Long storageId, Long folderId) {
         try {
             Storage storage = storageRepository.findById(storageId).orElseThrow(() -> new RuntimeException("Storage not found"));
             Folder folder = folderRepository.findById(folderId).orElseThrow(() -> new RuntimeException("Folder not found"));
-            StorageResponse storageResponse= storageService.updateCapacity(storageId,file.getSize());
-            if(storageResponse.isStatus()==false) {
+            StorageResponse storageResponse = storageService.updateCapacity(storageId, file.getSize());
+            if (storageResponse.isStatus() == false) {
                 return storageResponse.getMessage();
             }
             // Use the BlobStorageService's upload method
-            String uploadResult = blobStorageService.upload(file, userId);
+            String uploadResult = blobStorageService.upload(file, storageId);
             if (uploadResult != null) {
                 return uploadResult;
             }
             File fileEntity = new File();
 
             fileEntity.setFile_name(file.getOriginalFilename());
-            fileEntity.setFile_url(blobServiceClient.getBlobContainerClient(userId.toString()).getBlobClient(file.getOriginalFilename()).getBlobUrl());
+            fileEntity.setFile_url(blobServiceClient.getBlobContainerClient(storageId.toString()).getBlobClient(file.getOriginalFilename()).getBlobUrl());
             fileEntity.setSize(file.getSize());
             fileEntity.setFolder(folder);
             fileEntity.setStorage(storage);
@@ -71,7 +71,7 @@ public class FileService {
         }
     }
 
-    public String deleteFile(Long fileId, Integer userId,Long storageId) {
+    public String deleteFile(Long fileId, Integer userId, Long storageId) {
         try {
             File file = fileRepository.findById(fileId).orElseThrow(() -> new RuntimeException("File not found"));
             blobStorageService.delete(userId.toString(), file.getFile_name());
@@ -85,12 +85,12 @@ public class FileService {
         }
     }
 
-    public byte[] getFileData(String fileName, Integer userId, Long fileId) {
+    public byte[] getFileData(String fileName, Long storageId, Long fileId) {
         File file = fileRepository.findById(fileId).orElseThrow(() -> new RuntimeException("File not found"));
 //        if(file.getIsDeleted()){
 //            return null;
 //        }
-        return blobStorageService.getFile(fileName,userId);
+        return blobStorageService.getFile(fileName, storageId);
     }
 
     public List<File> listFilesInFolder(Long folderId) {
@@ -112,12 +112,12 @@ public class FileService {
 
     // soft delete == move to bin
 
-    public void moveToTrash(Long fileId){
-        System.out.println("move to trash folder with id : "+fileId);
+    public void moveToTrash(Long fileId) {
+        System.out.println("move to trash folder with id : " + fileId);
         File file = fileRepository.findById(fileId).orElseThrow(() -> new RuntimeException("File not found"));
-        if(file.getIsDeleted()){
+        if (file.getIsDeleted()) {
             return;
-        }else {
+        } else {
             System.out.println("set true to move to bin");
             file.setIsDeleted(true);
             file.setFolder(null);
@@ -125,12 +125,11 @@ public class FileService {
         }
     }
 
-    public List<File> getFileInBin(Long storageId){
+    public List<File> getFileInBin(Long storageId) {
         Storage storage = storageRepository.findById(storageId).orElseThrow(() -> new RuntimeException("Storage not found"));
-        if(storage==null){
+        if (storage == null) {
             return null;
-        }
-        else return fileRepository.findByStorageAndIsDeletedIsTrue(storage);
+        } else return fileRepository.findByStorageAndIsDeletedIsTrue(storage);
     }
 
 }
