@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import * as z from "zod";
-import { Button } from "@/components/auth_ui/button";
+import { Button } from "@/components/auth_ui/Button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
@@ -11,8 +11,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/auth_ui/form";
-import { Input } from "@/components/auth_ui/input";
+} from "@/components/auth_ui/Form";
+import { Input } from "@/components/auth_ui/Input";
 import { FcGoogle } from "react-icons/fc";
 import { SiGithub } from "react-icons/si";
 import Link from "next/link";

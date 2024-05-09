@@ -1,5 +1,5 @@
 import { useGoogleLogin } from "@react-oauth/google";
-import { Button } from "@/components/auth_ui/button";
+import { Button } from "@/components/auth_ui/Button";
 import { FcGoogle } from "react-icons/fc";
 import React from "react";
 import axios from "axios";
