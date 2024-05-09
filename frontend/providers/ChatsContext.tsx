@@ -39,6 +39,7 @@ export const ChatContextProvider = ({ children }: React.PropsWithChildren) => {
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
   const [output, setOutput] = useState<string>("");
   const [showResult, setShowResult] = useState<boolean>(false);
+    const [prevPrompts, setPrevPrompts] = useState<string[]>([]);
 
   const handleNewChat = () => {
     setRecentPrompt("");
@@ -69,14 +70,17 @@ export const ChatContextProvider = ({ children }: React.PropsWithChildren) => {
       }, 40 * idx)
     );
 
-  return (
+
+    return (
     <ChatContext.Provider
       value={{
         sendPrompt: handleSendPrompt,
         setRecentPrompt,
         setPrompt,
         startNewChat: handleNewChat,
-        recentPrompt,
+          setPrevPrompts,
+          prevPrompts,
+          recentPrompt,
         prompt,
         isPending,
         isGenerating,
