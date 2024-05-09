@@ -30,7 +30,7 @@ const Chat = () => {
             <div className="flex p-5 text-4xl font-semibold my-14">
               <FiCodesandbox />
               <div className="ml-2">
-                <span className="">
+                <span>
                   Hi, I'm <span className="italic font-bold">IntelliBot</span>
                   <br />
                   How can I help you today?

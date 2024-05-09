@@ -9,7 +9,7 @@ export const BackButton=()=>{
     const handleCallBack=async ()=>{
         if (parentFolderId === "0") {
             localStorage.removeItem("folderId");
-            console.log("removed folderId");
+            // console.log("removed folderId");
             window.location.reload();
         } else if (parentFolderId !== null && folderId !== null) {
             localStorage.setItem("folderId", parentFolderId);

@@ -29,7 +29,7 @@ export default function Page() {
 
   const handleAccess = async () => {
     try {
-      console.log(code);
+      // console.log(code);
       const response = await getSharedFolder(code);
       setFolderList(response.subFolders);
       if (response.files.isEmpty()) {

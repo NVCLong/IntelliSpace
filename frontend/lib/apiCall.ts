@@ -45,7 +45,7 @@ export const getAllRootFolder = async (storageId: string) => {
 
 export const createRootFolder = async (storageId: string, folder: Object) => {
   try {
-    console.log(storageId)
+    // console.log(storageId)
     const response = await api.post(
       `/folder/root_folder/create/${storageId}`,
       folder,
@@ -54,7 +54,7 @@ export const createRootFolder = async (storageId: string, folder: Object) => {
       }
     )
 
-    console.log(response.data)
+    // console.log(response.data)
     return response.data
   } catch (e) {
     console.log(e)
@@ -83,11 +83,10 @@ export const deleteFolder = async (storageId: string, folderId: number) => {
       }
     )
 
-    console.log('Folder deleted successfully:', response.data)
+    // console.log('Folder deleted successfully:', response.data)
     return response.data
   } catch (error) {
     console.error('Error deleting folder:', error)
-
     throw error
   }
 }
@@ -110,7 +109,6 @@ export const updateFolder = async (
     return response.data
   } catch (error) {
     console.error('Error deleting folder:', error)
-
     throw error
   }
 }
@@ -141,7 +139,7 @@ export const createFolder = async (
   newFolder: object
 ) => {
   try {
-    console.log('storaeg Id' + storageId)
+    // console.log('storage Id' + storageId)
     const response = await api.post(
       `/folder/create/${storageId}/${parentFolderId}`,
       newFolder,
@@ -150,7 +148,7 @@ export const createFolder = async (
       }
     )
 
-    console.log(response.data)
+    // console.log(response.data)
     return response.data
   } catch (e) {
     console.log(e)
@@ -164,8 +162,8 @@ export const uploadFile = async (
   file: string | Blob
 ) => {
   try {
-    console.log('upload file ')
-    console.log(file)
+    // console.log('upload file ')
+    // console.log(file)
     const form = new FormData()
     form.append('file', file)
 
@@ -193,7 +191,7 @@ export const getCapacity = async (storageId: string | null) => {
         headers: header
       }
     )
-    console.log(response.data)
+    // console.log(response.data)
 
     return response.data
   } catch (error) {
@@ -203,7 +201,7 @@ export const getCapacity = async (storageId: string | null) => {
 
 export const softDelete = async (fileId: string) => {
   try {
-    console.log(fileId)
+    // console.log(fileId)
     const header = await getHeader()
     const response = await api.patch(
       `/file/softDelete?fileId=${fileId}`,
@@ -246,7 +244,7 @@ export const deletedFile = async (storageId: string) => {
     const response = await api.get(`file/trash/${storageId}`, {
       headers: header
     })
-    console.log(response.data)
+    // console.log(response.data)
     return response.data
   } catch (error) {
     console.log(error)
@@ -262,7 +260,7 @@ export const shareFolderCode = async (folderId: string, storageId: string | null
         headers: header
       }
     )
-    console.log(response.data)
+    // console.log(response.data)
     return response.data
   } catch (error) {
     console.log(error)
@@ -282,7 +280,7 @@ export const deletePermanently = async (
         headers: header
       }
     )
-    console.log(response)
+    // console.log(response)
     return response.data
   } catch (error) {
     console.log(error)
@@ -290,12 +288,12 @@ export const deletePermanently = async (
 }
 export const createNote = async (userId: string | null, note: object) => {
   try {
-    console.log(note)
+    // console.log(note)
     const header = await getHeader()
     const response = await api.post(`note/create/${userId}`, note, {
       headers: header
     })
-    console.log(response)
+    // console.log(response)
     return response.data
   } catch (e) {
     console.log(e)
@@ -305,7 +303,7 @@ export const createNote = async (userId: string | null, note: object) => {
 
 export const getAllNotes = async (userId: string | null) => {
   try {
-    console.log(userId)
+    // console.log(userId)
     const header = await getHeader()
     const response = await api.get(`/note/${userId}`, {
       headers: header
@@ -368,11 +366,11 @@ export const updateNote = async (
 ) => {
   try {
     const header = await getHeader()
-    console.log(updatedNote)
+    // console.log(updatedNote)
     const response = await api.patch(`note/update/${noteId}`, updatedNote, {
       headers: header
     })
-    console.log(response.data)
+    // console.log(response.data)
     return response.data
   } catch (error) {
     console.log(error)
@@ -381,7 +379,7 @@ export const updateNote = async (
 
 export const sendPrompt = async (prompt: string) => {
   try {
-    console.log(prompt)
+    // console.log(prompt)
     const header = await getHeader()
     const response = await api.post(
       'openai/chat',
@@ -390,7 +388,7 @@ export const sendPrompt = async (prompt: string) => {
         headers: header
       }
     )
-    console.log(response.data)
+    // console.log(response.data)
     return response.data
   } catch (error) {
     console.error('Error sending prompt:', error)
@@ -405,7 +403,7 @@ export const getSharedFolder = async (code:string | null) =>{
     const response = await api.post(`folder/shared`,
       {sharedCode: code}, {headers: header}
     )
-    console.log(response.data)
+    // console.log(response.data)
     return response.data
 
   }

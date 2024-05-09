@@ -48,7 +48,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
     // @ts-ignore
     if (storageId !== null) {
       const response = deleteFolder(storageId, folderId)
-      console.log(response)
+      // console.log(response)
     }
   }
   const handleChangeFolder = (folderId: string) => {
@@ -78,7 +78,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
     // @ts-ignore
     if (storageId !== null) {
       const response = updateFolder(storageId, folderId, newFolder)
-      console.log(response)
+      // console.log(response)
     }
   }
   const handleOpen = async (folderId: string) => {
