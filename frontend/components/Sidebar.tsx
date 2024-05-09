@@ -16,7 +16,6 @@ import StorageBar from "./StorageBar";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { getCapacity } from "../lib/apiCall";
-import { set } from "zod";
 
 const SideBar: React.FC = () => {
   const router = useRouter();
@@ -31,17 +30,16 @@ const SideBar: React.FC = () => {
       );
   const handleLogout = async () => {
     const userId = localStorage.getItem("userId");
-    console.log(userId);
+    // console.log(userId);
     const response = await axios.get(
       `http://localhost:8888/api/auth/logout/${userId}`,
     );
-    console.log(response.data);
+    // console.log(response.data);
     localStorage.removeItem("access_token");
     localStorage.removeItem("userId");
     localStorage.removeItem("storageID");
     localStorage.removeItem("folderId");
     localStorage.removeItem("parentFolder");
-    // document.cookie = 'cookieName=refreshToken; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     clearCookies();
   };
 
