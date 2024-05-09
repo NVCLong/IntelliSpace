@@ -1,10 +1,11 @@
-import { Loader, SendHorizonal, UserRound } from 'lucide-react'
+import { Loader, SendHorizonal} from 'lucide-react'
 import { useContext } from 'react'
 import { ChatContext } from '@/providers'
 import { UserCircle } from '@phosphor-icons/react'
 import { FiCodesandbox } from 'react-icons/fi'
 
 const Chat = () => {
+
   const {
     sendPrompt,
     setPrompt,
@@ -19,6 +20,7 @@ const Chat = () => {
   const handleSendPrompt = () => {
     sendPrompt(prompt)
   }
+
 
   return (
     <div className="relative h-screen flex-1 pb-[15vh]">

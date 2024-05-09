@@ -2,13 +2,12 @@
 import { createContext, useState } from "react";
 import {sendPrompt} from "@/lib/apiCall";
 
+
 type ChatContextProps = {
   sendPrompt: (prompt: string) => Promise<void>;
-  setPrevPrompts: React.Dispatch<React.SetStateAction<string[]>>;
   setRecentPrompt: React.Dispatch<React.SetStateAction<string>>;
   setPrompt: React.Dispatch<React.SetStateAction<string>>;
   startNewChat: () => void;
-  prevPrompts: string[];
   recentPrompt: string;
   prompt: string;
   isPending: boolean;
@@ -19,11 +18,9 @@ type ChatContextProps = {
 
 export const ChatContext = createContext<ChatContextProps>({
   sendPrompt: async () => {},
-  setPrevPrompts: () => {},
   setRecentPrompt: () => {},
   setPrompt: () => {},
   startNewChat: () => {},
-  prevPrompts: [],
   recentPrompt: "",
   prompt: "",
   isPending: false,
@@ -39,13 +36,13 @@ export const ChatContextProvider = ({ children }: React.PropsWithChildren) => {
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
   const [output, setOutput] = useState<string>("");
   const [showResult, setShowResult] = useState<boolean>(false);
-    const [prevPrompts, setPrevPrompts] = useState<string[]>([]);
 
   const handleNewChat = () => {
     setRecentPrompt("");
     setOutput("");
     setShowResult(false);
   };
+
 
   const handleSendPrompt = async (prompt: string) => {
     setIsGenerating(true);
@@ -62,13 +59,13 @@ export const ChatContextProvider = ({ children }: React.PropsWithChildren) => {
     setIsGenerating(false);
   };
 
-  const simulateTypingEffect = (idx: number, nextWord: string): Promise<void> =>
-    new Promise((resolve) =>
-      setTimeout(() => {
-        setOutput((prev) => prev + nextWord);
-        resolve();
-      }, 40 * idx)
-    );
+  // const simulateTypingEffect = (idx: number, nextWord: string): Promise<void> =>
+  //   new Promise((resolve) =>
+  //     setTimeout(() => {
+  //       setOutput((prev) => prev + nextWord);
+  //       resolve();
+  //     }, 40 * idx)
+  //   );
 
 
     return (
@@ -78,9 +75,7 @@ export const ChatContextProvider = ({ children }: React.PropsWithChildren) => {
         setRecentPrompt,
         setPrompt,
         startNewChat: handleNewChat,
-          setPrevPrompts,
-          prevPrompts,
-          recentPrompt,
+        recentPrompt,
         prompt,
         isPending,
         isGenerating,
