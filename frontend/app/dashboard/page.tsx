@@ -43,20 +43,20 @@ export default function Page() {
       try {
         console.log('{Fetching in subfolder')
         const response = await openFolder(storageID_temp, folderId)
-        if (response.parentFolder == null) {
+        if (response.parentFolder == null && parentFolder.parentFolderId == null) {
           // console.log(response)
-          setFolderList(response.subFolders)
-          setIsFetch(false)
-          setFileList(response.files)
+          setFolderList(response.subFolders);
+          setIsFetch(false);
+          setFileList(response.files);
 
-          localStorage.setItem('parentFolder', '0')
+          localStorage.setItem("parentFolder", "0");
         } else {
-          setFolderList(response.subFolders)
-          setIsFetch(false)
-          setFileList(response.files)
+          setFolderList(response.subFolders);
+          setIsFetch(false);
+          setFileList(response.files);
           // console.log(response)
           // setParentFolder({parentFolderId: response.parentFolder.id})
-          localStorage.setItem('parentFolder', response.parentFolder.id)
+          localStorage.setItem("parentFolder", response.parentFolder.id);
         }
       } catch (e) {
         console.error(e)
