@@ -16,10 +16,10 @@ public class BlobStorageController {
         this.blobStorageService = blobStorageService;
     }
 
-    @PostMapping(value = "/upload/{userId}/{storageId}")
-    public String uploadFile(@RequestParam("file") MultipartFile file, @PathVariable("userId") Integer userId) {
-        return blobStorageService.upload(file, userId);
-    }
+//    @PostMapping(value = "/upload/{userId}/{storageId}")
+//    public String uploadFile(@RequestParam("file") MultipartFile file, @PathVariable("userId") Integer userId) {
+//        return blobStorageService.upload(file, userId);
+//    }
 
 //    @GetMapping(value = "/download/{userId}/{fileName}")
 //    public ResponseEntity<InputStreamResource> downloadFile(@PathVariable("userId") Integer userId, @PathVariable("fileName") String fileName) {
@@ -32,9 +32,9 @@ public class BlobStorageController {
     }
 
 
-    @PostMapping(value = "/deleteContainer")
-    public void deleteContainer(@RequestParam("userId") String userId) {
-        blobStorageService.deleteContainer(userId);
-    }
+//    @PostMapping(value = "/deleteContainer")
+//    public void deleteContainer(@RequestParam("userId") String userId) {
+//        blobStorageService.deleteContainer(userId);
+//    }
 
 }

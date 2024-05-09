@@ -31,9 +31,9 @@ public class FileController {
         this.blobStorageService = blobStorageService;
     }
 
-    @PostMapping(value = "/upload/{folderId}/{storageId}", consumes = "multipart/form-data", produces = "application/json")
-    public String uploadFileToFolder(@RequestParam("file") MultipartFile file, @PathVariable("folderId") Long folderId, @PathVariable("storageId") Long storageId) throws SQLException, IOException {
-        return fileService.uploadFile(file, storageId, folderId);
+    @PostMapping(value = "/upload/{userId}/{folderId}/{storageId}", consumes = "multipart/form-data", produces = "application/json")
+    public String uploadFileToFolder(@RequestParam("file") MultipartFile file, @PathVariable("folderId") Long folderId, @PathVariable("storageId") Long storageId, @PathVariable("userId") Integer userId) throws SQLException, IOException {
+        return fileService.uploadFile(file, storageId, folderId,userId);
     }
 
     @GetMapping(value = "/read/{storageId}/{filename}")

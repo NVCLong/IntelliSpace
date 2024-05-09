@@ -18,8 +18,8 @@ public class BlobStorageService {
     @Autowired
     BlobServiceClient blobServiceClient;
 
-    public String upload(MultipartFile file, Long storageId) {
-        BlobContainerClient containerClient = getContainer(storageId);
+    public String upload(MultipartFile file, Long storageId, Integer userId) {
+        BlobContainerClient containerClient = getContainer(userId.longValue());
 
         try (InputStream inputStream = file.getInputStream()) {
             BlobClient blobClient = containerClient.getBlobClient(file.getOriginalFilename());

@@ -38,7 +38,7 @@ public class FileService {
         this.blobStorageService = blobStorageService;
     }
 
-    public String uploadFile(MultipartFile file, Long storageId, Long folderId) {
+    public String uploadFile(MultipartFile file, Long storageId, Long folderId,Integer userId) {
         try {
             Storage storage = storageRepository.findById(storageId).orElseThrow(() -> new RuntimeException("Storage not found"));
             Folder folder = folderRepository.findById(folderId).orElseThrow(() -> new RuntimeException("Folder not found"));
@@ -47,7 +47,7 @@ public class FileService {
                 return storageResponse.getMessage();
             }
             // Use the BlobStorageService's upload method
-            String uploadResult = blobStorageService.upload(file, storageId);
+            String uploadResult = blobStorageService.upload(file,storageId ,userId);
             if (uploadResult != null) {
                 return uploadResult;
             }

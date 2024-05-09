@@ -253,7 +253,7 @@ export const deletedFile = async (storageId: string) => {
   }
 }
 
-export const shareFolderCode = async (folderId: string, storageId: string) => {
+export const shareFolderCode = async (folderId: string, storageId: string | null) => {
   try {
     const header = await getHeader()
     const response = await api.get(
