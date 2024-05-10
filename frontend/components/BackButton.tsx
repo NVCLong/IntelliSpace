@@ -3,9 +3,15 @@ import { FiArrowLeftCircle } from "react-icons/fi";
 
 
 export const BackButton=()=>{
-    const storageId= localStorage.getItem("storageID")
-    const folderId= localStorage.getItem("folderId")
-    const parentFolderId= localStorage.getItem("parentFolder")
+
+    let storageId:string|null;
+    let folderId:string|null;
+    let parentFolderId:string|null;
+    if(typeof window !=='undefined') {
+       storageId = localStorage.getItem("storageID")
+       folderId = localStorage.getItem("folderId")
+       parentFolderId = localStorage.getItem("parentFolder")
+    }
     const handleCallBack=async ()=>{
         if (parentFolderId === "0") {
             localStorage.removeItem("folderId");

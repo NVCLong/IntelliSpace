@@ -104,7 +104,7 @@ export const NewNote = (userId: any) => {
                   onPress={(e) => {
                     handleSubmit()
                     onClose()
-                    // window.location.reload();
+                    window.location.reload();
                   }}
                 >
                   Submit

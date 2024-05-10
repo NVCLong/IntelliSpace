@@ -55,7 +55,7 @@ const SideBar: React.FC = () => {
     },
     { name: "Meeting", path: "/meet", icon: FiVideo, onClick: () => {} },
     { name: "Notes", path: "/note", icon: FiPaperclip, onClick: () => {} },
-    { name: "Bin", path: "/recycleBin", icon: FiTrash2, onClick: () => {} },
+    { name: "Bin", path: "/recyclebin", icon: FiTrash2, onClick: () => {} },
     {
       name: "Logout",
       path: "/",
@@ -74,13 +74,12 @@ const SideBar: React.FC = () => {
 
   const handleStorageUsed = async () => {
     const storageId = localStorage.getItem("storageID");
-    // console.log(storageId)
 
     const storageUsed = await getCapacity(storageId);
+    console.log(storageUsed)
     setUsed(storageUsed.storage.currentStorage);
     setTotal(storageUsed.storage.maxStorage);
-    // console.log(storageUsed.storage);
-    // console.log(storageUsed.storage);
+
   };
 
   useEffect(() => {

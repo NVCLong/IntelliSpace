@@ -1,7 +1,7 @@
 import 'react-toastify/dist/ReactToastify.css'
 
 import copy from 'copy-to-clipboard'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from "react";
 import { MdFolder } from 'react-icons/md'
 import {
   Button,
@@ -39,9 +39,12 @@ interface FolderListProps {
 // @ts-ignore
 const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
+  let storageId:string|null;
+  if(typeof window !=='undefined'){
+      storageId=localStorage.getItem('storageID')
+  }
 
   const [folderName, setFolderName] = useState('')
-  const storageId = localStorage.getItem('storageID')
   const [currentFolderId, setCurrenFolderId] = useState('')
 
   const handleDelete = (folderId: number) => {
@@ -59,6 +62,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
   }) => {
     setFolderName(e.target.value)
   }
+
 
   const handleShareFolder = async (folderId: string) => {
 
@@ -82,7 +86,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
     }
   }
   const handleOpen = async (folderId: string) => {
-    if (storageId !== null) {
+    if ( storageId!== null) {
       localStorage.setItem('folderId', folderId)
     }
   }

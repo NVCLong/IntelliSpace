@@ -17,27 +17,33 @@ import { getSharedFolder } from "@/lib/apiCall";
 export default function Page() {
   const [code, setCode] = useState("");
   const [folderList, setFolderList] = useState([]);
-  const [parentFolder, setParentFolder] = useState({
-    parentFolderId: "",
-  });
+  const [parentFolder, setParentFolder] = useState({ parentFolderId: "" });
   const [fileList, setFileList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   // @ts-ignore
   const handleChangeCode = (e) => {
     setCode(e.target.value);
   };
-
   const handleAccess = async () => {
+    setIsLoading(true);
+    setError(null);
+
     try {
-      console.log(code);
       const response = await getSharedFolder(code);
+
       setFolderList(response.subFolders);
-      if (response.files.isEmpty()) {
-        setFileList(response.files);
-      }
+
+      // Handle potentially empty files array gracefully
+      setFileList(response.files || []);
+
       setParentFolder({ parentFolderId: response.parentFolder.id });
     } catch (error) {
-      console.log(error);
+      // @ts-ignore
+      setError(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -72,20 +78,20 @@ export default function Page() {
         </CardContent>
       </Card>
 
-      <div className="ml-32">
-        <div>
-          {folderList !== null && (
-            <FolderList
-              folders={folderList}
-              parentFolderId={parentFolder.parentFolderId}
-            />
-          )}
-        </div>
-      </div>
+      {isLoading && <div>Loading...</div>}
+      {error && <div>Error fetching shared folder: {error}</div>}
 
-      <div className="ml-20 -mt-5">
-        {fileList !== null && <FileList files={fileList} />}
-      </div>
+      {!isLoading && !error && (
+        <>
+          <div className="ml-32">
+            <FolderList folders={folderList} parentFolderId={parentFolder.parentFolderId} />
+          </div>
+          <div className="ml-20 -mt-5">
+            <FileList files={fileList} />
+          </div>
+        </>
+      )}
     </motion.div>
   );
 }
+

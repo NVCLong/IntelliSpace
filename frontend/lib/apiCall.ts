@@ -1,10 +1,5 @@
 import { jwtDecode, JwtPayload } from 'jwt-decode'
 import axios from 'axios'
-import { Simulate } from 'react-dom/test-utils'
-import error = Simulate.error
-import { h } from 'preact'
-import exp from 'constants'
-import { headers } from 'next/headers'
 
 export const api = axios.create({
   baseURL: 'http://localhost:8888/api',
@@ -12,20 +7,27 @@ export const api = axios.create({
 })
 
 export const getHeader = async () => {
-  let accessToken = localStorage.getItem('access_token')
-  // @ts-ignore
-  const decoded: JwtPayload = jwtDecode(accessToken) // Type assertion for decoded data
-  // @ts-ignore
-  const isExpired = Date.now() >= decoded.exp * 1000 // Check expiration in milliseconds
-  // console.log(isExpired)
-  if (isExpired) {
-    const userId = localStorage.getItem('userId')
-    const response = await api.get(`/auth/newAccessToken?userId=${userId}`)
-    localStorage.removeItem('access_token')
-    localStorage.setItem('access_token', response.data.accessToken)
+  let accessToken;
+  if(typeof  window !== 'undefined'){
+   try{
+     console.log("....")
+     accessToken = localStorage.getItem('access_token')
+     if(!accessToken) return;
+     const decoded: JwtPayload = jwtDecode(accessToken) // Type assertion for decoded data
+     // @ts-ignore
+     const isExpired = Date.now() >= decoded.exp * 1000 // Check expiration in milliseconds
+     // console.log(isExpired)
+     if (isExpired) {
+       const userId = localStorage.getItem('userId')
+       const response = await api.get(`/auth/newAccessToken?userId=${userId}`)
+       localStorage.removeItem('access_token')
+       accessToken =response.data.accessToken
+       localStorage.setItem('access_token', accessToken)
+     }
+   } catch (e){
+     console.log("Err", e)
+   }
   }
-
-  accessToken = localStorage.getItem('access_token')
   return {
     Authorization: `Bearer ${accessToken}`
     // "Content-Type": "application/json",
@@ -240,7 +242,7 @@ export const getFile = async (
   }
 }
 
-export const deletedFile = async (storageId: string) => {
+export const deletedFile = async (storageId: string | null) => {
   try {
     const header = await getHeader()
     const response = await api.get(`file/trash/${storageId}`, {

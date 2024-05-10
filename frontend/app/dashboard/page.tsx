@@ -1,5 +1,5 @@
 'use client'
-import { useEffect } from 'react'
+import { useCallback, useEffect } from "react";
 import { AppDispatch, useAppSelector } from '@/lib/store'
 import { getAllRootFolder, openFolder } from '@/lib/apiCall'
 import { useState } from 'react'
@@ -12,8 +12,13 @@ import { UploadFile } from '@/components/UploadFile'
 import { motion } from 'framer-motion'
 
 export default function Page() {
-  const storageID_temp: string | null = localStorage.getItem('storageID')
-  const folderId: string | null = localStorage.getItem('folderId')
+  let storageID_temp: string | null
+  let folderId:string|null
+  if(typeof window !=='undefined') {
+    storageID_temp = localStorage.getItem('storageID')
+     folderId= localStorage.getItem('folderId')
+  }
+
   const dispatch = useDispatch<AppDispatch>()
   const [folderList, setFolderList] = useState([])
   const [parentFolder, setParentFolder] = useState({
@@ -25,50 +30,61 @@ export default function Page() {
   )
   const [isFetch, setIsFetch] = useState(true)
   const [fileList, setFileList] = useState([])
+ // ong oi co gi mai tui fix, khong hieu tui hoi ong nha, muon roi ong nghi di cam on o
+  // Ok ban
 
-  const handleFetchData = async () => {
-    // if (isFetch) return; // Prevent redundant fetches
-    if (folderId === null) {
-      try {
-        // console.log("Fetching in root folder")
-        // @ts-ignore
-        const response = await getAllRootFolder(storageID_temp)
-        setFolderList(response.rootFolders)
-        setIsFetch(false) // Mark fetching complete
-        // console.log(response);
-      } catch (error) {
-        console.error(error)
-      }
-    } else {
-      try {
-        console.log('{Fetching in subfolder')
-        const response = await openFolder(storageID_temp, folderId)
-        if (response.parentFolder == null && parentFolder.parentFolderId == null) {
-          // console.log(response)
-          setFolderList(response.subFolders);
-          setIsFetch(false);
-          setFileList(response.files);
 
-          localStorage.setItem("parentFolder", "0");
-        } else {
-          setFolderList(response.subFolders);
-          setIsFetch(false);
-          setFileList(response.files);
-          // console.log(response)
-          // setParentFolder({parentFolderId: response.parentFolder.id})
-          localStorage.setItem("parentFolder", response.parentFolder.id);
-        }
-      } catch (e) {
-        console.error(e)
-      }
-    }
-  }
 
+  // comment giup minh doan useEffect nay
+
+
+  // noi chung la do cai dong fetch api cua ban dang bi lôp vo tanar
+
+  // kieu minh luc dau de reload ma minh muon co folder cap nhat la no tu them ay, khong phai reload tai relaod compile lau ay
   useEffect(() => {
-    handleFetchData()
-  }, [folderList, fileList])
-  // @ts-ignore
 
+    const handleFetchData = async () => {
+      try {
+        if (folderId === null) {
+          const response = await getAllRootFolder(storageID_temp);
+          if (response) {
+            setFolderList(response.rootFolders);
+            setIsFetch(false);
+            console.log(response);
+          }
+        } else {
+          console.log('Fetching in subfolder');
+          const response = await openFolder(storageID_temp, folderId);
+          if (response) {
+            if (response.parentFolder === null) {
+              console.log(response);
+              setFolderList(response.subFolders);
+              setIsFetch(false);
+              setFileList(response.files);
+              localStorage.setItem('parentFolder', '0');
+            } else {
+              setFolderList(response.subFolders);
+              setIsFetch(false);
+              setFileList(response.files);
+              console.log(response);
+              localStorage.setItem('parentFolder', response.parentFolder.id);
+            }
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    handleFetchData().then().catch(console.error)
+  }, [])
+  // nay chi la cach chong che de no work thoi, cost perf lam, thong thuong, ban muon data duoc fetch lai khi files thay doi
+  // thi ban truyen cai handleFetchData() vao cai onFileChange hay gi do
+  // ban đafàuaufuseEffect củra ban c dependency gi ay
+  // @ts-ignore
+  // co folderList, fileList a
+  // oke ban, minh cung lo cai viec call nhieu qua server tai ko noi
+  // gio thu build lai thi chac se ko con loi trang /dashboard dau, may trang con lai ban cu vo next dev va check
+ // next js co cach nao tang tyoc do compile ko ban, DUY no ko biet
   return (
     <div className="flex flex-col">
       <div className="flex flex-row">

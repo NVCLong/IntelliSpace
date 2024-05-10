@@ -23,7 +23,11 @@ interface FileListProps {
 
 // @ts-ignore
 const FileList: React.FC<FileListProps> = ({ files }) => {
-  const userId= localStorage.getItem("userId")
+
+  let userId:string|null;
+  if(typeof window!=='undefined'){
+    userId=localStorage.getItem("userId")
+  }
 
   const handleMoveToTrash = async (fileId: string) => {
      const data= await softDelete(fileId);

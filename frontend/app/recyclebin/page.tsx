@@ -1,54 +1,77 @@
-"use client";
-import { useEffect } from "react";
-import {AppDispatch, useAppSelector} from "@/lib/store";
-import { useState } from "react";
-import FileList from "@/components/listDeleted/FileList";
-import {useDispatch} from "react-redux";
-import {deletedFile} from "@/lib/apiCall";
+'use client';
+import { useEffect, useState } from "react";
+import { deletedFile } from "@/lib/apiCall";
+import dynamic from "next/dynamic";
 
 
+const DynamicFileList = dynamic(() => import('@/components/listDeleted/FileList'), { ssr: false });
 
 export default function Page() {
-  const storageID_temp:string | null  = localStorage.getItem("storageID")
-    const folderId: string|null= localStorage.getItem('folderId');
-    const  dispatch = useDispatch<AppDispatch>();
-    // const [folderList, setFolderList] = useState([]);
-    // const [parentFolder, setParentFolder]=useState({
-    //     parentFolderId: ""
-    // })
-  // @ts-ignore
-  const storageID: string | null = useAppSelector(
-    (state) => state.storageSlice.storageID
-  );
-  const [isFetch, setIsFetch] = useState(true);
-  const [fileList, setFileList] = useState([]);
 
 
-  const handleFetchData = async ()=>{
-          try {
-              // @ts-ignore
-              const response = await deletedFile(storageID_temp);
-              setFileList(response);
-              // setIsFetch(false); // Mark fetching complete
+  const [fetchedFileList, setFetchedFileList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState({ message: "" });
 
-          } catch (error) {
-              console.error(error);
-          }
+  const handleFetchData = async (storageID_temp: string | null) => {
+    setIsLoading(true);
+    setError({ message: "" });
+
+    try {
+      if (!storageID_temp) {
+        throw new Error("storageID_temp is not available");
+      }
+
+      const response = await deletedFile(storageID_temp);
+      if (response !== null) {
+        if (Array.isArray(response)) {
+          // @ts-ignore
+          setFetchedFileList(response);
+        } else {
+          throw new Error("Response from deletedFile is not an array");
         }
+      } else {
+        throw new Error("Response from deletedFile is null");
+      }
+    } catch (error) {
+      // @ts-ignore
+      setError({ message: error.message });
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    handleFetchData();
+    let storageID_temp: string | null=null;
+    console.log(typeof window)
+    if(typeof  window !== "undefined") {
+      storageID_temp = localStorage.getItem("storageID") || "";
+    }
+
+      // @ts-ignore
+    if (storageID_temp==null) {
+        setError({ message: "storageID_temp is not available" });
+        setIsLoading(false);
+        return;
+      }
+      handleFetchData(storageID_temp);
+
+  }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
-  , [fileList]
-);
-  // @ts-ignore
-    return (
-    <>
-        <div className="mt-10 ml-16">
-        <div>
-          {fileList !== null && <FileList files={fileList}/>}
-        </div>
-        </div>
-    </>
+
+  if (error.message) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  return (
+    <div className="mt-10 ml-16">
+      {fetchedFileList.length > 0 && (
+        <DynamicFileList files={fetchedFileList} />
+      )}
+    </div>
   );
 }

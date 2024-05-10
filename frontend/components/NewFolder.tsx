@@ -16,7 +16,10 @@ import 'react-toastify/dist/ReactToastify.css'
 
 export const NewFolder = (storageID: any) => {
   const [folderName, setFolderName] = React.useState('')
-  const folderId = localStorage.getItem('folderId')
+  let folderId:string |null;
+  if(typeof window !=='undefined'){
+    folderId = localStorage.getItem('folderId')
+  }
   const handleInput = (e: {
     target: { value: React.SetStateAction<string> }
   }) => {

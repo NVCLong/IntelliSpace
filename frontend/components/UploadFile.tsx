@@ -17,10 +17,14 @@ export const UploadFile = () => {
   const [file, setFile] = React.useState({
     file: null
   })
-  const folderId = localStorage.getItem('folderId')
-  const storageId = localStorage.getItem('storageID')
-  const userId = localStorage.getItem('userId')
-
+  let folderId:string|null;
+  let storageId:string|null;
+  let userId:string|null;
+  if(typeof window !=='undefined') {
+    folderId = localStorage.getItem('folderId')
+    storageId = localStorage.getItem('storageID')
+    userId = localStorage.getItem('userId')
+  }
   const handleFileChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
