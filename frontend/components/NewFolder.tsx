@@ -32,14 +32,14 @@ export const NewFolder = (storageID: any) => {
       name: folderName
     }
     if (folderId == null) {
-      console.log('create folder')
+      // console.log('create folder')
       const response = createRootFolder(storageID.storageID, request)
-      console.log(response)
+      // console.log(response)
       toast.success('Create folder')
     } else {
-      console.log('create in sub folder')
+      // console.log('create in sub folder')
       const response = createFolder(storageID.storageID, folderId, request)
-      console.log(response)
+      // console.log(response)
       toast.success('Create in sub-folder')
     }
   }

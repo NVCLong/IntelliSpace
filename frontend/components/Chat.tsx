@@ -1,10 +1,11 @@
-import { Loader, SendHorizonal, UserRound } from 'lucide-react'
+import { Loader, SendHorizonal} from 'lucide-react'
 import { useContext } from 'react'
 import { ChatContext } from '@/providers'
 import { UserCircle } from '@phosphor-icons/react'
 import { FiCodesandbox } from 'react-icons/fi'
 
 const Chat = () => {
+
   const {
     sendPrompt,
     setPrompt,
@@ -20,6 +21,7 @@ const Chat = () => {
     sendPrompt(prompt)
   }
 
+
   return (
     <div className="relative h-screen flex-1 pb-[15vh]">
       <div className="mx-auto max-w-[55rem]">
@@ -28,7 +30,7 @@ const Chat = () => {
             <div className="flex p-5 text-4xl font-semibold my-14">
               <FiCodesandbox />
               <div className="ml-2">
-                <span className="">
+                <span>
                   Hi, I'm <span className="italic font-bold">IntelliBot</span>
                   <br />
                   How can I help you today?

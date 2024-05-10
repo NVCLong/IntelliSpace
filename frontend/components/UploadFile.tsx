@@ -47,17 +47,17 @@ export const UploadFile = () => {
 
   const handleSubmit = async () => {
     if (folderId !== null && file !== null) {
-      console.log('create folder')
+      // console.log('create folder')
       // @ts-ignore
       const response = await uploadFile(userId, folderId, storageId, file.file)
       if (response.toLowerCase().includes('is not enough')) {
         toast.error(`Submit failed: ${response}`)
         // alert(response)
       }
-      console.log(response)
+      // console.log(response)
     } else {
       toast.error('File is null')
-      console.log('file is null')
+      // console.log('file is null')
     }
   }
 

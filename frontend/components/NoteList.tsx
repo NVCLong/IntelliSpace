@@ -51,7 +51,7 @@ const NoteList: React.FC<NoteListProps> = ({ notes }) => {
       ...updatedNote,
       [name]: value
     })
-    console.log(updatedNote)
+    // console.log(updatedNote)
   }
 
   const handleUpdate = async (noteId: string | null) => {
