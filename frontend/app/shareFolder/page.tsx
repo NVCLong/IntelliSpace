@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
-import FileList from "@/components/list/FileList";
-import FolderList from "@/components/list/FolderList";
+import FileList from "@/components/sharedList/FileList";
+import FolderList from "@/components/sharedList/FolderList";
+import {Spinner} from "@nextui-org/react";
 
 import { Button } from "@/components/ui/button"
 import {
@@ -32,11 +33,11 @@ export default function Page() {
 
     try {
       const response = await getSharedFolder(code);
-
+      console.log(response)
       setFolderList(response.subFolders);
 
       // Handle potentially empty files array gracefully
-      setFileList(response.files || []);
+      setFileList(response.files);
 
       setParentFolder({ parentFolderId: response.parentFolder.id });
     } catch (error) {
@@ -78,10 +79,10 @@ export default function Page() {
         </CardContent>
       </Card>
 
-      {isLoading && <div>Loading...</div>}
-      {error && <div>Error fetching shared folder: {error}</div>}
+      {isLoading && <div><Spinner/></div>}
 
-      {!isLoading && !error && (
+
+      {!isLoading && (
         <>
           <div className="ml-32">
             <FolderList folders={folderList} parentFolderId={parentFolder.parentFolderId} />
