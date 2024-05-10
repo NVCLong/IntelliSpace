@@ -106,7 +106,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
           theme="colored"
         />
       <div className="w-full max-w-screen-xl mx-auto">
-        <div className="grid gap-6 md:grid-cols-4 grid-col-2">
+        <div className="grid gap-6 md:grid-cols-4 grid-col-2 xl:grid-cols-6">
 
           {folders.map((folder) => (
             <div key={folder.id}>
@@ -143,7 +143,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
                       onClick={() => {
                         handleDelete(Number.parseInt(folder.id))
                         setTimeout(() => {
-                          // window.location.reload();
+                          window.location.reload();
                         }, 2000)
                       }}
                     >
@@ -202,7 +202,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
                           color="primary"
                           onPress={(e) => {
                             handleUpdate(currentFolderId)
-                            // window.location.reload();
+                            window.location.reload();
                           }}
                         >
                           Edit

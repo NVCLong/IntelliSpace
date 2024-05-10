@@ -45,7 +45,7 @@ export const NewFolder = (storageID: any) => {
   }
 
   return (
-    <div className="mt-24 ml-5">
+    <div className="ml-5">
       <Button
         className="flex items-center px-4 py-2 text-gray-600 bg-white border rounded-full shadow-md cursor-pointer hoverScale"
         color="primary"

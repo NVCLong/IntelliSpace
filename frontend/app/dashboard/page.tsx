@@ -10,6 +10,7 @@ import { NewFolder } from '@/components/NewFolder'
 import { BackButton } from '@/components/BackButton'
 import { UploadFile } from '@/components/UploadFile'
 import { motion } from 'framer-motion'
+import SearchBar from "@/components/SearchBar";
 
 export default function Page() {
   let storageID_temp: string | null
@@ -46,6 +47,7 @@ export default function Page() {
     const handleFetchData = async () => {
       try {
         if (folderId === null) {
+          // @ts-ignore
           const response = await getAllRootFolder(storageID_temp);
           if (response) {
             setFolderList(response.rootFolders);
@@ -86,7 +88,11 @@ export default function Page() {
   // gio thu build lai thi chac se ko con loi trang /dashboard dau, may trang con lai ban cu vo next dev va check
  // next js co cach nao tang tyoc do compile ko ban, DUY no ko biet
   return (
+    <>
     <div className="flex flex-col">
+      <div className="justify-center w-full mt-8 mb-8 ml-auto md:w-2/3 lg:w-1/3">
+          <SearchBar/>
+      </div>
       <div className="flex flex-row">
         <BackButton />
         <NewFolder storageID={storageID_temp} />
@@ -117,5 +123,6 @@ export default function Page() {
         </div>
       </motion.div>
     </div>
+    </>
   )
 }

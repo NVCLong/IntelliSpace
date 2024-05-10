@@ -4,10 +4,10 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
-import NextTopLoader from "nextjs-toploader";
+import TopLoader from '@/components/TopLoader';
 import { NextUIProvider } from "@nextui-org/react";
 import { Button } from "@/components/ui/button";
-import { ChevronRight } from "lucide-react";
+import { FiChevronRight } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 
 
@@ -18,8 +18,8 @@ export default function Home() {
   };
   return (
     <NextUIProvider>
-      <div>
-        <NextTopLoader color="#BF40BF" showSpinner={false} easing="ease" />
+      <div className="">
+        <TopLoader/>
         <NavBar />
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
@@ -29,7 +29,7 @@ export default function Home() {
             delay: 0.5,
             ease: [0, 0.71, 0.2, 1.01],
           }}
-          className="flex flex-col items-center space-y-5 mb-36"
+          className="flex flex-col items-center w-full h-full space-y-7"
         >
           <Link
             href="/"
@@ -53,13 +53,14 @@ export default function Home() {
             <br /> to store and manage your data, meeting notes, and other
             information.
           </p>
-          <Button
-            className="shadow-lg animate-pulse animate-infinite animate-duration-1000 animate-ease-in-out text-md"
-            onClick={handleSignin}>
-            <ChevronRight className="mr-2 w-7 h-7" /> Getting started
+          <Button className="bg-blue-600 shadow-lg animate-pulse animate-infinite animate-duration-1000 animate-ease-in-out text-md" onClick={handleSignin}>
+            <FiChevronRight className="mr-2 w-7 h-7" />
+            Getting started
           </Button>
         </motion.div>
-        <Footer />
+        <div className="mt-24">
+          <Footer />
+        </div>
       </div>
     </NextUIProvider>
   );
