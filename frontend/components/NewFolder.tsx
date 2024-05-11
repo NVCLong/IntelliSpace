@@ -94,7 +94,7 @@ export const NewFolder = (storageID: any) => {
                   onPress={(e) => {
                     handleSubmit()
                     onClose()
-                    // window.location.reload();
+                    window.location.reload();
                   }}
                 >
                   Submit
