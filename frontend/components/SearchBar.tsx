@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input"
 
 const SearchBar = () => {
   return (
-        <form>
+        <form className='mt-8 mb-8'>
           <div className="relative flex items-center drop-shadow-lg">
             <FiSearch className="absolute w-10 mr-2 text-gray-500" />
             <Input

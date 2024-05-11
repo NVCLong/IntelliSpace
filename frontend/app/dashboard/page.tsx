@@ -31,17 +31,7 @@ export default function Page() {
   )
   const [isFetch, setIsFetch] = useState(true)
   const [fileList, setFileList] = useState([])
- // ong oi co gi mai tui fix, khong hieu tui hoi ong nha, muon roi ong nghi di cam on o
-  // Ok ban
 
-
-
-  // comment giup minh doan useEffect nay
-
-
-  // noi chung la do cai dong fetch api cua ban dang bi lôp vo tanar
-
-  // kieu minh luc dau de reload ma minh muon co folder cap nhat la no tu them ay, khong phai reload tai relaod compile lau ay
   useEffect(() => {
 
     const handleFetchData = async () => {
@@ -79,20 +69,12 @@ export default function Page() {
     };
     handleFetchData().then().catch(console.error)
   }, [])
-  // nay chi la cach chong che de no work thoi, cost perf lam, thong thuong, ban muon data duoc fetch lai khi files thay doi
-  // thi ban truyen cai handleFetchData() vao cai onFileChange hay gi do
-  // ban đafàuaufuseEffect củra ban c dependency gi ay
-  // @ts-ignore
-  // co folderList, fileList a
-  // oke ban, minh cung lo cai viec call nhieu qua server tai ko noi
-  // gio thu build lai thi chac se ko con loi trang /dashboard dau, may trang con lai ban cu vo next dev va check
- // next js co cach nao tang tyoc do compile ko ban, DUY no ko biet
+
   return (
     <>
     <div className="flex flex-col">
-      <div className="justify-center w-full mt-8 mb-8 ml-auto md:w-2/3 lg:w-1/3">
-          <SearchBar/>
-      </div>
+
+        <SearchBar/>
       <div className="flex flex-row">
         <BackButton />
         <NewFolder storageID={storageID_temp} />
