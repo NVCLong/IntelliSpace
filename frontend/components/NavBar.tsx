@@ -10,15 +10,7 @@ import NextTopLoader from "nextjs-toploader";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button"
@@ -68,12 +60,12 @@ const NavBar = () => {
         </ul>
       </div>
 
-      <ul className="hidden h-full gap-12 lg:flex" id="navBarFull">
+      <ul className="hidden h-full space-x-36 lg:flex">
         {NAV_LINKS.map((link) => (
           <li key={link.key}>
             <Link
               href={link.href}
-              className="relative font-semibold  text-xl text-neutral-600 cursor-pointer transition hover:text-gray-900 duration-200 after:block after:content-[''] after:absolute after:h-[3px] after:bg-gray-900 after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-200 after:origin-center"
+              className="relative font-semibold text-xl text-neutral-600 cursor-pointer transition hover:text-gray-900 duration-200 after:block after:content-[''] after:absolute after:h-[3px] after:bg-gray-900 after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-200 after:origin-center"
             >
               {link.label}
             </Link>
@@ -82,7 +74,6 @@ const NavBar = () => {
       </ul>
 
       <div
-        id="loginButton"
         className="hidden gap-2 px-4 py-2 bg-blue-500 rounded-full cursor-pointer hover:bg-blue-600 lg:flex md:flex sm:hidden hoverScale drop-shadow-md flexCenter bold-16"
         onClick={handleSignin}
       >

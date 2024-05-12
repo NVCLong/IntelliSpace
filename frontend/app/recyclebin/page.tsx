@@ -1,7 +1,9 @@
 'use client';
-import { useEffect, useState } from "react";
+import { useEffect, useState, CSSProperties  } from "react";
 import { deletedFile } from "@/lib/apiCall";
 import dynamic from "next/dynamic";
+import BarLoader from "react-spinners/BarLoader";
+
 
 
 const DynamicFileList = dynamic(() => import('@/components/listDeleted/FileList'), { ssr: false });
@@ -44,7 +46,7 @@ export default function Page() {
 
   useEffect(() => {
     let storageID_temp: string | null=null;
-    console.log(typeof window)
+    // console.log(typeof window)
     if(typeof  window !== "undefined") {
       storageID_temp = localStorage.getItem("storageID") || "";
     }
@@ -60,7 +62,15 @@ export default function Page() {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className="w-screen h-screen flexCenter drop-shadow-md">
+      <BarLoader
+  color="#1351ae"
+  height={8}
+  loading
+  speedMultiplier={1}
+  width={200}
+/>
+    </div>
   }
 
   if (error.message) {

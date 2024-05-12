@@ -57,6 +57,7 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
       <div className="w-full max-w-screen-xl px-4 mx-auto">
         <div className="grid w-full gap-9 xl:grid-cols-6 sm:grid-cols-4">
           {files.map((file) => (
+            <div key={file.id}>
             <ContextMenu>
               <ContextMenuTrigger>
                 <ContextMenuContent className="bg-white rounded-lg w-30">
@@ -128,6 +129,7 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
                 </Card>
               </ContextMenuTrigger>
             </ContextMenu>
+            </div>
           ))}
         </div>
       </div>
