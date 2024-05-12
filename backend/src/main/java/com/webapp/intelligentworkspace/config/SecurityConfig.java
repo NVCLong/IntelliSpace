@@ -40,6 +40,7 @@ public class SecurityConfig {
 //                .oauth2Login(withDefaults())
                 .userDetailsService(customerService)
                 .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers("/ws-message/room/**","/ws-webRTC/room/**").permitAll();
                     auth.requestMatchers("/auth/**").permitAll();
                     auth.anyRequest().authenticated();
                 })
