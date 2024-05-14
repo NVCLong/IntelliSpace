@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
-import NextTopLoader from 'nextjs-toploader'
 import Sidebar from '@/components/SideBar'
+import TopLoader from "@/components/TopLoader";
+import SearchBar from "@/components/SearchBar";
+
 
 export const metadata: Metadata = {
   title: 'Dashboard | IntelliSpace',
@@ -10,8 +12,9 @@ export const metadata: Metadata = {
 const Dashboardlayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex">
-      <NextTopLoader color="#BF40BF" showSpinner={false} easing="ease" />
+      <TopLoader/>
       <Sidebar />
+
       {children}
     </div>
   )

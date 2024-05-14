@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import NextTopLoader from "nextjs-toploader";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
+import TopLoader from '@/components/TopLoader';
 
 export const metadata: Metadata = {
   title: "Register | IntelliSpace",
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 const RegisterLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      <NextTopLoader color="#BF40BF" showSpinner={false} easing="ease" />
+      <TopLoader/>
       <NavBar />
       {children}
       <Footer />

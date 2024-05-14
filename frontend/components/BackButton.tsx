@@ -2,7 +2,7 @@ import React from "react";
 import { FiArrowLeftCircle } from "react-icons/fi";
 
 
-export const BackButton=()=>{
+export const BackButton = ()=>{
 
     let storageId:string|null;
     let folderId:string|null;
@@ -24,7 +24,7 @@ export const BackButton=()=>{
     }
     return(
         <>
-            <div className="mt-24 ml-20">
+            <div className="ml-20">
             <button
                 className="flex items-center px-2 py-2 text-gray-600 bg-white border rounded-full shadow-md cursor-pointer hoverScale"
                 color="primary"
