@@ -40,7 +40,7 @@ public class SecurityConfig {
 //                .oauth2Login(withDefaults())
                 .userDetailsService(customerService)
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/auth/**").permitAll();
+                    auth.requestMatchers("/auth/**", "/ws-message/**").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
