@@ -40,8 +40,10 @@ interface FolderListProps {
 const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
   let storageId:string|null;
+  let userId: string|null;
   if(typeof window !=='undefined'){
-      storageId=localStorage.getItem('storageID')
+      storageId=localStorage.getItem('storageID');
+      userId=localStorage.getItem("userId");
   }
 
   const [folderName, setFolderName] = useState('')
@@ -66,7 +68,8 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
 
   const handleShareFolder = async (folderId: string) => {
 
-    const response = await shareFolderCode(folderId, storageId)
+    const response = await shareFolderCode(folderId, storageId,userId)
+    console.log(response)
     toast.success(<div>
     Code: {response}
     <br />

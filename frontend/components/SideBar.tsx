@@ -49,7 +49,7 @@ const SideBar: React.FC = () => {
     { name: "Share", path: "/shareFolder", icon: FiShare2, onClick: () => {} },
     {
       name: "IntelliBot",
-      path: "/intelliBot",
+      path: "/intellibot",
       icon: FiCodesandbox,
       onClick: () => {},
     },

@@ -253,11 +253,11 @@ export const deletedFile = async (storageId: string | null) => {
   }
 }
 
-export const shareFolderCode = async (folderId: string, storageId: string | null) => {
+export const shareFolderCode = async (folderId: string, storageId: string | null, userId: string|null) => {
   try {
     const header = await getHeader()
     const response = await api.get(
-      `folder/getShareCode?folderId=${folderId}&storageId=${storageId}`,
+      `folder/getShareCode?folderId=${folderId}&storageId=${storageId}&userId=${userId}`,
       {
         headers: header
       }
@@ -412,5 +412,20 @@ export const getSharedFolder = async (code:string | null) =>{
   catch (e)
   {
     console.log(e)
+  }
+}
+export const downloadSharedFile=async (code:string | null, fileId:string, fileName:string)=>{
+  try{
+    const header= await getHeader()
+    const response= await api.get(`file/sharedFile/download?code=${code}&fileName=${fileName}&fileId=${fileId}`,{
+      headers: header,
+      responseType: 'blob'
+    })
+    console.log(response)
+    return response.data
+  }catch (error){
+    // @ts-ignore
+    console.error(error.message)
+    throw error
   }
 }

@@ -4,9 +4,19 @@ import React, { useState } from 'react';
 import {
     ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuLabel, ContextMenuTrigger
 } from '@/components/ui/context-menu';
-import { getFile, softDelete } from '@/lib/apiCall';
+import { downloadSharedFile, getFile, softDelete } from "@/lib/apiCall";
 import { Card,CardFooter } from '@nextui-org/card';
-import { Image } from '@nextui-org/react';
+import {
+  Button,
+  Image,
+  Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  useDisclosure
+} from "@nextui-org/react";
 import { FiDownloadCloud, FiTrash2 } from "react-icons/fi";
 
 interface File {
@@ -23,6 +33,10 @@ interface FileListProps {
 
 // @ts-ignore
 const FileList: React.FC<FileListProps> = ({ files }) => {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure()
+  const [code, setCode]= useState("")
+  const [fileId, setFileId]= useState("");
+  const [fileName, setFileName]=useState("")
 
   let userId:string|null;
   if(typeof window!=='undefined'){
@@ -33,11 +47,14 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
      const data= await softDelete(fileId);
     //  console.log(data)
   };
+  const handleInput=(e: { target: { value: React.SetStateAction<string>; }; })=>{
+    setCode(e.target.value);
+  }
 
-  const handleDownload = async (fileId: string,fileName:string) => {
+  const handleDownload = async () => {
     try {
-      const fileData = await getFile(fileId, fileName, userId);
-      // console.log(fileData)
+      const fileData = await downloadSharedFile(code, fileId, fileName);
+      console.log(fileData)
       // @ts-ignore
       const url = window.URL.createObjectURL(fileData);
       const link = document.createElement('a');
@@ -45,6 +62,7 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
       link.setAttribute('download', fileName);
       document.body.appendChild(link);
       link.click();
+      setCode("")
     }catch (e){
       throw  e
     }
@@ -55,33 +73,22 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
       <div className="w-full max-w-screen-xl px-4 mx-auto">
         <div className="grid w-full gap-9 xl:grid-cols-6 sm:grid-cols-4">
           {files.map((file) => (
+            <div key={file.id}>
             <ContextMenu>
               <ContextMenuTrigger>
                 <ContextMenuContent className="bg-white rounded-lg w-30">
                   <ContextMenuItem
                     className="hover:bg-slate-600 "
                     onClick={() => {
-                      handleDownload(file.id, file.file_name);
+                      setFileId(file.id);
+                      setFileName(file.file_name);
+                      onOpen()
                     }}
                   >
                     <ContextMenuLabel className="flex hover:text-white">
                         <FiDownloadCloud size={20} className="mr-2"/>
 
                       Download
-                    </ContextMenuLabel>
-                  </ContextMenuItem>
-                  <hr className="h-px bg-gray-200 border-0"></hr>
-                  <ContextMenuItem
-                    className="hover:bg-slate-600 "
-                    onClick={() => {
-                      handleMoveToTrash(file.id);
-                      // window.location.reload();
-                    }}
-                  >
-                    <ContextMenuLabel className="flex hover:text-white">
-                    <FiTrash2 size={20} className="mr-2"/>
-
-                      Delete
                     </ContextMenuLabel>
                   </ContextMenuItem>
                 </ContextMenuContent>
@@ -128,6 +135,49 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
                 </Card>
               </ContextMenuTrigger>
             </ContextMenu>
+            <Modal
+            isOpen={isOpen}
+          onOpenChange={onOpenChange}
+          placement="center"
+        >
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader className="flex flex-col gap-1">
+                  Folder options
+                </ModalHeader>
+
+                <ModalBody>
+                  <p>
+                    {' '}
+                    If you want to download this file please input the shared code
+                  </p>
+                  <Input
+                    value={code}
+                    onChange={handleInput}
+                    placeholder="Enter shared code"
+                    variant="bordered"
+                  />
+                </ModalBody>
+
+                <ModalFooter>
+                  <Button
+                    color="primary"
+                    onPress={(e) => {
+                      // handleUpdate(currentFolderId)
+                      handleDownload()
+
+                      onOpenChange()
+                    }}
+                  >
+                    Download
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        </Modal>
+            </div>
           ))}
         </div>
       </div>

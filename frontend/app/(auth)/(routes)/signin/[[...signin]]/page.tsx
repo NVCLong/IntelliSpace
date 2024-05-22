@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import * as z from "zod";
 import { Button } from "@/components/auth_ui/Button";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -61,7 +61,15 @@ const Page = () => {
   // const ResponseFolder = await axios.get("http://localhost:8888/api/folder/rootFolders/{storageId}"
   // );
   // localStorage.setItem("storageId", ResponseFolder.data.storageId);
-
+  // useEffect(() => {
+  //   let userId;
+  //   if(typeof window !=='undefined'){
+  //     userId= localStorage.getItem("userId")
+  //   }
+  //   if(userId!==null){
+  //     router.push("/dashboard")
+  //   }
+  // }, []);
 
 
   return (

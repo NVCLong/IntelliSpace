@@ -42,7 +42,6 @@ const NoteList: React.FC<NoteListProps> = ({ notes }) => {
 
   const handleDelete = async (noteId: string | null) => {
     await deleteNote(noteId)
-    // window.location.reload();
   }
   // @ts-ignore
   const handleInput = async (e) => {
@@ -51,10 +50,10 @@ const NoteList: React.FC<NoteListProps> = ({ notes }) => {
       ...updatedNote,
       [name]: value
     })
-    // console.log(updatedNote)
   }
 
   const handleUpdate = async (noteId: string | null) => {
+    console.log(updatedNote)
     await updateNote(noteId, updatedNote)
     window.location.reload()
   }

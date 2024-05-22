@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import * as z from "zod";
 import { Button } from "@/components/auth_ui/Button";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -44,6 +44,7 @@ const registerSchema = z
     path: ["confirmPassword"],
   });
 
+
 const Page = () => {
   const router = useRouter();
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -65,6 +66,16 @@ const Page = () => {
     // console.log(response.data);
     await router.push("/signin");
   }
+
+  useEffect(() => {
+    let userId;
+    if(typeof window !=='undefined'){
+      userId= localStorage.getItem("userId")
+    }
+    if(userId!==null){
+      router.push("/dashboard")
+    }
+  }, []);
 
   return (
     <>

@@ -65,16 +65,6 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
   }
 
 
-  const handleShareFolder = async (folderId: string) => {
-
-    const response = await shareFolderCode(folderId, storageId)
-    toast.success(<div>
-    Code: {response}
-    <br />
-    Copied to clipboard
-  </div>)
-    copy(response);
-  }
 
   const handleUpdate = (folderId: string) => {
     const newFolder = {
@@ -116,9 +106,6 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
                   <ContextMenuContent className="bg-white rounded-lg w-30">
                     <ContextMenuItem
                       className="hover:bg-slate-600 "
-                      onClick={() => {
-                        handleShareFolder(folder.id)
-                      }}
                     >
                       <ContextMenuLabel className="flex hover:text-white">
                         <FiShare size={20} className="mr-2" />

@@ -15,6 +15,7 @@ function getColor(percentage: number): string {
 
 const StorageBar: React.FC<StorageBarProps> = ({ used, total, open }) => {
   // console.log(typeof used, typeof total)
+  const usedStorage = Math.round(used * 100) / 100;
   const percentage = Math.round((used / total) * 100)
 
   return (
@@ -27,7 +28,7 @@ const StorageBar: React.FC<StorageBarProps> = ({ used, total, open }) => {
       </div>
       {!open && <p className="font-semibold">{`${percentage}%`}</p>}
       {open && (
-        <p className="font-semibold">{`Used ${used}GB of ${total}GB`}</p>
+        <p className="font-semibold">{`Used ${usedStorage}GB of ${total}GB`}</p>
       )}
     </div>
   )
