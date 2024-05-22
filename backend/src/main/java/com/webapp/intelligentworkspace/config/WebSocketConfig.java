@@ -14,7 +14,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         //with socket
-        registry.addEndpoint("/ws-message/room").setAllowedOriginPatterns("*");
+        registry.addEndpoint("/ws-message").setAllowedOriginPatterns("*").withSockJS();
 
         registry.addEndpoint("/ws-webRTC/room").setAllowedOriginPatterns("*");
     }
@@ -22,7 +22,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         registry.setApplicationDestinationPrefixes("/app");
-        registry.enableSimpleBroker("/topic","/queue");
+        registry.enableSimpleBroker("/topic");
         registry.setUserDestinationPrefix("/user");
     }
 }

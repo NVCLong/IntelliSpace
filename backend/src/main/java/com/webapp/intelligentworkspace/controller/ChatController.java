@@ -1,24 +1,29 @@
 package com.webapp.intelligentworkspace.controller;
-
-import com.webapp.intelligentworkspace.model.Message;
+import com.webapp.intelligentworkspace.model.ChatMessage;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 
 @Controller
 public class ChatController {
 
     @MessageMapping("/chat.sendMessage")
-    @SendTo("/topic/rooms/{roomId}")
-    public Message sendMessage(@Payload Message chatMessage) {
+    @SendTo("/topic/public")
+    public ChatMessage sendMessage(
+            @Payload ChatMessage chatMessage
+    ) {
         return chatMessage;
     }
 
     @MessageMapping("/chat.addUser")
-    @SendTo("/topic/rooms/{roomId}")
-    public Message addUser(@Payload Message chatMessage) {
-        chatMessage.setContent(chatMessage.getSender() + " joined the room.");
+    @SendTo("/topic/public")
+    public ChatMessage addUser(
+            @Payload ChatMessage chatMessage,
+            SimpMessageHeaderAccessor headerAccessor
+    ) {
+        headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
         return chatMessage;
     }
 }

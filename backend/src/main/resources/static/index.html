@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Chat Room</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="/js/main.js"></script>
+</head>
+<body>
+
+<div id="username-page" class="page">
+    <div class="container">
+        <h1>Chat test</h1>
+        <form id="usernameForm" class="form">
+            <input type="text" id="name" placeholder="Enter username" autocomplete="off" class="input">
+            <button type="submit" class="button">Join Chat</button>
+        </form>
+    </div>
+</div>
+
+<div id="chat-page" class="page hidden">
+    <div class="chat-container">
+        <header>
+            <h1>Chat Room</h1>
+        </header>
+        <div class="messages" id="messageArea">
+        </div>
+        <form id="messageForm" class="form">
+            <input type="text" id="message" placeholder="Type a message..." autocomplete="off" class="input">
+            <button type="submit" class="button send">Send</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

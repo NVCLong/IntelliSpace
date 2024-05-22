@@ -1,0 +1,73 @@
+/* Reset some basic elements */
+body, h1, form, button, input {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Body and full page container styles */
+body, .page {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* General container styling */
+.container {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+/* Form and input styles */
+.form {
+    margin-top: 20px;
+}
+
+.input, .button {
+    width: 90%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.button {
+    background-color: #5c67f2;
+    color: white;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Chat specific styling */
+.chat-container {
+    width: 300px;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.messages {
+    height: 300px;
+    overflow-y: auto;
+    background: #e8eaff;
+    padding: 10px;
+}
+
+.message {
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.send {
+    background-color: #4CAF50;
+}
