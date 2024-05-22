@@ -2,10 +2,10 @@
 import React, { useState } from 'react';
 
 import {
-    ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuLabel, ContextMenuTrigger
+  ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuLabel, ContextMenuTrigger
 } from '@/components/ui/context-menu';
 import { getFile, softDelete } from '@/lib/apiCall';
-import { Card,CardFooter } from '@nextui-org/card';
+import { Card, CardFooter } from '@nextui-org/card';
 import { Image } from '@nextui-org/react';
 import { FiDownloadCloud, FiTrash2 } from "react-icons/fi";
 
@@ -24,17 +24,17 @@ interface FileListProps {
 // @ts-ignore
 const FileList: React.FC<FileListProps> = ({ files }) => {
 
-  let userId:string|null;
-  if(typeof window!=='undefined'){
-    userId=localStorage.getItem("userId")
+  let userId: string | null;
+  if (typeof window !== 'undefined') {
+    userId = localStorage.getItem("userId")
   }
 
   const handleMoveToTrash = async (fileId: string) => {
-     const data= await softDelete(fileId);
+    const data = await softDelete(fileId);
     //  console.log(data)
   };
 
-  const handleDownload = async (fileId: string,fileName:string) => {
+  const handleDownload = async (fileId: string, fileName: string) => {
     try {
       const fileData = await getFile(fileId, fileName, userId);
       // console.log(fileData)
@@ -45,8 +45,8 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
       link.setAttribute('download', fileName);
       document.body.appendChild(link);
       link.click();
-    }catch (e){
-      throw  e
+    } catch (e) {
+      throw e
     }
   }
 
@@ -55,6 +55,7 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
       <div className="w-full max-w-screen-xl px-4 mx-auto">
         <div className="grid w-full gap-9 xl:grid-cols-6 sm:grid-cols-4">
           {files.map((file) => (
+            <div key={file.id}>
             <ContextMenu>
               <ContextMenuTrigger>
                 <ContextMenuContent className="bg-white rounded-lg w-30">
@@ -65,7 +66,7 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
                     }}
                   >
                     <ContextMenuLabel className="flex hover:text-white">
-                        <FiDownloadCloud size={20} className="mr-2"/>
+                      <FiDownloadCloud size={20} className="mr-2" />
 
                       Download
                     </ContextMenuLabel>
@@ -79,7 +80,7 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
                     }}
                   >
                     <ContextMenuLabel className="flex hover:text-white">
-                    <FiTrash2 size={20} className="mr-2"/>
+                      <FiTrash2 size={20} className="mr-2" />
 
                       Delete
                     </ContextMenuLabel>
@@ -92,7 +93,7 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
                   className="border-none hoverScale fixed-card-size"
                 >
                   {file.file_name.split(".")[1].toLowerCase() === "png" ||
-                  file.file_name.split(".")[1].toLowerCase() === "jpg" ? (
+                    file.file_name.split(".")[1].toLowerCase() === "jpg" ? (
                     <Image
                       alt="image file icon"
                       src="/imageIcon.png"
@@ -127,7 +128,8 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
                   </CardFooter>
                 </Card>
               </ContextMenuTrigger>
-            </ContextMenu>
+              </ContextMenu>
+            </div>
           ))}
         </div>
       </div>

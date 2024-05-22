@@ -77,6 +77,7 @@ const NoteList: React.FC<NoteListProps> = ({ notes }) => {
         <div className="w-full max-w-screen-xl mx-auto">
           <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
             {notes.map((note) => (
+              <div key={note.id}>
               <Card className="border-transparent border-3 hover:border-red-200 hover:border-3 radius">
                 <CardHeader className="justify-between">
                   <div className="gap-5 flexCenter">
@@ -161,6 +162,7 @@ const NoteList: React.FC<NoteListProps> = ({ notes }) => {
                   </Button>
                 </CardFooter>
               </Card>
+              </div>
             ))}
           </div>
         </div>

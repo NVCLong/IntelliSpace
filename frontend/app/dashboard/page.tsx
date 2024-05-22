@@ -10,7 +10,7 @@ import { NewFolder } from '@/components/NewFolder'
 import { BackButton } from '@/components/BackButton'
 import { UploadFile } from '@/components/UploadFile'
 import { motion } from 'framer-motion'
-import SearchBar from "@/components/SearchBar";
+// import SearchBar from "@/components/SearchBar";
 
 export default function Page() {
   let storageID_temp: string | null
@@ -74,8 +74,8 @@ export default function Page() {
     <>
     <div className="flex flex-col">
 
-        <SearchBar/>
-      <div className="flex flex-row">
+        {/* <SearchBar/> */}
+      <div className="flex flex-row mt-11">
         <BackButton />
         <NewFolder storageID={storageID_temp} />
         <UploadFile />

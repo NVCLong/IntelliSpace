@@ -10,7 +10,7 @@ export const getHeader = async () => {
   let accessToken;
   if(typeof  window !== 'undefined'){
    try{
-     console.log("....")
+    //  console.log("....")
      accessToken = localStorage.getItem('access_token')
      if(!accessToken) return;
      const decoded: JwtPayload = jwtDecode(accessToken) // Type assertion for decoded data
