@@ -3,6 +3,8 @@ import { useEffect, useState, CSSProperties  } from "react";
 import { deletedFile } from "@/lib/apiCall";
 import dynamic from "next/dynamic";
 import BarLoader from "react-spinners/BarLoader";
+import { router } from "next/client";
+import { useRouter } from "next/navigation";
 
 
 
@@ -10,7 +12,7 @@ const DynamicFileList = dynamic(() => import('@/components/listDeleted/FileList'
 
 export default function Page() {
 
-
+  const router = useRouter();
   const [fetchedFileList, setFetchedFileList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState({ message: "" });
@@ -48,6 +50,10 @@ export default function Page() {
     let storageID_temp: string | null=null;
     // console.log(typeof window)
     if(typeof  window !== "undefined") {
+      let userId=localStorage.getItem("userId")
+      if(userId==null){
+        router.push("/")
+      }
       storageID_temp = localStorage.getItem("storageID") || "";
     }
 

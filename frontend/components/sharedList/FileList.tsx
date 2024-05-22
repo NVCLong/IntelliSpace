@@ -38,10 +38,6 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
   const [fileId, setFileId]= useState("");
   const [fileName, setFileName]=useState("")
 
-  let userId:string|null;
-  if(typeof window!=='undefined'){
-    userId=localStorage.getItem("userId")
-  }
 
   const handleMoveToTrash = async (fileId: string) => {
      const data= await softDelete(fileId);
@@ -164,9 +160,8 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
                   <Button
                     color="primary"
                     onPress={(e) => {
-                      // handleUpdate(currentFolderId)
-                      handleDownload()
 
+                      handleDownload()
                       onOpenChange()
                     }}
                   >

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FileList from "@/components/sharedList/FileList";
 import FolderList from "@/components/sharedList/FolderList";
 import {Spinner} from "@nextui-org/react";
@@ -14,8 +14,12 @@ import {
 import { Input } from "@/components/ui/input"
 import { motion } from 'framer-motion'
 import { getSharedFolder } from "@/lib/apiCall";
+import { router } from "next/client";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
+
+  const router = useRouter();
   const [code, setCode] = useState("");
   const [folderList, setFolderList] = useState([]);
   const [parentFolder, setParentFolder] = useState({ parentFolderId: "" });
@@ -47,6 +51,14 @@ export default function Page() {
       setIsLoading(false);
     }
   };
+  useEffect(() => {
+    if(typeof  window !="undefined"){
+      let userId=localStorage.getItem("userId")
+      if(userId==null){
+        router.push("/")
+      }
+    }
+  }, []);
 
   // @ts-ignore
   return (

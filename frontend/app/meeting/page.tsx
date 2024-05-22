@@ -5,9 +5,11 @@ import { getAllNotes } from "@/lib/apiCall";
 import NoteList from "@/components/NoteList";
 import { NewNote } from "@/components/NewNote";
 import { motion } from "framer-motion";
+import { router } from "next/client";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
-
+  const router = useRouter();
   const[userId, setUserId]= useState("")
   const [noteList, setNoteList] = useState([]);
   const [error, setError] = useState({ message: "" });
@@ -34,7 +36,12 @@ export default function Page() {
   };
 
   useEffect(() => {
+
     if (typeof window !== 'undefined') { // Make sure window exists
+      let user=localStorage.getItem("userId")
+      if(user==null){
+        router.push("/")
+      }
       const userId = localStorage.getItem("userId") || "";
       setUserId(userId);
       console.log(userId === null);

@@ -10,10 +10,12 @@ import { NewFolder } from '@/components/NewFolder'
 import { BackButton } from '@/components/BackButton'
 import { UploadFile } from '@/components/UploadFile'
 import { motion } from 'framer-motion'
+import { useRouter } from "next/navigation";
 // import SearchBar from "@/components/SearchBar";
 
 export default function Page() {
   let storageID_temp: string | null
+  const router = useRouter();
   let folderId:string|null
   if(typeof window !=='undefined') {
     storageID_temp = localStorage.getItem('storageID')
@@ -33,7 +35,12 @@ export default function Page() {
   const [fileList, setFileList] = useState([])
 
   useEffect(() => {
-
+    if(typeof  window !="undefined"){
+      let userId=localStorage.getItem("userId")
+      if(userId==null){
+        router.push("/")
+      }
+    }
     const handleFetchData = async () => {
       try {
         if (folderId === null) {
