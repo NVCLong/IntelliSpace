@@ -24,9 +24,9 @@ const SideBar: React.FC = () => {
       .split(";")
       .forEach(
         (c) =>
-          (document.cookie = c
-            .replace(/^ +/, "")
-            .replace(/=.*/, `=;expires=${new Date().toUTCString()}; path=/`)),
+        (document.cookie = c
+          .replace(/^ +/, "")
+          .replace(/=.*/, `=;expires=${new Date().toUTCString()}; path=/`)),
       );
   const handleLogout = async () => {
     const userId = localStorage.getItem("userId");
@@ -44,18 +44,18 @@ const SideBar: React.FC = () => {
   };
 
   const navItems = [
-    { name: "Home", path: "/", icon: FiHome, onClick: () => {} },
-    { name: "Files", path: "/dashboard", icon: FiFolder, onClick: () => {} },
-    { name: "Share", path: "/shareFolder", icon: FiShare2, onClick: () => {} },
+    { name: "Home", path: "/", icon: FiHome, onClick: () => { } },
+    { name: "Files", path: "/dashboard", icon: FiFolder, onClick: () => { } },
+    { name: "Share", path: "/shareFolder", icon: FiShare2, onClick: () => { } },
     {
       name: "IntelliBot",
       path: "/intelliBot",
       icon: FiCodesandbox,
-      onClick: () => {},
+      onClick: () => { },
     },
-    { name: "Meeting", path: "/meet", icon: FiVideo, onClick: () => {} },
-    { name: "Notes", path: "/note", icon: FiPaperclip, onClick: () => {} },
-    { name: "Bin", path: "/recyclebin", icon: FiTrash2, onClick: () => {} },
+    { name: "Meeting", path: "/meet", icon: FiVideo, onClick: () => { } },
+    { name: "Notes", path: "/note", icon: FiPaperclip, onClick: () => { } },
+    { name: "Bin", path: "/recyclebin", icon: FiTrash2, onClick: () => { } },
     {
       name: "Logout",
       path: "/",
@@ -88,9 +88,8 @@ const SideBar: React.FC = () => {
 
   return (
     <div
-      className={`${
-        open ? "w-60" : "w-24 p-2"
-      } z-10 flex-col h-screen shadow-xl backdrop-blur-2xl transition-all duration-300 p-5 pt-8`}
+      className={`${open ? "w-60" : "w-24 p-2"
+        } z-10 flex-col shadow-xl backdrop-blur-2xl transition-all duration-300 p-5 pt-8 h-dvh`}
     >
       <div className="h-full overflow-y-auto lg:block">
         <img
@@ -113,9 +112,8 @@ const SideBar: React.FC = () => {
             />
           </a>
           <span
-            className={`text-xl font-bold ml-2 flex-shrink-0 flex ${
-              !open && "hidden"
-            }`}
+            className={`text-xl font-bold ml-2 flex-shrink-0 flex ${!open && "hidden"
+              }`}
           >
             IntelliDrive
           </span>
@@ -126,21 +124,18 @@ const SideBar: React.FC = () => {
             <Link key={index} href={item.path}>
               <div className="flex items-center p-4 mt-2.5 transition duration-100 ease-linear transform rounded-lg cursor-pointer focus:bg-slate-50 focus:outline-none active:bg-slate-50 hover:text-white focus:bg-white/10 active:bg-white/10 w-fit ">
                 <div
-                  className={`${
-                    !open ? "w-full flex justify-center" : ""
-                  } transition-all duration-100`}
+                  className={`${!open ? "w-full flex justify-center" : ""
+                    } transition-all duration-100`}
                 >
                   <item.icon
-                    className={`${
-                      !open ? "w-6 h-6 cursor-pointer flex justify-center " : ""
-                    } transition-all duration-100 w-6 h-6 -ml-4`}
+                    className={`${!open ? "w-6 h-6 cursor-pointer flex justify-center " : ""
+                      } transition-all duration-100 w-6 h-6 -ml-4`}
                     onClick={item.onClick}
                   />
                 </div>
                 <span
-                  className={`${
-                    !open && "hidden"
-                  } relative pl-3 font-semibold duration-100 after:block after:content-[''] after:absolute after:h-[3px] after:bg-purple-400 after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-200 after:origin-center`}
+                  className={`${!open && "hidden"
+                    } relative pl-3 font-semibold duration-100 after:block after:content-[''] after:absolute after:h-[3px] after:bg-purple-400 after:w-full after:scale-x-0 after:hover:scale-x-100 after:transition after:duration-200 after:origin-center`}
                 >
                   {item.name}
                 </span>
