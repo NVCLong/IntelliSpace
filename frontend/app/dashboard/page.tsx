@@ -89,7 +89,7 @@ export default function Page() {
           ease: [0, 0.71, 0.2, 1.01]
         }}
       >
-        <div className="ml-32">
+        <div className="">
           <div>
             {folderList !== null && (
               <FolderList
@@ -100,7 +100,7 @@ export default function Page() {
           </div>
         </div>
 
-        <div className="ml-20 -mt-5">
+        <div className="-mt-5 ">
           {fileList !== null && <FileList files={fileList} />}
         </div>
       </motion.div>

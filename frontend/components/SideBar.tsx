@@ -87,9 +87,10 @@ const SideBar: React.FC = () => {
   }, []);
 
   return (
+    <div className="mr-28">
     <div
       className={`${open ? "w-60" : "w-24 p-2"
-        } z-10 flex-col shadow-xl backdrop-blur-2xl transition-all duration-300 p-5 pt-8 h-dvh`}
+        } z-10 flex-col shadow-xl backdrop-blur-2xl transition-all duration-300 p-5 pt-8 h-dvh fixed`}
     >
       <div className="h-full overflow-y-auto lg:block">
         <img
@@ -148,6 +149,7 @@ const SideBar: React.FC = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };
