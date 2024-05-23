@@ -72,7 +72,7 @@ export const UploadFile = () => {
   return (
     <div className="ml-5">
       <Button
-        className="flex items-center px-4 py-2 text-gray-600 bg-white border rounded-full shadow-md cursor-pointer hoverScale"
+        className="px-4 py-2 text-gray-600 bg-white border rounded-full shadow-md cursor-pointer flexCenter hoverScale"
         color="primary"
         onPress={onOpen}
       >
@@ -101,7 +101,7 @@ export const UploadFile = () => {
               </ModalHeader>
 
               <ModalBody>
-                <div className="flex items-center justify-center w-full">
+                <div className="w-full flexCenter">
                   <label
                     htmlFor="dropzone-file"
                     className="flex flex-col items-center justify-center w-full h-64 bg-white border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:bg-gray-300"

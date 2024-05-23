@@ -26,7 +26,7 @@ export const BackButton = ()=>{
         <>
             <div className="ml-20">
             <button
-                className="flex items-center px-2 py-2 text-gray-600 bg-white border rounded-full shadow-md cursor-pointer hoverScale"
+                className="flex items-center p-2 text-gray-600 bg-white border rounded-full shadow-md cursor-pointer hoverScale"
                 color="primary"
                 onClick={handleCallBack}
             >

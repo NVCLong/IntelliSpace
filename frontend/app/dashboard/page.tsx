@@ -75,9 +75,11 @@ export default function Page() {
     <div className="flex flex-col">
 
         {/* <SearchBar/> */}
-      <div className="flex flex-row mt-11">
+      <div className="flex-col mt-5 flexCenter sm:flex-row sm:space-x-5 sm:flexCenter">
         <BackButton />
+        <br/>
         <NewFolder storageID={storageID_temp} />
+        <br/>
         <UploadFile />
       </div>
       <motion.div

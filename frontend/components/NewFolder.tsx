@@ -47,12 +47,12 @@ export const NewFolder = (storageID: any) => {
   return (
     <div className="ml-5">
       <Button
-        className="flex items-center px-4 py-2 text-gray-600 bg-white border rounded-full shadow-md cursor-pointer hoverScale"
+        className="px-4 py-2 text-gray-600 bg-white border rounded-full shadow-md cursor-pointer flexCenter hoverScale"
         color="primary"
         onPress={onOpen}
       >
         <FiFolderPlus size={24} />
-        <span className="font-semibold md:block">New folder</span>
+        <span className="font-semibold md:block sm:hidden">New folder</span>
         <ToastContainer
           position="bottom-right"
           autoClose={5000}

@@ -73,7 +73,7 @@ const NoteList: React.FC<NoteListProps> = ({ notes }) => {
   // },[])
   return (
     <>
-      <div className="flex flex-col p-3 overflow-hidden sm:py-12">
+      <div className="flex flex-col p-3 sm:py-12">
         <div className="w-full max-w-screen-xl mx-auto">
           <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
             {notes.map((note) => (
@@ -81,7 +81,6 @@ const NoteList: React.FC<NoteListProps> = ({ notes }) => {
                 <Card className="border-transparent border-3 hover:border-red-200 hover:border-3 radius">
                   <CardHeader className="justify-between">
                     <div className="gap-5 flexCenter">
-                      <UserCircle size={30} />
                       <div className="flex flex-col items-start justify-center gap-1">
                         <TextareaAutosize
                           name="title"
@@ -90,7 +89,7 @@ const NoteList: React.FC<NoteListProps> = ({ notes }) => {
                           cacheMeasurements
                           onChange={handleInput}
                           className="mr-4 font-semibold leading-none border-transparent rounded-lg resize-none text-small text-default-600 border-3 hover:border-red-200 hover:border-3"
-                        ></TextareaAutosize>
+                        >Title</TextareaAutosize>
                       </div>
                     </div>
                   </CardHeader>
