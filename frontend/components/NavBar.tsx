@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NAV_LINKS } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { FiUser, FiMenu } from "react-icons/fi";
 import NextTopLoader from "nextjs-toploader";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,6 +20,18 @@ import { Button } from "@/components/ui/button"
 const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [userId, setUserId] = useState(null);
+
+
+  useEffect(()=>{
+    let userId;
+    if (typeof window !== "undefined"){
+      userId = localStorage.getItem('userId')
+      setUserId(userId)
+    }
+  })
+
+
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -30,6 +43,8 @@ const NavBar = () => {
     router.push("/signin")
     setIsLoading(false)
   };
+
+
 
   return (
     <motion.nav
@@ -43,10 +58,10 @@ const NavBar = () => {
       </Link>
 
       <div
-        className={`absolute right-5 mt-36 transform translate-x-2 lg:hidden ${isMenuOpen ? "block" : "hidden"
+        className={`absolute flexCenter right-5 mt-36 transform translate-x-2 lg:hidden ${isMenuOpen ? "block" : "hidden"
           }`}
       >
-        <ul className="flex flex-col items-center p-4 mt-24 text-black bg-white rounded-md shadow-lg">
+        <ul className="p-4 mt-24 text-black bg-white rounded-md shadow-lg flexCenter">
           {NAV_LINKS.map((link) => (
             <li key={link.key}>
               <Link
@@ -73,6 +88,7 @@ const NavBar = () => {
         ))}
       </ul>
 
+        {userId==null ? (
       <div
         className="hidden gap-2 px-4 py-2 bg-blue-500 rounded-full cursor-pointer hover:bg-blue-600 lg:flex md:flex sm:hidden hoverScale drop-shadow-md flexCenter bold-16"
         onClick={handleSignin}
@@ -87,7 +103,7 @@ const NavBar = () => {
             <span className="font-semibold text-white md:block">Login</span>
           </>
         )}
-      </div>
+      </div>) :(<></>)}
 
       <div className="lg:hidden">
         <DropdownMenu >
@@ -100,7 +116,7 @@ const NavBar = () => {
             {NAV_LINKS.map((link) => (
               <DropdownMenuItem
                 key={link.key}
-                className="text-lg font-semibold hover:bg-white/80"
+                className="text-lg font-semibold bg-white flexCenter hover:bg-blue-300"
               >
                 <Link href={link.href}>{link.label}</Link>
               </DropdownMenuItem>
