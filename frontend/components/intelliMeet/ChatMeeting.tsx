@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import SockJS from 'sockjs-client'
 import Stomp from 'stompjs'
 import { useState } from "react";
-
+import Image from "next/image";
 
 
 const ChatMeeting = () => {
@@ -30,8 +30,19 @@ const ChatMeeting = () => {
     };
     return (
         <div className="flexCenter">
+            <div>
             <Input type="text" placeholder="Type a message" />
-            <Button onClick={}>Send</Button>
+            <Button>Send</Button>
+            </div>
+            <div>
+            <Image
+              src="/Meet_Home.png"
+              alt="logo"
+              width={100}
+              height={100}
+            />
+            </div>
+
         </div>
     )
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import TopLoader from '@/components/TopLoader';
-import Sidebar from "@/components/SideBar";
+import NavBar from "@/components/NavBar";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "IntelliMeet | IntelliSpace",
@@ -9,10 +10,11 @@ export const metadata: Metadata = {
 
 const Dashboardlayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex">
+    <div className="flex flex-col">
       <TopLoader />
-      <Sidebar />
+      <NavBar />
       {children}
+      <Footer />
     </div>
   );
 };
