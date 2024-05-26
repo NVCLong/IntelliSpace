@@ -13,8 +13,8 @@ public class RoomController {
     @Autowired
     private RoomService roomService;
 
-    @PostMapping("/create")
-    public ResponseEntity<ChatRoom> createRoom(@RequestParam String userId) {
+    @GetMapping("/create")
+    public ResponseEntity<ChatRoom> createRoom(@RequestParam("userId") Integer userId) {
         ChatRoom newRoom = roomService.createRoom(userId);
         return ResponseEntity.ok(newRoom);
     }

@@ -1,5 +1,6 @@
 import { jwtDecode, JwtPayload } from 'jwt-decode'
 import axios from 'axios'
+import { h } from "preact";
 
 export const api = axios.create({
   baseURL: 'http://localhost:8888/api',
@@ -412,5 +413,19 @@ export const getSharedFolder = async (code:string | null) =>{
   catch (e)
   {
     console.log(e)
+  }
+}
+
+export const getCode=async (userId:string|null)=>{
+  try{
+  const header= await getHeader()
+    const response= await api.get(`rooms/create?userId=${userId}`,{
+      headers: header
+    })
+    return response.data;
+
+  }catch (e){
+    console.log(e)
+    throw  e;
   }
 }
