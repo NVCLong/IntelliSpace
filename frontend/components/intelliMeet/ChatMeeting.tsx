@@ -31,7 +31,7 @@ const ChatMeeting = () => {
     return (
         <div className="flexCenter">
             <Input type="text" placeholder="Type a message" />
-            <Button onClick={handleSendMessage}>Send</Button>
+            <Button onClick={}>Send</Button>
         </div>
     )
 }
