@@ -51,7 +51,7 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
   }
 
   return (
-    <div className="relative flex flex-col overflow-hidden sm:py-12 sm:px-12">
+    <div className="flex flex-col sm:py-12 sm:px-12">
       <div className="w-full max-w-screen-xl px-4 mx-auto">
         <div className="grid w-full gap-9 xl:grid-cols-6 sm:grid-cols-4">
           {files.map((file) => (
@@ -60,7 +60,7 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
               <ContextMenuTrigger>
                 <ContextMenuContent className="bg-white rounded-lg w-30">
                   <ContextMenuItem
-                    className="hover:bg-slate-600 "
+                    className="hover:bg-slate-600"
                     onClick={() => {
                       handleDownload(file.id, file.file_name);
                     }}
@@ -90,7 +90,7 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
                 <Card
                   isFooterBlurred={true}
                   radius="lg"
-                  className="border-none hoverScale fixed-card-size"
+                  className="border-none fixed-card-size hover:opacity-70"
                 >
                   {file.file_name.split(".")[1].toLowerCase() === "png" ||
                     file.file_name.split(".")[1].toLowerCase() === "jpg" ? (
@@ -121,7 +121,7 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
                       Unsupported File Type
                     </div>
                   )}
-                  <CardFooter className="flexCenter  before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-md rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-large ml-1 z-10">
+                  <CardFooter className="flexCenter before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-md rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-large ml-1 z-10">
                     <h4 className="text-white truncate font-regular text-small">
                       {file.file_name}
                     </h4>

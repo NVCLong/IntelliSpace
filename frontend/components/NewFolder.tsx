@@ -45,14 +45,14 @@ export const NewFolder = (storageID: any) => {
   }
 
   return (
-    <div className="ml-5">
-      <Button
-        className="px-4 py-2 text-gray-600 bg-white border rounded-full shadow-md cursor-pointer flexCenter hoverScale"
-        color="primary"
-        onPress={onOpen}
+    <div className="">
+      <button
+        className="p-2 text-gray-600 bg-white border rounded-full shadow-md cursor-pointer sm:px-4 sm:gap-2 flexCenter hoverScale"
+
+        onClick={onOpen}
       >
         <FiFolderPlus size={24} />
-        <span className="font-semibold md:block sm:hidden">New folder</span>
+        <span className="hidden font-semibold sm:flex">New folder</span>
         <ToastContainer
           position="bottom-right"
           autoClose={5000}
@@ -65,7 +65,7 @@ export const NewFolder = (storageID: any) => {
           pauseOnHover
           theme="colored"
         />
-      </Button>
+      </button>
 
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="center">
         <ModalContent>

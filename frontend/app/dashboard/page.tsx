@@ -10,6 +10,18 @@ import { NewFolder } from '@/components/NewFolder'
 import { BackButton } from '@/components/BackButton'
 import { UploadFile } from '@/components/UploadFile'
 import { motion } from 'framer-motion'
+import { FiXCircle, FiDisc } from "react-icons/fi";
+
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
+
+
 // import SearchBar from "@/components/SearchBar";
 
 export default function Page() {
@@ -75,12 +87,30 @@ export default function Page() {
     <div className="flex flex-col">
 
         {/* <SearchBar/> */}
-      <div className="flex-col mt-5 flexCenter sm:flex-row sm:space-x-5 sm:flexCenter">
+      <div className="hidden ml-3 space-x-5 sm:flex mt-9 sm:flex-row">
         <BackButton />
         <br/>
         <NewFolder storageID={storageID_temp} />
         <br/>
         <UploadFile />
+      </div>
+      <div className="fixed bottom-0 right-0 mb-3 mr-7 sm:fixed sm:hidden">
+          <Drawer >
+            <DrawerTrigger>
+              <FiDisc size={45} className="flex items-center p-2 text-gray-600 bg-white rounded-full shadow-md cursor-pointer hoverScale"/>
+            </DrawerTrigger>
+            <DrawerContent className="ml-auto w-fit h-fit">
+              <DrawerHeader className="flex flex-col items-center">
+                  <BackButton />
+                  <NewFolder storageID={storageID_temp} />
+                  <UploadFile />
+                  <DrawerClose className="flexCenter">
+                  <FiXCircle size={45} className="flex items-center p-2 text-white bg-red-400 rounded-full shadow-md cursor-pointer hoverScale"/>
+                </DrawerClose>
+              </DrawerHeader>
+
+            </DrawerContent>
+          </Drawer>
       </div>
       <motion.div
         initial={{ opacity: 0, scale: 0.5 }}
@@ -91,7 +121,7 @@ export default function Page() {
           ease: [0, 0.71, 0.2, 1.01]
         }}
       >
-        <div className="">
+        <div className="mt-7 sm:mt-0">
           <div>
             {folderList !== null && (
               <FolderList
@@ -102,7 +132,7 @@ export default function Page() {
           </div>
         </div>
 
-        <div className="-mt-5 ">
+        <div className="mt-8 sm:mt-0">
           {fileList !== null && <FileList files={fileList} />}
         </div>
       </motion.div>

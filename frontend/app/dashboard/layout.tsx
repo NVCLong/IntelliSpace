@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Sidebar from '@/components/SideBar'
 import TopLoader from "@/components/TopLoader";
-import SearchBar from "@/components/SearchBar";
+// import SearchBar from "@/components/SearchBar";
 
 
 export const metadata: Metadata = {

@@ -24,7 +24,7 @@ export const BackButton = ()=>{
     }
     return(
         <>
-            <div className="ml-20">
+            <div className="">
             <button
                 className="flex items-center p-2 text-gray-600 bg-white border rounded-full shadow-md cursor-pointer hoverScale"
                 color="primary"
