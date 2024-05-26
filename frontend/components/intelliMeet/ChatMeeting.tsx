@@ -30,7 +30,7 @@ const ChatMeeting = () => {
     };
     return (
         <div className="flexCenter">
-            <div>
+            <div className="flex space-x-3">
             <Input type="text" placeholder="Type a message" />
             <Button>Send</Button>
             </div>
@@ -38,8 +38,9 @@ const ChatMeeting = () => {
             <Image
               src="/Meet_Home.png"
               alt="logo"
-              width={100}
-              height={100}
+              width={500}
+              height={500}
+              className="rounded-lg"
             />
             </div>
 
