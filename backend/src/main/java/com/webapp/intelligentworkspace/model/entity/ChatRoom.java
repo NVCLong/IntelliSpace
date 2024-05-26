@@ -1,5 +1,7 @@
 package com.webapp.intelligentworkspace.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "chat_room")
+@Table(name = "chatRooms")
 public class ChatRoom {
 
     @Id
@@ -23,8 +25,10 @@ public class ChatRoom {
     @Column(name = "room_id", nullable = false, unique = true)
     private String roomId;
 
-    @Column(name = "user_id", nullable = false)
-    private String userId;
+    @OneToOne(mappedBy = "chatroom")
+    @JsonManagedReference
+    @JsonIgnore
+    private User user;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();

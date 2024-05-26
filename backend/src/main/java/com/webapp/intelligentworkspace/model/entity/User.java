@@ -33,6 +33,15 @@ public class User {
     @JsonIgnore
     private Bin bin;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="chatRoomId",referencedColumnName = "id")
+    @JsonManagedReference
+    @JsonIgnore
+    private ChatRoom chatroom;
+
+
+
+
     private Long resetCode;
 
     @Override

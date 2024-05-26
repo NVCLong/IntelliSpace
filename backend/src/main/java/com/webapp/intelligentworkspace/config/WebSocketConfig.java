@@ -16,13 +16,13 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         //with socket
         registry.addEndpoint("/ws-message").setAllowedOriginPatterns("*").withSockJS();
 
-        registry.addEndpoint("/ws-webRTC/room").setAllowedOriginPatterns("*");
+        registry.addEndpoint("/ws-webRTC/room").setAllowedOriginPatterns("*").withSockJS();
     }
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         registry.setApplicationDestinationPrefixes("/app");
         registry.enableSimpleBroker("/topic");
-        registry.setUserDestinationPrefix("/user");
+
     }
 }
