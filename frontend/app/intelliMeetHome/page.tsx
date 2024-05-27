@@ -4,29 +4,24 @@ import 'react-toastify/dist/ReactToastify.css'
 import Image from "next/image";
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { toast, ToastContainer } from "react-toastify";
 import copy from "copy-to-clipboard";
 import { getCode } from "@/lib/apiCall";
-import { toast, ToastContainer } from "react-toastify";
-import React, { createContext, MutableRefObject, SetStateAction, useContext, useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import React, { MutableRefObject,SetStateAction, useEffect, useRef, useState } from "react";
+import { router } from "next/client";
+import { DropdownMenu } from "@nextui-org/react";
+import { DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { FiPlayCircle, FiPlusCircle } from "react-icons/fi";
 
 
-interface CodeContextType {
-  code: string;
-  setCode: (newCode: string) => void;
-}
 
 
 
 export default function Page() {
   const [code, setCode]=useState("");
-  // @ts-ignore
-  const DataContext = createContext<CodeContextType | undefined>(undefined);
-  const router = useRouter();
   const handleChangeCode=(e: { target: { value: SetStateAction<string>; }; })=>{
     setCode(e.target.value)
-  }
-
+}
   const handleCreate=async  ()=>{
     try{
       let userId:string|null
@@ -35,7 +30,7 @@ export default function Page() {
         userId=localStorage.getItem("userId");
       }
         // @ts-ignore
-      const data = await getCode(userId);
+        const data = await getCode(userId);
         console.log(data)
         toast.success(<div>
             Code: {data.roomId}
@@ -78,7 +73,23 @@ export default function Page() {
           <Button onClick={handleCreate}>Create room</Button>
           <h4>OR</h4>
           <Button onClick={handleConnect}>Connect</Button>
+    <DropdownMenu>
+      <DropdownMenuTrigger className="flex">
+        <Button variant="outline">+ New meeting</Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-56">
+            <DropdownMenuItem className="cursor-pointer hover:bg-gray-200 rouunded-md">
+                <FiPlayCircle className="w-4 h-4 mr-2" />
+                Connect
+            </DropdownMenuItem >
+            <DropdownMenuItem className="cursor-pointer hover:bg-gray-200 rouunded-md" onClick={handleCreate}>
+                <FiPlusCircle className="w-4 h-4 mr-2" />
+                Create new meeting
+            </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
     </div>
+
 
     </div>
     <div className="shadow-lg">
