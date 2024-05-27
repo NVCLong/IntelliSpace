@@ -61,21 +61,10 @@ const NavBar = () => {
         className={`absolute flexCenter right-5 mt-36 transform translate-x-2 lg:hidden ${isMenuOpen ? "block" : "hidden"
           }`}
       >
-        <ul className="p-4 mt-24 text-black bg-white rounded-md shadow-lg flexCenter">
-          {NAV_LINKS.map((link) => (
-            <li key={link.key}>
-              <Link
-                href={link.href}
-                className="block p-6 py-2 transition rounded-md hover:bg-purple-200 hover:font-bold hover:scale-110"
-              >
-                {link.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
+
       </div>
 
-      <ul className="hidden h-full space-x-36 lg:flex">
+      <ul className="hidden h-full space-x-5 lg:flex">
         {NAV_LINKS.map((link) => (
           <li key={link.key}>
             <Link
@@ -105,7 +94,7 @@ const NavBar = () => {
         )}
       </div>) :(<></>)}
 
-      <div className="lg:hidden">
+      <div className="flex sm:hidden md:hidden">
         <DropdownMenu >
           <DropdownMenuTrigger asChild onClick={toggleMenu}>
             <Button variant="destructive">
