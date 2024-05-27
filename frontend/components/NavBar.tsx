@@ -27,6 +27,7 @@ const NavBar = () => {
     let userId;
     if (typeof window !== "undefined"){
       userId = localStorage.getItem('userId')
+      // @ts-ignore
       setUserId(userId)
     }
   })
