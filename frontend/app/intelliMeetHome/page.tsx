@@ -1,26 +1,41 @@
 "use client";
-import ChatMeeting from "@/components/intelliMeet/ChatMeeting";
+
+import 'react-toastify/dist/ReactToastify.css'
 import Image from "next/image";
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { toast } from "react-toastify";
 import copy from "copy-to-clipboard";
 import { getCode } from "@/lib/apiCall";
-import React, { MutableRefObject,SetStateAction, useEffect, useRef, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import React, { createContext, MutableRefObject, SetStateAction, useContext, useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
 
+interface CodeContextType {
+  code: string;
+  setCode: (newCode: string) => void;
+}
 
 
 
 export default function Page() {
   const [code, setCode]=useState("");
+  // @ts-ignore
+  const DataContext = createContext<CodeContextType | undefined>(undefined);
+  const router = useRouter();
   const handleChangeCode=(e: { target: { value: SetStateAction<string>; }; })=>{
     setCode(e.target.value)
-}
+  }
+
   const handleCreate=async  ()=>{
     try{
+      let userId:string|null
         // @ts-ignore
-        const data = await getCode(userId);
+      if(typeof window !=="undefined"){
+        userId=localStorage.getItem("userId");
+      }
+        // @ts-ignore
+      const data = await getCode(userId);
         console.log(data)
         toast.success(<div>
             Code: {data.roomId}
@@ -32,8 +47,27 @@ export default function Page() {
         console.log(e)
         throw  e
     }
-}
+  }
+
+  const handleConnect= ()=>{
+    if(code !=="") {
+      router.push(`/intelliMeet?roomId=${code}`);
+    }
+  }
   return(
+    <>
+      <ToastContainer
+      position="bottom-right"
+      autoClose={8000}
+      hideProgressBar={false}
+      newestOnTop
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="colored"
+    />
   <div className="w-3/4 h-screen ml-auto mr-auto space-x-36 flexCenter">
     <div className="flex-col space-y-5 flexCenter">
     <h1 className="text-4xl italic font-black flexCenter">IntelliMeet</h1>
@@ -43,9 +77,8 @@ export default function Page() {
     <div className="flex-col space-y-3 flexCenter ">
           <Button onClick={handleCreate}>Create room</Button>
           <h4>OR</h4>
-          <Button>Connect</Button>
+          <Button onClick={handleConnect}>Connect</Button>
     </div>
-
 
     </div>
     <div className="shadow-lg">
@@ -60,5 +93,6 @@ export default function Page() {
 
 
   </div>
+      </>
   )
 }

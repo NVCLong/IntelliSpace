@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import TopLoader from '@/components/TopLoader';
+import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import Sidebar from "@/components/SideBar"
 

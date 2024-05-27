@@ -20,16 +20,10 @@ import { Button } from "@/components/ui/button"
 const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [userId, setUserId] = useState(null);
 
 
-  useEffect(()=>{
-    let userId;
-    if (typeof window !== "undefined"){
-      userId = localStorage.getItem('userId')
-      setUserId(userId)
-    }
-  })
+
+
 
 
 
@@ -88,7 +82,7 @@ const NavBar = () => {
         ))}
       </ul>
 
-        {userId==null ? (
+
       <div
         className="hidden gap-2 px-4 py-2 bg-blue-500 rounded-full cursor-pointer hover:bg-blue-600 lg:flex md:flex sm:hidden hoverScale drop-shadow-md flexCenter bold-16"
         onClick={handleSignin}
@@ -103,7 +97,7 @@ const NavBar = () => {
             <span className="font-semibold text-white md:block">Login</span>
           </>
         )}
-      </div>) :(<></>)}
+      </div>
 
       <div className="lg:hidden">
         <DropdownMenu >

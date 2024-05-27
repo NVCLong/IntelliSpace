@@ -1,5 +1,6 @@
 package com.webapp.intelligentworkspace.controller;
 import com.webapp.intelligentworkspace.model.ChatMessage;
+import com.webapp.intelligentworkspace.model.request.WebRTCMessage;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -33,8 +34,21 @@ public class ChatController {
         return chatMessage;
     }
 
-//    @GetMapping("/getCode")
-//    public ResponseEntity<> getRoomCode(@RequestParam("userId") Integer userId){
-//
-//    }
+    @MessageMapping("/offer/{roomId}")
+    @SendTo("/topic/room/{roomId}")
+    public WebRTCMessage sendOffer(@DestinationVariable String roomId,@Payload WebRTCMessage message) {
+        return message;
+    }
+
+    @MessageMapping("/answer/{roomId}")
+    @SendTo("/topic/room/{roomId}")
+    public WebRTCMessage sendAnswer(@DestinationVariable String roomId,@Payload WebRTCMessage message) {
+        return message;
+    }
+
+    @MessageMapping("/candidate/{roomId}")
+    @SendTo("/topic/room/{roomId}")
+    public WebRTCMessage sendCandidate(@DestinationVariable String roomId,@Payload WebRTCMessage message) {
+        return message;
+    }
 }

@@ -37,18 +37,18 @@ public class WebSocketEventListener  {
             messagingTemplate.convertAndSend("/topic/public", chatMessage);
         }
     }
-    @EventListener
-    public void handleWebSocketConnected(SessionConnectedEvent event){
-        StompHeaderAccessor headerAccessor= StompHeaderAccessor.wrap(event.getMessage());
-        String username = (String) headerAccessor.getSessionAttributes().get("username");
-        if (username != null) {
-            log.info("user connected: {}", username);
-            var chatMessage = ChatMessage.builder()
-                    .type(MessageType.JOIN)
-                    .sender(username)
-                    .build();
-            messagingTemplate.convertAndSend("/topic/public", chatMessage);
-        }
-    }
+//    @EventListener
+//    public void handleWebSocketConnected(SessionConnectedEvent event){
+//        StompHeaderAccessor headerAccessor= StompHeaderAccessor.wrap(event.getMessage());
+//        String username = (String) headerAccessor.getSessionAttributes().get("username");
+//        if (username != null) {
+//            log.info("user connected: {}", username);
+//            var chatMessage = ChatMessage.builder()
+//                    .type(MessageType.JOIN)
+//                    .sender(username)
+//                    .build();
+//            messagingTemplate.convertAndSend("/topic/public", chatMessage);
+//        }
+//    }
 
 }
