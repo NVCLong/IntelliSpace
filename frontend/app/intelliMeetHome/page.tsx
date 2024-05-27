@@ -7,15 +7,10 @@ import { Button } from "@/components/ui/button"
 import { toast, ToastContainer } from "react-toastify";
 import copy from "copy-to-clipboard";
 import { getCode } from "@/lib/apiCall";
-import React, { MutableRefObject,SetStateAction, useEffect, useRef, useState } from "react";
+import React, { SetStateAction,useState } from "react";
 import { router } from "next/client";
-import { DropdownMenu } from "@nextui-org/react";
-import { DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenu } from "@/components/ui/dropdown-menu";
 import { FiPlayCircle, FiPlusCircle } from "react-icons/fi";
-
-
-
-
 
 export default function Page() {
   const [code, setCode]=useState("");
@@ -68,21 +63,18 @@ export default function Page() {
     <h1 className="text-4xl italic font-black flexCenter">IntelliMeet</h1>
     <span className="text-center max-w-96 text-wrap">IntelliMeet is a meeting companion that helps you collaborate better during meetings by taking notes, tracking action items, and keeping things on track.</span>
 
-    <Input className="max-w-96" type="text" placeholder="Room code" value={code} onChange={handleChangeCode} />
+    <Input className="max-w-96" type="text" placeholder="Enter room code" value={code} onChange={handleChangeCode} />
     <div className="flex-col space-y-3 flexCenter ">
-          <Button onClick={handleCreate}>Create room</Button>
-          <h4>OR</h4>
-          <Button onClick={handleConnect}>Connect</Button>
     <DropdownMenu>
       <DropdownMenuTrigger className="flex">
         <Button variant="outline">+ New meeting</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-            <DropdownMenuItem className="cursor-pointer hover:bg-gray-200 rouunded-md">
+            <DropdownMenuItem className="rounded-md cursor-pointer hover:bg-gray-200">
                 <FiPlayCircle className="w-4 h-4 mr-2" />
                 Connect
             </DropdownMenuItem >
-            <DropdownMenuItem className="cursor-pointer hover:bg-gray-200 rouunded-md" onClick={handleCreate}>
+            <DropdownMenuItem className="rounded-md cursor-pointer hover:bg-gray-200" onClick={handleCreate}>
                 <FiPlusCircle className="w-4 h-4 mr-2" />
                 Create new meeting
             </DropdownMenuItem>
