@@ -31,114 +31,17 @@ const ChatMeeting = () => {
     const [peerConnection, setPeerConnection] = useState(null);
 
 
-    const createPeerConnection = (
-      onTrack: (stream: MediaStream) => void,
-      onIceCandidate: (candidate: RTCIceCandidate) => void
-    ): RTCPeerConnection => {
-        const config: RTCConfiguration = {
-            iceServers: [{ urls: 'stun:stun.l.google.com:19302' }],
-        };
-
-        const peerConnection = new RTCPeerConnection(config); // Provide config object
-
-        peerConnection.onicecandidate = (event) => {
-            if (event.candidate) {
-                onIceCandidate(event.candidate);
-            }
-        };
-
-        peerConnection.ontrack = (event) => {
-            onTrack(event.streams[0]);
-        };
-
-        return peerConnection;
-    };
-
-    const createOffer = async (peerConnection: RTCPeerConnection): Promise<RTCSessionDescriptionInit> => {
-        const offer = await peerConnection.createOffer();
-        await peerConnection.setLocalDescription(offer);
-        return offer;
-    };
-
-    const createAnswer = async (peerConnection: RTCPeerConnection, offer: RTCSessionDescriptionInit): Promise<RTCSessionDescriptionInit> => {
-        console.log(offer)
-        await peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
-        const answer = await peerConnection.createAnswer();
-        console.log(answer)
-        await peerConnection.setLocalDescription(answer);
-        return answer;
-    };
-
-    const addIceCandidate = async (peerConnection: RTCPeerConnection, candidate: RTCIceCandidateInit | undefined): Promise<void> => {
-        if (candidate) {
-            try {
-                await peerConnection.addIceCandidate(new RTCIceCandidate(candidate));
-            } catch (error) {
-                console.error("Error adding ICE candidate:", error);
-            }
-        }
-    };
 
 
 
     const onMessageReceived = (payload: { body: string; }) => {
         const newMessage = JSON.parse(payload.body);
-        console.log(newMessage.offer)
-        // @ts-ignore
+
         setMessages(prevMessages => [...prevMessages, newMessage]);
-        console.log("this is an offer")
-        if(peerConnection!==null) {
-            if (newMessage.type === 'offer') {
-                // @ts-ignore
-                console.log("Answer")
-                // @ts-ignore
-                createAnswer(peerConnection, newMessage.offer).then((answer) => {
-                    // @ts-ignore
-                    stompClient.send(`/app/answer/${code}`,{}, JSON.stringify({
-                        type:"answer",
-                        answer:answer,
-                        candidate:null,
-                        offer:null,
-                    }));
-                });
-            } else if (newMessage.type === 'answer') {
-                console.log("processing answer");
-                // @ts-ignore
-                if (peerConnection.signalingState === 'stable') {
-                    console.log("Initiating renegotiation...");
 
-                    createOffer(peerConnection).then((offer: any) => {
-                        console.log("running")
-                        // @ts-ignore
-                        stompClient.send(`/app/offer/${code}`, {}, JSON.stringify({
-                            type: "offer", // Include the type field with value "offer"
-                            offer: offer,
-                            answer:null,
-                            candidate:null
-                        }));
-                    });
-                } else {
-                    // Proceed with setting the remote answer since the state is not 'stable'
-                    // @ts-ignore
-                    peerConnection.setRemoteDescription(new RTCSessionDescription(newMessage.answer))
-                      .catch((error: any) => {
-                          console.error("Error setting remote description:", error);
-                      });
-                }
 
-            } else if (newMessage.type === 'candidate') {
-                console.log("processing candidate");
+    };
 
-                if (peerConnection && newMessage.candidate) { // Check if peerConnection and candidate are defined
-                    addIceCandidate(peerConnection, newMessage.candidate).catch((error: any) => {
-                        console.error("Error adding ICE candidate:", error);
-                    });
-                } else {
-                    console.warn("Skipping adding ICE candidate due to null peerConnection or candidate.");
-                }
-            }
-        }
-    }
 
 
     useEffect(() => {
@@ -154,7 +57,7 @@ const ChatMeeting = () => {
                 console.error(error)
             });
         }
-    }, [stompClient, connected, code]);
+    }, []);
 
 
     const handleChangeName = (e: { target: { value: SetStateAction<string>; }; })=>{
@@ -168,6 +71,14 @@ const ChatMeeting = () => {
     const handleConnect = () => {
         const sock = new SockJS('http://localhost:8888/api/ws-message');
         const stompClient = Stomp.over(sock);
+        // @ts-ignore
+        const peer= new Peer({
+            config: {'iceServers': [
+                    { url: 'stun:stun.l.google.com:19302' },
+                ]} /* Sample servers, please use appropriate ones */
+        });
+        // @ts-ignore
+        setPeerConnection(peer)
 
         // @ts-ignore
         setStompClient(stompClient); // Set stompClient immediately
@@ -176,46 +87,74 @@ const ChatMeeting = () => {
             console.log('Connected:', frame);
             setConnected(true);
             localStorage.setItem("nickName", nickName);
+            let username: string | null;
+            if(typeof  window !="undefined"){
+                username=localStorage.getItem("nickName")
+            }
 
-            const pc=createPeerConnection((stream)=>{
-                // @ts-ignore
-                remoteVideoRef.current.srcObject=stream
-                console.log(remoteVideoRef)
-            },(candidate)=>{
-                stompClient.send(`/app/candidate/${code}`,{},JSON.stringify({
-                    type:"candidate",
-                    candidate:candidate,
-                    offer:null,
-                    answer:null,
-                }))
-            })
             // @ts-ignore
-            setPeerConnection(pc);
-            navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream) => {
-                // @ts-ignore
-                localVideoRef.current.srcObject = stream;
-                stream.getTracks().forEach((track) => pc.addTrack(track, stream));
-            });
+            peer.on("open",id=>{
+                console.log("My peerId: "+ id)
+                stompClient.send(`/app/sendMessage/${code}`, {}, JSON.stringify({
+                    type:"JOIN",
+                    sender: username,
+                    content: null,
+                    peerId: id
+                }));
+            })
+            navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+              .then((stream) => {
+                  // @ts-ignore
+                  addVideoStream(localVideoRef, stream)
+                  stompClient.subscribe(`/topic/room/${code}`, (message) => {
+                      const parsedMessage = JSON.parse(message.body);
+                      if (parsedMessage.type === "CHAT") {
+                          onMessageReceived(message);
+                      } else if (parsedMessage.type === "JOIN" ) {
+                          // When someone new joins, initiate a call to them
+                          console.log(peerConnection)
+                          connectToNewUser(parsedMessage.peerId, stream, peer);
+                      }
+                  });
 
+                  peer.on("call",(call)=>{
+                      call.answer(stream)
 
-                // @ts-ignore
-                console.log("running");
-                // @ts-ignore
-                createOffer(pc).then((offer: any) => {
-                    console.log("running")
-                    // @ts-ignore
-                    stompClient.send(`/app/offer/${code}`, {}, JSON.stringify({
-                        type: "offer", // Include the type field with value "offer"
-                        offer: offer,
-                        answer:null,
-                        candidate:null
-                    }));
-                });
-        })
+                      call.on('stream', userVideoStream=>{
+                          addVideoStream(remoteVideoRef,userVideoStream)
+                      })
+                  })
+              })
+              .catch(error => console.error('Error accessing media devices:', error));
+            })
+
     };
 
+    const addVideoStream = (ref: React.MutableRefObject<null>, stream: MediaStream)=>{
+        // @ts-ignore
+        ref.current.srcObject=stream
+    }
+    const connectToNewUser = (userId: string, stream: MediaStream, peer: Peer) => {  // Use 'peer' directly
+        console.log("Other id " + userId);
 
+        if (!peer) {
+            console.error("Peer instance not available.");
+            return;
+        }
 
+        const call = peer.call(userId, stream);
+        console.log(call);
+
+        call.on('stream', (userVideoStream: MediaStream) => {
+            console.log("calling");
+            console.log("Received userVideoStream:", userVideoStream);
+            addVideoStream(remoteVideoRef, userVideoStream);
+        });
+
+        call.on('error', (error: any) => {
+            console.error('PeerJS call error:', error);
+        });
+    };
 
 
     const handleSendMessage=()=>{
@@ -226,17 +165,14 @@ const ChatMeeting = () => {
             }
             // @ts-ignore
             stompClient.send(`/app/sendMessage/${code}`, {}, JSON.stringify({
+                type:"CHAT",
                 sender: username,
                 content: message,
+                peerId:null,
             }));
             setMessage('');
         }
     }
-    const  handleChangeCode=(e: { target: { value: SetStateAction<string>; }; })=>{
-        setCode(e.target.value)
-    }
-
-
 
 
 
@@ -276,7 +212,6 @@ const ChatMeeting = () => {
 
       </>
     )
-
 }
 
 export default ChatMeeting

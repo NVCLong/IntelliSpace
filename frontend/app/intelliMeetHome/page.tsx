@@ -7,23 +7,23 @@ import { Button } from "@/components/ui/button"
 import { toast, ToastContainer } from "react-toastify";
 import copy from "copy-to-clipboard";
 import { getCode } from "@/lib/apiCall";
-import React, { SetStateAction,useState } from "react";
-import { router } from "next/client";
+import React, { SetStateAction, useEffect, useState } from "react";
+
 import { DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenu } from "@/components/ui/dropdown-menu";
 import { FiPlayCircle, FiPlusCircle } from "react-icons/fi";
+import { useRouter } from "next/navigation";
+import{Fragment} from "react";
 
 export default function Page() {
+  const router=useRouter()
+  const [userId, setUserId]=useState("")
+
   const [code, setCode]=useState("");
   const handleChangeCode=(e: { target: { value: SetStateAction<string>; }; })=>{
     setCode(e.target.value)
-}
+ }
   const handleCreate=async  ()=>{
     try{
-      let userId:string|null
-        // @ts-ignore
-      if(typeof window !=="undefined"){
-        userId=localStorage.getItem("userId");
-      }
         // @ts-ignore
         const data = await getCode(userId);
         console.log(data)
@@ -38,6 +38,13 @@ export default function Page() {
         throw  e
     }
   }
+  useEffect(() => {
+    // @ts-ignore
+    if(typeof window !=="undefined"){
+      // @ts-ignore
+      setUserId(localStorage.getItem("userId"));
+    }
+  }, []);
 
   const handleConnect= ()=>{
     if(code !=="") {
@@ -45,7 +52,7 @@ export default function Page() {
     }
   }
   return(
-    <>
+   <>
       <ToastContainer
       position="bottom-right"
       autoClose={8000}
@@ -67,10 +74,10 @@ export default function Page() {
     <div className="flex-col space-y-3 flexCenter ">
     <DropdownMenu>
       <DropdownMenuTrigger className="flex">
-        <Button variant="outline">+ New meeting</Button>
+        <div >+ New meeting</div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-            <DropdownMenuItem className="rounded-md cursor-pointer hover:bg-gray-200">
+            <DropdownMenuItem className="rounded-md cursor-pointer hover:bg-gray-200" onClick={handleConnect}>
                 <FiPlayCircle className="w-4 h-4 mr-2" />
                 Connect
             </DropdownMenuItem >
@@ -81,8 +88,6 @@ export default function Page() {
       </DropdownMenuContent>
     </DropdownMenu>
     </div>
-
-
     </div>
     <div className="shadow-lg">
     <Image
@@ -96,6 +101,7 @@ export default function Page() {
 
 
   </div>
-      </>
+   </>
+
   )
 }
