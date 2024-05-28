@@ -6,23 +6,27 @@ import { Input } from "@/components/ui/input"
 import { toast, ToastContainer } from "react-toastify";
 import copy from "copy-to-clipboard";
 import { getCode } from "@/lib/apiCall";
+import React, { SetStateAction, useEffect, useState } from "react";
+
+import { DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenu } from "@/components/ui/dropdown-menu";
 import React, { SetStateAction,useState } from "react";
 import { useRouter } from "next/navigation";
 import { FiPlayCircle, FiPlusCircle } from "react-icons/fi";
+import { useRouter } from "next/navigation";
+import{Fragment} from "react";
 
 export default function Page() {
+  const router=useRouter()
+  const [userId, setUserId]=useState("")
+
   const [code, setCode]=useState("");
   const handleChangeCode=(e: { target: { value: SetStateAction<string>; }; })=>{
     setCode(e.target.value)
+ }
 }
 const router = useRouter();
   const handleCreate=async  ()=>{
     try{
-      let userId:string|null
-        // @ts-ignore
-      if(typeof window !=="undefined"){
-        userId=localStorage.getItem("userId");
-      }
         // @ts-ignore
         const data = await getCode(userId);
         console.log(data)
@@ -37,6 +41,13 @@ const router = useRouter();
         throw  e
     }
   }
+  useEffect(() => {
+    // @ts-ignore
+    if(typeof window !=="undefined"){
+      // @ts-ignore
+      setUserId(localStorage.getItem("userId"));
+    }
+  }, []);
 
   const handleConnect= ()=>{
     if(code !=="") {
@@ -44,7 +55,7 @@ const router = useRouter();
     }
   }
   return(
-    <>
+   <>
       <ToastContainer
       position="bottom-right"
       autoClose={8000}
@@ -89,6 +100,7 @@ const router = useRouter();
 
 
   </div>
-      </>
+   </>
+
   )
 }
