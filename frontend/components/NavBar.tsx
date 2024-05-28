@@ -55,7 +55,7 @@ const NavBar = () => {
         className={`absolute flexCenter right-5 mt-36 transform translate-x-2 lg:hidden ${isMenuOpen ? "block" : "hidden"
           }`}
       >
-        <ul className="p-4 mt-24 text-black bg-white rounded-md shadow-lg flexCenter">
+        {/* <ul className="p-4 mt-24 text-black bg-white rounded-md shadow-lg flexCenter">
           {NAV_LINKS.map((link) => (
             <li key={link.key}>
               <Link
@@ -66,10 +66,10 @@ const NavBar = () => {
               </Link>
             </li>
           ))}
-        </ul>
+        </ul> */}
       </div>
 
-      <ul className="hidden h-full space-x-36 lg:flex">
+      <ul className="hidden h-full space-x-14 lg:flex">
         {NAV_LINKS.map((link) => (
           <li key={link.key}>
             <Link

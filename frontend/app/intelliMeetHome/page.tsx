@@ -3,13 +3,11 @@
 import 'react-toastify/dist/ReactToastify.css'
 import Image from "next/image";
 import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
 import { toast, ToastContainer } from "react-toastify";
 import copy from "copy-to-clipboard";
 import { getCode } from "@/lib/apiCall";
 import React, { SetStateAction,useState } from "react";
-import { router } from "next/client";
-import { DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenu } from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
 import { FiPlayCircle, FiPlusCircle } from "react-icons/fi";
 
 export default function Page() {
@@ -17,6 +15,7 @@ export default function Page() {
   const handleChangeCode=(e: { target: { value: SetStateAction<string>; }; })=>{
     setCode(e.target.value)
 }
+const router = useRouter();
   const handleCreate=async  ()=>{
     try{
       let userId:string|null
@@ -63,23 +62,17 @@ export default function Page() {
     <h1 className="text-4xl italic font-black flexCenter">IntelliMeet</h1>
     <span className="text-center max-w-96 text-wrap">IntelliMeet is a meeting companion that helps you collaborate better during meetings by taking notes, tracking action items, and keeping things on track.</span>
 
-    <Input className="max-w-96" type="text" placeholder="Enter room code" value={code} onChange={handleChangeCode} />
+    <Input className="shadow-lg max-w-96" type="text" placeholder="Enter room code" value={code} onChange={handleChangeCode} />
     <div className="flex-col space-y-3 flexCenter ">
-    <DropdownMenu>
-      <DropdownMenuTrigger className="flex">
-        <Button variant="outline">+ New meeting</Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56">
-            <DropdownMenuItem className="rounded-md cursor-pointer hover:bg-gray-200">
-                <FiPlayCircle className="w-4 h-4 mr-2" />
-                Connect
-            </DropdownMenuItem >
-            <DropdownMenuItem className="rounded-md cursor-pointer hover:bg-gray-200" onClick={handleCreate}>
-                <FiPlusCircle className="w-4 h-4 mr-2" />
-                Create new meeting
-            </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+        <div className="px-4 py-2 transition-all duration-200 rounded-full shadow-lg cursor-pointer bg-slate-200 flexCenter hover:bg-slate-400" onClick={handleConnect}>
+        <FiPlayCircle className="w-4 h-4 mr-2" />
+        <span>Connect</span>
+        </div>
+        <div className="px-4 py-2 transition-all duration-200 rounded-full shadow-lg cursor-pointer bg-slate-200 flexCenter hover:bg-slate-400 max-w-fit" onClick={handleCreate}>
+        <FiPlusCircle className="w-4 h-4 mr-2"/>
+        <span>New meeting</span>
+        </div>
+
     </div>
 
 
