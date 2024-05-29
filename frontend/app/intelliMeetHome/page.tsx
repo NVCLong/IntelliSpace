@@ -1,30 +1,23 @@
 "use client";
-
 import 'react-toastify/dist/ReactToastify.css'
-import Image from "next/image";
-import { Input } from "@/components/ui/input"
 import { toast, ToastContainer } from "react-toastify";
 import copy from "copy-to-clipboard";
 import { getCode } from "@/lib/apiCall";
-import React, { SetStateAction, useEffect, useState } from "react";
-
-import { DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenu } from "@/components/ui/dropdown-menu";
-import React, { SetStateAction,useState } from "react";
+import React, {SetStateAction, useEffect, useState} from "react";
 import { useRouter } from "next/navigation";
 import { FiPlayCircle, FiPlusCircle } from "react-icons/fi";
-import { useRouter } from "next/navigation";
-import{Fragment} from "react";
+import Image from "next/image";
+import { Input } from "@/components/ui/input"
 
 export default function Page() {
-  const router=useRouter()
+  const router = useRouter()
   const [userId, setUserId]=useState("")
 
   const [code, setCode]=useState("");
   const handleChangeCode=(e: { target: { value: SetStateAction<string>; }; })=>{
     setCode(e.target.value)
  }
-}
-const router = useRouter();
+
   const handleCreate=async  ()=>{
     try{
         // @ts-ignore
@@ -54,7 +47,7 @@ const router = useRouter();
       router.push(`/intelliMeet?roomId=${code}`);
     }
   }
-  return(
+  return (
    <>
       <ToastContainer
       position="bottom-right"
@@ -83,10 +76,7 @@ const router = useRouter();
         <FiPlusCircle className="w-4 h-4 mr-2"/>
         <span>New meeting</span>
         </div>
-
     </div>
-
-
     </div>
     <div className="shadow-lg">
     <Image
@@ -97,10 +87,7 @@ const router = useRouter();
               className="rounded-lg"
             />
     </div>
-
-
   </div>
    </>
-
-  )
+    )
 }

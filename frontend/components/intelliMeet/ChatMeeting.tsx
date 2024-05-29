@@ -177,40 +177,55 @@ const ChatMeeting = () => {
 
 
     return (
-      <>
-          <ToastContainer
-            position="bottom-right"
-            autoClose={8000}
-            hideProgressBar={false}
-            newestOnTop
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="colored"
-          />
+        <div className='flex flex-col'>
+            <ToastContainer
+                position="bottom-right"
+                autoClose={8000}
+                hideProgressBar={false}
+                newestOnTop
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"/>
 
-          <div className="flexCenter">
-              {connected && (
-                <ul>
-                    {messages.map((msg, index) => (
-                      <li key={index}>
-                          <b>{msg.sender}:</b> {msg.content}
-                      </li>
-                    ))}
-                </ul>
-              )}
-              <video ref={localVideoRef} autoPlay muted></video>
-              <video ref={remoteVideoRef} autoPlay></video>
+            <div className="grid sm:grid-cols-2 grid-cols-1 gap-4  mx-auto">
+                <video
+                    className='rounded-lg shadow-lg border-2  hover:border-2 hover:border-blue-300 duration-200 transition-all'
+                    ref={localVideoRef} autoPlay></video>
+                <video
+                    className='rounded-lg shadow-lg border-2  hover:border-2 hover:border-blue-300 duration-200 transition-all'
+                    ref={remoteVideoRef} autoPlay></video>
+                <video
+                    className='rounded-lg shadow-lg border-2  hover:border-2 hover:border-blue-300 duration-200 transition-all'
+                    ref={localVideoRef} autoPlay></video>
+                <video
+                    className='rounded-lg shadow-lg border-2  hover:border-2 hover:border-blue-300 duration-200 transition-all'
+                    ref={remoteVideoRef} autoPlay></video>
+            </div>
 
-              <Input type="text" placeholder="Type a message" onChange={handleInput} value={message} />
-              <Input type="text" placeholder="Enter nickname" value={nickName} onChange={handleChangeName} />
-              <Button onClick={handleSendMessage}>Send</Button>
-              <Button onClick={handleConnect} disabled={connected}>Connect</Button>
-          </div>
+            <div className="">
+                {connected && (
+                    <ul>
+                        {messages.map((msg, index) => (
+                            <li key={index}>
+                                <b>{msg.sender}</b> {msg.content}
+                            </li>
+                        ))}
+                    </ul>
+                )}
 
-      </>
+            <div className='flex flex-col'>
+                <Button onClick={handleConnect} disabled={connected}>Connect</Button>
+                <Input type="text" placeholder="Enter nickname" value={nickName} onChange={handleChangeName}/>
+                <Input type="text" placeholder="Type a message" onChange={handleInput} value={message}/>
+                <Button onClick={handleSendMessage}>Send</Button>
+
+            </div>
+            </div>
+
+        </div>
     )
 }
 
