@@ -240,7 +240,7 @@ const ChatMeeting = () => {
           </ul>
         )}
 
-        <div className="flex flex-col">
+        <div className="flex flex-col space-y-4">
           <Button onClick={handleConnect} disabled={connected}>
             Connect
           </Button>
