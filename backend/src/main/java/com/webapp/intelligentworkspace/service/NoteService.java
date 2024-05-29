@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class NoteService {
@@ -87,7 +88,16 @@ public class NoteService {
             // case do not find note
             return null;
         }else{
-            note.setContent(updatedNote.getContent());
+            System.out.println(updatedNote.getTitle());
+            System.out.println(updatedNote.getContent()=="");
+            if(!Objects.equals(updatedNote.getContent(), "")) {
+                System.out.println("Have content");
+                note.setContent(updatedNote.getContent());
+            }
+            if(!Objects.equals(updatedNote.getTitle(),"")){
+                System.out.println("Have tittle ");
+                note.setTitle(updatedNote.getTitle());
+            }
             return noteRepository.save(note);
         }
     }

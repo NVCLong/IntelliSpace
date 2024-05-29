@@ -1,7 +1,7 @@
 import 'react-toastify/dist/ReactToastify.css'
 
 import copy from 'copy-to-clipboard'
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { MdFolder } from 'react-icons/md'
 import {
   Button,
@@ -40,11 +40,10 @@ interface FolderListProps {
 const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
   let storageId:string|null;
-  let userId: string|null;
   if(typeof window !=='undefined'){
-      storageId=localStorage.getItem('storageID');
-      userId=localStorage.getItem("userId");
+      storageId=localStorage.getItem('storageID')
   }
+  console.log(folders)
 
   const [folderName, setFolderName] = useState('')
   const [currentFolderId, setCurrenFolderId] = useState('')
@@ -66,18 +65,6 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
   }
 
 
-  const handleShareFolder = async (folderId: string) => {
-    // @ts-ignore
-    const response = await shareFolderCode(folderId, storageId);
-    toast.success(
-      <div>
-        Code: {response}
-        <br />
-        Copied to clipboard
-      </div>,
-    );
-    copy(response);
-  }
 
   const handleUpdate = (folderId: string) => {
     const newFolder = {
@@ -110,7 +97,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
           theme="colored"
         />
       <div className="w-full max-w-screen-xl mx-auto">
-        <div className="grid gap-6 md:grid-cols-4 grid-col-2 xl:grid-cols-6">
+        <div className="grid gap-6 md:grid-cols-4 grid-col-2">
 
           {folders.map((folder) => (
             <div key={folder.id}>
@@ -119,9 +106,6 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
                   <ContextMenuContent className="bg-white rounded-lg w-30">
                     <ContextMenuItem
                       className="hover:bg-slate-600 "
-                      onClick={() => {
-                        handleShareFolder(folder.id)
-                      }}
                     >
                       <ContextMenuLabel className="flex hover:text-white">
                         <FiShare size={20} className="mr-2" />
@@ -147,7 +131,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
                       onClick={() => {
                         handleDelete(Number.parseInt(folder.id))
                         setTimeout(() => {
-                          window.location.reload();
+                          // window.location.reload();
                         }, 2000)
                       }}
                     >
@@ -206,7 +190,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
                           color="primary"
                           onPress={(e) => {
                             handleUpdate(currentFolderId)
-                            window.location.reload();
+                            // window.location.reload();
                           }}
                         >
                           Edit

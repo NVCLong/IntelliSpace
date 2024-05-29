@@ -1,9 +1,9 @@
-'use client';
-import React from 'react';
-import * as z from 'zod';
-import { Button } from '@/components/auth_ui/Button';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+"use client";
+import React from "react";
+import * as z from "zod";
+import { Button } from "@/components/auth_ui/Button";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
@@ -11,11 +11,12 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/auth_ui/Form';
-import { Input } from '@/components/auth_ui/Input';
-import Link from 'next/link';
-import axios from 'axios';
-import { motion } from 'framer-motion';
+} from "@/components/auth_ui/Form";
+import { Input } from "@/components/auth_ui/Input";
+;
+import Link from "next/link";
+import axios from "axios";
+import { motion } from "framer-motion";
 
 import {
   GoogleLogin,
@@ -29,39 +30,43 @@ import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { setStorageID } from '@/lib/features/todos/storageSlice';
 
+
+
 const signInSchema = z.object({
   username: z.string(),
-  password: z.string().min(6, 'Password should have at least 6 characters.'),
+  password: z.string().min(6, "Password should have at least 6 characters."),
 });
 
 const Page = () => {
   const router = useRouter();
-  const dispatch = useDispatch();
+  const dispatch= useDispatch();
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
-      username: '',
-      password: '',
+      username: "",
+      password: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof signInSchema>) {
     const response = await axios.post(
-      'http://localhost:8888/api/auth/login',
-      values,
+      "http://localhost:8888/api/auth/login",
+      values
     );
-    localStorage.setItem('access_token', response.data.accessToken);
+    localStorage.setItem("access_token", response.data.accessToken);
     document.cookie = `refreshToken=${response.data.refreshToken}`;
-    localStorage.setItem('userId', response.data.user.id);
-    localStorage.setItem('storageID', response.data.storageId);
+    localStorage.setItem("userId", response.data.user.id);
+    localStorage.setItem("storageID", response.data.storageId);
     // console.log(response.data);
     dispatch(setStorageID(response.data.storageId));
-    router.push('/dashboard');
+    router.push("/dashboard");
   }
 
   // const ResponseFolder = await axios.get("http://localhost:8888/api/folder/rootFolders/{storageId}"
   // );
   // localStorage.setItem("storageId", ResponseFolder.data.storageId);
+
+
 
   return (
     <>
@@ -71,15 +76,14 @@ const Page = () => {
         transition={{
           duration: 1,
           delay: 0.5,
-          ease: [0, 0.71, 0.2, 1.01],
+          ease: [0, 0.71, 0.2, 1.01]
         }}
-        className="registerWrapper drop-shadow-md"
-      >
+        className="registerWrapper drop-shadow-md">
         <div className="formWrapper">
           <div className="space-y-5 left">
             <h3 className="title">Hello, friends!</h3>
             <p>Enter your personal details and start journey with us</p>
-            <Link href={'/register'}>
+            <Link href={"/register"}>
               <Button className="px-8 text-gray-900 border rounded-full border-zinc-500 hover:border-gray-900 hover:font-bold hoverScale">
                 Register
               </Button>
@@ -91,13 +95,11 @@ const Page = () => {
               <GoogleOAuthProvider clientId="221707522416-c5ac904abilmbldbpq7m75t0kpekigjm.apps.googleusercontent.com">
                 <CustomButton />
               </GoogleOAuthProvider>
+
             </div>
             <p className="text-center">or use this option</p>
             <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="flex-col flexCenter drop-shadow-md"
-              >
+              <form onSubmit={form.handleSubmit(onSubmit)} className="flex-col flexCenter drop-shadow-md">
                 <FormField
                   control={form.control}
                   name="username"
@@ -129,10 +131,8 @@ const Page = () => {
                   )}
                 />
 
-                <Link href={'/forget'}>
-                  <span className="text-gray-500 hover:underline">
-                    Forget password?
-                  </span>
+                <Link href={"/forget"}>
+                  <span className="text-gray-500 hover:underline">Forget password?</span>
                 </Link>
                 <Button
                   type="submit"

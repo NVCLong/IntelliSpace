@@ -36,6 +36,7 @@ export default function Page() {
   };
 
   useEffect(() => {
+
     if (typeof window !== 'undefined') { // Make sure window exists
       let user=localStorage.getItem("userId")
       if(user==null){

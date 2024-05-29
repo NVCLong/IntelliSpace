@@ -20,6 +20,7 @@ import {
   DrawerHeader,
   DrawerTrigger,
 } from '@/components/ui/drawer';
+import { router } from 'next/client';
 
 // import SearchBar from "@/components/SearchBar";
 
@@ -31,19 +32,25 @@ export default function Page() {
     folderId = localStorage.getItem('folderId');
   }
 
-  const dispatch = useDispatch<AppDispatch>();
-  const [folderList, setFolderList] = useState([]);
+  const dispatch = useDispatch<AppDispatch>()
+  const [folderList, setFolderList] = useState([])
   const [parentFolder, setParentFolder] = useState({
-    parentFolderId: '',
-  });
+    parentFolderId: ''
+  })
   // @ts-ignore
   const storageID: string | null = useAppSelector(
-    (state) => state.storageSlice.storageID,
-  );
-  const [isFetch, setIsFetch] = useState(true);
-  const [fileList, setFileList] = useState([]);
+    (state) => state.storageSlice.storageID
+  )
+  const [isFetch, setIsFetch] = useState(true)
+  const [fileList, setFileList] = useState([])
 
   useEffect(() => {
+    if(typeof  window !="undefined"){
+      let userId=localStorage.getItem("userId")
+      if(userId==null){
+        router.push("/")
+      }
+    }
     const handleFetchData = async () => {
       try {
         if (folderId === null) {
@@ -77,68 +84,44 @@ export default function Page() {
         console.error(error);
       }
     };
-    handleFetchData().then().catch(console.error);
-  }, []);
+    handleFetchData().then().catch(console.error)
+  }, [])
 
   return (
     <>
-      <div className="flex flex-col">
-        {/* <SearchBar/> */}
-        <div className="hidden ml-3 space-x-5 sm:flex mt-9 sm:flex-row">
-          <BackButton />
-          <br />
-          <NewFolder storageID={storageID_temp} />
-          <br />
-          <UploadFile />
-        </div>
-        <div className="fixed bottom-0 right-0 mb-3 mr-7 sm:fixed sm:hidden">
-          <Drawer>
-            <DrawerTrigger>
-              <FiDisc
-                size={45}
-                className="flex items-center p-2 text-gray-600 bg-white rounded-full shadow-md cursor-pointer hoverScale"
-              />
-            </DrawerTrigger>
-            <DrawerContent className="ml-auto w-fit h-fit">
-              <DrawerHeader className="flex flex-col items-center">
-                <BackButton />
-                <NewFolder storageID={storageID_temp} />
-                <UploadFile />
-                <DrawerClose className="flexCenter">
-                  <FiXCircle
-                    size={45}
-                    className="flex items-center p-2 text-white bg-red-400 rounded-full shadow-md cursor-pointer hoverScale"
-                  />
-                </DrawerClose>
-              </DrawerHeader>
-            </DrawerContent>
-          </Drawer>
-        </div>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{
-            duration: 1,
-            delay: 0.5,
-            ease: [0, 0.71, 0.2, 1.01],
-          }}
-        >
-          <div className="mt-7 sm:mt-0">
-            <div>
-              {folderList !== null && (
-                <FolderList
-                  folders={folderList}
-                  parentFolderId={parentFolder.parentFolderId}
-                />
-              )}
-            </div>
-          </div>
+    <div className="flex flex-col">
 
-          <div className="mt-8 sm:mt-0">
-            {fileList !== null && <FileList files={fileList} />}
-          </div>
-        </motion.div>
+        {/* <SearchBar/> */}
+      <div className="flex flex-row mt-11">
+        <BackButton />
+        <NewFolder storageID={storageID_temp} />
+        <UploadFile />
       </div>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{
+          duration: 1,
+          delay: 0.5,
+          ease: [0, 0.71, 0.2, 1.01]
+        }}
+      >
+        <div className="ml-32">
+          <div>
+            {folderList !== null && (
+              <FolderList
+                folders={folderList}
+                parentFolderId={parentFolder.parentFolderId}
+              />
+            )}
+          </div>
+        </div>
+
+        <div className="ml-20 -mt-5">
+          {fileList !== null && <FileList files={fileList} />}
+        </div>
+      </motion.div>
+    </div>
     </>
-  );
+  )
 }
