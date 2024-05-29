@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import NextTopLoader from 'nextjs-toploader';
 
 const TopLoader = () => {
@@ -9,7 +9,7 @@ const TopLoader = () => {
       easing="ease"
       speed={2000}
     />
-  )
-}
+  );
+};
 
-export default TopLoader
+export default TopLoader;

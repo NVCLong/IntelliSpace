@@ -1,8 +1,10 @@
-"use client";
-import ChatMeeting from "@/components/intelliMeet/ChatMeeting";
+'use client';
+import ChatMeeting from '@/components/intelliMeet/ChatMeeting';
 
 export default function Page() {
-  return <>
-    <ChatMeeting />
-  </>;
+  return (
+    <div className=''>
+      <ChatMeeting />
+    </div>
+  );
 }

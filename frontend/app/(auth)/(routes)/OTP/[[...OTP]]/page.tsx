@@ -1,9 +1,9 @@
-"use client";
-import React from "react";
-import * as z from "zod";
-import { Button } from "@/components/auth_ui/Button";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+'use client';
+import React from 'react';
+import * as z from 'zod';
+import { Button } from '@/components/auth_ui/Button';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
 import {
   Form,
   FormControl,
@@ -11,51 +11,50 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/auth_ui/Form";
-import { Input } from "@/components/auth_ui/Input";
-import Link from "next/link";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
-import {useAppSelector} from "@/lib/store";
+} from '@/components/auth_ui/Form';
+import { Input } from '@/components/auth_ui/Input';
+import Link from 'next/link';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
+import { useAppSelector } from '@/lib/store';
 import { setEmail } from '@/lib/features/todos/emailSlice';
-import {AppDispatch} from "@/lib/store";
-import {useDispatch} from "react-redux";
-
+import { AppDispatch } from '@/lib/store';
+import { useDispatch } from 'react-redux';
 
 const registerSchema = z.object({
   otp: z.string(),
 });
 
 const Page = () => {
-  const  dispatch=useDispatch<AppDispatch>();
+  const dispatch = useDispatch<AppDispatch>();
   const email: string | null = useAppSelector(
-      (state) => state.emailSlice.email
+    (state) => state.emailSlice.email,
   );
   const router = useRouter();
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      otp: "",
+      otp: '',
     },
   });
 
   async function onSubmit(values: z.infer<typeof registerSchema>) {
-    const request={
+    const request = {
       email: email,
-      otp: values.otp
-    }
+      otp: values.otp,
+    };
     if (email != null) {
-      dispatch(setEmail(email))
+      dispatch(setEmail(email));
     }
     // console.log(values)
     const response = await axios.post(
       `http://localhost:8888/api/auth/checkOtp`,
-      request
+      request,
     );
     // console.log(response.data);
 
-    router.push("/resetPassword");
+    router.push('/resetPassword');
   }
 
   return (
@@ -74,9 +73,9 @@ const Page = () => {
           <div className="left">
             <h3 className="mb-3 title">Recovery your password</h3>
             <p>
-              Enter your email address and we will send you a one-time-password to reset your password.
+              Enter your email address and we will send you a one-time-password
+              to reset your password.
             </p>
-
           </div>
           <div className="right">
             <h3 className="mb-10 text-2xl font-semibold text-center">
@@ -84,31 +83,26 @@ const Page = () => {
             </h3>
             <Form {...form}>
               <form
-                  className="flex-col flexCenter drop-shadow-md"
-                  onSubmit={form.handleSubmit(onSubmit)}
+                className="flex-col flexCenter drop-shadow-md"
+                onSubmit={form.handleSubmit(onSubmit)}
               >
-
                 <FormField
-                    control={form.control}
-                    name="otp"
-                    render={({ field }) => (
-                        <FormItem className="mb-2 space-y-1">
-                          <FormLabel>OTP code</FormLabel>
-                          <FormControl>
-                            <Input
-                                placeholder="Enter OTP"
-                                {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                    )}
+                  control={form.control}
+                  name="otp"
+                  render={({ field }) => (
+                    <FormItem className="mb-2 space-y-1">
+                      <FormLabel>OTP code</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter OTP" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
 
-
                 <Button
-                    type="submit"
-                    className="w-1/2 mt-4 mb-10 border-2 border-gray-500 border-solid rounded-lg shadow-lg flexCenter hoverScale"
+                  type="submit"
+                  className="w-1/2 mt-4 mb-10 border-2 border-gray-500 border-solid rounded-lg shadow-lg flexCenter hoverScale"
                 >
                   Submit
                 </Button>

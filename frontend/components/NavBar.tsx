@@ -1,31 +1,24 @@
-"use client";
-import { useState, useEffect } from "react";
-import { NAV_LINKS } from "@/constants";
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
-import { FiUser, FiMenu } from "react-icons/fi";
-import NextTopLoader from "nextjs-toploader";
+'use client';
+import { useState, useEffect } from 'react';
+import { NAV_LINKS } from '@/constants';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
+import { FiUser, FiMenu } from 'react-icons/fi';
+import NextTopLoader from 'nextjs-toploader';
 
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button"
-
+} from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
 
 const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-
-
-
-
-
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -33,12 +26,10 @@ const NavBar = () => {
 
   const router = useRouter();
   const handleSignin = () => {
-    setIsLoading(true)
-    router.push("/signin")
-    setIsLoading(false)
+    setIsLoading(true);
+    router.push('/signin');
+    setIsLoading(false);
   };
-
-
 
   return (
     <motion.nav
@@ -52,8 +43,9 @@ const NavBar = () => {
       </Link>
 
       <div
-        className={`absolute flexCenter right-5 mt-36 transform translate-x-2 lg:hidden ${isMenuOpen ? "block" : "hidden"
-          }`}
+        className={`absolute flexCenter right-5 mt-36 transform translate-x-2 lg:hidden ${
+          isMenuOpen ? 'block' : 'hidden'
+        }`}
       >
         {/* <ul className="p-4 mt-24 text-black bg-white rounded-md shadow-lg flexCenter">
           {NAV_LINKS.map((link) => (
@@ -82,7 +74,6 @@ const NavBar = () => {
         ))}
       </ul>
 
-
       <div
         className="hidden gap-2 px-4 py-2 bg-blue-500 rounded-full cursor-pointer hover:bg-blue-600 lg:flex md:flex sm:hidden hoverScale drop-shadow-md flexCenter bold-16"
         onClick={handleSignin}
@@ -100,7 +91,7 @@ const NavBar = () => {
       </div>
 
       <div className="lg:hidden">
-        <DropdownMenu >
+        <DropdownMenu>
           <DropdownMenuTrigger asChild onClick={toggleMenu}>
             <Button variant="destructive">
               <FiMenu size={40} />

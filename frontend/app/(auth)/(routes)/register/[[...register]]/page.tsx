@@ -1,9 +1,9 @@
-"use client";
-import React from "react";
-import * as z from "zod";
-import { Button } from "@/components/auth_ui/Button";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+'use client';
+import React from 'react';
+import * as z from 'zod';
+import { Button } from '@/components/auth_ui/Button';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
 import {
   Form,
   FormControl,
@@ -11,37 +11,37 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/auth_ui/Form";
-import { Input } from "@/components/auth_ui/Input";
-import { FcGoogle } from "react-icons/fc";
-import { SiGithub } from "react-icons/si";
-import Link from "next/link";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+} from '@/components/auth_ui/Form';
+import { Input } from '@/components/auth_ui/Input';
+import { FcGoogle } from 'react-icons/fc';
+import { SiGithub } from 'react-icons/si';
+import Link from 'next/link';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
 
 const registerSchema = z
   .object({
     username: z
       .string()
-      .min(2, "Name should have at least 2 characters.")
-      .max(50, "Name should not exceed 50 characters.")
+      .min(2, 'Name should have at least 2 characters.')
+      .max(50, 'Name should not exceed 50 characters.')
       .refine(
         (value) => /^[a-zA-Z]+[-'s]?[a-zA-Z ]+$/.test(value),
-        "Name should contain only alphabets."
+        'Name should contain only alphabets.',
       ),
-    email: z.string().email("Email must be valid."),
+    email: z.string().email('Email must be valid.'),
     numberPhone: z
       .string()
-      .min(10, "Phone number should have at least 10 characters."),
-    password: z.string().min(6, "Password Should have at least 6 characters."),
+      .min(10, 'Phone number should have at least 10 characters.'),
+    password: z.string().min(6, 'Password Should have at least 6 characters.'),
     confirmPassword: z
       .string()
-      .min(6, "Password Should have at least 6 characters."),
+      .min(6, 'Password Should have at least 6 characters.'),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords does not match.",
-    path: ["confirmPassword"],
+    message: 'Passwords does not match.',
+    path: ['confirmPassword'],
   });
 
 const Page = () => {
@@ -49,21 +49,21 @@ const Page = () => {
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      username: "",
-      email: "",
-      numberPhone: "",
-      password: "",
-      confirmPassword: "",
+      username: '',
+      email: '',
+      numberPhone: '',
+      password: '',
+      confirmPassword: '',
     },
   });
 
   async function onSubmit(values: z.infer<typeof registerSchema>) {
     const response = await axios.post(
       `http://localhost:8888/api/auth/register`,
-      values
+      values,
     );
     // console.log(response.data);
-    await router.push("/signin");
+    await router.push('/signin');
   }
 
   return (
@@ -74,7 +74,7 @@ const Page = () => {
         transition={{
           duration: 1,
           delay: 0.5,
-          ease: [0, 0.71, 0.2, 1.01]
+          ease: [0, 0.71, 0.2, 1.01],
         }}
         className="registerWrapper drop-shadow-md"
       >
@@ -84,7 +84,7 @@ const Page = () => {
             <p>
               To keep connected with us please login with your personal info
             </p>
-            <Link href={"/signin"}>
+            <Link href={'/signin'}>
               <Button className="px-8 text-gray-900 border rounded-full border-zinc-500 hover:border-gray-900 hover:font-bold hoverScale">
                 Sign in
               </Button>

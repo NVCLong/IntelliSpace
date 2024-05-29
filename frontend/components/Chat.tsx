@@ -1,11 +1,10 @@
-import { Loader, SendHorizonal} from 'lucide-react'
-import { useContext } from 'react'
-import { ChatContext } from '@/providers'
-import { UserCircle } from '@phosphor-icons/react'
-import { FiCodesandbox } from 'react-icons/fi'
+import { Loader, SendHorizonal } from 'lucide-react';
+import { useContext } from 'react';
+import { ChatContext } from '@/providers';
+import { UserCircle } from '@phosphor-icons/react';
+import { FiCodesandbox } from 'react-icons/fi';
 
 const Chat = () => {
-
   const {
     sendPrompt,
     setPrompt,
@@ -14,13 +13,12 @@ const Chat = () => {
     isPending,
     isGenerating,
     output,
-    showResult
-  } = useContext(ChatContext)
+    showResult,
+  } = useContext(ChatContext);
 
   const handleSendPrompt = () => {
-    sendPrompt(prompt)
-  }
-
+    sendPrompt(prompt);
+  };
 
   return (
     <div className="relative h-screen flex-1 pb-[15vh]">
@@ -60,8 +58,8 @@ const Chat = () => {
                     isPending
                       ? 'animate-pulse'
                       : isGenerating
-                        ? 'animate-spin'
-                        : 'rotate-0 [animation-play-state:pause]'
+                      ? 'animate-spin'
+                      : 'rotate-0 [animation-play-state:pause]'
                   }`}
                   src="/icon.ico"
                   alt="IntelliBot icon"
@@ -96,7 +94,7 @@ const Chat = () => {
           <div className="flex items-center justify-between gap-5 px-5 py-3 bg-gray-200 rounded-full shadow-lg">
             <input
               onChange={(e) => {
-                setPrompt(e.target.value)
+                setPrompt(e.target.value);
               }}
               onKeyDown={(e) => e.key === 'Enter' && handleSendPrompt()}
               className="flex-1 font-serif text-black bg-transparent border-none outline-none"
@@ -127,7 +125,7 @@ const Chat = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Chat
+export default Chat;

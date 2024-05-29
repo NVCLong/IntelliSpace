@@ -1,9 +1,9 @@
-"use client";
-import React from "react";
-import * as z from "zod";
-import { Button } from "@/components/auth_ui/Button";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+'use client';
+import React from 'react';
+import * as z from 'zod';
+import { Button } from '@/components/auth_ui/Button';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
 import {
   Form,
   FormControl,
@@ -11,40 +11,38 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/auth_ui/Form";
-import { Input } from "@/components/auth_ui/Input";
-import Link from "next/link";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+} from '@/components/auth_ui/Form';
+import { Input } from '@/components/auth_ui/Input';
+import Link from 'next/link';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
 import { useDispatch } from 'react-redux';
 import { setEmail } from '@/lib/features/todos/emailSlice';
-import {AppDispatch} from "@/lib/store";
+import { AppDispatch } from '@/lib/store';
 
-
-const registerSchema = z
-  .object({
-    email: z.string().email("Email must be valid."),
-  })
+const registerSchema = z.object({
+  email: z.string().email('Email must be valid.'),
+});
 
 const Page = () => {
-  const  dispatch=useDispatch<AppDispatch>();
+  const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      email: "",
+      email: '',
     },
   });
 
   async function onSubmit(values: z.infer<typeof registerSchema>) {
     const response = await axios.post(
       `http://localhost:8888/api/auth/resetPassword`,
-      values
+      values,
     );
-    dispatch(setEmail(values.email))
+    dispatch(setEmail(values.email));
     // console.log(response.data);
-    router.push("/OTP");
+    router.push('/OTP');
   }
 
   return (
@@ -55,7 +53,7 @@ const Page = () => {
         transition={{
           duration: 1,
           delay: 0.5,
-          ease: [0, 0.71, 0.2, 1.01]
+          ease: [0, 0.71, 0.2, 1.01],
         }}
         className="h-full registerWrapper drop-shadow-md"
       >
@@ -65,7 +63,7 @@ const Page = () => {
             <p>
               To keep connected with us please login with your personal info
             </p>
-            <Link href={"/signin"}>
+            <Link href={'/signin'}>
               <Button className="px-8 text-gray-900 border rounded-full border-zinc-500 hover:border-gray-900 hover:font-bold hoverScale">
                 Sign in
               </Button>
@@ -80,7 +78,6 @@ const Page = () => {
                 className="flex-col flexCenter drop-shadow-md"
                 onSubmit={form.handleSubmit(onSubmit)}
               >
-
                 <FormField
                   control={form.control}
                   name="email"

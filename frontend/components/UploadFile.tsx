@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 import { FiArrowUpCircle, FiShare } from 'react-icons/fi';
-import { uploadFile } from '@/lib/apiCall'
+import { uploadFile } from '@/lib/apiCall';
 import {
   Modal,
   ModalContent,
@@ -8,72 +8,68 @@ import {
   ModalBody,
   ModalFooter,
   Button,
-  useDisclosure
-} from '@nextui-org/react'
-import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+  useDisclosure,
+} from '@nextui-org/react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const UploadFile = () => {
   const [file, setFile] = React.useState({
-    file: null
-  })
+    file: null,
+  });
   let folderId: string | null;
   let storageId: string | null;
   let userId: string | null;
   if (typeof window !== 'undefined') {
-    folderId = localStorage.getItem('folderId')
-    storageId = localStorage.getItem('storageID')
-    userId = localStorage.getItem('userId')
+    folderId = localStorage.getItem('folderId');
+    storageId = localStorage.getItem('storageID');
+    userId = localStorage.getItem('userId');
   }
 
   const handleSubmit = async () => {
     if (folderId !== null && file !== null) {
       // console.log('create folder')
       // @ts-ignore
-      const response = await uploadFile(userId, folderId, storageId, file.file)
+      const response = await uploadFile(userId, folderId, storageId, file.file);
       if (response.toLowerCase().includes('is not enough')) {
-        toast.error(`Submit failed: ${response}`)
+        toast.error(`Submit failed: ${response}`);
         // alert(response)
       }
       // console.log(response)
     } else {
-      toast.error('File is null')
+      toast.error('File is null');
       // console.log('file is null')
     }
-  }
+  };
 
   const handleFileChange = (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ): void => {
     // @ts-ignore
-    const selectedFile = event.target.files[0]
+    const selectedFile = event.target.files[0];
 
     if (selectedFile) {
-      toast.success('Have file')
+      toast.success('Have file');
       //   console.log('Have file')
       //   console.log(selectedFile)
       // @ts-ignore
-      setFile({ file: selectedFile })
+      setFile({ file: selectedFile });
       const fileNameElement = document.getElementById('selectedFileName');
       if (fileNameElement) {
         fileNameElement.textContent = selectedFile.name;
       }
     } else {
       //   console.warn('No file selected.')
-      toast.error('No file selected.')
+      toast.error('No file selected.');
     }
-  }
+  };
 
-  const { isOpen, onOpen, onOpenChange } = useDisclosure()
-
-
-
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
     <div className="">
       <button
         className="p-2 text-gray-600 bg-white border rounded-full shadow-md cursor-pointer sm:px-4 sm:gap-2 flexCenter hoverScale"
-
         onClick={onOpen}
       >
         <FiArrowUpCircle size={24} />
@@ -108,9 +104,7 @@ export const UploadFile = () => {
                   >
                     <input
                       id="dropzone-file"
-                      onChange={
-                        handleFileChange
-                      }
+                      onChange={handleFileChange}
                       type="file"
                       className="hidden"
                     />
@@ -119,9 +113,14 @@ export const UploadFile = () => {
                       <p className="mb-2 text-sm text-gray-500">
                         <span className="font-semibold">Click to upload</span>
                       </p>
-                      <p className="text-xs text-gray-500">DOCX, TXT, PNG, JPG (MAX. 100MB)</p>
+                      <p className="text-xs text-gray-500">
+                        DOCX, TXT, PNG, JPG (MAX. 100MB)
+                      </p>
                     </div>
-                    <p id="selectedFileName" className="mb-2 text-sm text-gray-500"></p>
+                    <p
+                      id="selectedFileName"
+                      className="mb-2 text-sm text-gray-500"
+                    ></p>
                   </label>
                 </div>
               </ModalBody>
@@ -133,9 +132,9 @@ export const UploadFile = () => {
                 <Button
                   color="primary"
                   onPress={(e) => {
-                    handleSubmit()
-                    onClose()
-                    window.location.reload()
+                    handleSubmit();
+                    onClose();
+                    window.location.reload();
                   }}
                 >
                   Submit
@@ -146,5 +145,5 @@ export const UploadFile = () => {
         </ModalContent>
       </Modal>
     </div>
-  )
-}
+  );
+};

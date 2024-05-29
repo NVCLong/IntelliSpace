@@ -1,17 +1,17 @@
-import type { Metadata } from "next";
-import TopLoader from "@/components/TopLoader";
-import NavBar from "@/components/NavBar";
-import Footer from "@/components/Footer";
+import type { Metadata } from 'next';
+import TopLoader from '@/components/TopLoader';
+import NavBar from '@/components/NavBar';
+import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: "Register | IntelliSpace",
-  description: "Register for an account on IntelliSpace.",
+  title: 'Register | IntelliSpace',
+  description: 'Register for an account on IntelliSpace.',
 };
 
 const RegisterLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      <TopLoader/>
+      <TopLoader />
       <NavBar />
       {children}
       <Footer />

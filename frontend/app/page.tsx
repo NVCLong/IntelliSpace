@@ -1,25 +1,24 @@
-"use client"
-import Image from "next/image";
-import Link from "next/link";
-import { motion } from "framer-motion";
-import NavBar from "@/components/NavBar";
-import Footer from "@/components/Footer";
+'use client';
+import Image from 'next/image';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import NavBar from '@/components/NavBar';
+import Footer from '@/components/Footer';
 import TopLoader from '@/components/TopLoader';
-import { NextUIProvider } from "@nextui-org/react";
-import { Button } from "@/components/ui/button";
-import { FiChevronRight } from "react-icons/fi";
-import { useRouter } from "next/navigation";
-
+import { NextUIProvider } from '@nextui-org/react';
+import { Button } from '@/components/ui/button';
+import { FiChevronRight } from 'react-icons/fi';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
-    const router = useRouter();
-    const handleSignin = () => {
-    router.push("/signin");
+  const router = useRouter();
+  const handleSignin = () => {
+    router.push('/signin');
   };
   return (
     <NextUIProvider>
       <div className="">
-        <TopLoader/>
+        <TopLoader />
         <NavBar />
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
@@ -53,7 +52,10 @@ export default function Home() {
             <br /> to store and manage your data, meeting notes, and other
             information.
           </p>
-          <Button className="bg-blue-600 shadow-lg animate-pulse animate-infinite animate-duration-1000 animate-ease-in-out text-md" onClick={handleSignin}>
+          <Button
+            className="bg-blue-600 shadow-lg animate-pulse animate-infinite animate-duration-1000 animate-ease-in-out text-md"
+            onClick={handleSignin}
+          >
             <FiChevronRight className="mr-2 w-7 h-7" />
             Getting started
           </Button>
@@ -64,6 +66,4 @@ export default function Home() {
       </div>
     </NextUIProvider>
   );
-
 }
-

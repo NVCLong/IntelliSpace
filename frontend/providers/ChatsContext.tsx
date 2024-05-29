@@ -1,7 +1,6 @@
-"use client"
-import { createContext, useState } from "react";
-import {sendPrompt} from "@/lib/apiCall";
-
+'use client';
+import { createContext, useState } from 'react';
+import { sendPrompt } from '@/lib/apiCall';
 
 type ChatContextProps = {
   sendPrompt: (prompt: string) => Promise<void>;
@@ -21,28 +20,27 @@ export const ChatContext = createContext<ChatContextProps>({
   setRecentPrompt: () => {},
   setPrompt: () => {},
   startNewChat: () => {},
-  recentPrompt: "",
-  prompt: "",
+  recentPrompt: '',
+  prompt: '',
   isPending: false,
   isGenerating: false,
-  output: "",
+  output: '',
   showResult: false,
 });
 
 export const ChatContextProvider = ({ children }: React.PropsWithChildren) => {
-  const [recentPrompt, setRecentPrompt] = useState<string>("");
-  const [prompt, setPrompt] = useState<string>("");
+  const [recentPrompt, setRecentPrompt] = useState<string>('');
+  const [prompt, setPrompt] = useState<string>('');
   const [isPending, setIsPending] = useState<boolean>(false);
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
-  const [output, setOutput] = useState<string>("");
+  const [output, setOutput] = useState<string>('');
   const [showResult, setShowResult] = useState<boolean>(false);
 
   const handleNewChat = () => {
-    setRecentPrompt("");
-    setOutput("");
+    setRecentPrompt('');
+    setOutput('');
     setShowResult(false);
   };
-
 
   const handleSendPrompt = async (prompt: string) => {
     setIsGenerating(true);
@@ -55,7 +53,7 @@ export const ChatContextProvider = ({ children }: React.PropsWithChildren) => {
     // console.log(promptResponse)
     setOutput(promptResponse);
     setIsPending(false);
-    setPrompt("");
+    setPrompt('');
     setIsGenerating(false);
   };
 
@@ -67,8 +65,7 @@ export const ChatContextProvider = ({ children }: React.PropsWithChildren) => {
   //     }, 40 * idx)
   //   );
 
-
-    return (
+  return (
     <ChatContext.Provider
       value={{
         sendPrompt: handleSendPrompt,

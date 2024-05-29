@@ -1,72 +1,72 @@
-'use client'
-import React, { useEffect } from 'react'
+'use client';
+import React, { useEffect } from 'react';
 import {
   Card,
   CardHeader,
   CardBody,
   CardFooter,
   Avatar,
-  Button
-} from '@nextui-org/react'
+  Button,
+} from '@nextui-org/react';
 
 interface Note {
-  id: string
-  content: string
-  title: string
-  status: boolean
+  id: string;
+  content: string;
+  title: string;
+  status: boolean;
 }
-import { UserCircle } from '@phosphor-icons/react'
+import { UserCircle } from '@phosphor-icons/react';
 import {
   changeNoteStatus,
   deleteNote,
   summarizeNote,
-  updateNote
-} from '@/lib/apiCall'
-import TextareaAutosize from 'react-textarea-autosize'
-import { FiEdit3 } from 'react-icons/fi'
-import { set } from 'zod'
+  updateNote,
+} from '@/lib/apiCall';
+import TextareaAutosize from 'react-textarea-autosize';
+import { FiEdit3 } from 'react-icons/fi';
+import { set } from 'zod';
 
 interface NoteListProps {
-  notes: Note[]
+  notes: Note[];
 }
 
 const NoteList: React.FC<NoteListProps> = ({ notes }) => {
-  const [content, setContent] = React.useState('')
-  const [title, setTitle] = React.useState('')
+  const [content, setContent] = React.useState('');
+  const [title, setTitle] = React.useState('');
   const [updatedNote, setUpdatedNote] = React.useState({
     content: '',
-    title: ''
-  })
+    title: '',
+  });
 
-  const userId = localStorage.getItem('userId')
+  const userId = localStorage.getItem('userId');
 
   const handleDelete = async (noteId: string | null) => {
-    await deleteNote(noteId)
+    await deleteNote(noteId);
     // window.location.reload();
-  }
+  };
   // @ts-ignore
   const handleInput = async (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setUpdatedNote({
       ...updatedNote,
-      [name]: value
-    })
+      [name]: value,
+    });
     // console.log(updatedNote)
-  }
+  };
 
   const handleUpdate = async (noteId: string | null) => {
-    await updateNote(noteId, updatedNote)
-    window.location.reload()
-  }
+    await updateNote(noteId, updatedNote);
+    window.location.reload();
+  };
 
   const handleSummarize = async (noteId: string | null) => {
-    const response = await summarizeNote(noteId)
-    window.location.reload()
-  }
+    const response = await summarizeNote(noteId);
+    window.location.reload();
+  };
   const handleChangeStatus = async (noteId: string | null) => {
-    await changeNoteStatus(noteId)
-    window.location.reload()
-  }
+    await changeNoteStatus(noteId);
+    window.location.reload();
+  };
 
   // useEffect(()=>{
 
@@ -89,7 +89,9 @@ const NoteList: React.FC<NoteListProps> = ({ notes }) => {
                           cacheMeasurements
                           onChange={handleInput}
                           className="mr-4 font-semibold leading-none border-transparent rounded-lg resize-none text-small text-default-600 border-3 hover:border-red-200 hover:border-3"
-                        >Title</TextareaAutosize>
+                        >
+                          Title
+                        </TextareaAutosize>
                       </div>
                     </div>
                   </CardHeader>
@@ -111,7 +113,7 @@ const NoteList: React.FC<NoteListProps> = ({ notes }) => {
                       size="sm"
                       variant="flat"
                       onPress={() => {
-                        handleUpdate(note.id)
+                        handleUpdate(note.id);
                       }}
                     >
                       Update
@@ -126,7 +128,7 @@ const NoteList: React.FC<NoteListProps> = ({ notes }) => {
                       size="sm"
                       variant="flat"
                       onPress={() => {
-                        handleDelete(note.id)
+                        handleDelete(note.id);
                       }}
                     >
                       Delete
@@ -138,7 +140,7 @@ const NoteList: React.FC<NoteListProps> = ({ notes }) => {
                       size="sm"
                       variant="flat"
                       onPress={() => {
-                        handleSummarize(note.id)
+                        handleSummarize(note.id);
                       }}
                     >
                       Summarize
@@ -154,7 +156,7 @@ const NoteList: React.FC<NoteListProps> = ({ notes }) => {
                       size="sm"
                       variant={note.status ? 'flat' : 'flat'}
                       onPress={() => {
-                        handleChangeStatus(note.id)
+                        handleChangeStatus(note.id);
                       }}
                     >
                       {note.status ? 'Done' : 'Processing'}
@@ -167,7 +169,7 @@ const NoteList: React.FC<NoteListProps> = ({ notes }) => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default NoteList
+export default NoteList;

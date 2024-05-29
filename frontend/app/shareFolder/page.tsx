@@ -1,23 +1,18 @@
-"use client";
-import { useState } from "react";
-import FileList from "@/components/list/FileList";
-import FolderList from "@/components/list/FolderList";
+'use client';
+import { useState } from 'react';
+import FileList from '@/components/list/FileList';
+import FolderList from '@/components/list/FolderList';
 
-import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { motion } from 'framer-motion'
-import { getSharedFolder } from "@/lib/apiCall";
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { motion } from 'framer-motion';
+import { getSharedFolder } from '@/lib/apiCall';
 
 export default function Page() {
-  const [code, setCode] = useState("");
+  const [code, setCode] = useState('');
   const [folderList, setFolderList] = useState([]);
-  const [parentFolder, setParentFolder] = useState({ parentFolderId: "" });
+  const [parentFolder, setParentFolder] = useState({ parentFolderId: '' });
   const [fileList, setFileList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -84,7 +79,10 @@ export default function Page() {
       {!isLoading && !error && (
         <>
           <div className="ml-32">
-            <FolderList folders={folderList} parentFolderId={parentFolder.parentFolderId} />
+            <FolderList
+              folders={folderList}
+              parentFolderId={parentFolder.parentFolderId}
+            />
           </div>
           <div className="ml-20 -mt-5">
             <FileList files={fileList} />
@@ -94,4 +92,3 @@ export default function Page() {
     </motion.div>
   );
 }
-

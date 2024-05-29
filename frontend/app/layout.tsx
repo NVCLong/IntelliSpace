@@ -1,15 +1,14 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import { ReduxProvider } from "@/lib/Provider";
+import type { Metadata } from 'next';
+import './globals.css';
+import { ReduxProvider } from '@/lib/Provider';
 
-import TopLoader from "@/components/TopLoader";
-import React from "react";
-
+import TopLoader from '@/components/TopLoader';
+import React from 'react';
 
 export const metadata: Metadata = {
-  title: "IntelliSpace | WAD Project",
+  title: 'IntelliSpace | WAD Project',
   description:
-    "IntelliSpace is a web application. It is a project for the Web Application Development course at the HCMIU.",
+    'IntelliSpace is a web application. It is a project for the Web Application Development course at the HCMIU.',
 };
 
 export default function RootLayout({
