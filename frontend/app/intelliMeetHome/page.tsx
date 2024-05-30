@@ -98,7 +98,7 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <div className="shadow-lg">
+        <div className="shadow-lg hidden sm:flex">
           <Image
             src="/Meet_Home.png"
             alt="logo"

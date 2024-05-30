@@ -1,24 +1,25 @@
 import 'react-toastify/dist/ReactToastify.css';
-
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
-import React, {
-  MutableRefObject,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-import { getCode } from '@/lib/apiCall';
-import { toast, ToastContainer } from 'react-toastify';
-import copy from 'copy-to-clipboard';
+import React, { SetStateAction, useEffect, useRef, useState } from 'react';
+import { ToastContainer } from 'react-toastify';
 import { Peer } from 'peerjs';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import {
+  FiCamera,
+  FiCameraOff,
+  FiMessageSquare,
+  FiMic,
+  FiMicOff,
+  FiPhoneOff,
+  FiPlayCircle,
+} from 'react-icons/fi';
 
 const ChatMeeting = () => {
   const searchParams = useSearchParams();
+  const router = useRouter();
+  const [isMuted, setIsMuted] = useState(true);
+  const [isCameraOff, setIsCameraOff] = useState(true);
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([
     {
@@ -52,7 +53,7 @@ const ChatMeeting = () => {
       stompClient.subscribe(
         `/topic/room/${code}`,
         onMessageReceived,
-        (error:any) => {
+        (error: any) => {
           console.error(error);
         },
       );
@@ -128,6 +129,10 @@ const ChatMeeting = () => {
             call.on('stream', (userVideoStream) => {
               addVideoStream(remoteVideoRef, userVideoStream);
             });
+            call.on('close', () => {
+              // @ts-ignore
+              remoteVideoRef.current.srcObject = null;
+            });
           });
         })
         .catch((error) =>
@@ -191,6 +196,46 @@ const ChatMeeting = () => {
     }
   };
 
+  const handleMicControl = () => {
+    console.log(isMuted);
+    // @ts-ignore
+    localVideoRef.current.srcObject.getAudioTracks()[0].enabled = !isMuted;
+    setIsMuted(!isMuted);
+  };
+
+  const handleCameraControl = () => {
+    // @ts-ignore
+    localVideoRef.current.srcObject.getVideoTracks()[0].enabled = !isCameraOff;
+    setIsCameraOff(!isCameraOff);
+  };
+
+  const handleDisconnect = () => {
+    // @ts-ignore
+    if (localVideoRef.current.srcObject != null) {
+      // @ts-ignore
+      localVideoRef.current.srcObject.getTracks().forEach((track) => {
+        track.stop();
+      });
+
+      if (peerConnection) {
+        // @ts-ignore
+        peerConnection.destroy();
+        setPeerConnection(null);
+      }
+      if (stompClient) {
+        // @ts-ignore
+        stompClient.unsubscribe(`/topic/room/${code}`);
+      }
+
+      // @ts-ignore
+      localVideoRef.current.srcObject = null;
+      // @ts-ignore
+      remoteVideoRef.current.srcObject = null;
+
+      router.push('/intelliMeetHome');
+    }
+  };
+
   return (
     <div className="flexCenter flex-col h-screen">
       <ToastContainer
@@ -239,24 +284,47 @@ const ChatMeeting = () => {
             ))}
           </ul>
         )}
+      </div>
 
-        <div className="flex flex-col space-y-4">
-          <Button onClick={handleConnect} disabled={connected}>
-            Connect
-          </Button>
-          <Input
-            type="text"
-            placeholder="Enter nickname"
-            value={nickName}
-            onChange={handleChangeName}
-          />
-          <Input
-            type="text"
-            placeholder="Type a message"
-            onChange={handleInput}
-            value={message}
-          />
-          <Button onClick={handleSendMessage}>Send</Button>
+      {/*Floating bar*/}
+      <div className="fixed z-50 w-1/3 max-w-xs h-12 bg-white border border-gray-200 rounded-full bottom-4">
+        <div className="grid h-full max-w-lg grid-cols-5 mx-auto ">
+          <button
+            className="flexCenter hover:bg-gray-200 rounded-l-full border-r-1"
+            onClick={handleMicControl}
+          >
+            {!isMuted ? <FiMicOff size={20} /> : <FiMic size={20} />}
+          </button>
+
+          <button
+            className="flexCenter hover:bg-gray-200 border-r-1"
+            onClick={handleCameraControl}
+          >
+            {!isMuted ? <FiCameraOff size={20} /> : <FiCamera size={20} />}
+          </button>
+
+          <button
+            className="flexCenter hover:bg-gray-200 border-r-1"
+            onClick={handleConnect}
+            disabled={connected}
+          >
+            {!connected ? (
+              <FiPlayCircle size={20} />
+            ) : (
+              <FiPlayCircle size={20} className="text-gray-20" />
+            )}
+          </button>
+
+          <button className="flexCenter hover:bg-gray-200 border-r-1">
+            <FiMessageSquare size={20} />
+          </button>
+
+          <button
+            className="flexCenter  rounded-r-full bg-red-600"
+            onClick={handleDisconnect}
+          >
+            <FiPhoneOff size={20} className="text-white" />
+          </button>
         </div>
       </div>
     </div>

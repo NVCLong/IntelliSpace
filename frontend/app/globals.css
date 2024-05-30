@@ -1,180 +1,181 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Poppins;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Poppins;
 }
 
 @layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    :root {
+        --background: 0 0% 100%;
+        --foreground: 222.2 84% 4.9%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+        --card: 0 0% 100%;
+        --card-foreground: 222.2 84% 4.9%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+        --primary: 222.2 47.4% 11.2%;
+        --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+        --secondary: 210 40% 96.1%;
+        --secondary-foreground: 222.2 47.4% 11.2%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+        --muted: 210 40% 96.1%;
+        --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+        --accent: 210 40% 96.1%;
+        --accent-foreground: 222.2 47.4% 11.2%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+        --destructive: 0 84.2% 60.2%;
+        --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+        --border: 214.3 31.8% 91.4%;
+        --input: 214.3 31.8% 91.4%;
+        --ring: 222.2 84% 4.9%;
 
-    --radius: 0.5rem;
-  }
+        --radius: 0.5rem;
+    }
 }
 
 /* Hide scrollbar for Chrome, Safari, and Opera */
 .no-scrollbar::-webkit-scrollbar {
-  display: none;
+    display: none;
 }
 
 /* Hide scrollbar for IE, Edge, and Firefox */
 .no-scrollbar {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
 }
 
 .hoverScale {
-  @apply transition hover:scale-110;
+    @apply transition hover:scale-110;
 }
 
 .camFormat {
-  @apply min-w-72 max-w-[100px] max-h-[150px] object-cover;
+    @apply min-w-96 min-h-52 max-w-[200px] max-h-[150px] object-cover;
 }
 
 .fixed-card-size {
-  width: 150px;
-  height: 150px;
+    width: 150px;
+    height: 150px;
 }
 
 .fixed-icon-size {
-  width: 30px;
-  height: 30px;
+    width: 30px;
+    height: 30px;
 }
 
 .max-w-13ch {
-  max-width: 13ch;
+    max-width: 13ch;
 }
 
 @layer utilities {
-  .btn_dark {
-    @apply px-3 py-2 text-white transition-all bg-indigo-500 hover:bg-black;
-  }
+    .btn_dark {
+        @apply px-3 py-2 text-white transition-all bg-indigo-500 hover:bg-black;
+    }
 
-  .max-container {
-    @apply mx-auto max-w-[1440px];
-  }
+    .max-container {
+        @apply mx-auto max-w-[1440px];
+    }
 
-  .padding-container {
-    @apply px-6 lg:px-20;
-  }
+    .padding-container {
+        @apply px-6 lg:px-20;
+    }
 
-  .flexCenter {
-    @apply flex items-center justify-center;
-  }
+    .flexCenter {
+        @apply flex items-center justify-center;
+    }
 
-  .flexBetween {
-    @apply flex items-center justify-between;
-  }
+    .flexBetween {
+        @apply flex items-center justify-between;
+    }
 
-  .flexStart {
-    @apply flex items-center justify-start;
-  }
+    .flexStart {
+        @apply flex items-center justify-start;
+    }
 
-  .flexEnd {
-    @apply flex items-center justify-end;
-  }
+    .flexEnd {
+        @apply flex items-center justify-end;
+    }
 
-  /* FONTS */
-  .regular-64 {
-    @apply text-[64px] font-[400] leading-[120%];
-  }
+    /* FONTS */
+    .regular-64 {
+        @apply text-[64px] font-[400] leading-[120%];
+    }
 
-  .regular-40 {
-    @apply text-[40px] font-[400] leading-[120%];
-  }
+    .regular-40 {
+        @apply text-[40px] font-[400] leading-[120%];
+    }
 
-  .regular-32 {
-    @apply text-[32px] font-[400];
-  }
+    .regular-32 {
+        @apply text-[32px] font-[400];
+    }
 
-  .regular-24 {
-    @apply text-[24px] font-[400];
-  }
+    .regular-24 {
+        @apply text-[24px] font-[400];
+    }
 
-  .regular-20 {
-    @apply text-[20px] font-[400];
-  }
+    .regular-20 {
+        @apply text-[20px] font-[400];
+    }
 
-  .regular-18 {
-    @apply text-[18px] font-[400];
-  }
+    .regular-18 {
+        @apply text-[18px] font-[400];
+    }
 
-  .regular-16 {
-    @apply text-[16px] font-[400];
-  }
+    .regular-16 {
+        @apply text-[16px] font-[400];
+    }
 
-  .regular-14 {
-    @apply text-[14px] font-[400];
-  }
+    .regular-14 {
+        @apply text-[14px] font-[400];
+    }
 
-  .medium-14 {
-    @apply text-[14px] font-[600];
-  }
+    .medium-14 {
+        @apply text-[14px] font-[600];
+    }
 
-  .bold-88 {
-    @apply text-[88px] font-[700] leading-[120%];
-  }
+    .bold-88 {
+        @apply text-[88px] font-[700] leading-[120%];
+    }
 
-  .bold-64 {
-    @apply text-[64px] font-[700] leading-[120%];
-  }
+    .bold-64 {
+        @apply text-[64px] font-[700] leading-[120%];
+    }
 
-  .bold-52 {
-    @apply text-[52px] font-[700] leading-[120%];
-  }
+    .bold-52 {
+        @apply text-[52px] font-[700] leading-[120%];
+    }
 
-  .bold-40 {
-    @apply text-[40px] font-[700] leading-[120%];
-  }
+    .bold-40 {
+        @apply text-[40px] font-[700] leading-[120%];
+    }
 
-  .bold-32 {
-    @apply text-[32px] font-[700] leading-[120%];
-  }
+    .bold-32 {
+        @apply text-[32px] font-[700] leading-[120%];
+    }
 
-  .bold-20 {
-    @apply text-[20px] font-[700];
-  }
+    .bold-20 {
+        @apply text-[20px] font-[700];
+    }
 
-  .bold-18 {
-    @apply text-[18px] font-[700];
-  }
+    .bold-18 {
+        @apply text-[18px] font-[700];
+    }
 
-  .bold-16 {
-    @apply text-[16px] font-[700];
-  }
+    .bold-16 {
+        @apply text-[16px] font-[700];
+    }
 }
 
 @layer base {
@@ -182,39 +183,39 @@
 
 .registerWrapper,
 .signInWrapper {
-  @apply flex items-center justify-center mt-8 mb-8;
+    @apply flex items-center justify-center mt-8 mb-8;
 }
 
 .formWrapper {
-  @apply flex items-center border rounded-xl shadow-lg overflow-hidden justify-center w-[20rem] mx-6 md:w-auto my-4;
+    @apply flex items-center border rounded-xl shadow-lg overflow-hidden justify-center w-[20rem] mx-6 md:w-auto my-4;
 }
 
 .registerWrapper .left,
 .signInWrapper .left {
-  @apply flex-col items-center justify-center hidden md:flex;
+    @apply flex-col items-center justify-center hidden md:flex;
 }
 
 .registerWrapper .left .title,
 .signInWrapper .left .title {
-  @apply text-2xl font-semibold;
+    @apply text-2xl font-semibold;
 }
 
 .registerWrapper .left p,
 .signInWrapper .left p {
-  @apply text-sm max-w-[90%] text-center mb-3;
+    @apply text-sm max-w-[90%] text-center mb-3;
 }
 
 .signInWrapper .right,
 .registerWrapper .right {
-  @apply px-4 py-4 my-4 mx-4 md:w-1/2 w-[20rem] bg-white rounded-lg;
+    @apply px-4 py-4 my-4 mx-4 md:w-1/2 w-[20rem] bg-white rounded-lg;
 }
 
 .socialFormBtn {
-  @apply rounded-full h-[2.5rem] w-[2.5rem] p-0 mx-2 border-gray-400;
+    @apply rounded-full h-[2.5rem] w-[2.5rem] p-0 mx-2 border-gray-400;
 }
 
 .socialRegisterOptions {
-  @apply flex items-center justify-center my-3;
+    @apply flex items-center justify-center my-3;
 }
 
 /* @layer base {

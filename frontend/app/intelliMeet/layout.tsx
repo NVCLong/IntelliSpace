@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import TopLoader from '@/components/TopLoader';
-import Sidebar from '@/components/SideBar';
 
 export const metadata: Metadata = {
   title: 'IntelliMeet | IntelliSpace',
@@ -11,7 +10,7 @@ const Dashboardlayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="">
       <TopLoader />
-      <Sidebar />
+      {/*<Sidebar />*/}
       {children}
     </div>
   );

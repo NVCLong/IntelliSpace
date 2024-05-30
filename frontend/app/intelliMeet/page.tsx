@@ -3,7 +3,7 @@ import ChatMeeting from '@/components/intelliMeet/ChatMeeting';
 
 export default function Page() {
   return (
-    <div className=''>
+    <div>
       <ChatMeeting />
     </div>
   );
