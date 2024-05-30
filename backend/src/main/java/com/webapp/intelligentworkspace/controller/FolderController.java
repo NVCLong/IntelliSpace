@@ -73,8 +73,8 @@ public class FolderController {
 
     @GetMapping(value="/getShareCode")
     @ResponseBody
-    public ResponseEntity<String> getShareCode(@RequestParam("folderId") Long folderId, @RequestParam("storageId") Long storageId) throws NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
-        String code = folderService.generateShareCode(folderId,storageId);
+    public ResponseEntity<String> getShareCode(@RequestParam("folderId") Long folderId, @RequestParam("storageId") Long storageId, @RequestParam("userId") Integer userId) throws NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+        String code = folderService.generateShareCode(folderId,storageId, userId);
         return ResponseEntity.ok(code);
     }
 

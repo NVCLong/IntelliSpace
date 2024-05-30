@@ -67,6 +67,16 @@ const Page = () => {
     router.push('/signin');
   }
 
+  useEffect(() => {
+    let userId;
+    if(typeof window !=='undefined'){
+      userId= localStorage.getItem("userId")
+    }
+    if(userId!==null){
+      router.push("/dashboard")
+    }
+  }, []);
+
   return (
     <>
       <motion.div

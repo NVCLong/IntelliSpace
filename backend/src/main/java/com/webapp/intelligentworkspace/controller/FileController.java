@@ -1,5 +1,6 @@
 package com.webapp.intelligentworkspace.controller;
 
+import com.azure.core.annotation.Get;
 import com.webapp.intelligentworkspace.model.entity.File;
 import com.webapp.intelligentworkspace.service.BlobStorageService;
 import com.webapp.intelligentworkspace.service.FileService;
@@ -11,8 +12,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -65,8 +72,34 @@ public class FileController {
         }
     }
 
-
-
+    @GetMapping(value="/sharedFile/download")
+    public ResponseEntity<byte[]> downloadSharedFile(@RequestParam("code") String code, @RequestParam("fileName") String fileName, @RequestParam("fileId") Long fileId) throws NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+        System.out.println(fileName);
+        String headerValue = "attachment; filename=\"" +fileName + "\"";
+        if(fileName.contains(".png")){
+            return ResponseEntity.status(200)
+                    .contentType(MediaType.IMAGE_PNG)
+                    .header(HttpHeaders.CONTENT_DISPOSITION, headerValue)
+                    .body(fileService.getSharedFile(code, fileName, fileId));
+        } else if (fileName.contains(".jpeg")) {
+            return ResponseEntity.status(200)
+                    .contentType(MediaType.IMAGE_JPEG)
+                    .header(HttpHeaders.CONTENT_DISPOSITION, headerValue)
+                    .body(fileService.getSharedFile(code, fileName, fileId));
+        }else if (fileName.contains(".txt")) {
+            return ResponseEntity.status(200)
+                    .contentType(MediaType.TEXT_PLAIN)
+                    .header(HttpHeaders.CONTENT_DISPOSITION, headerValue)
+                    .body(fileService.getSharedFile(code, fileName, fileId));
+        } else if (fileName.contains(".docx")) {
+            return ResponseEntity.status(200)
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .header(HttpHeaders.CONTENT_DISPOSITION, headerValue)
+                    .body(fileService.getSharedFile(code, fileName, fileId));
+        }else {
+            return null;
+        }
+    }
 
 
 //

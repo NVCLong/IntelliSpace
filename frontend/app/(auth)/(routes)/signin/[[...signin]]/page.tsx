@@ -29,6 +29,8 @@ import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { setStorageID } from '@/lib/features/todos/storageSlice';
 
+
+
 const signInSchema = z.object({
   username: z.string(),
   password: z.string().min(6, 'Password should have at least 6 characters.'),
@@ -62,6 +64,16 @@ const Page = () => {
   // const ResponseFolder = await axios.get("http://localhost:8888/api/folder/rootFolders/{storageId}"
   // );
   // localStorage.setItem("storageId", ResponseFolder.data.storageId);
+  // useEffect(() => {
+  //   let userId;
+  //   if(typeof window !=='undefined'){
+  //     userId= localStorage.getItem("userId")
+  //   }
+  //   if(userId!==null){
+  //     router.push("/dashboard")
+  //   }
+  // }, []);
+
 
   return (
     <>
@@ -91,6 +103,7 @@ const Page = () => {
               <GoogleOAuthProvider clientId="221707522416-c5ac904abilmbldbpq7m75t0kpekigjm.apps.googleusercontent.com">
                 <CustomButton />
               </GoogleOAuthProvider>
+
             </div>
             <p className="text-center">or use this option</p>
             <Form {...form}>

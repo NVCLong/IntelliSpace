@@ -84,6 +84,7 @@ const SideBar: React.FC = () => {
     // console.log(storageUsed)
     setUsed(storageUsed.storage.currentStorage);
     setTotal(storageUsed.storage.maxStorage);
+
   };
 
   useEffect(() => {

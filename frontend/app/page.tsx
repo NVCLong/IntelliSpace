@@ -28,7 +28,7 @@ export default function Home() {
   return (
     <NextUIProvider>
       <>
-        <TopLoader />
+        <TopLoader/>
         <NavBar />
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
@@ -78,6 +78,4 @@ export default function Home() {
       </>
     </NextUIProvider>
   );
-
 }
-

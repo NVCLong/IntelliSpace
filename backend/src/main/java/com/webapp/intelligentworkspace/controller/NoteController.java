@@ -43,6 +43,7 @@ public class NoteController {
     @ResponseBody
     public ResponseEntity<Note> updateNote(@PathVariable("noteId") Long noteId, @RequestBody Note updatedNote){
         System.out.println("Update Note");
+        System.out.println(updatedNote);
         return ResponseEntity.ok(noteService.updateNote(noteId,updatedNote));
     }
 
