@@ -19,6 +19,7 @@ import Link from 'next/link';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
+import { useEffect } from 'react';
 
 const registerSchema = z
   .object({
@@ -63,7 +64,7 @@ const Page = () => {
       values,
     );
     // console.log(response.data);
-    await router.push('/signin');
+    router.push('/signin');
   }
 
   return (
