@@ -12,28 +12,28 @@ import {
   ModalFooter,
   ModalHeader,
   useDisclosure,
-} from '@nextui-org/react'
-import { FiEdit3, FiShare, FiTrash2 } from 'react-icons/fi'
-import { toast, ToastContainer } from 'react-toastify'
+} from '@nextui-org/react';
+import { FiEdit3, FiShare, FiTrash2 } from 'react-icons/fi';
+import { toast, ToastContainer } from 'react-toastify';
 
-import { deleteFolder, openFolder, updateFolder } from '@/lib/apiCall'
+import { deleteFolder, openFolder, updateFolder } from '@/lib/apiCall';
 import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuLabel,
   ContextMenuTrigger,
-} from '@/components/ui/context-menu'
-import { shareFolderCode } from '@/lib/apiCall'
+} from '@/components/ui/context-menu';
+import { shareFolderCode } from '@/lib/apiCall';
 
 interface Folder {
-  id: string
-  name: string
+  id: string;
+  name: string;
 }
 
 interface FolderListProps {
-  folders: Folder[]
-  parentFolderId: string
+  folders: Folder[];
+  parentFolderId: string;
 }
 
 // @ts-ignore
@@ -46,72 +46,69 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
       userId=localStorage.getItem("userId");
   }
 
-  const [folderName, setFolderName] = useState('')
-  const [currentFolderId, setCurrenFolderId] = useState('')
+  const [folderName, setFolderName] = useState('');
+  const [currentFolderId, setCurrenFolderId] = useState('');
 
   const handleDelete = (folderId: number) => {
     // @ts-ignore
     if (storageId !== null) {
-      const response = deleteFolder(storageId, folderId)
+      const response = deleteFolder(storageId, folderId);
       // console.log(response)
     }
-  }
+  };
   const handleChangeFolder = (folderId: string) => {
-    setCurrenFolderId(folderId)
-  }
+    setCurrenFolderId(folderId);
+  };
   const handleInput = (e: {
-    target: { value: React.SetStateAction<string> }
+    target: { value: React.SetStateAction<string> };
   }) => {
-    setFolderName(e.target.value)
-  }
-
+    setFolderName(e.target.value);
+  };
 
   const handleShareFolder = async (folderId: string) => {
-    // @ts-ignore
-    const response = await shareFolderCode(folderId, storageId);
-    toast.success(
-      <div>
-        Code: {response}
-        <br />
-        Copied to clipboard
-      </div>,
-    );
+
+    const response = await shareFolderCode(folderId, storageId,userId)
+    console.log(response)
+    toast.success(<div>
+    Code: {response}
+    <br />
+    Copied to clipboard
+  </div>)
     copy(response);
-  }
+  };
 
   const handleUpdate = (folderId: string) => {
     const newFolder = {
-      name: folderName
-    }
+      name: folderName,
+    };
     // @ts-ignore
     if (storageId !== null) {
-      const response = updateFolder(storageId, folderId, newFolder)
+      const response = updateFolder(storageId, folderId, newFolder);
       // console.log(response)
     }
-  }
+  };
   const handleOpen = async (folderId: string) => {
-    if ( storageId!== null) {
-      localStorage.setItem('folderId', folderId)
+    if (storageId !== null) {
+      localStorage.setItem('folderId', folderId);
     }
-  }
+  };
 
   return (
     <div className="flex flex-col p-3 overflow-hidden sm:py-12">
       <ToastContainer
-          position="bottom-right"
-          autoClose={8000}
-          hideProgressBar={false}
-          newestOnTop
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="colored"
-        />
+        position="bottom-right"
+        autoClose={8000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       <div className="w-full max-w-screen-xl mx-auto">
         <div className="grid gap-6 md:grid-cols-4 grid-col-2 xl:grid-cols-6">
-
           {folders.map((folder) => (
             <div key={folder.id}>
               <ContextMenu>
@@ -120,7 +117,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
                     <ContextMenuItem
                       className="hover:bg-slate-600 "
                       onClick={() => {
-                        handleShareFolder(folder.id)
+                        handleShareFolder(folder.id);
                       }}
                     >
                       <ContextMenuLabel className="flex hover:text-white">
@@ -132,8 +129,8 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
                     <ContextMenuItem
                       className="hover:bg-slate-600 "
                       onClick={(e) => {
-                        handleChangeFolder(folder.id)
-                        onOpen()
+                        handleChangeFolder(folder.id);
+                        onOpen();
                       }}
                     >
                       <ContextMenuLabel className="flex hover:text-white">
@@ -145,10 +142,10 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
                     <ContextMenuItem
                       className="hover:bg-slate-600"
                       onClick={() => {
-                        handleDelete(Number.parseInt(folder.id))
+                        handleDelete(Number.parseInt(folder.id));
                         setTimeout(() => {
                           window.location.reload();
-                        }, 2000)
+                        }, 2000);
                       }}
                     >
                       <ContextMenuLabel className="flex hover:text-white">
@@ -161,8 +158,8 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
                   <div
                     key={folder.id}
                     onClick={() => {
-                      handleOpen(folder.id)
-                      window.location.reload()
+                      handleOpen(folder.id);
+                      window.location.reload();
                     }}
                     className="flex items-center w-40 p-3 bg-white rounded-md shadow-md cursor-pointer h-15 hoverScale"
                   >
@@ -205,7 +202,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
                         <Button
                           color="primary"
                           onPress={(e) => {
-                            handleUpdate(currentFolderId)
+                            handleUpdate(currentFolderId);
                             window.location.reload();
                           }}
                         >
@@ -221,7 +218,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default FolderList
+export default FolderList;

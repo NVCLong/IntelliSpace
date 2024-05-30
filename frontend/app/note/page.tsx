@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import { useEffect,useState } from "react";
 import { getAllNotes } from "@/lib/apiCall";
@@ -9,23 +9,23 @@ import { router } from "next/client";
 import { useRouter } from "next/navigation";
 
 export default function Page() {
+  const [userId, setUserId] = useState('');
   const router = useRouter();
-  const[userId, setUserId]= useState("")
   const [noteList, setNoteList] = useState([]);
-  const [error, setError] = useState({ message: "" });
+  const [error, setError] = useState({ message: '' });
 
-  const handleFetchData = async (userId:string|null) => {
-    setError({ message: "" }); // Reset any previous error
-    if (userId === "") {
-      setError({ message: "do not have userId" });
+  const handleFetchData = async (userId: string | null) => {
+    setError({ message: '' }); // Reset any previous error
+    if (userId === '') {
+      setError({ message: 'do not have userId' });
       return;
     }
     try {
       // @ts-ignore
       const response = await getAllNotes(userId);
       setNoteList(response);
-      if (response=== null) {
-        console.log("Null");
+      if (response === null) {
+        console.log('Null');
       }
     } catch (error) {
       // @ts-ignore
@@ -46,13 +46,12 @@ export default function Page() {
       console.log(userId === null);
       handleFetchData(userId)
         .then(() => {
-          console.log("success");
+          console.log('success');
         })
         .catch(() => {
-          console.log("error");
-       })
+          console.log('error');
+        });
     }
-
   }, []);
 
   return (
@@ -68,7 +67,7 @@ export default function Page() {
     >
       <NewNote className="flex flex-row ml-36" userId={userId} />
       <div className="mt-10 ml-16">
-        {noteList.length > 0 && error.message === "" && (
+        {noteList.length > 0 && error.message === '' && (
           <NoteList notes={noteList} />
         )}
       </div>
