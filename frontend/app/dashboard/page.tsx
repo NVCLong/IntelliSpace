@@ -20,11 +20,12 @@ import {
   DrawerHeader,
   DrawerTrigger,
 } from '@/components/ui/drawer';
-import { router } from 'next/client';
+import { useRouter } from 'next/navigation';
 
 // import SearchBar from "@/components/SearchBar";
 
 export default function Page() {
+  const router = useRouter();
   let storageID_temp: string | null;
   let folderId: string | null;
   if (typeof window !== 'undefined') {

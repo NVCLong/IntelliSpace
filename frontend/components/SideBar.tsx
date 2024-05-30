@@ -41,6 +41,7 @@ const SideBar: React.FC = () => {
     localStorage.removeItem('folderId');
     localStorage.removeItem('parentFolder');
     clearCookies();
+    router.push('/');
   };
 
   const navItems = [
