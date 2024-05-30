@@ -31,19 +31,19 @@ export const getHeader = async () => {
   return {
     Authorization: `Bearer ${accessToken}`,
     // "Content-Type": "application/json",
-  };
-};
+  }
+}
 
 export const getAllRootFolder = async (storageId: string) => {
   try {
     const response = await api.get(`/folder/rootFolders/${storageId}`, {
-      headers: await getHeader(),
-    });
-    return response.data;
+      headers: await getHeader()
+    })
+    return response.data
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
-};
+}
 
 export const createRootFolder = async (storageId: string, folder: Object) => {
   try {
@@ -52,93 +52,93 @@ export const createRootFolder = async (storageId: string, folder: Object) => {
       `/folder/root_folder/create/${storageId}`,
       folder,
       {
-        headers: await getHeader(),
-      },
-    );
+        headers: await getHeader()
+      }
+    )
 
     // console.log(response.data)
-    return response.data;
+    return response.data
   } catch (e) {
-    console.log(e);
+    console.log(e)
   }
-};
+}
 
 export const sendMailPassword = async (email: string) => {
   try {
     let user = {
-      email: email,
-    };
-    const response = await api.post(`/auth/resetPassword`, user);
-    return response.data;
+      email: email
+    }
+    const response = await api.post(`/auth/resetPassword`, user)
+    return response.data
   } catch (e) {
-    console.log(e);
+    console.log(e)
   }
-};
+}
 
 export const deleteFolder = async (storageId: string, folderId: number) => {
   try {
-    const headers = await getHeader();
+    const headers = await getHeader()
     const response = await api.delete(
       `/folder/delete/${storageId}?folderId=${folderId}`,
       {
-        headers: headers,
-      },
-    );
+        headers: headers
+      }
+    )
 
     // console.log('Folder deleted successfully:', response.data)
-    return response.data;
+    return response.data
   } catch (error) {
-    console.error('Error deleting folder:', error);
-    throw error;
+    console.error('Error deleting folder:', error)
+    throw error
   }
-};
+}
 export const updateFolder = async (
   storageId: string,
   folderId: string,
-  newFolder: object,
+  newFolder: object
 ) => {
   try {
-    const headers = await getHeader();
-    console.log(newFolder);
+    const headers = await getHeader()
+    console.log(newFolder)
     // @ts-ignore
     const response = await api.patch(
       `/folder/update/${storageId}/${folderId}`,
       newFolder,
       {
-        headers: headers,
-      },
-    );
-    return response.data;
+        headers: headers
+      }
+    )
+    return response.data
   } catch (error) {
-    console.error('Error deleting folder:', error);
-    throw error;
+    console.error('Error deleting folder:', error)
+    throw error
   }
-};
+}
 
 export const openFolder = async (
   storageId: string | null,
-  folderId: string,
+  folderId: string
 ) => {
   try {
-    const headers = await getHeader();
+    const headers = await getHeader()
     const response = await api.get(
       `/folder/getFolder/${storageId}?folderId=${folderId}`,
       {
-        headers: headers,
-      },
-    );
+        headers: headers
+      }
+    )
 
-    return response.data;
+    return response.data
   } catch (e) {
-    console.error('Error :', e);
-    throw e;
+    console.error('Error :', e)
+    throw e
   }
-};
+}
 
 export const createFolder = async (
   storageId: string,
   parentFolderId: string,
-  newFolder: object,
+  newFolder: object
 ) => {
   try {
     // console.log('storage Id' + storageId)
@@ -146,269 +146,268 @@ export const createFolder = async (
       `/folder/create/${storageId}/${parentFolderId}`,
       newFolder,
       {
-        headers: await getHeader(),
-      },
-    );
+        headers: await getHeader()
+      }
+    )
 
     // console.log(response.data)
-    return response.data;
+    return response.data
   } catch (e) {
-    console.log(e);
+    console.log(e)
   }
-};
+}
 
 export const uploadFile = async (
   userId: string,
   folderId: string,
   storageId: string,
-  file: string | Blob,
+  file: string | Blob
 ) => {
   try {
     // console.log('upload file ')
     // console.log(file)
-    const form = new FormData();
-    form.append('file', file);
+    const form = new FormData()
+    form.append('file', file)
 
-    const header = await getHeader();
+    const header = await getHeader()
     const response = await api.post(
       `/file/upload/${userId}/${folderId}/${storageId}`,
       form,
       {
-        headers: header,
-      },
-    );
-    return response.data;
+        headers: header
+      }
+    )
+    return response.data
   } catch (e) {
-    console.error(e);
-    throw e;
+    console.error(e)
+    throw e
   }
-};
+}
 
 export const getCapacity = async (storageId: string | null) => {
   try {
-    const header = await getHeader();
+    const header = await getHeader()
     const response = await api.get(
       `/storage/currentCapacity?storageId=${storageId}`,
       {
-        headers: header,
-      },
-    );
+        headers: header
+      }
+    )
     // console.log(response.data)
 
-    return response.data;
+    return response.data
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
-};
+}
 
 export const softDelete = async (fileId: string) => {
   try {
     // console.log(fileId)
-    const header = await getHeader();
+    const header = await getHeader()
     const response = await api.patch(
       `/file/softDelete?fileId=${fileId}`,
       {},
       {
-        headers: header,
-      },
-    );
-    return response.data;
+        headers: header
+      }
+    )
+    return response.data
   } catch (e) {
-    console.log(e);
-    throw e;
+    console.log(e)
+    throw e
   }
-};
+}
 
 export const getFile = async (
   fileId: string,
   fileName: string,
-  userId: string | null,
+  userId: string | null
 ) => {
   try {
-    const header = await getHeader();
+    const header = await getHeader()
     const response = await api.get(
       `file/read/${userId}/${fileName}?fileId=${fileId}`,
       {
         headers: header,
-        responseType: 'blob',
-      },
-    );
-    return response.data;
+        responseType: 'blob'
+      }
+    )
+    return response.data
   } catch (e) {
-    console.log(e);
-    throw e;
+    console.log(e)
+    throw e
   }
-};
+}
 
 export const deletedFile = async (storageId: string | null) => {
   try {
-    const header = await getHeader();
+    const header = await getHeader()
     const response = await api.get(`file/trash/${storageId}`, {
-      headers: header,
-    });
+      headers: header
+    })
     // console.log(response.data)
-    return response.data;
+    return response.data
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
-};
+}
 
 export const shareFolderCode = async (folderId: string, storageId: string | null, userId: string|null) => {
   try {
-    const header = await getHeader();
+    const header = await getHeader()
     const response = await api.get(
       `folder/getShareCode?folderId=${folderId}&storageId=${storageId}`,
       {
-        headers: header,
-      },
-    );
+        headers: header
+      }
+    )
     // console.log(response.data)
-    return response.data;
+    return response.data
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
-};
+}
 
 export const deletePermanently = async (
   fileId: number,
   storageId: number,
-  userId: number,
+  userId: number
 ) => {
   try {
-    const header = await getHeader();
+    const header = await getHeader()
     const response = await api.delete(
       `file/delete/${fileId}/${storageId}?userId=${userId}`,
       {
-        headers: header,
-      },
-    );
+        headers: header
+      }
+    )
     // console.log(response)
-    return response.data;
+    return response.data
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
-};
+}
 export const createNote = async (userId: string | null, note: object) => {
   try {
     // console.log(note)
-    const header = await getHeader();
+    const header = await getHeader()
     const response = await api.post(`note/create/${userId}`, note, {
-      headers: header,
-    });
+      headers: header
+    })
     // console.log(response)
-    return response.data;
+    return response.data
   } catch (e) {
-    console.log(e);
-    throw e;
+    console.log(e)
+    throw e
   }
-};
+}
 
 export const getAllNotes = async (userId: string | null) => {
   try {
     // console.log(userId)
-    const header = await getHeader();
+    const header = await getHeader()
     const response = await api.get(`/note/${userId}`, {
-      headers: header,
-    });
-    return response.data;
+      headers: header
+    })
+    return response.data
   } catch (e) {
-    console.log(e);
+    console.log(e)
   }
-};
+}
 
 export const changeNoteStatus = async (noteId: string | null) => {
   try {
-    const header = await getHeader();
+    const header = await getHeader()
     const response = await api.patch(
       `note/updateStatus?noteId=${noteId}`,
       {},
       {
-        headers: header,
-      },
-    );
-    return response.data;
+        headers: header
+      }
+    )
+    return response.data
   } catch (e) {
-    console.log(e);
-    throw e;
+    console.log(e)
+    throw e
   }
-};
+}
 
 export const deleteNote = async (noteId: string | null) => {
   try {
-    const header = await getHeader();
+    const header = await getHeader()
     const response = await api.delete(`note/delete/${noteId}`, {
-      headers: header,
-    });
-    return response.data;
+      headers: header
+    })
+    return response.data
   } catch (e) {
-    console.log(e);
-    throw e;
+    console.log(e)
+    throw e
   }
-};
+}
 export const summarizeNote = async (noteId: string | null) => {
   try {
-    const header = await getHeader();
+    const header = await getHeader()
     const response = await api.patch(
       `note/sumarize/${noteId}`,
       {},
       {
-        headers: header,
-      },
-    );
-    return response.data;
+        headers: header
+      }
+    )
+    return response.data
   } catch (e) {
-    console.log(e);
-    throw e;
+    console.log(e)
+    throw e
   }
-};
+}
 
 export const updateNote = async (
   noteId: string | null,
-  updatedNote: object,
+  updatedNote: object
 ) => {
   try {
-    const header = await getHeader();
+    const header = await getHeader()
     // console.log(updatedNote)
     const response = await api.patch(`note/update/${noteId}`, updatedNote, {
-      headers: header,
-    });
+      headers: header
+    })
     // console.log(response.data)
-    return response.data;
+    return response.data
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
-};
+}
 
 export const sendPrompt = async (prompt: string) => {
   try {
     // console.log(prompt)
-    const header = await getHeader();
+    const header = await getHeader()
     const response = await api.post(
       'openai/chat',
       { prompt },
       {
-        headers: header,
-      },
-    );
+        headers: header
+      }
+    )
     // console.log(response.data)
-    return response.data;
+    return response.data
   } catch (error) {
-    console.error('Error sending prompt:', error);
-    throw error;
+    console.error('Error sending prompt:', error)
+    throw error
   }
-};
+}
 
 export const getSharedFolder = async (code:string | null) =>{
   try {
-    console.log(code);
+    console.log(code)
     const header = await getHeader();
-    const response = await api.post(
-      `folder/shared`,
-      { sharedCode: code },
-      { headers: header },
-    );
+    const response = await api.post(`folder/shared`,
+      {sharedCode: code}, {headers: header}
+    )
     // console.log(response.data)
     return response.data
+
   }
   catch (e)
   {
@@ -429,4 +428,4 @@ export const downloadSharedFile=async (code:string | null, fileId:string, fileNa
     console.error(error.message)
     throw error
   }
-};
+}
