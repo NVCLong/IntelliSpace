@@ -266,7 +266,7 @@ public class FolderService {
     }
 
     //hash code the string contain folderId and user storageId
-    public String generateShareCode(Long folderId, Long storageId) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+    public String generateShareCode(Long folderId, Long storageId, Integer userId) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         Folder folder= folderRepository.findById(folderId).orElse(null);
         if(folder==null){
             return null;
@@ -275,7 +275,7 @@ public class FolderService {
         byte[] decodedKey= Base64.getDecoder().decode(base64EncodedKey);
         SecretKey key= new SecretKeySpec(decodedKey,"AES");
 
-        String privateInformation= folderId+"."+storageId;
+        String privateInformation= folderId+"."+storageId +"."+userId;
 
         Cipher cipher= Cipher.getInstance("AES");
         cipher.init(Cipher.ENCRYPT_MODE,key);

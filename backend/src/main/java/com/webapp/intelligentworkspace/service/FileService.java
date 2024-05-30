@@ -14,7 +14,12 @@ import com.webapp.intelligentworkspace.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.crypto.*;
+import javax.crypto.spec.SecretKeySpec;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -27,6 +32,7 @@ public class FileService {
     private final StorageRepository storageRepository;
     private final StorageService storageService;
     private final BlobStorageService blobStorageService;
+    private  final String base64EncodedKey = "9fWSwatmHu2KQwLoDA1rSQ==";
 
     public FileService(BlobServiceClient blobServiceClient, FileRepository fileRepository, FolderRepository folderRepository, UserRepository userRepository, StorageRepository storageRepository, StorageService storageService, BlobStorageService blobStorageService) {
         this.blobServiceClient = blobServiceClient;
@@ -90,6 +96,21 @@ public class FileService {
 //        if(file.getIsDeleted()){
 //            return null;
 //        }
+        return blobStorageService.getFile(fileName,userId);
+    }
+
+    public byte[] getSharedFile(String sharedCode, String fileName, Long fileId) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+        byte[] decodedKey= Base64.getDecoder().decode(base64EncodedKey);
+        SecretKey key= new SecretKeySpec(decodedKey,"AES");
+        Cipher cipher= Cipher.getInstance("AES");
+        cipher.init(Cipher.DECRYPT_MODE,key);
+        byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(sharedCode));
+        String decryptedString= new String(decryptedBytes);
+        System.out.println(decryptedString);
+
+        int userId= Integer.parseInt(decryptedString.split("\\.")[2]);
+        File file = fileRepository.findById(fileId).orElseThrow(() -> new RuntimeException("File not found"));
+
         return blobStorageService.getFile(fileName,userId);
     }
 

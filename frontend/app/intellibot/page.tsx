@@ -1,10 +1,18 @@
-'use client';
-import Chat from '@/components/Chat';
+"use client";
+import Chat from "@/components/Chat"
+import { useEffect } from "react";
+import { router } from "next/client";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
-  return (
-    <>
-      <Chat />
-    </>
-  );
+  const router = useRouter();
+  useEffect(()=>{
+    let userId=localStorage.getItem("userId")
+    if(userId==null){
+      router.push("/")
+    }
+  },[])
+  return <>
+      <Chat/>
+  </>;
 }

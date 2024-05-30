@@ -1,18 +1,28 @@
-'use client';
-import { useState } from 'react';
-import FileList from '@/components/list/FileList';
-import FolderList from '@/components/list/FolderList';
+"use client";
+import { useEffect, useState } from "react";
+import FileList from "@/components/sharedList/FileList";
+import FolderList from "@/components/sharedList/FolderList";
+import {Spinner} from "@nextui-org/react";
 
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { motion } from 'framer-motion';
-import { getSharedFolder } from '@/lib/apiCall';
+import { Button } from "@/components/ui/button"
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { motion } from 'framer-motion'
+import { getSharedFolder } from "@/lib/apiCall";
+import { router } from "next/client";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
-  const [code, setCode] = useState('');
+
+  const router = useRouter();
+  const [code, setCode] = useState("");
   const [folderList, setFolderList] = useState([]);
-  const [parentFolder, setParentFolder] = useState({ parentFolderId: '' });
+  const [parentFolder, setParentFolder] = useState({ parentFolderId: "" });
   const [fileList, setFileList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -27,11 +37,11 @@ export default function Page() {
 
     try {
       const response = await getSharedFolder(code);
-
+      console.log(response)
       setFolderList(response.subFolders);
 
       // Handle potentially empty files array gracefully
-      setFileList(response.files || []);
+      setFileList(response.files);
 
       setParentFolder({ parentFolderId: response.parentFolder.id });
     } catch (error) {
@@ -41,6 +51,14 @@ export default function Page() {
       setIsLoading(false);
     }
   };
+  useEffect(() => {
+    if(typeof  window !="undefined"){
+      let userId=localStorage.getItem("userId")
+      if(userId==null){
+        router.push("/")
+      }
+    }
+  }, []);
 
   // @ts-ignore
   return (
@@ -73,10 +91,10 @@ export default function Page() {
         </CardContent>
       </Card>
 
-      {isLoading && <div>Loading...</div>}
-      {error && <div>Error fetching shared folder: {error}</div>}
+      {isLoading && <div><Spinner/></div>}
 
-      {!isLoading && !error && (
+
+      {!isLoading && (
         <>
           <div className="ml-32">
             <FolderList
@@ -92,3 +110,4 @@ export default function Page() {
     </motion.div>
   );
 }
+

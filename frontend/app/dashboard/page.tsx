@@ -44,6 +44,12 @@ export default function Page() {
   const [fileList, setFileList] = useState([]);
 
   useEffect(() => {
+    if(typeof  window !="undefined"){
+      let userId=localStorage.getItem("userId")
+      if(userId==null){
+        router.push("/")
+      }
+    }
     const handleFetchData = async () => {
       try {
         if (folderId === null) {

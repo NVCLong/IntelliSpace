@@ -1,79 +1,78 @@
-'use client';
-import React, { useEffect } from 'react';
+'use client'
+import React, { useEffect } from 'react'
 import {
   Card,
   CardHeader,
   CardBody,
   CardFooter,
   Avatar,
-  Button,
-} from '@nextui-org/react';
+  Button
+} from '@nextui-org/react'
 
 interface Note {
-  id: string;
-  content: string;
-  title: string;
-  status: boolean;
+  id: string
+  content: string
+  title: string
+  status: boolean
 }
-import { UserCircle } from '@phosphor-icons/react';
+import { UserCircle } from '@phosphor-icons/react'
 import {
   changeNoteStatus,
   deleteNote,
   summarizeNote,
-  updateNote,
-} from '@/lib/apiCall';
-import TextareaAutosize from 'react-textarea-autosize';
-import { FiEdit3 } from 'react-icons/fi';
-import { set } from 'zod';
+  updateNote
+} from '@/lib/apiCall'
+import TextareaAutosize from 'react-textarea-autosize'
+import { FiEdit3 } from 'react-icons/fi'
+import { set } from 'zod'
 
 interface NoteListProps {
-  notes: Note[];
+  notes: Note[]
 }
 
 const NoteList: React.FC<NoteListProps> = ({ notes }) => {
-  const [content, setContent] = React.useState('');
-  const [title, setTitle] = React.useState('');
+  const [content, setContent] = React.useState('')
+  const [title, setTitle] = React.useState('')
   const [updatedNote, setUpdatedNote] = React.useState({
     content: '',
-    title: '',
-  });
+    title: ''
+  })
 
-  const userId = localStorage.getItem('userId');
+  const userId = localStorage.getItem('userId')
 
   const handleDelete = async (noteId: string | null) => {
-    await deleteNote(noteId);
-    // window.location.reload();
-  };
+    await deleteNote(noteId)
+  }
   // @ts-ignore
   const handleInput = async (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setUpdatedNote({
       ...updatedNote,
-      [name]: value,
-    });
-    // console.log(updatedNote)
-  };
+      [name]: value
+    })
+  }
 
   const handleUpdate = async (noteId: string | null) => {
-    await updateNote(noteId, updatedNote);
-    window.location.reload();
-  };
+    console.log(updatedNote)
+    await updateNote(noteId, updatedNote)
+    window.location.reload()
+  }
 
   const handleSummarize = async (noteId: string | null) => {
-    const response = await summarizeNote(noteId);
-    window.location.reload();
-  };
+    const response = await summarizeNote(noteId)
+    window.location.reload()
+  }
   const handleChangeStatus = async (noteId: string | null) => {
-    await changeNoteStatus(noteId);
-    window.location.reload();
-  };
+    await changeNoteStatus(noteId)
+    window.location.reload()
+  }
 
   // useEffect(()=>{
 
   // },[])
   return (
     <>
-      <div className="flex flex-col p-3 sm:py-12">
+      <div className="flex flex-col p-3 overflow-hidden sm:py-12">
         <div className="w-full max-w-screen-xl mx-auto">
           <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
             {notes.map((note) => (

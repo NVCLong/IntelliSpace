@@ -11,14 +11,24 @@ import { FiChevronRight } from 'react-icons/fi';
 import { useRouter } from 'next/navigation';
 
 export default function Home() {
-  const router = useRouter();
-  const handleSignin = () => {
-    router.push('/signin');
+    const router = useRouter();
+    const handleSignin = () => {
+    router.push("/signin");
+
   };
+  useEffect(() => {
+    let userId;
+    if(typeof window !=='undefined'){
+      userId= localStorage.getItem("userId")
+    }
+    if(userId!==null){
+      router.push("/dashboard")
+    }
+  }, []);
   return (
     <NextUIProvider>
       <>
-        <TopLoader />
+        <TopLoader/>
         <NavBar />
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
@@ -69,4 +79,6 @@ export default function Home() {
       </>
     </NextUIProvider>
   );
+
 }
+
