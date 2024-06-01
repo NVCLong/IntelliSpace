@@ -23,6 +23,16 @@ module.exports = {
       },
     },
     extend: {
+      animation: {
+        'background-pan': 'background-pan 3s ease-in-out infinite',
+      },
+      keyframes: {
+        'background-pan': {
+          '0%': { backgroundPosition: '100% 50%' },
+          '50%': { backgroundPosition: '0% 50%' },
+          '100%': { backgroundPosition: '100% 50%' },
+        },
+      },
       colors: {
         danger: {
           DEFAULT: '#b61920',

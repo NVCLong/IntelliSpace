@@ -47,7 +47,21 @@ const Chat = () => {
                 />
               </div>
               <p className="p-2 px-4 font-serif font-medium shadow-lg rounded-xl border-1 bg-white/40">
-                {recentPrompt}
+                <Typewriter
+                  onInit={(typewriter) => {
+                    typewriter
+                      .typeString({ recentPrompt })
+                      .callFunction(() => {
+                        console.log('String typed out!');
+                      })
+                      .pauseFor(2500)
+                      .deleteAll()
+                      .callFunction(() => {
+                        console.log('All strings were deleted');
+                      })
+                      .start();
+                  }}
+                />
               </p>
             </div>
 
@@ -58,8 +72,8 @@ const Chat = () => {
                     isPending
                       ? 'animate-pulse'
                       : isGenerating
-                      ? 'animate-spin'
-                      : 'rotate-0 [animation-play-state:pause]'
+                        ? 'animate-spin'
+                        : 'rotate-0 [animation-play-state:pause]'
                   }`}
                   src="/icon.ico"
                   alt="IntelliBot icon"
@@ -68,17 +82,11 @@ const Chat = () => {
 
               {isPending ? (
                 <div className="flex flex-col w-full gap-2">
-                  <hr
-                    className={`mt-1.5 h-5 animate-background-pan rounded-md border-none bg-brand-100 bg-gradient-to-r from-[#9ed7ff] via-[#ffffff] to-[#9ed7ff] [animation-delay:100ms] [animation-duration:3s] [background-size:800px_50px]`}
-                  />
+                  <hr className="mt-1.5 h-5 animate-background-pan rounded-md border-none bg-brand-100 bg-gradient-to-r from-[#9ed7ff] via-[#ffffff] to-[#9ed7ff] [animation-delay:100ms] [animation-duration:3s] [background-size:800px_50px]" />
 
-                  <hr
-                    className={`mt-1.5 h-5 animate-background-pan rounded-md border-none bg-brand-100 bg-gradient-to-r from-[#9ed7ff] via-[#ffffff] to-[#9ed7ff] [background-size:800px_50px] [animation-delay:200ms] [animation-duration:2s]`}
-                  />
+                  <hr className="mt-1.5 h-5 animate-background-pan rounded-md border-none bg-brand-100 bg-gradient-to-r from-[#9ed7ff] via-[#ffffff] to-[#9ed7ff] [background-size:800px_50px] [animation-delay:200ms] [animation-duration:2s]" />
 
-                  <hr
-                    className={`mt-1.5 h-5 w-8/12 animate-background-pan rounded-md border-none bg-brand-100 bg-gradient-to-r from-[#9ed7ff] via-[#ffffff] to-[#9ed7ff] [background-size:800px_50px] [animation-delay:300ms] [animation-duration:4s]`}
-                  />
+                  <hr className="mt-1.5 h-5 w-8/12 animate-background-pan rounded-md border-none bg-brand-100 bg-gradient-to-r from-[#9ed7ff] via-[#ffffff] to-[#9ed7ff] [background-size:800px_50px] [animation-delay:300ms] [animation-duration:4s]" />
                 </div>
               ) : (
                 <p

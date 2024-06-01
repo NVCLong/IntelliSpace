@@ -1,7 +1,13 @@
 import 'react-toastify/dist/ReactToastify.css';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
-import React, { SetStateAction, useEffect, useRef, useState } from 'react';
+import React, {
+  Fragment,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { ToastContainer } from 'react-toastify';
 import { Peer } from 'peerjs';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -14,12 +20,25 @@ import {
   FiPhoneOff,
   FiPlayCircle,
 } from 'react-icons/fi';
+import {
+  Button,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  useDisclosure,
+} from '@nextui-org/react';
 
 const ChatMeeting = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
   const [isMuted, setIsMuted] = useState(true);
   const [isCameraOff, setIsCameraOff] = useState(true);
+  const [connected, setConnected] = useState(false);
+
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([
     {
@@ -29,7 +48,6 @@ const ChatMeeting = () => {
   ]);
 
   const [nickName, setNickName] = useState('');
-  const [connected, setConnected] = useState(false);
   const [stompClient, setStompClient] = useState(null);
 
   const [code, setCode] = useState('');
@@ -58,6 +76,7 @@ const ChatMeeting = () => {
         },
       );
     }
+    onOpen();
   }, []);
 
   const handleChangeName = (e: {
@@ -251,7 +270,31 @@ const ChatMeeting = () => {
         theme="colored"
       />
 
-      <div className="grid sm:grid-cols-2 grid-cols-1 gap-4 p-4">
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                <h1 className="text-2xl font-bold">Instruction</h1>
+              </ModalHeader>
+              <ModalBody>
+                <span className="flex">
+                  User must click on &nbsp;
+                  <FiPlayCircle size={20} />
+                  &nbsp; to connect.
+                </span>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="primary" onPress={onClose}>
+                  Agree
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+
+      <div className="grid sm:grid-cols-2 grid-cols-1 gap-4 p-4 sm:mt-3">
         <video
           className="rounded-lg shadow-lg border-2  hover:border-2 hover:border-blue-300 duration-200 transition-all camFormat"
           ref={localVideoRef}
@@ -287,8 +330,8 @@ const ChatMeeting = () => {
       </div>
 
       {/*Floating bar*/}
-      <div className="fixed z-50 w-1/3 max-w-xs h-12 bg-white border border-gray-200 rounded-full bottom-4">
-        <div className="grid h-full max-w-lg grid-cols-5 mx-auto ">
+      <div className="fixed z-50 w-2/3 max-w-lg sm:max-w-xs h-12 bg-white border border-gray-200 rounded-full bottom-4">
+        <div className="grid h-full sm:max-w-lg grid-cols-5 mx-auto ">
           <button
             className="flexCenter hover:bg-gray-200 rounded-l-full border-r-1"
             onClick={handleMicControl}
@@ -300,7 +343,7 @@ const ChatMeeting = () => {
             className="flexCenter hover:bg-gray-200 border-r-1"
             onClick={handleCameraControl}
           >
-            {!isMuted ? <FiCameraOff size={20} /> : <FiCamera size={20} />}
+            {!isCameraOff ? <FiCameraOff size={20} /> : <FiCamera size={20} />}
           </button>
 
           <button

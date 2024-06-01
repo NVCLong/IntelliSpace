@@ -62,8 +62,13 @@
 }
 
 .camFormat {
-    @apply min-w-96 min-h-52 max-w-[200px] max-h-[150px] object-cover;
+    @apply min-w-[100px] min-h-[150px] max-w-[200px] max-h-[150px]
+    sm:min-w-[500px] sm:min-h-[300px] sm:max-w-[200px] sm:max-h-[150px] object-cover;
 }
+
+/*.camFormatOff {*/
+/*    @apply min-w-[300px] min-h-36 max-w-[200px] max-h-[150px];*/
+/*}*/
 
 .fixed-card-size {
     width: 150px;

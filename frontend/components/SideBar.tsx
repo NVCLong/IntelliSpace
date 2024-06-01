@@ -3,14 +3,14 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
-  FiHome,
-  FiFolder,
-  FiVideo,
   FiCodesandbox,
-  FiTrash2,
+  FiFolder,
+  FiHome,
   FiLogOut,
   FiPaperclip,
   FiShare2,
+  FiTrash2,
+  FiVideo,
 } from 'react-icons/fi';
 import StorageBar from './StorageBar';
 import axios from 'axios';
@@ -45,12 +45,27 @@ const SideBar: React.FC = () => {
   };
 
   const navItems = [
-    { name: 'Home', path: '/', icon: FiHome, onClick: () => {} },
-    { name: 'Files', path: '/dashboard', icon: FiFolder, onClick: () => {} },
-    { name: 'Share', path: '/shareFolder', icon: FiShare2, onClick: () => {} },
+    {
+      name: 'Home',
+      path: '/',
+      icon: FiHome,
+      onClick: () => {},
+    },
+    {
+      name: 'Files',
+      path: '/dashboard',
+      icon: FiFolder,
+      onClick: () => {},
+    },
+    {
+      name: 'Share',
+      path: '/shareFolder',
+      icon: FiShare2,
+      onClick: () => {},
+    },
     {
       name: 'IntelliBot',
-      path: '/intelliBot',
+      path: '/intellibot',
       icon: FiCodesandbox,
       onClick: () => {},
     },
@@ -60,8 +75,18 @@ const SideBar: React.FC = () => {
       icon: FiVideo,
       onClick: () => {},
     },
-    { name: 'Notes', path: '/note', icon: FiPaperclip, onClick: () => {} },
-    { name: 'Bin', path: '/recyclebin', icon: FiTrash2, onClick: () => {} },
+    {
+      name: 'Notes',
+      path: '/note',
+      icon: FiPaperclip,
+      onClick: () => {},
+    },
+    {
+      name: 'Bin',
+      path: '/recyclebin',
+      icon: FiTrash2,
+      onClick: () => {},
+    },
     {
       name: 'Logout',
       path: '/',
