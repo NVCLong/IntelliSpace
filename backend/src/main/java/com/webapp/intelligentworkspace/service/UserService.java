@@ -12,6 +12,7 @@ import com.webapp.intelligentworkspace.repository.UserRepository;
 import lombok.Data;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -243,6 +244,14 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         userRepository.save(user);
         return  new AuthResponse("Change Success");
+    }
+
+    public String getUsernameById(Integer userId) {
+        User user = userRepository.findUserById(userId).orElse(null);
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found with id: " + userId);
+        }
+        return user.getUsername();
     }
 
 }
