@@ -55,6 +55,8 @@ const ChatMeeting = () => {
   const remoteVideoRef = useRef(null);
   const [peerConnection, setPeerConnection] = useState(null);
 
+  const [isChatOpen, setIsChatOpen] = useState(false);
+
   const onMessageReceived = (payload: { body: string }) => {
     const newMessage = JSON.parse(payload.body);
 
@@ -358,7 +360,10 @@ const ChatMeeting = () => {
             )}
           </button>
 
-          <button className="flexCenter hover:bg-gray-200 border-r-1">
+          <button
+            className="flexCenter hover:bg-gray-200 border-r-1"
+            onClick={() => setIsChatOpen(!isChatOpen)}
+          >
             <FiMessageSquare size={20} />
           </button>
 
@@ -369,6 +374,20 @@ const ChatMeeting = () => {
             <FiPhoneOff size={20} className="text-white" />
           </button>
         </div>
+      </div>
+      <div
+        className={`fixed right-0 top-0 h-full ${isChatOpen ? 'w-96' : 'w-0'
+          } transition-width duration-300 ease-in-out bg-white shadow-lg`}
+      >
+        {isChatOpen && (
+          <div className="h-full p-4">
+            {/* <button onClick={() => setIsChatOpen(false)} className="mb-4">
+              
+            </button> */}
+            <p className="font-bold text-2xl">Chat</p>
+            {/* Chat messages */}
+          </div>
+        )}
       </div>
     </div>
   );
