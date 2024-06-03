@@ -321,7 +321,7 @@ const ChatMeeting = () => {
         ></video>
       </div>
 
-      <div className="">
+      {/* <div className="">
         {connected && (
           <ul>
             {messages.map((msg, index) => (
@@ -331,7 +331,7 @@ const ChatMeeting = () => {
             ))}
           </ul>
         )}
-      </div>
+      </div> */}
 
       {/*Floating bar*/}
       <div className="fixed z-50 w-2/3 max-w-lg sm:max-w-xs h-12 bg-white border border-gray-200 rounded-full bottom-4">
@@ -379,9 +379,8 @@ const ChatMeeting = () => {
       </div>
       {/* Message area */}
       <div
-        className={`fixed right-0 top-0 h-full ${
-          isChatOpen ? 'w-96' : 'w-0'
-        } transition-width duration-300 ease-in-out bg-white shadow-lg`}
+        className={`fixed right-0 top-0 h-full ${isChatOpen ? 'w-96' : 'w-0'
+          } transition-width duration-300 ease-in-out bg-white shadow-lg`}
       >
         {isChatOpen && (
           <div className="h-full p-4 flex flex-col">
