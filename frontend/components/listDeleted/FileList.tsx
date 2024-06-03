@@ -76,7 +76,7 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
                       onClick={() => {
                         // @ts-ignore
                         handleDelete(file.id, storageId, userId);
-                        // window.location.reload();
+                        window.location.reload();
                       }}
                     >
                       <ContextMenuLabel>Delete permanently</ContextMenuLabel>
@@ -89,8 +89,8 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
                     radius="lg"
                     className="border-none hoverScale"
                   >
-                    {file.file_name.split('.')[1].toLowerCase() === 'png' ||
-                    file.file_name.split('.')[1].toLowerCase() === 'jpg' ? (
+                    {file.file_name?.toLowerCase().includes('png') ||
+                    file.file_name?.toLowerCase().includes('jpg') ? (
                       <Image
                         alt="image file icon"
                         className=""
@@ -98,7 +98,7 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
                         width={300}
                         height={300}
                       />
-                    ) : file.file_name.split('.')[1].toLowerCase() === 'txt' ? (
+                    ) : file.file_name?.toLowerCase().includes('txt') ? (
                       <Image
                         alt="image file icon"
                         className=""
@@ -106,8 +106,7 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
                         width={300}
                         height={300}
                       />
-                    ) : file.file_name.split('.')[1].toLowerCase() ===
-                      'docx' ? (
+                    ) : file.file_name?.toLowerCase().includes('docx') ? (
                       <Image
                         alt="image file icon"
                         className=""

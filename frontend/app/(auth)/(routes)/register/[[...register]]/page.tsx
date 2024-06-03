@@ -1,4 +1,6 @@
 'use client';
+
+import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
 import * as z from 'zod';
 import { Button } from '@/components/auth_ui/Button';
@@ -20,6 +22,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { useEffect } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 
 const registerSchema = z
   .object({
@@ -63,22 +66,38 @@ const Page = () => {
       `http://localhost:8888/api/auth/register`,
       values,
     );
-    // console.log(response.data);
-    await router.push("/signin");
+    if (response.data.content.includes('has been registered')) {
+      toast.error(<div>Notification: {response.data.content}</div>);
+    } else {
+      // console.log(response.data);
+      router.push('/signin');
+    }
   }
 
   useEffect(() => {
     let userId;
-    if(typeof window !=='undefined'){
-      userId= localStorage.getItem("userId")
+    if (typeof window !== 'undefined') {
+      userId = localStorage.getItem('userId');
     }
-    if(userId!==null){
-      router.push("/dashboard")
+    if (userId !== null) {
+      router.push('/dashboard');
     }
   }, []);
 
   return (
     <>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={8000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       <motion.div
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}

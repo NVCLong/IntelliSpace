@@ -53,6 +53,7 @@ const ChatMeeting = () => {
   const [code, setCode] = useState('');
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
+  const useReference = useRef(null);
   const [peerConnection, setPeerConnection] = useState(null);
 
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -62,6 +63,10 @@ const ChatMeeting = () => {
 
     setMessages((prevMessages) => [...prevMessages, newMessage]);
   };
+  let userId: string | null;
+  if (typeof window !== 'undefined') {
+    userId = localStorage.getItem('userId');
+  }
 
   useEffect(() => {
     console.log(searchParams.get('roomId'));
@@ -109,10 +114,6 @@ const ChatMeeting = () => {
       console.log('Connected:', frame);
       setConnected(true);
       localStorage.setItem('nickName', nickName);
-      let username: string | null;
-      if (typeof window != 'undefined') {
-        username = localStorage.getItem('nickName');
-      }
 
       // @ts-ignore
       peer.on('open', (id) => {
@@ -122,7 +123,7 @@ const ChatMeeting = () => {
           {},
           JSON.stringify({
             type: 'JOIN',
-            sender: username,
+            sender: userId,
             content: null,
             peerId: id,
           }),
@@ -179,21 +180,22 @@ const ChatMeeting = () => {
 
     if (!peer) {
       console.error('Peer instance not available.');
-      return;
+    } else {
+      const call = peer.call(userId, stream);
+      console.log(call);
+      console.log(remoteVideoRef);
+      call.on('stream', (userVideoStream: MediaStream) => {
+        console.log('calling');
+        console.log('Received userVideoStream:', userVideoStream);
+
+        addVideoStream(remoteVideoRef, userVideoStream);
+        // addVideoStream(useReference, userVideoStream);
+      });
+
+      call.on('error', (error: any) => {
+        console.error('PeerJS call error:', error);
+      });
     }
-
-    const call = peer.call(userId, stream);
-    console.log(call);
-
-    call.on('stream', (userVideoStream: MediaStream) => {
-      console.log('calling');
-      console.log('Received userVideoStream:', userVideoStream);
-      addVideoStream(remoteVideoRef, userVideoStream);
-    });
-
-    call.on('error', (error: any) => {
-      console.error('PeerJS call error:', error);
-    });
   };
 
   const handleSendMessage = () => {
@@ -208,7 +210,7 @@ const ChatMeeting = () => {
         {},
         JSON.stringify({
           type: 'CHAT',
-          sender: username,
+          sender: userId,
           content: message,
           peerId: null,
         }),
@@ -309,7 +311,7 @@ const ChatMeeting = () => {
         ></video>
         <video
           className="rounded-lg shadow-lg border-2  hover:border-2 hover:border-blue-300 duration-200 transition-all camFormat"
-          ref={localVideoRef}
+          ref={remoteVideoRef}
           autoPlay
         ></video>
         <video
@@ -376,8 +378,9 @@ const ChatMeeting = () => {
         </div>
       </div>
       <div
-        className={`fixed right-0 top-0 h-full ${isChatOpen ? 'w-96' : 'w-0'
-          } transition-width duration-300 ease-in-out bg-white shadow-lg`}
+        className={`fixed right-0 top-0 h-full ${
+          isChatOpen ? 'w-96' : 'w-0'
+        } transition-width duration-300 ease-in-out bg-white shadow-lg`}
       >
         {isChatOpen && (
           <div className="h-full p-4">

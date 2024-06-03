@@ -28,6 +28,7 @@ public class ChatController {
             @DestinationVariable String roomId,
             @Payload ChatMessage chatMessage
     ) {
+        System.out.println(chatMessage.getSender());
         String username = userService.getUsernameById(Integer.parseInt(chatMessage.getSender()));
         chatMessage.setSender(username);
         chatMessage.setRoomId(roomId);

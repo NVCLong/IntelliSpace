@@ -35,6 +35,7 @@ export const UploadFile = () => {
         toast.error(`Submit failed: ${response}`);
         // alert(response)
       }
+      window.location.reload();
       // console.log(response)
     } else {
       toast.error('File is null');
@@ -134,7 +135,6 @@ export const UploadFile = () => {
                   onPress={(e) => {
                     handleSubmit();
                     onClose();
-                    window.location.reload();
                   }}
                 >
                   Submit

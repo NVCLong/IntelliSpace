@@ -15,7 +15,7 @@ import { FiDownloadCloud, FiTrash2 } from 'react-icons/fi';
 
 interface File {
   id: string;
-  file_name: string;
+  file_name: string | null | undefined;
   file_url: string;
   size: number;
   isDeleted: boolean;
@@ -37,15 +37,20 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
     //  console.log(data)
   };
 
-  const handleDownload = async (fileId: string, fileName: string) => {
+  const handleDownload = async (
+    fileId: string,
+    fileName: string | null | undefined,
+  ) => {
     try {
       const fileData = await getFile(fileId, fileName, userId);
-      console.log(fileData)
+      console.log(fileData);
       // @ts-ignore
       const url = window.URL.createObjectURL(fileData);
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', fileName);
+      if (typeof fileName === 'string') {
+        link.setAttribute('download', fileName);
+      }
       document.body.appendChild(link);
       link.click();
     } catch (e) {
@@ -78,7 +83,7 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
                       className="hover:bg-slate-600 "
                       onClick={() => {
                         handleMoveToTrash(file.id);
-                        // window.location.reload();
+                        window.location.reload();
                       }}
                     >
                       <ContextMenuLabel className="flex hover:text-white">
@@ -93,15 +98,15 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
                     radius="lg"
                     className="border-none fixed-card-size hover:opacity-70"
                   >
-                    {file.file_name.split('.')[1].toLowerCase() === 'png' ||
-                    file.file_name.split('.')[1].toLowerCase() === 'jpg' ? (
+                    {file.file_name?.toLowerCase().includes('jpg') ||
+                    file.file_name?.toLowerCase().includes('png') ? (
                       <Image
                         alt="image file icon"
                         src="/imageIcon.png"
                         width={300}
                         height={300}
                       />
-                    ) : file.file_name.split('.')[1].toLowerCase() === 'txt' ? (
+                    ) : file.file_name?.toLowerCase().includes('txt') ? (
                       <Image
                         alt="image file icon"
                         className=""
@@ -109,8 +114,7 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
                         width={300}
                         height={300}
                       />
-                    ) : file.file_name.split('.')[1].toLowerCase() ===
-                      'docx' ? (
+                    ) : file.file_name?.toLowerCase().includes('docx') ? (
                       <Image
                         alt="image file icon"
                         className=""

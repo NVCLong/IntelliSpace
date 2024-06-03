@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { ChatContext } from '@/providers';
 import { UserCircle } from '@phosphor-icons/react';
 import { FiCodesandbox } from 'react-icons/fi';
-
+import Typewriter from 'typewriter-effect';
 const Chat = () => {
   const {
     sendPrompt,
@@ -47,21 +47,7 @@ const Chat = () => {
                 />
               </div>
               <p className="p-2 px-4 font-serif font-medium shadow-lg rounded-xl border-1 bg-white/40">
-                <Typewriter
-                  onInit={(typewriter) => {
-                    typewriter
-                      .typeString({ recentPrompt })
-                      .callFunction(() => {
-                        console.log('String typed out!');
-                      })
-                      .pauseFor(2500)
-                      .deleteAll()
-                      .callFunction(() => {
-                        console.log('All strings were deleted');
-                      })
-                      .start();
-                  }}
-                />
+                {recentPrompt}
               </p>
             </div>
 
@@ -89,10 +75,21 @@ const Chat = () => {
                   <hr className="mt-1.5 h-5 w-8/12 animate-background-pan rounded-md border-none bg-brand-100 bg-gradient-to-r from-[#9ed7ff] via-[#ffffff] to-[#9ed7ff] [background-size:800px_50px] [animation-delay:300ms] [animation-duration:4s]" />
                 </div>
               ) : (
-                <p
-                  className="font-medium leading-[1.8] font-serif rounded-xl border-1 bg-purple-200/30 p-2 px-4 shadow-lg"
-                  dangerouslySetInnerHTML={{ __html: output }}
-                />
+                <p className="font-medium leading-[1.8] font-serif rounded-xl border-1 bg-purple-200/30 p-2 px-4 shadow-lg">
+                  <Typewriter
+                    onInit={(typewriter) => {
+                      typewriter
+                        .typeString(output)
+                        .callFunction(() => {
+                          console.log('String typed out!');
+                        })
+                        .callFunction(() => {
+                          console.log('All strings were deleted');
+                        })
+                        .start();
+                    }}
+                  />
+                </p>
               )}
             </div>
           </div>
@@ -120,7 +117,6 @@ const Chat = () => {
                   size={16}
                 />
               ) : null}
-
               {isGenerating ? (
                 <Loader className="min-w-4 animate-spin" size={16} />
               ) : null}

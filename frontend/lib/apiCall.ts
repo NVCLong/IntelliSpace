@@ -245,7 +245,7 @@ export const softDelete = async (fileId: string) => {
 
 export const getFile = async (
   fileId: string,
-  fileName: string,
+  fileName: string | null | undefined,
   userId: string | null,
 ) => {
   try {

@@ -53,6 +53,9 @@ public class UserService {
         if(userRepository.findUserByUsername(user.getUsername()).orElse(null)!= null){
             return  new AuthResponse("User has been registered");
         }else {
+            if(userRepository.findUserByEmail(user.getEmail()).orElse(null)!= null){
+                return new AuthResponse("Email has been registered");
+            }
             User newUser = new User();
             Random random = new Random();
             newUser.setId(random.nextInt(0,100000000));
@@ -86,7 +89,6 @@ public class UserService {
                                 user.getPassword()
                         )
                 );
-                System.out.println(user);
                 User user1= userRepository.findUserByUsername(user.getUsername()).orElse(null);
                 System.out.println(user1);
                 if(user1 != null) {

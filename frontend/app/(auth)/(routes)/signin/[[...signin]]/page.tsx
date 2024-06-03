@@ -1,4 +1,6 @@
 'use client';
+
+import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
 import * as z from 'zod';
 import { Button } from '@/components/auth_ui/Button';
@@ -16,6 +18,7 @@ import { Input } from '@/components/auth_ui/Input';
 import Link from 'next/link';
 import axios from 'axios';
 import { motion } from 'framer-motion';
+import { toast, ToastContainer } from 'react-toastify';
 
 import {
   GoogleLogin,
@@ -50,13 +53,18 @@ const Page = () => {
       'http://localhost:8888/api/auth/login',
       values,
     );
-    localStorage.setItem('access_token', response.data.accessToken);
-    document.cookie = `refreshToken=${response.data.refreshToken}`;
-    localStorage.setItem('userId', response.data.user.id);
-    localStorage.setItem('storageID', response.data.storageId);
-    // console.log(response.data);
-    dispatch(setStorageID(response.data.storageId));
-    router.push('/dashboard');
+
+    if (response.data.content.toLowerCase() === 'wrong password') {
+      toast.error(<div>Notification: {response.data.content}</div>);
+    } else {
+      localStorage.setItem('access_token', response.data.accessToken);
+      document.cookie = `refreshToken=${response.data.refreshToken}`;
+      localStorage.setItem('userId', response.data.user.id);
+      localStorage.setItem('storageID', response.data.storageId);
+      // console.log(response.data);
+      dispatch(setStorageID(response.data.storageId));
+      router.push('/dashboard');
+    }
   }
 
   // const ResponseFolder = await axios.get("http://localhost:8888/api/folder/rootFolders/{storageId}"
@@ -65,6 +73,18 @@ const Page = () => {
 
   return (
     <>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       <motion.div
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}

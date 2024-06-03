@@ -49,9 +49,9 @@ const NoteList: React.FC<NoteListProps> = ({ notes }) => {
     const { name, value } = e.target;
     setUpdatedNote({
       ...updatedNote,
-      [name]: value
-    })
-  }
+      [name]: value,
+    });
+  };
 
   const handleUpdate = async (noteId: string | null) => {
     await updateNote(noteId, updatedNote);
@@ -88,9 +88,7 @@ const NoteList: React.FC<NoteListProps> = ({ notes }) => {
                           cacheMeasurements
                           onChange={handleInput}
                           className="mr-4 font-semibold leading-none border-transparent rounded-lg resize-none text-small text-default-600 border-3 hover:border-red-200 hover:border-3"
-                        >
-                          Title
-                        </TextareaAutosize>
+                        ></TextareaAutosize>
                       </div>
                     </div>
                   </CardHeader>

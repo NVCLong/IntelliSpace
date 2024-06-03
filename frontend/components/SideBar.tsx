@@ -155,7 +155,10 @@ const SideBar: React.FC = () => {
           <div className="p-4 space-y-2 overflow-hidden">
             {navItems.map((item, index) => (
               <Link key={index} href={item.path}>
-                <div className="flex items-center p-4 mt-2.5 transition duration-100 ease-linear transform rounded-lg cursor-pointer focus:bg-slate-50 focus:outline-none active:bg-slate-50 hover:text-white focus:bg-white/10 active:bg-white/10 w-fit ">
+                <div
+                  className="flex items-center p-4 mt-2.5 transition duration-100 ease-linear transform rounded-lg cursor-pointer focus:bg-slate-50 focus:outline-none active:bg-slate-50 hover:text-white focus:bg-white/10 active:bg-white/10 w-fit "
+                  onClick={item.onClick}
+                >
                   <div
                     className={`${
                       !open ? 'w-full flex justify-center' : ''
@@ -167,7 +170,6 @@ const SideBar: React.FC = () => {
                           ? 'w-6 h-6 cursor-pointer flex justify-center '
                           : ''
                       } transition-all duration-100 w-6 h-6 -ml-4`}
-                      onClick={item.onClick}
                     />
                   </div>
                   <span
