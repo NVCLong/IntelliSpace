@@ -377,18 +377,39 @@ const ChatMeeting = () => {
           </button>
         </div>
       </div>
+      {/* Message area */}
       <div
         className={`fixed right-0 top-0 h-full ${
           isChatOpen ? 'w-96' : 'w-0'
         } transition-width duration-300 ease-in-out bg-white shadow-lg`}
       >
         {isChatOpen && (
-          <div className="h-full p-4">
-            {/* <button onClick={() => setIsChatOpen(false)} className="mb-4">
-              
-            </button> */}
-            <p className="font-bold text-2xl">Chat</p>
-            {/* Chat messages */}
+          <div className="h-full p-4 flex flex-col">
+            <p className="font-bold text-3xl mb-4">Chat</p>
+            <div className="flex-1 overflow-y-auto">
+              <ul>
+                {messages.map((msg, index) => (
+                  <li key={index}>
+                    <b>{msg.sender}</b> {msg.content}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="mt-4 flex">
+              <input
+                type="text"
+                value={message}
+                onChange={handleInput}
+                placeholder="Type your message..."
+                className="flex-1 p-2 border border-gray-300 rounded-l-lg"
+              />
+              <button
+                onClick={handleSendMessage}
+                className="p-2 bg-blue-500 text-white rounded-r-lg"
+              >
+                Send
+              </button>
+            </div>
           </div>
         )}
       </div>
