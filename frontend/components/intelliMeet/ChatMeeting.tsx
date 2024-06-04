@@ -8,7 +8,8 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
+
 import { Peer } from 'peerjs';
 import { useRouter, useSearchParams } from 'next/navigation';
 import {
@@ -53,20 +54,34 @@ const ChatMeeting = () => {
   const [code, setCode] = useState('');
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
-  const useReference = useRef(null);
   const [peerConnection, setPeerConnection] = useState(null);
 
   const [isChatOpen, setIsChatOpen] = useState(false);
-
-  const onMessageReceived = (payload: { body: string }) => {
-    const newMessage = JSON.parse(payload.body);
-
-    setMessages((prevMessages) => [...prevMessages, newMessage]);
-  };
   let userId: string | null;
   if (typeof window !== 'undefined') {
     userId = localStorage.getItem('userId');
   }
+
+  const onMessageReceived = (payload: { body: string }) => {
+    const newMessage = JSON.parse(payload.body);
+    if (newMessage.type === 'CHAT') {
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
+      if (newMessage.userid != userId) {
+        if (!isChatOpen) {
+          toast.info(
+            <div>
+              {newMessage.sender}: {newMessage.content}
+            </div>,
+          );
+        }
+      }
+    }
+  };
+
+  const handleOpenChat = () => {
+    setIsChatOpen((prevIsChatOpen) => !prevIsChatOpen);
+    toast.dismiss();
+  };
 
   useEffect(() => {
     console.log(searchParams.get('roomId'));
@@ -83,7 +98,7 @@ const ChatMeeting = () => {
         },
       );
     }
-    onOpen();
+    open();
   }, []);
 
   const handleChangeName = (e: {
@@ -213,6 +228,7 @@ const ChatMeeting = () => {
           sender: userId,
           content: message,
           peerId: null,
+          userid: userId,
         }),
       );
       setMessage('');
@@ -261,18 +277,23 @@ const ChatMeeting = () => {
 
   return (
     <div className="flexCenter flex-col h-screen">
-      <ToastContainer
-        position="bottom-right"
-        autoClose={8000}
-        hideProgressBar={false}
-        newestOnTop
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
+      {!isChatOpen && (
+        <ToastContainer
+          onClick={() => {
+            handleOpenChat();
+          }}
+          position="bottom-right"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
+      )}
 
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
@@ -321,19 +342,6 @@ const ChatMeeting = () => {
         ></video>
       </div>
 
-      {/* <div className="">
-        {connected && (
-          <ul>
-            {messages.map((msg, index) => (
-              <li key={index}>
-                <b>{msg.sender}</b> {msg.content}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div> */}
-
-      {/*Floating bar*/}
       <div className="fixed z-50 w-2/3 max-w-lg sm:max-w-xs h-12 bg-white border border-gray-200 rounded-full bottom-4">
         <div className="grid h-full sm:max-w-lg grid-cols-5 mx-auto ">
           <button
@@ -364,7 +372,9 @@ const ChatMeeting = () => {
 
           <button
             className="flexCenter hover:bg-gray-200 border-r-1"
-            onClick={() => setIsChatOpen(!isChatOpen)}
+            onClick={() => {
+              handleOpenChat();
+            }}
           >
             <FiMessageSquare size={20} />
           </button>
@@ -379,8 +389,9 @@ const ChatMeeting = () => {
       </div>
       {/* Message area */}
       <div
-        className={`fixed right-0 top-0 h-full ${isChatOpen ? 'w-96' : 'w-0'
-          } transition-width duration-300 ease-in-out bg-white shadow-lg`}
+        className={`fixed right-0 top-0 h-full ${
+          isChatOpen ? 'w-96' : 'w-0'
+        } transition-width duration-300 ease-in-out bg-white shadow-lg`}
       >
         {isChatOpen && (
           <div className="h-full p-4 flex flex-col">
