@@ -30,6 +30,7 @@ import {
   ModalHeader,
   useDisclosure,
 } from '@nextui-org/react';
+import { time, timeStamp } from 'console';
 
 const ChatMeeting = () => {
   const searchParams = useSearchParams();
@@ -41,12 +42,7 @@ const ChatMeeting = () => {
   const [connected, setConnected] = useState(false);
 
   const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState([
-    {
-      sender: '',
-      content: '',
-    },
-  ]);
+  const [messages, setMessages] = useState<{ sender: string; content: string; timestamp: string }[]>([]);
 
   const [nickName, setNickName] = useState('');
   const [stompClient, setStompClient] = useState(null);
@@ -70,7 +66,7 @@ const ChatMeeting = () => {
         if (!isChatOpen) {
           toast.info(
             <div>
-              {newMessage.sender}: {newMessage.content}
+              {newMessage.sender} {newMessage.timestamp}: {newMessage.content}
             </div>,
           );
         }
@@ -142,6 +138,7 @@ const ChatMeeting = () => {
             sender: userId,
             content: null,
             peerId: id,
+            timestamp: null,
           }),
         );
       });
@@ -216,25 +213,37 @@ const ChatMeeting = () => {
 
   const handleSendMessage = () => {
     if (stompClient && connected) {
-      let username;
-      if (typeof window != 'undefined') {
-        username = localStorage.getItem('nickName');
+      if (message.trim().length > 0) {
+        const currentTime = new Date();
+        const formattedTime = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        let username;
+        if (typeof window != 'undefined') {
+          username = localStorage.getItem('nickName');
+        }
+        // @ts-ignore
+        stompClient.send(
+          `/app/sendMessage/${code}`,
+          {},
+          JSON.stringify({
+            type: 'CHAT',
+            sender: userId,
+            content: message,
+            peerId: null,
+            userid: userId,
+            timestamp: formattedTime,
+          }),
+        );
+        // setMessages([...messages, { sender: 'You', content: message, timestamp: formattedTime }]);
+        setMessage('');
       }
-      // @ts-ignore
-      stompClient.send(
-        `/app/sendMessage/${code}`,
-        {},
-        JSON.stringify({
-          type: 'CHAT',
-          sender: userId,
-          content: message,
-          peerId: null,
-          userid: userId,
-        }),
-      );
-      setMessage('');
     }
   };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSendMessage();
+    }
+  }
 
   const handleMicControl = () => {
     console.log(isMuted);
@@ -390,18 +399,18 @@ const ChatMeeting = () => {
       </div>
       {/* Message area */}
       <div
-        className={`fixed right-0 top-0 h-full ${
-          isChatOpen ? 'w-96' : 'w-0'
-        } transition-width duration-300 ease-in-out bg-white shadow-lg`}
+        className={`fixed right-0 top-0 h-full ${isChatOpen ? 'w-96' : 'w-0'
+          } transition-width duration-300 ease-in-out bg-white shadow-lg`}
       >
         {isChatOpen && (
           <div className="h-full p-4 flex flex-col">
             <p className="font-bold text-3xl mb-4">Chat</p>
-            <div className="flex-1 overflow-y-auto">
+            <div className="flex-1 overflow-y-auto overflow-x-hidden">
               <ul>
                 {messages.map((msg, index) => (
-                  <li key={index}>
-                    <b>{msg.sender}</b> {msg.content}
+
+                  <li key={index} className="break-words">
+                    <b>{msg.sender}</b> <span className="text-gray-500 text-sm">{msg.timestamp}</span> <br /> {msg.content}
                   </li>
                 ))}
               </ul>
@@ -411,12 +420,14 @@ const ChatMeeting = () => {
                 type="text"
                 value={message}
                 onChange={handleInput}
+                onKeyPress={handleKeyPress}
                 placeholder="Type your message..."
                 className="flex-1 p-2 border border-gray-300 rounded-l-lg"
               />
               <button
                 onClick={handleSendMessage}
-                className="p-2 bg-blue-500 text-white rounded-r-lg"
+                className={`p-2 text-white rounded-r-lg ${message.trim().length === 0 ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500'}`}
+                disabled={message.trim().length === 0}
               >
                 Send
               </button>

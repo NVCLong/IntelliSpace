@@ -15,5 +15,5 @@ public class ChatMessage {
     private String sender;
     private String roomId;
     private String peerId;
-
+    private String timestamp;
 }
