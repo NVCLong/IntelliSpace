@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import TopLoader from '@/components/TopLoader';
+import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: 'IntelliMeet | IntelliSpace',
@@ -8,11 +9,13 @@ export const metadata: Metadata = {
 
 const Dashboardlayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="">
-      <TopLoader />
-      {/*<Sidebar />*/}
-      {children}
-    </div>
+    <Suspense>
+      <div className="">
+        <TopLoader />
+        {/*<Sidebar />*/}
+        {children}
+      </div>
+    </Suspense>
   );
 };
 
