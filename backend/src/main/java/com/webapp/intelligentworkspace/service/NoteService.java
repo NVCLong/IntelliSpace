@@ -60,7 +60,7 @@ public class NoteService {
             return null;
         }else{
             Note note= Note.builder()
-//                    .title(request.getTitle())
+                    .title(request.getTitle())
                     .status(false)
                     .content(request.getContent())
                     .user(user)

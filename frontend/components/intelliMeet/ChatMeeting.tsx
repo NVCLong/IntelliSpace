@@ -111,6 +111,7 @@ const ChatMeeting = () => {
   };
 
   const handleConnect = () => {
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
     const sock = new SockJS('http://localhost:8888/api/ws-message');
     const stompClient = Stomp.over(sock);
     // @ts-ignore
