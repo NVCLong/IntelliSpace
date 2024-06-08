@@ -30,7 +30,6 @@ import {
   ModalHeader,
   useDisclosure,
 } from '@nextui-org/react';
-import { time, timeStamp } from 'console';
 
 const ChatMeeting = () => {
   const searchParams = useSearchParams();
@@ -42,7 +41,9 @@ const ChatMeeting = () => {
   const [connected, setConnected] = useState(false);
 
   const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState<{ sender: string; content: string; timestamp: string }[]>([]);
+  const [messages, setMessages] = useState<
+    { sender: string; content: string; timestamp: string }[]
+  >([]);
 
   const [nickName, setNickName] = useState('');
   const [stompClient, setStompClient] = useState(null);
@@ -215,7 +216,10 @@ const ChatMeeting = () => {
     if (stompClient && connected) {
       if (message.trim().length > 0) {
         const currentTime = new Date();
-        const formattedTime = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const formattedTime = currentTime.toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit',
+        });
         let username;
         if (typeof window != 'undefined') {
           username = localStorage.getItem('nickName');
@@ -243,7 +247,7 @@ const ChatMeeting = () => {
     if (e.key === 'Enter') {
       handleSendMessage();
     }
-  }
+  };
 
   const handleMicControl = () => {
     console.log(isMuted);
@@ -399,23 +403,27 @@ const ChatMeeting = () => {
       </div>
       {/* Message area */}
       <div
-        className={`fixed right-0 top-0 h-full ${isChatOpen ? 'w-96' : 'w-0'
-          } transition-width duration-300 ease-in-out bg-white shadow-lg`}
+        className={`fixed right-0 top-0 h-full ${
+          isChatOpen ? 'w-96' : 'w-0'
+        } transition-width duration-300 ease-in-out bg-white shadow-lg`}
       >
         {isChatOpen && (
-          <div className="h-full p-4 flex flex-col">
+          <div className="h-full p-4 flex flex-col bg-gradient-to-r from-slate-50 to-slate-200">
             <p className="font-bold text-3xl mb-4">Chat</p>
             <div className="flex-1 overflow-y-auto overflow-x-hidden">
               <ul>
                 {messages.map((msg, index) => (
-
                   <li key={index} className="break-words">
-                    <b>{msg.sender}</b> <span className="text-gray-500 text-sm">{msg.timestamp}</span> <br /> {msg.content}
+                    <b>{msg.sender}</b>{' '}
+                    <span className="text-gray-500 text-sm">
+                      {msg.timestamp}
+                    </span>
+                    <br /> {msg.content}
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="mt-4 flex">
+            <div className="flex pb-16 sm:pb-0">
               <input
                 type="text"
                 value={message}

@@ -66,6 +66,10 @@
     sm:min-w-[500px] sm:min-h-[300px] sm:max-w-[200px] sm:max-h-[150px] object-cover;
 }
 
+.backgroundIntelli {
+    @apply bg-[#4cbcd831] absolute top-[-6rem] right-[11rem] h-[31.25rem] w-[31.25rem] rounded-full blur-[10rem]
+}
+
 /*.camFormatOff {*/
 /*    @apply min-w-[300px] min-h-36 max-w-[200px] max-h-[150px];*/
 /*}*/
