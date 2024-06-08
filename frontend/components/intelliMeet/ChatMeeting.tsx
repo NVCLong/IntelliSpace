@@ -1,13 +1,7 @@
 import 'react-toastify/dist/ReactToastify.css';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
-import React, {
-  Fragment,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { SetStateAction, useEffect, useRef, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 
 import { Peer } from 'peerjs';
@@ -34,7 +28,7 @@ import {
 const ChatMeeting = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpenChange } = useDisclosure();
 
   const [isMuted, setIsMuted] = useState(true);
   const [isCameraOff, setIsCameraOff] = useState(true);
@@ -334,26 +328,10 @@ const ChatMeeting = () => {
       </Modal>
 
       <div className="grid sm:grid-cols-2 grid-cols-1 gap-4 p-4 sm:mt-3">
-        <video
-          className="rounded-lg shadow-lg border-2  hover:border-2 hover:border-blue-300 duration-200 transition-all camFormat"
-          ref={localVideoRef}
-          autoPlay
-        ></video>
-        <video
-          className="rounded-lg shadow-lg border-2  hover:border-2 hover:border-blue-300 duration-200 transition-all camFormat"
-          ref={remoteVideoRef}
-          autoPlay
-        ></video>
-        <video
-          className="rounded-lg shadow-lg border-2  hover:border-2 hover:border-blue-300 duration-200 transition-all camFormat"
-          ref={remoteVideoRef}
-          autoPlay
-        ></video>
-        <video
-          className="rounded-lg shadow-lg border-2  hover:border-2 hover:border-blue-300 duration-200 transition-all camFormat"
-          ref={remoteVideoRef}
-          autoPlay
-        ></video>
+        <video className="camFormat" ref={localVideoRef} autoPlay></video>
+        <video className="camFormat" ref={remoteVideoRef} autoPlay></video>
+        <video className="camFormat" ref={remoteVideoRef} autoPlay></video>
+        <video className="camFormat" ref={remoteVideoRef} autoPlay></video>
       </div>
 
       <div className="fixed z-50 w-2/3 max-w-lg sm:max-w-xs h-12 bg-white border border-gray-200 rounded-full bottom-4">
@@ -401,16 +379,17 @@ const ChatMeeting = () => {
           </button>
         </div>
       </div>
+
       {/* Message area */}
       <div
         className={`fixed right-0 top-0 h-full ${
           isChatOpen ? 'w-96' : 'w-0'
-        } transition-width duration-300 ease-in-out bg-white shadow-lg`}
+        } transition-width duration-300 ease-in-out bg-white shadow-xl`}
       >
         {isChatOpen && (
-          <div className="h-full p-4 flex flex-col bg-gradient-to-r from-slate-50 to-slate-200">
+          <div className="z-1 h-full p-4 flex flex-col bg-gradient-to-r from-slate-50 to-slate-200">
             <p className="font-bold text-3xl mb-4">Chat</p>
-            <div className="flex-1 overflow-y-auto overflow-x-hidden">
+            <div className="flex-1 overflow-y-auto">
               <ul>
                 {messages.map((msg, index) => (
                   <li key={index} className="break-words">
@@ -428,9 +407,9 @@ const ChatMeeting = () => {
                 type="text"
                 value={message}
                 onChange={handleInput}
-                onKeyPress={handleKeyPress}
+                onKeyUp={handleKeyPress}
                 placeholder="Type your message..."
-                className="flex-1 p-2 border border-gray-300 rounded-l-lg"
+                className="flex-1 p-2 border border-slate-300 rounded-l-lg focus:border-blue-300"
               />
               <button
                 onClick={handleSendMessage}

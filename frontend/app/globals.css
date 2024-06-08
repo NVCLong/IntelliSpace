@@ -63,12 +63,10 @@
 
 .camFormat {
     @apply min-w-[100px] min-h-[150px] max-w-[200px] max-h-[150px]
-    sm:min-w-[500px] sm:min-h-[300px] sm:max-w-[200px] sm:max-h-[150px] object-cover;
+    sm:min-w-[500px] sm:min-h-[300px] sm:max-w-[200px] sm:max-h-[150px] sm:gap-5
+    rounded-lg shadow-xl border-2 hover:border-2 hover:border-blue-300 duration-200 transition-all gap-2 object-cover;
 }
 
-.backgroundIntelli {
-    @apply bg-[#4cbcd831] absolute top-[-6rem] right-[11rem] h-[31.25rem] w-[31.25rem] rounded-full blur-[10rem]
-}
 
 /*.camFormatOff {*/
 /*    @apply min-w-[300px] min-h-36 max-w-[200px] max-h-[150px];*/
