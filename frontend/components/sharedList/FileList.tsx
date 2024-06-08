@@ -1,15 +1,11 @@
-'use client';
+"use client";
 import React, { useState } from 'react';
 
 import {
-  ContextMenu,
-  ContextMenuContent,
-  ContextMenuItem,
-  ContextMenuLabel,
-  ContextMenuTrigger,
+    ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuLabel, ContextMenuTrigger
 } from '@/components/ui/context-menu';
-import { downloadSharedFile, getFile, softDelete } from '@/lib/apiCall';
-import { Card, CardFooter } from '@nextui-org/card';
+import { downloadSharedFile, getFile, softDelete } from "@/lib/apiCall";
+import { Card,CardFooter } from '@nextui-org/card';
 import {
   Button,
   Image,
@@ -55,7 +51,7 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
   const handleDownload = async () => {
     try {
       const fileData = await downloadSharedFile(code, fileId, fileName);
-      console.log(fileData);
+      console.log(fileData)
       // @ts-ignore
       const url = window.URL.createObjectURL(fileData);
       const link = document.createElement('a');
@@ -67,7 +63,7 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
     } catch (e) {
       throw e;
     }
-  };
+  }
 
   return (
     <div className="relative flex flex-col overflow-hidden sm:py-12 sm:px-12">

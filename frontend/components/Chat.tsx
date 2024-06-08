@@ -4,6 +4,7 @@ import { ChatContext } from '@/providers';
 import { UserCircle } from '@phosphor-icons/react';
 import { FiCodesandbox } from 'react-icons/fi';
 import Typewriter from 'typewriter-effect';
+
 const Chat = () => {
   const {
     sendPrompt,
@@ -117,6 +118,7 @@ const Chat = () => {
                   size={16}
                 />
               ) : null}
+
               {isGenerating ? (
                 <Loader className="min-w-4 animate-spin" size={16} />
               ) : null}
