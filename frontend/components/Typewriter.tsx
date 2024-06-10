@@ -1,4 +1,4 @@
-import { useTypewriter } from '../lib/hooks/useTypeWriter';
+import { useTypewriter } from '@/lib/hooks/useTypeWriter';
 
 // @ts-ignore
 const Typewriter = ({ text, speed }) => {

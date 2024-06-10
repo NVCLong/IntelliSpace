@@ -1,21 +1,12 @@
 'use client';
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
+  Button,
   Card,
-  CardHeader,
   CardBody,
   CardFooter,
-  Avatar,
-  Button,
+  CardHeader,
 } from '@nextui-org/react';
-
-interface Note {
-  id: string;
-  content: string;
-  title: string;
-  status: boolean;
-}
-import { UserCircle } from '@phosphor-icons/react';
 import {
   changeNoteStatus,
   deleteNote,
@@ -23,8 +14,13 @@ import {
   updateNote,
 } from '@/lib/apiCall';
 import TextareaAutosize from 'react-textarea-autosize';
-import { FiEdit3 } from 'react-icons/fi';
-import { set } from 'zod';
+
+interface Note {
+  id: string;
+  content: string;
+  title: string;
+  status: boolean;
+}
 
 interface NoteListProps {
   notes: Note[];
@@ -67,9 +63,6 @@ const NoteList: React.FC<NoteListProps> = ({ notes }) => {
     window.location.reload();
   };
 
-  // useEffect(()=>{
-
-  // },[])
   return (
     <>
       <div className="flex flex-col p-3 sm:py-12">

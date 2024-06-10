@@ -1,8 +1,7 @@
 'use client';
-import { useCallback, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { AppDispatch, useAppSelector } from '@/lib/store';
 import { getAllRootFolder, openFolder } from '@/lib/apiCall';
-import { useState } from 'react';
 import FolderList from '@/components/list/FolderList';
 import FileList from '@/components/list/FileList';
 import { useDispatch } from 'react-redux';
@@ -10,13 +9,12 @@ import { NewFolder } from '@/components/NewFolder';
 import { BackButton } from '@/components/BackButton';
 import { UploadFile } from '@/components/UploadFile';
 import { motion } from 'framer-motion';
-import { FiXCircle, FiDisc } from 'react-icons/fi';
+import { FiDisc, FiXCircle } from 'react-icons/fi';
 
 import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerFooter,
   DrawerHeader,
   DrawerTrigger,
 } from '@/components/ui/drawer';

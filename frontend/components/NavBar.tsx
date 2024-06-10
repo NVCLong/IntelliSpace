@@ -1,11 +1,11 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { NAV_LINKS } from '@/constants';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { FiUser, FiMenu } from 'react-icons/fi';
+import { FiMenu, FiUser } from 'react-icons/fi';
 import NextTopLoader from 'nextjs-toploader';
 
 import {

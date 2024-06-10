@@ -1,17 +1,17 @@
 import React from 'react';
 import { FiFolderPlus } from 'react-icons/fi';
-import { createFolder, createRootFolder } from '../lib/apiCall';
+import { createFolder, createRootFolder } from '@/lib/apiCall';
 import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
   Button,
-  useDisclosure,
   Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  useDisclosure,
 } from '@nextui-org/react';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export const NewFolder = (storageID: any) => {

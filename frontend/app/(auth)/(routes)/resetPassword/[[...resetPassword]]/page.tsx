@@ -13,13 +13,11 @@ import {
   FormMessage,
 } from '@/components/auth_ui/Form';
 import { Input } from '@/components/auth_ui/Input';
-import Link from 'next/link';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { useAppSelector } from '@/lib/store';
+import { AppDispatch, useAppSelector } from '@/lib/store';
 import { setEmail } from '@/lib/features/todos/emailSlice';
-import { AppDispatch } from '@/lib/store';
 import { useDispatch } from 'react-redux';
 
 const resetSchema = z

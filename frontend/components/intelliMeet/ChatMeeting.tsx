@@ -14,6 +14,7 @@ import {
   FiMicOff,
   FiPhoneOff,
   FiPlayCircle,
+  FiSend,
 } from 'react-icons/fi';
 import {
   Button,
@@ -32,6 +33,7 @@ const ChatMeeting = () => {
 
   const [isMuted, setIsMuted] = useState(true);
   const [isCameraOff, setIsCameraOff] = useState(true);
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const [connected, setConnected] = useState(false);
 
   const [message, setMessage] = useState('');
@@ -47,7 +49,6 @@ const ChatMeeting = () => {
   const remoteVideoRef = useRef(null);
   const [peerConnection, setPeerConnection] = useState(null);
 
-  const [isChatOpen, setIsChatOpen] = useState(false);
   let userId: string | null;
   if (typeof window !== 'undefined') {
     userId = localStorage.getItem('userId');
@@ -59,8 +60,9 @@ const ChatMeeting = () => {
       setMessages((prevMessages) => [...prevMessages, newMessage]);
       if (newMessage.userid != userId) {
         if (!isChatOpen) {
-          toast.info(
-            <div>
+          toast(
+            <div className="flex space-x-5">
+              <FiMessageSquare />
               {newMessage.sender} {newMessage.timestamp}: {newMessage.content}
             </div>,
           );
@@ -368,11 +370,19 @@ const ChatMeeting = () => {
               handleOpenChat();
             }}
           >
-            <FiMessageSquare size={20} />
+            {!isChatOpen ? (
+              <FiMessageSquare size={20} />
+            ) : (
+              <FiMessageSquare
+                size={20}
+                fontSize={1.5}
+                className="text-blue-500 font-bold"
+              />
+            )}
           </button>
 
           <button
-            className="flexCenter  rounded-r-full bg-red-600"
+            className="flexCenter rounded-r-full bg-red-600"
             onClick={handleDisconnect}
           >
             <FiPhoneOff size={20} className="text-white" />
@@ -382,41 +392,52 @@ const ChatMeeting = () => {
 
       {/* Message area */}
       <div
-        className={`fixed right-0 top-0 h-full ${
-          isChatOpen ? 'w-96' : 'w-0'
-        } transition-width duration-300 ease-in-out bg-white shadow-xl`}
+        className={`fixed right-0 h-screen ${
+          isChatOpen ? 'w-80' : 'w-0'
+        } transition-width duration-300 ease-in-out bg-white h-[80%] shadow-xl rounded-tl-2xl rounded-bl-2xl`}
       >
         {isChatOpen && (
-          <div className="z-1 h-full p-4 flex flex-col bg-gradient-to-r from-slate-50 to-slate-200">
-            <p className="font-bold text-3xl mb-4">Chat</p>
+          <div className="z-1 h-[91%] p-4 flex flex-col ">
+            <p className="font-semibold text-xl mb-4">In-call messages</p>
+            <span className="bg-blue-100/30 text-center rounded-xl p-3 text-sm mb-4">
+              Messages can only be seen by people in the call when the message
+              is sent. All are deleted when the call ends.
+            </span>
             <div className="flex-1 overflow-y-auto">
-              <ul>
+              <div>
                 {messages.map((msg, index) => (
-                  <li key={index} className="break-words">
-                    <b>{msg.sender}</b>{' '}
-                    <span className="text-gray-500 text-sm">
-                      {msg.timestamp}
-                    </span>
-                    <br /> {msg.content}
-                  </li>
+                  <div
+                    key={index}
+                    className="break-words flex flex-col mb-2 bg-gradient-to-l from-slate-50 to-slate-100 rounded-xl p-2"
+                  >
+                    <div className="flex space-x-2 items-center">
+                      <p className="text-gray-900 font-bold text-sm uppercase">
+                        {msg.sender}
+                      </p>{' '}
+                      <span className="text-gray-500 text-sm">
+                        {msg.timestamp}
+                      </span>
+                    </div>
+                    <span className="ml-3">{msg.content}</span>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
-            <div className="flex pb-16 sm:pb-0">
+            <div className="fixed bottom-28 flex pl-3 pt-2">
               <input
                 type="text"
                 value={message}
                 onChange={handleInput}
                 onKeyUp={handleKeyPress}
                 placeholder="Type your message..."
-                className="flex-1 p-2 border border-slate-300 rounded-l-lg focus:border-blue-300"
+                className=" p-2 border border-slate-300 rounded-l-lg shadow-lg focus:border-blue-300"
               />
               <button
                 onClick={handleSendMessage}
-                className={`p-2 text-white rounded-r-lg ${message.trim().length === 0 ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500'}`}
+                className={`p-4 text-white rounded-r-lg shadow-lg ${message.trim().length === 0 ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500'}`}
                 disabled={message.trim().length === 0}
               >
-                Send
+                <FiSend />
               </button>
             </div>
           </div>

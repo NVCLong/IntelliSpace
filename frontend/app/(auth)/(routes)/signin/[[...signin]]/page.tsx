@@ -20,14 +20,8 @@ import axios from 'axios';
 import { motion } from 'framer-motion';
 import { toast, ToastContainer } from 'react-toastify';
 
-import {
-  GoogleLogin,
-  GoogleOAuthProvider,
-  useGoogleLogin,
-} from '@react-oauth/google';
-import { jwtDecode } from 'jwt-decode';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import { CustomButton } from '@/app/(auth)/(routes)/signin/[[...signin]]/CustomButton';
-import { router } from 'next/client';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { setStorageID } from '@/lib/features/todos/storageSlice';

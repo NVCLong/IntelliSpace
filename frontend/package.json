@@ -11,7 +11,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@hookform/resolvers": "^3.4.2",
+    "@hookform/resolvers": "^3.6.0",
     "@nextui-org/card": "^2.0.30",
     "@nextui-org/react": "^2.4.1",
     "@nextui-org/theme": "^2.2.5",
@@ -34,7 +34,7 @@
     "eslint-plugin-simple-import-sort": "^12.1.0",
     "framer-motion": "^11.2.10",
     "jwt-decode": "^4.0.0",
-    "lucide-react": "^0.381.0",
+    "lucide-react": "^0.394.0",
     "next": "^14.2.3",
     "next-auth": "^4.24.7",
     "nextjs-toploader": "^1.6.12",
@@ -63,7 +63,7 @@
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^14.2.3",
-    "@types/node": "^20.12.13",
+    "@types/node": "^20.14.2",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18",
     "@types/sockjs": "^0.3.36",
@@ -73,8 +73,8 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",
     "postcss": "^8",
-    "prettier": "^3.2.5",
-    "tailwindcss": "^3.4.3",
+    "prettier": "^3.3.1",
+    "tailwindcss": "^3.4.4",
     "tailwindcss-animated": "^1.1.0",
     "typescript": "^5"
   }

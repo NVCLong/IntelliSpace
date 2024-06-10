@@ -14,7 +14,7 @@ import {
 } from '@nextui-org/react';
 import { toast, ToastContainer } from 'react-toastify';
 
-import { createFolder, createNote, createRootFolder } from '../lib/apiCall';
+import { createNote } from '@/lib/apiCall';
 
 export const NewNote = (userId: any) => {
   const [noteContent, setNoteContent] = React.useState('');
