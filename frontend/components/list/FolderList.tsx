@@ -1,8 +1,8 @@
-import 'react-toastify/dist/ReactToastify.css'
+import 'react-toastify/dist/ReactToastify.css';
 
-import copy from 'copy-to-clipboard'
-import React, { useEffect, useState } from "react";
-import { MdFolder } from 'react-icons/md'
+import copy from 'copy-to-clipboard';
+import React, { useState } from 'react';
+import { MdFolder } from 'react-icons/md';
 import {
   Button,
   Input,
@@ -16,7 +16,7 @@ import {
 import { FiEdit3, FiShare, FiTrash2 } from 'react-icons/fi';
 import { toast, ToastContainer } from 'react-toastify';
 
-import { deleteFolder, openFolder, updateFolder } from '@/lib/apiCall';
+import { deleteFolder, shareFolderCode, updateFolder } from '@/lib/apiCall';
 import {
   ContextMenu,
   ContextMenuContent,
@@ -24,7 +24,6 @@ import {
   ContextMenuLabel,
   ContextMenuTrigger,
 } from '@/components/ui/context-menu';
-import { shareFolderCode } from '@/lib/apiCall';
 
 interface Folder {
   id: string;
@@ -38,12 +37,12 @@ interface FolderListProps {
 
 // @ts-ignore
 const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure()
-  let storageId:string|null;
-  let userId: string|null;
-  if(typeof window !=='undefined'){
-      storageId=localStorage.getItem('storageID');
-      userId=localStorage.getItem("userId");
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  let storageId: string | null;
+  let userId: string | null;
+  if (typeof window !== 'undefined') {
+    storageId = localStorage.getItem('storageID');
+    userId = localStorage.getItem('userId');
   }
 
   const [folderName, setFolderName] = useState('');
@@ -66,14 +65,15 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
   };
 
   const handleShareFolder = async (folderId: string) => {
-
-    const response = await shareFolderCode(folderId, storageId,userId)
-    console.log(response)
-    toast.success(<div>
-    Code: {response}
-    <br />
-    Copied to clipboard
-  </div>)
+    const response = await shareFolderCode(folderId, storageId, userId);
+    console.log(response);
+    toast.success(
+      <div>
+        Code: {response}
+        <br />
+        Copied to clipboard
+      </div>,
+    );
     copy(response);
   };
 

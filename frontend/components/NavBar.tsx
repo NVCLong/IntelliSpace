@@ -39,7 +39,13 @@ const NavBar = () => {
       className="relative z-30 w-screen py-1.5 shadow-md flexBetween padding-container backdrop-blur-md "
     >
       <Link href="/" className="hoverScale">
-        <Image src="/IntelliSpace.png" alt="logo" width={40} height={40} />
+        <Image
+          src="/IntelliSpace.png"
+          alt="logo"
+          width={40}
+          height={40}
+          priority
+        />
       </Link>
 
       <div

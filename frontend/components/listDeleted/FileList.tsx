@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { Card, CardFooter } from '@nextui-org/card';
-import { getFile } from '@/lib/apiCall';
+import { deletePermanently, getFile } from '@/lib/apiCall';
 import { Image } from '@nextui-org/react';
 import {
   ContextMenu,
@@ -10,7 +10,6 @@ import {
   ContextMenuLabel,
   ContextMenuTrigger,
 } from '@/components/ui/context-menu';
-import { deletePermanently } from '@/lib/apiCall';
 
 interface File {
   id: string;
@@ -115,8 +114,8 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
                         height={300}
                       />
                     ) : (
-                      <div className="{/* Styles for unknown file type */}">
-                        Unsupported File Type
+                      <div className="flexCenter text-center font-bold h-full p-2">
+                        Unsupported file type
                       </div>
                     )}
                     <CardFooter className="flexCenter  before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-md rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-large ml-1 z-10">

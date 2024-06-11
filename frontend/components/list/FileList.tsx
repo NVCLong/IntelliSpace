@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
 
 import {
   ContextMenu,
@@ -59,7 +59,7 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
   };
 
   return (
-    <div className="flex flex-col sm:py-12 sm:px-12">
+    <div className="relative flex flex-col overflow-hidden sm:py-12 sm:px-12">
       <div className="w-full max-w-screen-xl px-4 mx-auto">
         <div className="grid w-full gap-9 xl:grid-cols-6 sm:grid-cols-4">
           {files.map((file) => (
@@ -96,7 +96,7 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
                   <Card
                     isFooterBlurred={true}
                     radius="lg"
-                    className="border-none fixed-card-size hover:opacity-70"
+                    className="border-none fixed-card-size hover:opacity-60"
                   >
                     {file.file_name?.toLowerCase().includes('jpg') ||
                     file.file_name?.toLowerCase().includes('png') ? (
@@ -123,8 +123,8 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
                         height={300}
                       />
                     ) : (
-                      <div className="{/* Styles for unknown file type */}">
-                        Unsupported File Type
+                      <div className="flexCenter text-center font-bold h-full p-2">
+                        Unsupported file type
                       </div>
                     )}
                     <CardFooter className="flexCenter before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-md rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-large ml-1 z-10">
