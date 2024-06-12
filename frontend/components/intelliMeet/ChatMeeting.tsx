@@ -392,12 +392,12 @@ const ChatMeeting = () => {
 
       {/* Message area */}
       <div
-        className={`fixed right-0 h-screen ${
+        className={`fixed right-0 ${
           isChatOpen ? 'w-80' : 'w-0'
         } transition-width duration-300 ease-in-out bg-white h-[80%] shadow-xl rounded-tl-2xl rounded-bl-2xl`}
       >
         {isChatOpen && (
-          <div className="z-1 h-[91%] p-4 flex flex-col ">
+          <div className="z-1 h-[85%] p-4 flex flex-col ">
             <p className="font-semibold text-xl mb-4">In-call messages</p>
             <span className="bg-blue-100/30 text-center rounded-xl p-3 text-sm mb-4">
               Messages can only be seen by people in the call when the message

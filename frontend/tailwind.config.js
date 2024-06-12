@@ -17,7 +17,7 @@ module.exports = {
       center: true,
       padding: '0rem',
       screens: {
-        sm: '400px',
+        sm: '431px',
         xl: '1680px',
         '2xl': '2200px',
       },
@@ -100,8 +100,8 @@ module.exports = {
         foreground: 'hsl(var(--card-foreground))',
       },
       transitionProperty: {
-        'width': 'width',
-      }
+        width: 'width',
+      },
     },
   },
   darkMode: 'class',
