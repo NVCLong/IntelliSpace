@@ -77,15 +77,16 @@ export default function Page() {
     );
   }
 
+
   if (error.message) {
     return (
-      <div className="mx-auto flexCenter h-screen">Error: {error.message}</div>
+      <div className="h-screen mx-auto flexCenter">Error: {error.message}</div>
     );
   }
   return (
     <>
       {fetchedFileList.length <= 0 && (
-        <div className="flexCenter mx-auto h-screen flex-col space-y-4">
+        <div className="flex-col h-screen mx-auto space-y-4 flexCenter">
           <FiTrash size={50} />
           <p className="text-xl">Recycle bin is empty</p>
         </div>
