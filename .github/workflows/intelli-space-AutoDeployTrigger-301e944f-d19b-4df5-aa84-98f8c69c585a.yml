@@ -1,0 +1,47 @@
+name: Trigger auto deployment for intelli-space
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ master ]
+    paths:
+    - 'backend/**'
+    - '.github/workflows/intelli-space-AutoDeployTrigger-301e944f-d19b-4df5-aa84-98f8c69c585a.yml'
+
+  # Allow manual trigger 
+  workflow_dispatch:      
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions: 
+      id-token: write #This is required for requesting the OIDC JWT Token
+      contents: read #Required when GH token is used to authenticate with private repo
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.INTELLISPACE_AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.INTELLISPACE_AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.INTELLISPACE_AZURE_SUBSCRIPTION_ID }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v2
+        with:
+          appSourcePath: ${{ github.workspace }}/backend 
+          registryUrl: docker.io
+          registryUsername: ${{ secrets.INTELLISPACE_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.INTELLISPACE_REGISTRY_PASSWORD }}
+          containerAppName: intelli-space
+          resourceGroup: IntelliSpace
+          imageToBuild: nvclong1701/intelli-space:${{ github.sha }}
+          _buildArgumentsKey_: |
+            _buildArgumentsValues_
+
+
