@@ -19,6 +19,7 @@ import { motion } from 'framer-motion';
 import { AppDispatch, useAppSelector } from '@/lib/store';
 import { setEmail } from '@/lib/features/todos/emailSlice';
 import { useDispatch } from 'react-redux';
+import { toast, ToastContainer } from 'react-toastify';
 
 const registerSchema = z.object({
   otp: z.string(),
@@ -50,13 +51,27 @@ const Page = () => {
       `https://intelli-space-v1.azurewebsites.net/api/auth/checkOtp`,
       request,
     );
-    // console.log(response.data);
-
-    router.push('/resetPassword');
+    if (response.data.status === false) {
+      toast.error(<div>Notification: {response.data.message}</div>);
+    } else {
+      router.push('/resetPassword');
+    }
   }
 
   return (
     <>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={8000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       <motion.div
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
