@@ -20,7 +20,7 @@ export const CustomButton = () => {
       );
       // console.log(response.data)
       const loginResponse = await axios.get(
-        `http://localhost:8888/api/auth/oauth2/login?name=${response.data.family_name}&email=${response.data.email}`,
+        `https://intelli-space.victoriousmeadow-365dcf6c.southeastasia.azurecontainerapps.io/api/auth/oauth2/login?name=${response.data.family_name}&email=${response.data.email}`,
       );
       // console.log(loginResponse.data)
       localStorage.setItem('access_token', loginResponse.data.accessToken);

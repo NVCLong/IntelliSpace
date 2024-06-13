@@ -61,9 +61,18 @@ const ChatMeeting = () => {
       if (newMessage.userid != userId) {
         if (!isChatOpen) {
           toast(
-            <div className="flex space-x-5">
-              <FiMessageSquare />
-              {newMessage.sender} {newMessage.timestamp}: {newMessage.content}
+            <div className="flex items-center">
+              <div className="mr-2">
+                <FiMessageSquare size={20} />
+              </div>
+              <div className="flex items-end">
+                <div className="flex-col">
+                  <div className="text-sm">{newMessage.timestamp}</div>
+                  <div className="mr-1 font-semibold">{newMessage.sender}:</div>
+                </div>
+
+                <div>{newMessage.content}</div>
+              </div>
             </div>,
           );
         }
@@ -105,7 +114,9 @@ const ChatMeeting = () => {
 
   const handleConnect = () => {
     const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const sock = new SockJS('http://localhost:8888/api/ws-message');
+    const sock = new SockJS(
+      'https://intelli-space.victoriousmeadow-365dcf6c.southeastasia.azurecontainerapps.io/api/ws-message',
+    );
     const stompClient = Stomp.over(sock);
     // @ts-ignore
     const peer = new Peer({
@@ -293,7 +304,7 @@ const ChatMeeting = () => {
             handleOpenChat();
           }}
           position="bottom-right"
-          autoClose={2000}
+          autoClose={90000}
           hideProgressBar={false}
           newestOnTop
           closeOnClick

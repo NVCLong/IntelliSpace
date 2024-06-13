@@ -37,7 +37,7 @@ const Page = () => {
 
   async function onSubmit(values: z.infer<typeof registerSchema>) {
     const response = await axios.post(
-      `http://localhost:8888/api/auth/resetPassword`,
+      `https://intelli-space.victoriousmeadow-365dcf6c.southeastasia.azurecontainerapps.io/api/auth/resetPassword`,
       values,
     );
     dispatch(setEmail(values.email));
