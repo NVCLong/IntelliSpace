@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
+  FiBookmark,
   FiCodesandbox,
   FiFolder,
   FiHome,
   FiLogOut,
-  FiPaperclip,
   FiShare2,
   FiTrash2,
   FiVideo,
@@ -78,7 +78,7 @@ const SideBar: React.FC = () => {
     {
       name: 'Notes',
       path: '/note',
-      icon: FiPaperclip,
+      icon: FiBookmark,
       onClick: () => {},
     },
     {
@@ -120,10 +120,10 @@ const SideBar: React.FC = () => {
     <div className="mr-28">
       <div
         className={`${
-          open ? 'w-60' : 'w-24 p-2'
-        } z-50 flex-col shadow-xl backdrop-blur-2xl transition-all duration-300 p-5 pt-8 h-dvh fixed`}
+          open ? 'w-60' : 'w-20 p-2 flexCenter'
+        } z-50 flex-col shadow-2xl backdrop-blur-xl transition-all duration-400 py-5 h-screen fixed`}
       >
-        <div className="h-full overflow-y-auto lg:block">
+        <div className="h-full overflow-y-auto lg:block mt-3">
           <img
             src="/control.png"
             className={`absolute cursor-pointer rounded-full -right-3 top-9 w-6 transition duration-200 transform hover:scale-110
@@ -139,7 +139,7 @@ const SideBar: React.FC = () => {
                 alt="logo"
                 width={30}
                 height={30}
-                className={`cursor-pointer ml-3 transition-full
+                className={`cursor-pointer ml-7 transition-full
             ${!open && ''}`}
               />
             </a>
@@ -152,11 +152,11 @@ const SideBar: React.FC = () => {
             </span>
           </div>
 
-          <div className="p-4 space-y-2 overflow-hidden">
+          <div className="px-4 space-y-2 overflow-hidden mt-5">
             {navItems.map((item, index) => (
               <Link key={index} href={item.path}>
                 <div
-                  className="flex items-center p-4 mt-2.5 transition duration-100 ease-linear transform rounded-lg cursor-pointer focus:bg-slate-50 focus:outline-none active:bg-slate-50 hover:text-white focus:bg-white/10 active:bg-white/10 w-fit "
+                  className="flex items-center p-4 mt-2.5 transition duration-100 ease-linear transform rounded-lg cursor-pointer focus:bg-slate-50 focus:outline-none active:bg-slate-50 hover:text-white focus:bg-white/10 active:bg-white/10 "
                   onClick={item.onClick}
                 >
                   <div
@@ -169,7 +169,7 @@ const SideBar: React.FC = () => {
                         !open
                           ? 'w-6 h-6 cursor-pointer flex justify-center '
                           : ''
-                      } transition-all duration-100 w-6 h-6 -ml-4`}
+                      } transition-all duration-100 w-6 h-6 `}
                     />
                   </div>
                   <span

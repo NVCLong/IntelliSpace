@@ -10,7 +10,7 @@ module.exports = {
   theme: {
     fontFamily: {
       sans: ['Poppins'],
-      serif: ['Noto Sans'],
+      serif: ['Montserrat'],
       display: ['Poppins'],
     },
     container: {

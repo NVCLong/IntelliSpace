@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -65,6 +65,10 @@
     @apply min-w-[100px] min-h-[150px] max-w-[200px] max-h-[150px]
     sm:min-w-[500px] sm:min-h-[300px] sm:max-w-[200px] sm:max-h-[150px] sm:gap-5
     rounded-lg shadow-xl border-2 hover:border-2 hover:border-blue-300 duration-200 transition-all gap-2 object-cover;
+}
+
+input {
+    @apply font-serif font-medium;
 }
 
 

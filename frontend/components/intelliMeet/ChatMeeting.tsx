@@ -62,7 +62,7 @@ const ChatMeeting = () => {
         if (!isChatOpen) {
           toast(
             <div className="flex items-center">
-              <div className="mr-2">
+              <div className="mr-2 text-blue-500 ">
                 <FiMessageSquare size={20} />
               </div>
               <div className="flex items-end">
@@ -71,7 +71,9 @@ const ChatMeeting = () => {
                   <div className="mr-1 font-semibold">{newMessage.sender}:</div>
                 </div>
 
-                <div>{newMessage.content}</div>
+                <div className="font-serif font-medium">
+                  {newMessage.content}
+                </div>
               </div>
             </div>,
           );
@@ -426,7 +428,9 @@ const ChatMeeting = () => {
                         {msg.timestamp}
                       </span>
                     </div>
-                    <span className="ml-3">{msg.content}</span>
+                    <span className="ml-3 text-sm font-serif font-medium">
+                      {msg.content}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -438,7 +442,7 @@ const ChatMeeting = () => {
                 onChange={handleInput}
                 onKeyUp={handleKeyPress}
                 placeholder="Type your message..."
-                className=" p-2 border border-slate-300 rounded-l-lg shadow-lg focus:border-blue-300"
+                className=" p-2 border border-slate-300 font-serif font-medium rounded-l-lg shadow-lg focus:border-blue-300"
               />
               <button
                 onClick={handleSendMessage}

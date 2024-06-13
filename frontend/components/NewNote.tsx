@@ -48,7 +48,7 @@ export const NewNote = (userId: any) => {
   };
 
   return (
-    <div className="mt-24 ml-20">
+    <div className="mt-24 ml-20 font-serif font-medium">
       <ToastContainer
         position="bottom-right"
         autoClose={5000}

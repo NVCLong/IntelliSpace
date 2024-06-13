@@ -80,7 +80,7 @@ const NoteList: React.FC<NoteListProps> = ({ notes }) => {
                           maxRows={1}
                           cacheMeasurements
                           onChange={handleInput}
-                          className="mr-4 font-semibold leading-none border-transparent rounded-lg resize-none text-small text-default-600 border-3 hover:border-red-200 hover:border-3"
+                          className="mr-4 font-semibold leading-none font-serif p-2 border-transparent rounded-lg resize-none text-small text-default-600 border-3 hover:border-red-200 hover:border-3"
                         ></TextareaAutosize>
                       </div>
                     </div>
@@ -94,7 +94,7 @@ const NoteList: React.FC<NoteListProps> = ({ notes }) => {
                       cacheMeasurements
                       defaultValue={note.content}
                       onChange={handleInput}
-                      className="p-2 border-2 border-gray-200 rounded-lg resize-none"
+                      className="p-2 border-2 border-gray-200 rounded-lg resize-none font-serif font-medium"
                     ></TextareaAutosize>
                     <Button
                       className="bg-gray-300 shadow-md text-foreground"

@@ -14,8 +14,6 @@ import {
   FormLabel,
 } from '@/components/auth_ui/Form';
 import { Input } from '@/components/auth_ui/Input';
-import { FcGoogle } from 'react-icons/fc';
-import { SiGithub } from 'react-icons/si';
 import Link from 'next/link';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
@@ -122,15 +120,15 @@ const Page = () => {
             <h3 className="text-2xl font-semibold text-center">
               Register here
             </h3>
-            <div className="socialRegisterOptions drop-shadow-md ">
-              <Button className="socialFormBtn hoverScale">
-                <FcGoogle className="w-10 h-10" />
-              </Button>
-              <Button className="socialFormBtn hoverScale">
-                <SiGithub className="w-10 h-10" />
-              </Button>
-            </div>
-            <p className="text-center">or use this option</p>
+            {/*<div className="socialRegisterOptions drop-shadow-md ">*/}
+            {/*  <Button className="socialFormBtn hoverScale">*/}
+            {/*    <FcGoogle className="w-10 h-10" />*/}
+            {/*  </Button>*/}
+            {/*  <Button className="socialFormBtn hoverScale">*/}
+            {/*    <SiGithub className="w-10 h-10" />*/}
+            {/*  </Button>*/}
+            {/*</div>*/}
+            {/*<p className="text-center">or use this option</p>*/}
             <Form {...form}>
               <form
                 className="flex-col flexCenter drop-shadow-md"

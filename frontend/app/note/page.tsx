@@ -1,12 +1,11 @@
 'use client';
 
-import { useEffect,useState } from "react";
-import { getAllNotes } from "@/lib/apiCall";
-import NoteList from "@/components/NoteList";
-import { NewNote } from "@/components/NewNote";
-import { motion } from "framer-motion";
-import { router } from "next/client";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from 'react';
+import { getAllNotes } from '@/lib/apiCall';
+import NoteList from '@/components/NoteList';
+import { NewNote } from '@/components/NewNote';
+import { motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 
 export default function Page() {
   const [userId, setUserId] = useState('');
@@ -36,12 +35,13 @@ export default function Page() {
   };
 
   useEffect(() => {
-    if (typeof window !== 'undefined') { // Make sure window exists
-      let user=localStorage.getItem("userId")
-      if(user==null){
-        router.push("/")
+    if (typeof window !== 'undefined') {
+      // Make sure window exists
+      let user = localStorage.getItem('userId');
+      if (user == null) {
+        router.push('/');
       }
-      const userId = localStorage.getItem("userId") || "";
+      const userId = localStorage.getItem('userId') || '';
       setUserId(userId);
       console.log(userId === null);
       handleFetchData(userId)
