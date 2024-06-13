@@ -54,7 +54,7 @@ const Page = () => {
     }
     // console.log(values)
     const response = await axios.post(
-      `https://intelli-space.victoriousmeadow-365dcf6c.southeastasia.azurecontainerapps.io/api/auth/newPassword`,
+      `https://intelli-space-v1.azurewebsites.net/api/auth/newPassword`,
       request,
     );
     // console.log(response.data);

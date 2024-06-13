@@ -43,7 +43,7 @@ const Page = () => {
 
   async function onSubmit(values: z.infer<typeof signInSchema>) {
     const response = await axios.post(
-      'https://intelli-space.victoriousmeadow-365dcf6c.southeastasia.azurecontainerapps.io/api/auth/login',
+      'https://intelli-space-v1.azurewebsites.net/api/auth/login',
       values,
     );
 

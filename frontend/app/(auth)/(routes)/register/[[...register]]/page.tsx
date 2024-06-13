@@ -59,7 +59,7 @@ const Page = () => {
 
   async function onSubmit(values: z.infer<typeof registerSchema>) {
     const response = await axios.post(
-      `https://intelli-space.victoriousmeadow-365dcf6c.southeastasia.azurecontainerapps.io/api/auth/register`,
+      `https://intelli-space-v1.azurewebsites.net/api/auth/register`,
       values,
     );
     if (response.data.content.includes('has been registered')) {

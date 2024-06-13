@@ -2,8 +2,7 @@ import { jwtDecode, JwtPayload } from 'jwt-decode';
 import axios from 'axios';
 
 export const api = axios.create({
-  baseURL:
-    'https://intelli-space.victoriousmeadow-365dcf6c.southeastasia.azurecontainerapps.io/api',
+  baseURL: 'https://intelli-space-v1.azurewebsites.net/api',
   withCredentials: true,
 });
 
@@ -25,7 +24,7 @@ export const getHeader = async () => {
           const userId = localStorage.getItem('userId');
           // console.log(userId);
           const response = await axios.get(
-            `https://intelli-space.victoriousmeadow-365dcf6c.southeastasia.azurecontainerapps.io/api/auth/logout/${userId}`,
+            `https://intelli-space-v1.azurewebsites.net/api/auth/logout/${userId}`,
           );
           // console.log(response.data);
           localStorage.removeItem('access_token');

@@ -117,7 +117,7 @@ const ChatMeeting = () => {
   const handleConnect = () => {
     const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
     const sock = new SockJS(
-      'https://intelli-space.victoriousmeadow-365dcf6c.southeastasia.azurecontainerapps.io/api/ws-message',
+      'https://intelli-space-v1.azurewebsites.net/api/ws-message',
     );
     const stompClient = Stomp.over(sock);
     // @ts-ignore

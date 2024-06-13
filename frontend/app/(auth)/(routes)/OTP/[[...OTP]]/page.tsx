@@ -47,7 +47,7 @@ const Page = () => {
     }
     // console.log(values)
     const response = await axios.post(
-      `https://intelli-space.victoriousmeadow-365dcf6c.southeastasia.azurecontainerapps.io/api/auth/checkOtp`,
+      `https://intelli-space-v1.azurewebsites.net/api/auth/checkOtp`,
       request,
     );
     // console.log(response.data);
