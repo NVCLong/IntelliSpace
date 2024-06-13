@@ -4,7 +4,7 @@ import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: 'Reset | IntelliSpace',
+  title: 'Reset password | IntelliSpace',
   description: 'Reset your password.',
 };
 

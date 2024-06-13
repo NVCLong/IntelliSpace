@@ -98,7 +98,11 @@ const Page = () => {
                     <FormItem className="mb-2 space-y-1">
                       <FormLabel>New Password</FormLabel>
                       <FormControl>
-                        <Input placeholder="Enter New Password" {...field} />
+                        <Input
+                          type="password"
+                          placeholder="Enter new password"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -112,7 +116,11 @@ const Page = () => {
                     <FormItem className="mb-2 space-y-1">
                       <FormLabel>Confirm Password</FormLabel>
                       <FormControl>
-                        <Input placeholder="Confirm Your Password" {...field} />
+                        <Input
+                          type="password"
+                          placeholder="Confirm your password"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
