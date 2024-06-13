@@ -1,7 +1,7 @@
 'use client';
 
 import 'react-toastify/dist/ReactToastify.css';
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as z from 'zod';
 import { Button } from '@/components/auth_ui/Button';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -12,7 +12,6 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from '@/components/auth_ui/Form';
 import { Input } from '@/components/auth_ui/Input';
 import { FcGoogle } from 'react-icons/fc';
@@ -21,7 +20,6 @@ import Link from 'next/link';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { useEffect } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 
 const registerSchema = z
@@ -31,17 +29,17 @@ const registerSchema = z
       .min(2, 'Name should have at least 2 characters.')
       .max(50, 'Name should not exceed 50 characters.')
       .refine(
-        (value) => /^[a-zA-Z]+[-'s]?[a-zA-Z ]+$/.test(value),
-        'Name should contain only alphabets.',
+        (value) => /^[a-zA-Z0-9]+[-'s]?[a-zA-Z0-9 ]+$/.test(value),
+        'Name should contain only alphabets and numbers.',
       ),
     email: z.string().email('Email must be valid.'),
     numberPhone: z
       .string()
       .min(10, 'Phone number should have at least 10 characters.'),
-    password: z.string().min(6, 'Password Should have at least 6 characters.'),
+    password: z.string().min(6, 'Password should have at least 6 characters.'),
     confirmPassword: z
       .string()
-      .min(6, 'Password Should have at least 6 characters.'),
+      .min(6, 'Password should have at least 6 characters.'),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: 'Passwords does not match.',
@@ -141,84 +139,115 @@ const Page = () => {
                 <FormField
                   control={form.control}
                   name="username"
-                  render={({ field }) => (
+                  render={({ field, fieldState }) => (
                     <FormItem className="mb-2 space-y-1">
                       <FormLabel>Username</FormLabel>
                       <FormControl>
-                        <Input placeholder="Your username" {...field} />
+                        <Input
+                          className={`InputFormat ${fieldState.error ? 'ring-pink-500 text-pink-600 ring-2' : ''}`}
+                          placeholder="Your username"
+                          {...field}
+                        />
                       </FormControl>
-                      <FormMessage />
+                      {fieldState.error && (
+                        <p className="errorFormat">
+                          {fieldState.error.message}
+                        </p>
+                      )}
                     </FormItem>
                   )}
                 />
                 <FormField
                   control={form.control}
                   name="email"
-                  render={({ field }) => (
+                  render={({ field, fieldState }) => (
                     <FormItem className="mb-2 space-y-1">
                       <FormLabel>Email</FormLabel>
                       <FormControl>
                         <Input
+                          className={`InputFormat ${fieldState.error ? 'ring-pink-500 text-pink-600 ring-2' : ''}`}
                           placeholder="email@intellispace.com"
                           {...field}
                         />
                       </FormControl>
-                      <FormMessage />
+                      {fieldState.error && (
+                        <p className="errorFormat">
+                          {fieldState.error.message}
+                        </p>
+                      )}
                     </FormItem>
                   )}
                 />
                 <FormField
                   control={form.control}
                   name="numberPhone"
-                  render={({ field }) => (
+                  render={({ field, fieldState }) => (
                     <FormItem className="mb-2 space-y-1">
                       <FormLabel>Phone number</FormLabel>
                       <FormControl>
-                        <Input placeholder="Your phone number" {...field} />
+                        <Input
+                          className={`InputFormat ${fieldState.error ? 'ring-pink-500 text-pink-600 ring-2' : ''}`}
+                          placeholder="Your phone number"
+                          {...field}
+                        />
                       </FormControl>
-                      <FormMessage />
+                      {fieldState.error && (
+                        <p className="errorFormat">
+                          {fieldState.error.message}
+                        </p>
+                      )}
                     </FormItem>
                   )}
                 />
                 <FormField
                   control={form.control}
                   name="password"
-                  render={({ field }) => (
+                  render={({ field, fieldState }) => (
                     <FormItem className="mb-2 space-y-1">
                       <FormLabel>Password</FormLabel>
                       <FormControl>
                         <Input
+                          className={`InputFormat ${fieldState.error ? 'ring-pink-500 text-pink-600 ring-2' : ''}`}
                           placeholder="********"
                           type="password"
                           {...field}
                         />
                       </FormControl>
-                      <FormMessage />
+                      {fieldState.error && (
+                        <p className="errorFormat">
+                          {fieldState.error.message}
+                        </p>
+                      )}
                     </FormItem>
                   )}
                 />
                 <FormField
                   control={form.control}
                   name="confirmPassword"
-                  render={({ field }) => (
+                  render={({ field, fieldState }) => (
                     <FormItem className="mb-2 space-y-1">
                       <FormLabel>Confirm password</FormLabel>
                       <FormControl>
                         <Input
+                          className={`InputFormat ${fieldState.error ? 'ring-pink-500 text-pink-600 ring-2' : ''}`}
                           placeholder="********"
                           type="password"
                           {...field}
                         />
                       </FormControl>
-                      <FormMessage />
+                      {fieldState.error && (
+                        <p className="errorFormat">
+                          {fieldState.error.message}
+                        </p>
+                      )}
                     </FormItem>
                   )}
                 />
                 <Button
                   type="submit"
-                  className="w-1/2 mt-4 border-2 border-gray-500 border-solid rounded-lg shadow-lg flexCenter hoverScale"
+                  className="w-1/3 mt-4 border-1 border-gray-800 border-solid rounded-lg shadow-lg flexCenter hoverScale hover:border-blue-200 hover:bg-blue-300/50 hover:text-white"
                 >
-                  Submit
+                  Register
                 </Button>
               </form>
             </Form>

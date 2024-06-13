@@ -12,7 +12,6 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from '@/components/auth_ui/Form';
 import { Input } from '@/components/auth_ui/Input';
 import Link from 'next/link';
@@ -48,7 +47,11 @@ const Page = () => {
       values,
     );
 
+    // console.log(response);
+
     if (response.data.content.toLowerCase() === 'wrong password') {
+      toast.error(<div>Notification: {response.data.content}</div>);
+    } else if (response.data.content.toLowerCase().includes('not register')) {
       toast.error(<div>Notification: {response.data.content}</div>);
     } else {
       localStorage.setItem('access_token', response.data.accessToken);
@@ -115,30 +118,43 @@ const Page = () => {
                 <FormField
                   control={form.control}
                   name="username"
-                  render={({ field }) => (
+                  render={({ field, fieldState }) => (
                     <FormItem className="mb-2 space-y-2">
                       <FormLabel>Username</FormLabel>
                       <FormControl>
-                        <Input placeholder="Enter username" {...field} />
+                        <Input
+                          className={`InputFormat ${fieldState.error ? 'ring-pink-500 text-pink-600 ring-2' : ''}`}
+                          placeholder="Enter username"
+                          {...field}
+                        />
                       </FormControl>
-                      <FormMessage />
+                      {fieldState.error && (
+                        <p className="errorFormat">
+                          {fieldState.error.message}
+                        </p>
+                      )}
                     </FormItem>
                   )}
                 />
                 <FormField
                   control={form.control}
                   name="password"
-                  render={({ field }) => (
+                  render={({ field, fieldState }) => (
                     <FormItem className="mb-2 space-y-2">
                       <FormLabel>Password</FormLabel>
                       <FormControl>
                         <Input
+                          className={`InputFormat ${fieldState.error ? 'ring-pink-500 text-pink-600 ring-2' : ''}`}
                           placeholder="********"
                           type="password"
                           {...field}
                         />
                       </FormControl>
-                      <FormMessage />
+                      {fieldState.error && (
+                        <p className="errorFormat">
+                          {fieldState.error.message}
+                        </p>
+                      )}
                     </FormItem>
                   )}
                 />
@@ -150,9 +166,9 @@ const Page = () => {
                 </Link>
                 <Button
                   type="submit"
-                  className="w-1/2 mt-4 border-2 border-gray-800 border-solid rounded-lg shadow-lg flexCenter hoverScale"
+                  className="w-1/3 mt-4 border-1 border-gray-800 border-solid rounded-lg shadow-lg flexCenter hoverScale hover:border-blue-200 hover:bg-blue-300/50 hover:text-white"
                 >
-                  Submit
+                  Login
                 </Button>
               </form>
             </Form>

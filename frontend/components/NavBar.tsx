@@ -42,8 +42,8 @@ const NavBar = () => {
         <Image
           src="/IntelliSpace.png"
           alt="logo"
-          width={40}
-          height={40}
+          width={30}
+          height={30}
           priority
         />
       </Link>
@@ -81,7 +81,7 @@ const NavBar = () => {
       </ul>
 
       <div
-        className="hidden gap-2 px-4 py-2 bg-blue-500 rounded-full cursor-pointer hover:bg-blue-600 lg:flex md:flex sm:hidden hoverScale drop-shadow-md flexCenter bold-16"
+        className="hidden gap-2 px-4 py-2 bg-purple-400 rounded-full cursor-pointer hover:bg-purple-600 lg:flex md:flex sm:hidden hoverScale drop-shadow-md flexCenter bold-16"
         onClick={handleSignin}
       >
         {isLoading ? (

@@ -86,6 +86,14 @@
     max-width: 13ch;
 }
 
+.InputFormat {
+    @apply flexStart w-[250px] sm:w-[360px];
+}
+
+.errorFormat {
+    @apply text-red-500 text-center text-sm;
+}
+
 @layer utilities {
     .btn_dark {
         @apply px-3 py-2 text-white transition-all bg-indigo-500 hover:bg-black;
@@ -96,7 +104,7 @@
     }
 
     .padding-container {
-        @apply px-6 lg:px-20;
+        @apply pl-6 pr-0 sm:px-20;
     }
 
     .flexCenter {
@@ -214,7 +222,7 @@
 
 .signInWrapper .right,
 .registerWrapper .right {
-    @apply px-4 py-4 my-4 mx-4 md:w-1/2 w-[20rem] bg-white rounded-lg;
+    @apply px-4 py-4 my-4 mx-4 sm:w-1/2 w-[20rem] bg-white rounded-lg;
 }
 
 .socialFormBtn {
@@ -225,12 +233,4 @@
     @apply flex items-center justify-center my-3;
 }
 
-/* @layer base {
-  * {
-    @apply border-border;
-  }
 
-  body {
-    @apply bg-background text-foreground;
-  }
-} */
