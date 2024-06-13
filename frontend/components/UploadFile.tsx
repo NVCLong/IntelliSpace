@@ -51,8 +51,6 @@ export const UploadFile = () => {
 
     if (selectedFile) {
       toast.success('Have file');
-      //   console.log('Have file')
-      //   console.log(selectedFile)
       // @ts-ignore
       setFile({ file: selectedFile });
       const fileNameElement = document.getElementById('selectedFileName');
@@ -60,7 +58,6 @@ export const UploadFile = () => {
         fileNameElement.textContent = selectedFile.name;
       }
     } else {
-      //   console.warn('No file selected.')
       toast.error('No file selected.');
     }
   };

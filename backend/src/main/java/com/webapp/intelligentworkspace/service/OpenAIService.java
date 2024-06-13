@@ -30,13 +30,12 @@ public class OpenAIService {
 
 
     public String chat(HttpEntity<ChatRequest> requestEntity, String model) {
-        System.out.println(openAIURL);
         System.out.println(requestEntity);
 
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("model", model);
         requestBody.put("messages", requestEntity.getBody().getMessages());
-        System.out.println(requestBody);
+
 
         HttpEntity<Map<String, Object>> requestWithModel = new HttpEntity<>(requestBody, requestEntity.getHeaders());
         ResponseEntity<ChatResponse> responseEntity = template.postForEntity(openAIURL, requestWithModel, ChatResponse.class);

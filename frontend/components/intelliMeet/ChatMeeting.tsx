@@ -122,7 +122,7 @@ const ChatMeeting = () => {
     const peer = new Peer({
       config: {
         iceServers: [{ url: 'stun:stun.l.google.com:19302' }],
-      } /* Sample servers, please use appropriate ones */,
+      },
     });
     // @ts-ignore
     setPeerConnection(peer);
@@ -277,15 +277,12 @@ const ChatMeeting = () => {
         track.stop();
       });
 
-      if (peerConnection) {
-        // @ts-ignore
-        peerConnection.destroy();
-        setPeerConnection(null);
-      }
-      if (stompClient) {
-        // @ts-ignore
-        stompClient.unsubscribe(`/topic/room/${code}`);
-      }
+      // @ts-ignore
+      peerConnection.destroy();
+      setPeerConnection(null);
+
+      // @ts-ignore
+      stompClient.unsubscribe(`/topic/room/${code}`);
 
       // @ts-ignore
       localVideoRef.current.srcObject = null;
