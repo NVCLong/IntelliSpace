@@ -6,6 +6,7 @@ interface StorageBarProps {
   total: number;
   open: boolean;
 }
+
 function getColor(percentage: number): string {
   if (percentage > 80) return 'bg-red-400';
   if (percentage >= 60 && percentage <= 80) return 'bg-yellow-400';
@@ -26,9 +27,9 @@ const StorageBar: React.FC<StorageBarProps> = ({ used, total, open }) => {
           className={`flex flex-col justify-center text-center text-white ${getColor(percentage)} shadow-none whitespace-nowrap`}
         ></div>
       </div>
-      {!open && <p className="font-semibold">{`${percentage}%`}</p>}
+      {!open && <p className="font-semibold flexCenter">{`${percentage}%`}</p>}
       {open && (
-        <p className="font-semibold">{`Used ${usedStorage}GB of ${total}GB`}</p>
+        <p className="font-semibold flexCenter">{`Used ${usedStorage}GB of ${total}GB`}</p>
       )}
     </div>
   );
