@@ -42,7 +42,7 @@
 
 ### Installation
 ```sh
-git clone [https://github.com/yourusername/IntelliSpace.git](https://github.com/NVCLong/IntelliSpace)
+git clone https://github.com/NVCLong/IntelliSpace
 cd IntelliSpace
 ```
 ### Backend Setup
@@ -79,11 +79,11 @@ npm run dev
 
 ### Usage
 
-  #### 👉 Sign Up or Log In: Create an account or log in to your existing account. <br>
-  #### 👉 File Management: Upload, organize, and manage your files. <br>
-  #### 👉 Video Meetings: Conduct real-time video meetings with screen sharing. <br>
-  #### 👉 Chat: Engage in instant messaging and group chats with team members. <br>
-  #### 👉 AI Support: Use AI tools for enhanced productivity and smart suggestions. <br>
+  👉 **Sign Up or Log In**: Create an account or log in to your existing account. <br>
+  👉 **File Management**: Upload, organize, and manage your files. <br>
+  👉 **Video Meetings**: Conduct real-time video meetings. <br>
+  👉 **Chat**: Engage in instant messaging and group chats with team members. <br>
+  👉 **AI Support**: Use AI tools for enhanced productivity and smart suggestions. <br>
 
 ### Contributing
 
@@ -100,4 +100,4 @@ git push origin feature/YourFeature
     Open a Pull Request
 
 ### License
-**This project is licensed under the MIT License. See the LICENSE file for details.**
+This project is licensed under the [MIT License](https://github.com/NVCLong/IntelliSpace/blob/master/LICENSE). See the LICENSE file for details.
