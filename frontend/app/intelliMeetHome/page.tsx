@@ -65,7 +65,7 @@ export default function Page() {
         pauseOnHover
         theme="colored"
       />
-      <div className="w-3/4 h-screen ml-auto mr-auto space-x-36 flexCenter">
+      <div className="sm:w-3/4 w-full h-screen mx-auto pr-8 space-x-0 sm:space-x-36 flexCenter flex-col-reverse sm:flex-row">
         <div className="flex-col space-y-5 flexCenter">
           <h1 className="text-4xl italic font-black flexCenter">IntelliMeet</h1>
           <span className="text-center max-w-96 text-wrap">
@@ -98,15 +98,13 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <div className="shadow-lg hidden sm:flex">
-          <Image
-            src="/Meet_Home.png"
-            alt="logo"
-            width={500}
-            height={500}
-            className="rounded-lg"
-          />
-        </div>
+        <Image
+          src="/Meet_Home.png"
+          alt="logo"
+          width={500}
+          height={500}
+          className="rounded-lg shadow-lg flexCenter mb-10 sm:mb-0"
+        />
       </div>
     </>
   );

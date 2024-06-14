@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AppDispatch, useAppSelector } from '@/lib/store';
 import { getAllRootFolder, openFolder } from '@/lib/apiCall';
 import FolderList from '@/components/list/FolderList';
@@ -84,12 +84,13 @@ export default function Page() {
       }
     };
     handleFetchData().then().catch(console.error);
-  }, []);
+  }, [folderList]);
 
   return (
     <>
       <div className="flex flex-col">
         {/* <SearchBar/> */}
+
         <div className="hidden ml-3 space-x-5 sm:flex mt-9 sm:flex-row">
           <BackButton />
           <br />
@@ -97,6 +98,7 @@ export default function Page() {
           <br />
           <UploadFile />
         </div>
+
         <div className="fixed bottom-0 right-0 mb-3 mr-7 sm:fixed sm:hidden">
           <Drawer>
             <DrawerTrigger>
@@ -120,6 +122,13 @@ export default function Page() {
             </DrawerContent>
           </Drawer>
         </div>
+        {/*{folderList === null && (*/}
+        {/*  <div className="flex-col h-screen space-y-4 w-screen flexCenter">*/}
+        {/*    <FiArchive size={50} />*/}
+        {/*    <p className="text-xl">Empty</p>*/}
+        {/*  </div>*/}
+        {/*)}*/}
+
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}

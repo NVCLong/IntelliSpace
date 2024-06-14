@@ -404,7 +404,7 @@ const ChatMeeting = () => {
               <FiMic size={20} />
             )}
             <span
-              className={`tooltip absolute bottom-full mb-2 px-2 py-2 text-sm text-white bg-zinc-800 rounded-lg opacity-0 ${isMicHovered ? 'opacity-100' : 'opacity-0'} transition-all duration-200 w-32`}
+              className={`tooltip absolute bottom-full mb-2 px-2 py-2 text-sm text-white bg-zinc-800 rounded-lg opacity-0 ${isMicHovered ? 'opacity-100' : 'hidden'} transition-all duration-200 w-32`}
             >
               {!isMuted ? 'Turn on mic' : 'Turn off mic'}
             </span>
@@ -422,7 +422,7 @@ const ChatMeeting = () => {
               <FiCamera size={20} />
             )}
             <span
-              className={`tooltip absolute bottom-full mb-2 px-2 py-2 text-sm text-white bg-zinc-800 rounded-lg opacity-0 ${isCamHovered ? 'opacity-100' : 'opacity-0'} transition-all duration-200 w-32`}
+              className={`tooltip absolute bottom-full mb-2 px-2 py-2 text-sm text-white bg-zinc-800 rounded-lg opacity-0 ${isCamHovered ? 'opacity-100' : 'hidden'} transition-all duration-200 w-32`}
             >
               {!isCameraOff ? 'Turn on camera' : 'Turn off camera'}
             </span>
@@ -441,7 +441,7 @@ const ChatMeeting = () => {
               <FiPlayCircle size={20} className="text-gray-20" />
             )}
             <span
-              className={`tooltip absolute bottom-full mb-2 px-2 py-2 text-sm text-white bg-zinc-800 rounded-lg opacity-0 ${isConnectHovered ? 'opacity-100' : 'opacity-0'} transition-all duration-200 w-32`}
+              className={`tooltip absolute bottom-full mb-2 px-2 py-2 text-sm text-white bg-zinc-800 rounded-lg opacity-0 ${isConnectHovered ? 'opacity-100' : 'hidden'} transition-all duration-200 w-32`}
             >
               {!connected ? 'Connect' : ''}
             </span>
@@ -465,7 +465,7 @@ const ChatMeeting = () => {
               />
             )}
             <span
-              className={`tooltip absolute bottom-full mb-2 px-2 py-2 text-sm text-white bg-zinc-800 rounded-lg opacity-0 ${isChatHovered ? 'opacity-100' : 'opacity-0'} transition-all duration-200 w-32`}
+              className={`tooltip absolute bottom-full mb-2 px-2 py-2 text-sm text-white bg-zinc-800 rounded-lg opacity-0 ${isChatHovered ? 'opacity-100' : 'hidden'} transition-all duration-200 w-32`}
             >
               {!isChatOpen ? 'Open chat box' : 'Close chat box'}
             </span>
@@ -479,9 +479,9 @@ const ChatMeeting = () => {
           >
             <FiPhoneOff size={20} className="text-white" />
             <span
-              className={`tooltip absolute bottom-full mb-2 px-2 py-2 text-sm text-white bg-zinc-800 rounded-lg opacity-0 ${isDisconnectHovered ? 'opacity-100' : 'opacity-0'} transition-all duration-200 w-32`}
+              className={`tooltip absolute bottom-full mb-2 px-2 py-2 text-sm text-white bg-zinc-800 rounded-lg opacity-0 ${isDisconnectHovered ? 'opacity-100' : 'hidden'} transition-all duration-200 w-32`}
             >
-              {!connected ? '' : 'Disconnect'}
+              {!connected ? 'Disconnect' : ''}
             </span>
           </button>
         </div>

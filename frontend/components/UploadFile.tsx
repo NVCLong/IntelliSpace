@@ -2,15 +2,15 @@ import React from 'react';
 import { FiArrowUpCircle, FiShare } from 'react-icons/fi';
 import { uploadFile } from '@/lib/apiCall';
 import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
   Button,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
   useDisclosure,
 } from '@nextui-org/react';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export const UploadFile = () => {
@@ -35,7 +35,7 @@ export const UploadFile = () => {
         toast.error(`Submit failed: ${response}`);
         // alert(response)
       }
-      window.location.reload();
+
       // console.log(response)
     } else {
       toast.error('File is null');
@@ -131,10 +131,10 @@ export const UploadFile = () => {
                   color="primary"
                   onPress={(e) => {
                     handleSubmit();
-                    onClose();
+                    window.location.reload();
                   }}
                 >
-                  Submit
+                  Upload
                 </Button>
               </ModalFooter>
             </>

@@ -36,11 +36,13 @@ export const NewFolder = (storageID: any) => {
       const response = createRootFolder(storageID.storageID, request);
       // console.log(response)
       toast.success('Create folder');
+      // window.location.reload();
     } else {
       // console.log('create in sub folder')
       const response = createFolder(storageID.storageID, folderId, request);
       // console.log(response)
       toast.success('Create in sub-folder');
+      // window.location.reload();
     }
   };
 
@@ -93,10 +95,10 @@ export const NewFolder = (storageID: any) => {
                   onPress={(e) => {
                     handleSubmit();
                     onClose();
-                    window.location.reload();
+                    // window.location.reload();
                   }}
                 >
-                  Submit
+                  Create
                 </Button>
               </ModalFooter>
             </>

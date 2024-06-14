@@ -15,17 +15,18 @@ import {
 import StorageBar from './StorageBar';
 import { useRouter } from 'next/navigation';
 import { getCapacity } from '@/lib/apiCall';
-// import {
-//   Button,
-//   Modal,
-//   ModalContent,
-//   ModalFooter,
-//   ModalHeader,
-//   useDisclosure,
-// } from '@nextui-org/react';
+import {
+  Button,
+  Modal,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  useDisclosure,
+} from '@nextui-org/react';
+import axios from 'axios';
 
 const SideBar: React.FC = () => {
-  // const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -87,17 +88,20 @@ const SideBar: React.FC = () => {
     },
     {
       name: 'Logout',
-      path: '/',
+      path: '',
       icon: FiLogOut,
       onClick: () => {
-        // handleOpenModal();
-        handleLogout();
+        onOpen();
       },
     },
   ];
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     const userId = localStorage.getItem('userId');
+    // console.log(userId);
+    const response = await axios.get(
+      `https://intelli-space-v1.azurewebsites.net/api/auth/logout/${userId}`,
+    );
     localStorage.removeItem('access_token');
     localStorage.removeItem('userId');
     localStorage.removeItem('storageID');
@@ -106,10 +110,6 @@ const SideBar: React.FC = () => {
     clearCookies();
     router.push('/');
   };
-
-  // const handleOpenModal = () => {
-  //   onOpen();
-  // };
 
   const handleStorageUsed = async () => {
     const storageId = localStorage.getItem('storageID');
@@ -126,25 +126,25 @@ const SideBar: React.FC = () => {
 
   return (
     <div className="mr-28">
-      {/*<Modal isOpen={isOpen}>*/}
-      {/*  <ModalContent>*/}
-      {/*    {(onClose) => (*/}
-      {/*      <>*/}
-      {/*        <ModalHeader className="flex flex-col gap-1">*/}
-      {/*          Are you sure you want to logout?*/}
-      {/*        </ModalHeader>*/}
-      {/*        <ModalFooter>*/}
-      {/*          <Button color="danger" variant="light" onPress={onClose}>*/}
-      {/*            Close*/}
-      {/*          </Button>*/}
-      {/*          <Button color="primary" onPress={handleLogout}>*/}
-      {/*            Logout*/}
-      {/*          </Button>*/}
-      {/*        </ModalFooter>*/}
-      {/*      </>*/}
-      {/*    )}*/}
-      {/*  </ModalContent>*/}
-      {/*</Modal>*/}
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flexCenter flex-col gap-1">
+                Are you sure you want to logout?
+              </ModalHeader>
+              <ModalFooter className="flexCenter">
+                <Button
+                  className="bg-red-500 text-white font-medium"
+                  onPress={handleLogout}
+                >
+                  Logout
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
 
       <div
         className={`${

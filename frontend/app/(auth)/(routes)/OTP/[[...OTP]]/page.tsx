@@ -48,8 +48,8 @@ const Page = () => {
       dispatch(setEmail(email));
     }
     // console.log(values)
-    setIsLoading(true);
     try {
+      setIsLoading(true);
       const response = await axios.post(
         `https://intelli-space-v1.azurewebsites.net/api/auth/checkOtp`,
         request,
