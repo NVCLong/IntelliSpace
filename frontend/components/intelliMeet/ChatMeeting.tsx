@@ -29,7 +29,7 @@ import {
 const ChatMeeting = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const { isOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const [isMuted, setIsMuted] = useState(true);
   const [isCameraOff, setIsCameraOff] = useState(true);
@@ -102,7 +102,7 @@ const ChatMeeting = () => {
         },
       );
     }
-    open();
+    onOpen();
   }, []);
 
   const handleChangeName = (e: {
