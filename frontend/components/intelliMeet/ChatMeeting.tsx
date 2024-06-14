@@ -282,6 +282,8 @@ const ChatMeeting = () => {
     setPeerConnection(null);
 
     // @ts-ignore
+    await stompClient.disconnect();
+    // @ts-ignore
     stompClient.unsubscribe(`/topic/room/${code}`);
 
     // @ts-ignore
