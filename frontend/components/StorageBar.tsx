@@ -22,7 +22,8 @@ const StorageBar: React.FC<StorageBarProps> = ({ used, total, open }) => {
 
   useEffect(() => {
     console.log(Math.round((used / total) * 100));
-    setPercent(Math.round((used / total) * 100));
+    if (Math.round((used / total) * 100) !== 0)
+      setPercent(Math.round((used / total) * 100));
   }, [used]);
 
   return (
