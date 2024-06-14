@@ -293,16 +293,16 @@ const ChatMeeting = () => {
       track.stop();
     });
     // @ts-ignore
-    // stompClient.send(
-    //   `/app/sendMessage/${code}`,
-    //   {},
-    //   JSON.stringify({
-    //     type: 'LEAVE',
-    //     sender: userId,
-    //     content: null,
-    //     timestamp: null,
-    //   }),
-    // );
+    stompClient.send(
+      `/app/sendMessage/${code}`,
+      {},
+      JSON.stringify({
+        type: 'LEAVE',
+        sender: userId,
+        content: null,
+        timestamp: null,
+      }),
+    );
 
     // @ts-ignore
     peerConnection.destroy();
@@ -329,7 +329,7 @@ const ChatMeeting = () => {
             handleOpenChat();
           }}
           position="bottom-right"
-          autoClose={90000}
+          autoClose={5000}
           hideProgressBar={false}
           newestOnTop
           closeOnClick
