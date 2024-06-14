@@ -318,6 +318,8 @@ const ChatMeeting = () => {
     // @ts-ignore
     remoteVideoRef.current.srcObject = null;
 
+    setIsChatOpen(true);
+
     router.push('/intelliMeetHome');
   };
 
