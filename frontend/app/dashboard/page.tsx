@@ -84,7 +84,7 @@ export default function Page() {
       }
     };
     handleFetchData().then().catch(console.error);
-  }, [folderList]);
+  }, []);
 
   return (
     <>

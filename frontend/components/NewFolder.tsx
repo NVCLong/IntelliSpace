@@ -47,25 +47,24 @@ export const NewFolder = (storageID: any) => {
   };
 
   return (
-    <div className="">
+    <div>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        theme="colored"
+      />
       <button
         className="p-2 text-gray-600 bg-white border rounded-full shadow-md cursor-pointer sm:px-4 sm:gap-2 flexCenter hoverScale"
         onClick={onOpen}
       >
         <FiFolderPlus size={24} />
         <span className="hidden font-semibold sm:flex">New folder</span>
-        <ToastContainer
-          position="bottom-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="colored"
-        />
       </button>
 
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="center">
@@ -94,8 +93,7 @@ export const NewFolder = (storageID: any) => {
                   color="primary"
                   onPress={(e) => {
                     handleSubmit();
-                    onClose();
-                    // window.location.reload();
+                    window.location.reload();
                   }}
                 >
                   Create

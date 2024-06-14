@@ -29,4 +29,9 @@ export const FOOTER_CONTACT_INFO = {
 export const SOCIALS = {
   title: 'Social',
   links: ['/facebook.svg', '/instagram.svg', '/youtube.svg'],
+  href: [
+    'https://www.facebook.com/Bionic7nm',
+    'https://www.instagram.com/tduy1706',
+    'https://www.youtube.com/',
+  ],
 };
