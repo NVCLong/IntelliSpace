@@ -1,11 +1,15 @@
-"use client";
+'use client';
 import React, { useState } from 'react';
 
 import {
-    ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuLabel, ContextMenuTrigger
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuLabel,
+  ContextMenuTrigger,
 } from '@/components/ui/context-menu';
-import { downloadSharedFile, getFile, softDelete } from "@/lib/apiCall";
-import { Card,CardFooter } from '@nextui-org/card';
+import { downloadSharedFile, softDelete } from '@/lib/apiCall';
+import { Card, CardFooter } from '@nextui-org/card';
 import {
   Button,
   Image,
@@ -17,7 +21,7 @@ import {
   ModalHeader,
   useDisclosure,
 } from '@nextui-org/react';
-import { FiDownloadCloud, FiTrash2 } from 'react-icons/fi';
+import { FiDownloadCloud } from 'react-icons/fi';
 
 interface File {
   id: string;
@@ -51,7 +55,7 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
   const handleDownload = async () => {
     try {
       const fileData = await downloadSharedFile(code, fileId, fileName);
-      console.log(fileData)
+      console.log(fileData);
       // @ts-ignore
       const url = window.URL.createObjectURL(fileData);
       const link = document.createElement('a');
@@ -63,7 +67,7 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
     } catch (e) {
       throw e;
     }
-  }
+  };
 
   return (
     <div className="relative flex flex-col overflow-hidden sm:py-12 sm:px-12">
@@ -92,7 +96,7 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
                   <Card
                     isFooterBlurred={true}
                     radius="lg"
-                    className="border-none hoverScale fixed-card-size"
+                    className="border-none hoverScale fixed-card-size gap-4"
                   >
                     {file.file_name?.toLowerCase().includes('png') ||
                     file.file_name?.toLowerCase().includes('jpg') ? (

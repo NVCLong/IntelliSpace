@@ -102,11 +102,10 @@ export const NewNote = (userId: any) => {
                   color="primary"
                   onPress={(e) => {
                     handleSubmit();
-                    onClose();
                     window.location.reload();
                   }}
                 >
-                  Submit
+                  Create
                 </Button>
               </ModalFooter>
             </>

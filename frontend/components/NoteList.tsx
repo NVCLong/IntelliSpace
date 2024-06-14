@@ -36,10 +36,6 @@ const NoteList: React.FC<NoteListProps> = ({ notes }) => {
 
   const userId = localStorage.getItem('userId');
 
-  const handleDelete = async (noteId: string | null) => {
-    await deleteNote(noteId);
-    // window.location.reload();
-  };
   // @ts-ignore
   const handleInput = async (e) => {
     const { name, value } = e.target;
@@ -49,11 +45,14 @@ const NoteList: React.FC<NoteListProps> = ({ notes }) => {
     });
   };
 
+  const handleDelete = async (noteId: string | null) => {
+    await deleteNote(noteId);
+    window.location.reload();
+  };
   const handleUpdate = async (noteId: string | null) => {
     await updateNote(noteId, updatedNote);
     window.location.reload();
   };
-
   const handleSummarize = async (noteId: string | null) => {
     const response = await summarizeNote(noteId);
     window.location.reload();

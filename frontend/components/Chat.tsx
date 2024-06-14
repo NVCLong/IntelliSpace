@@ -81,12 +81,12 @@ const Chat = () => {
                     onInit={(typewriter) => {
                       typewriter
                         .typeString(output)
-                        .callFunction(() => {
-                          console.log('String typed out!');
-                        })
-                        .callFunction(() => {
-                          console.log('All strings were deleted');
-                        })
+                        // .callFunction(() => {
+                        //   console.log('String typed out!');
+                        // })
+                        // .callFunction(() => {
+                        //   console.log('All strings were deleted');
+                        // })
                         .start();
                     }}
                   />
