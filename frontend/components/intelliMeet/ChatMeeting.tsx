@@ -341,15 +341,19 @@ const ChatMeeting = () => {
         />
       )}
 
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} className="">
+      <Modal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        className="bg-gradient-to-tr from-zinc-900 to-zinc-800 border-zinc-500 border-zinc-500 border-2"
+      >
         <ModalContent>
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                <h1 className="text-2xl font-bold">Instruction</h1>
+                <h1 className="text-2xl font-bold text-white">Instruction</h1>
               </ModalHeader>
               <ModalBody>
-                <span className="flex">
+                <span className="flex text-white">
                   User must click on &nbsp;
                   <FiPlayCircle size={20} />
                   &nbsp; to connect.
