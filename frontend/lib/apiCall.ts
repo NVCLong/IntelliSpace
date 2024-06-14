@@ -20,7 +20,7 @@ export const getHeader = async () => {
       if (isExpired) {
         const userId = localStorage.getItem('userId');
         const response = await api.get(`/auth/newAccessToken?userId=${userId}`);
-        if (response.data.contain === 'Log out') {
+        if (response.data.content === 'Log out') {
           const userId = localStorage.getItem('userId');
           // console.log(userId);
           const response = await axios.get(
@@ -32,6 +32,7 @@ export const getHeader = async () => {
           localStorage.removeItem('storageID');
           localStorage.removeItem('folderId');
           localStorage.removeItem('parentFolder');
+          localStorage.clear();
           document.cookie
             .split(';')
             .forEach(
@@ -43,10 +44,11 @@ export const getHeader = async () => {
                     `=;expires=${new Date().toUTCString()}; path=/`,
                   )),
             );
+        } else {
+          localStorage.removeItem('access_token');
+          accessToken = response.data.accessToken;
+          localStorage.setItem('access_token', accessToken);
         }
-        localStorage.removeItem('access_token');
-        accessToken = response.data.accessToken;
-        localStorage.setItem('access_token', accessToken);
       }
     } catch (e) {
       console.log('Err', e);
