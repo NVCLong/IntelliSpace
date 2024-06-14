@@ -15,18 +15,18 @@ const Footer = () => {
         delay: 1,
         ease: [0, 0.71, 0.2, 1.01],
       }}
-      className="flexCenter"
+      className="flexCenter mt-24 sm:mt-0"
     >
       <div className="padding-container max-container flex w-full flex-col gap-5">
         <div className="flex flex-col items-start justify-center gap-[10%] sm:flex-row">
-          <Link href="/" className="mb-3 hidden sm:flex">
+          <Link href="/" className="mb-3">
             <Image src="/IntelliSpace.png" alt="logo" width={74} height={74} />
           </Link>
 
-          <div className="flex  flex-row flex-wrap space-x-16">
+          <div className="flex flex-row flex-wrap space-x-16">
             {FOOTER_LINKS.map((columns, index) => (
               <FooterColumn title={columns.title} key={index}>
-                <ul className="flex flex-col gap-4 regular-14 text-gray-30">
+                <ul className="flex flex-col gap-2 sm:gap-4 regular-14 text-gray-30">
                   {columns.links.map((link, linkIndex) => (
                     <Link href="/" key={linkIndex}>
                       {link}
@@ -52,7 +52,7 @@ const Footer = () => {
               </FooterColumn>
             </div>
 
-            <div className="sm:flex hidden gap-5 ">
+            <div className=" gap-5 ">
               <FooterColumn title={SOCIALS.title}>
                 <ul className="flex gap-4 regular-14 text-gray-30">
                   {SOCIALS.links.map((link) => (

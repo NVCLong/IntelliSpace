@@ -1,7 +1,7 @@
 'use client';
 
 import 'react-toastify/dist/ReactToastify.css';
-import React from 'react';
+import React, { useState } from 'react';
 import * as z from 'zod';
 import { Button } from '@/components/auth_ui/Button';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -24,6 +24,7 @@ import { CustomButton } from '@/app/(auth)/(routes)/signin/[[...signin]]/CustomB
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { setStorageID } from '@/lib/features/todos/storageSlice';
+import BarLoader from 'react-spinners/BarLoader';
 
 const signInSchema = z.object({
   username: z.string(),
@@ -41,26 +42,34 @@ const Page = () => {
     },
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
   async function onSubmit(values: z.infer<typeof signInSchema>) {
-    const response = await axios.post(
-      'https://intelli-space-v1.azurewebsites.net/api/auth/login',
-      values,
-    );
+    setIsLoading(true);
+    try {
+      const response = await axios.post(
+        'https://intelli-space-v1.azurewebsites.net/api/auth/login',
+        values,
+      );
 
-    // console.log(response);
+      // console.log(response);
 
-    if (response.data.content.toLowerCase() === 'wrong password') {
-      toast.error(<div>Notification: {response.data.content}</div>);
-    } else if (response.data.content.toLowerCase().includes('not register')) {
-      toast.error(<div>Notification: {response.data.content}</div>);
-    } else {
-      localStorage.setItem('access_token', response.data.accessToken);
-      document.cookie = `refreshToken=${response.data.refreshToken}`;
-      localStorage.setItem('userId', response.data.user.id);
-      localStorage.setItem('storageID', response.data.storageId);
-      // console.log(response.data);
-      dispatch(setStorageID(response.data.storageId));
-      router.push('/dashboard');
+      if (response.data.content.toLowerCase() === 'wrong password') {
+        toast.error(<div>Notification: {response.data.content}</div>);
+      } else if (response.data.content.toLowerCase().includes('not register')) {
+        toast.error(<div>Notification: {response.data.content}</div>);
+      } else {
+        localStorage.setItem('access_token', response.data.accessToken);
+        document.cookie = `refreshToken=${response.data.refreshToken}`;
+        localStorage.setItem('userId', response.data.user.id);
+        localStorage.setItem('storageID', response.data.storageId);
+        // console.log(response.data);
+        dispatch(setStorageID(response.data.storageId));
+        router.push('/dashboard');
+      }
+    } catch (e) {
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -165,10 +174,23 @@ const Page = () => {
                   </span>
                 </Link>
                 <Button
+                  disabled={isLoading}
                   type="submit"
-                  className="w-1/3 mt-4 border-1 border-gray-800 border-solid rounded-lg shadow-lg flexCenter hoverScale hover:border-blue-200 hover:bg-blue-300/50 hover:text-white"
+                  className="w-1/3 mt-4 border-1 border-blue-300 text-blue-500 border-solid rounded-lg shadow-lg flexCenter hoverScale hover:border-blue-200 hover:bg-blue-300/50 hover:text-white tracking-wide"
                 >
-                  Login
+                  {isLoading ? (
+                    <div className="flexCenter drop-shadow-md">
+                      <BarLoader
+                        color="#1351ae"
+                        height={8}
+                        loading
+                        speedMultiplier={1}
+                        width={100}
+                      />
+                    </div>
+                  ) : (
+                    'LOGIN'
+                  )}
                 </Button>
               </form>
             </Form>

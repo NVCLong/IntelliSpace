@@ -11,11 +11,12 @@ export const metadata: Metadata = {
 
 const RegisterLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <>
-      <TopLoader /> <NavBar />
-      {children}
+    <div className="flex flex-col min-h-screen">
+      <TopLoader />
+      <NavBar />
+      <div className="flex-grow">{children}</div>
       <Footer />
-    </>
+    </div>
   );
 };
 

@@ -1,7 +1,7 @@
 'use client';
 
 import 'react-toastify/dist/ReactToastify.css';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as z from 'zod';
 import { Button } from '@/components/auth_ui/Button';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -19,6 +19,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { toast, ToastContainer } from 'react-toastify';
+import BarLoader from 'react-spinners/BarLoader';
 
 const registerSchema = z
   .object({
@@ -45,6 +46,7 @@ const registerSchema = z
   });
 
 const Page = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
@@ -58,15 +60,22 @@ const Page = () => {
   });
 
   async function onSubmit(values: z.infer<typeof registerSchema>) {
-    const response = await axios.post(
-      `https://intelli-space-v1.azurewebsites.net/api/auth/register`,
-      values,
-    );
-    if (response.data.content.includes('has been registered')) {
-      toast.error(<div>Notification: {response.data.content}</div>);
-    } else {
-      // console.log(response.data);
-      router.push('/signin');
+    setIsLoading(true);
+    try {
+      const response = await axios.post(
+        'https://intelli-space-v1.azurewebsites.net/api/auth/register',
+        values,
+      );
+
+      if (response.data.content.includes('has been registered')) {
+        toast.error(<div>Notification: {response.data.content}</div>);
+      } else {
+        // console.log(response.data);
+        router.push('/signin');
+      }
+    } catch (e) {
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -242,10 +251,23 @@ const Page = () => {
                   )}
                 />
                 <Button
+                  disabled={isLoading}
                   type="submit"
-                  className="w-1/3 mt-4 border-1 border-gray-800 border-solid rounded-lg shadow-lg flexCenter hoverScale hover:border-blue-200 hover:bg-blue-300/50 hover:text-white"
+                  className="w-1/3 mt-4 border-1 border-blue-300 text-blue-500 border-solid rounded-lg shadow-lg flexCenter hoverScale hover:border-blue-200 hover:bg-blue-300/50 hover:text-white tracking-wide"
                 >
-                  Register
+                  {isLoading ? (
+                    <div className="flexCenter drop-shadow-md">
+                      <BarLoader
+                        color="#1351ae"
+                        height={8}
+                        loading
+                        speedMultiplier={1}
+                        width={100}
+                      />
+                    </div>
+                  ) : (
+                    'REGISTER'
+                  )}
                 </Button>
               </form>
             </Form>

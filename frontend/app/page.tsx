@@ -27,10 +27,10 @@ export default function Home() {
   }, []);
   return (
     <NextUIProvider>
-      <>
+      <div className="flex flex-col min-h-screen">
         <TopLoader />
         <NavBar />
-        <div className="flexCenter flex-col h-full">
+        <div className="flex-grow flexCenter flex-col h-full">
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -61,18 +61,16 @@ export default function Home() {
               information.
             </p>
             <Button
-              className="bg-blue-600 mx-auto shadow-lg w-46 mt-7 animate-pulse animate-infinite animate-duration-1000 animate-ease-in-out text-md"
+              className="bg-blue-300/90 mx-auto shadow-lg w-46 mt-7 animate-pulse animate-infinite animate-duration-1000 animate-ease-in-out text-md hover:bg-blue-400"
               onClick={handleSignin}
             >
               <FiChevronRight className="mr-2" />
               Getting started
             </Button>
           </motion.div>
-          <div className="sm:flex fixed bottom-5">
-            <Footer />
-          </div>
         </div>
-      </>
+        <Footer />
+      </div>
     </NextUIProvider>
   );
 }

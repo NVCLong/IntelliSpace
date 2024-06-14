@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import * as z from 'zod';
 import { Button } from '@/components/auth_ui/Button';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -10,7 +10,6 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from '@/components/auth_ui/Form';
 import { Input } from '@/components/auth_ui/Input';
 import axios from 'axios';
@@ -19,6 +18,7 @@ import { motion } from 'framer-motion';
 import { AppDispatch, useAppSelector } from '@/lib/store';
 import { setEmail } from '@/lib/features/todos/emailSlice';
 import { useDispatch } from 'react-redux';
+import BarLoader from 'react-spinners/BarLoader';
 
 const resetSchema = z
   .object({
@@ -32,6 +32,7 @@ const resetSchema = z
 
 const Page = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const [isLoading, setIsLoading] = useState(false);
   const email: string | null = useAppSelector(
     (state) => state.emailSlice.email,
   );
@@ -53,13 +54,19 @@ const Page = () => {
       dispatch(setEmail(email));
     }
     // console.log(values)
-    const response = await axios.post(
-      `https://intelli-space-v1.azurewebsites.net/api/auth/newPassword`,
-      request,
-    );
-    // console.log(response.data);
+    setIsLoading(true);
+    try {
+      const response = await axios.post(
+        `https://intelli-space-v1.azurewebsites.net/api/auth/newPassword`,
+        request,
+      );
+      // console.log(response.data);
 
-    router.push('/signin');
+      router.push('/signin');
+    } catch (e) {
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -84,7 +91,7 @@ const Page = () => {
           </div>
           <div className="right">
             <h3 className="mb-10 text-2xl font-semibold text-center">
-              Enter New Password
+              Enter new password
             </h3>
             <Form {...form}>
               <form
@@ -94,17 +101,22 @@ const Page = () => {
                 <FormField
                   control={form.control}
                   name="newPassword"
-                  render={({ field }) => (
+                  render={({ field, fieldState }) => (
                     <FormItem className="mb-2 space-y-1">
-                      <FormLabel>New Password</FormLabel>
+                      <FormLabel>New password</FormLabel>
                       <FormControl>
                         <Input
                           type="password"
+                          className={`InputFormat ${fieldState.error ? 'ring-pink-500 text-pink-600 ring-2' : ''}`}
                           placeholder="Enter new password"
                           {...field}
                         />
                       </FormControl>
-                      <FormMessage />
+                      {fieldState.error && (
+                        <p className="errorFormat">
+                          {fieldState.error.message}
+                        </p>
+                      )}
                     </FormItem>
                   )}
                 />
@@ -112,26 +124,44 @@ const Page = () => {
                 <FormField
                   control={form.control}
                   name="confirmPassword"
-                  render={({ field }) => (
+                  render={({ field, fieldState }) => (
                     <FormItem className="mb-2 space-y-1">
-                      <FormLabel>Confirm Password</FormLabel>
+                      <FormLabel>Confirm password</FormLabel>
                       <FormControl>
                         <Input
                           type="password"
+                          className={`InputFormat ${fieldState.error ? 'ring-pink-500 text-pink-600 ring-2' : ''}`}
                           placeholder="Confirm your password"
                           {...field}
                         />
                       </FormControl>
-                      <FormMessage />
+                      {fieldState.error && (
+                        <p className="errorFormat">
+                          {fieldState.error.message}
+                        </p>
+                      )}
                     </FormItem>
                   )}
                 />
 
                 <Button
+                  disabled={isLoading}
                   type="submit"
-                  className="w-1/2 mt-4 mb-10 border-2 border-gray-500 border-solid rounded-lg shadow-lg flexCenter hoverScale"
+                  className="w-1/3 mt-4 border-1 border-blue-300 text-blue-500 border-solid rounded-lg shadow-lg flexCenter hoverScale hover:border-blue-200 hover:bg-blue-300/50 hover:text-white tracking-wide"
                 >
-                  Submit
+                  {isLoading ? (
+                    <div className="flexCenter drop-shadow-md">
+                      <BarLoader
+                        color="#1351ae"
+                        height={8}
+                        loading
+                        speedMultiplier={1}
+                        width={100}
+                      />
+                    </div>
+                  ) : (
+                    'SUBMIT'
+                  )}
                 </Button>
               </form>
             </Form>

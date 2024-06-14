@@ -344,7 +344,7 @@ const ChatMeeting = () => {
       <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-        className="bg-gradient-to-tr from-zinc-900 to-zinc-800 border-zinc-500 border-zinc-500 border-2"
+        className="bg-gradient-to-tr from-zinc-900 to-zinc-800 border-zinc-500 border-2"
       >
         <ModalContent>
           {(onClose) => (

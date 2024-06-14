@@ -13,12 +13,25 @@ import {
   FiVideo,
 } from 'react-icons/fi';
 import StorageBar from './StorageBar';
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { getCapacity } from '@/lib/apiCall';
+// import {
+//   Button,
+//   Modal,
+//   ModalContent,
+//   ModalFooter,
+//   ModalHeader,
+//   useDisclosure,
+// } from '@nextui-org/react';
 
 const SideBar: React.FC = () => {
+  // const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
   const router = useRouter();
+  const [open, setOpen] = useState(false);
+
+  const [used, setUsed] = useState(0);
+  const [total, setTotal] = useState(0);
   const clearCookies = () =>
     document.cookie
       .split(';')
@@ -28,21 +41,6 @@ const SideBar: React.FC = () => {
             .replace(/^ +/, '')
             .replace(/=.*/, `=;expires=${new Date().toUTCString()}; path=/`)),
       );
-  const handleLogout = async () => {
-    const userId = localStorage.getItem('userId');
-    // console.log(userId);
-    const response = await axios.get(
-      `https://intelli-space-v1.azurewebsites.net/api/auth/logout/${userId}`,
-    );
-    // console.log(response.data);
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('userId');
-    localStorage.removeItem('storageID');
-    localStorage.removeItem('folderId');
-    localStorage.removeItem('parentFolder');
-    clearCookies();
-    router.push('/');
-  };
 
   const navItems = [
     {
@@ -92,16 +90,26 @@ const SideBar: React.FC = () => {
       path: '/',
       icon: FiLogOut,
       onClick: () => {
-        // console.log("logout");
+        // handleOpenModal();
         handleLogout();
       },
     },
   ];
 
-  const [open, setOpen] = useState(false);
+  const handleLogout = () => {
+    const userId = localStorage.getItem('userId');
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('storageID');
+    localStorage.removeItem('folderId');
+    localStorage.removeItem('parentFolder');
+    clearCookies();
+    router.push('/');
+  };
 
-  const [used, setUsed] = useState(0);
-  const [total, setTotal] = useState(0);
+  // const handleOpenModal = () => {
+  //   onOpen();
+  // };
 
   const handleStorageUsed = async () => {
     const storageId = localStorage.getItem('storageID');
@@ -118,6 +126,26 @@ const SideBar: React.FC = () => {
 
   return (
     <div className="mr-28">
+      {/*<Modal isOpen={isOpen}>*/}
+      {/*  <ModalContent>*/}
+      {/*    {(onClose) => (*/}
+      {/*      <>*/}
+      {/*        <ModalHeader className="flex flex-col gap-1">*/}
+      {/*          Are you sure you want to logout?*/}
+      {/*        </ModalHeader>*/}
+      {/*        <ModalFooter>*/}
+      {/*          <Button color="danger" variant="light" onPress={onClose}>*/}
+      {/*            Close*/}
+      {/*          </Button>*/}
+      {/*          <Button color="primary" onPress={handleLogout}>*/}
+      {/*            Logout*/}
+      {/*          </Button>*/}
+      {/*        </ModalFooter>*/}
+      {/*      </>*/}
+      {/*    )}*/}
+      {/*  </ModalContent>*/}
+      {/*</Modal>*/}
+
       <div
         className={`${
           open ? 'w-60' : 'w-20 p-2 flexCenter'

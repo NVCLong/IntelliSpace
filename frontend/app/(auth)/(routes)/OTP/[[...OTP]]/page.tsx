@@ -1,5 +1,6 @@
 'use client';
-import React from 'react';
+import 'react-toastify/dist/ReactToastify.css';
+import React, { useState } from 'react';
 import * as z from 'zod';
 import { Button } from '@/components/auth_ui/Button';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -10,7 +11,6 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from '@/components/auth_ui/Form';
 import { Input } from '@/components/auth_ui/Input';
 import axios from 'axios';
@@ -27,6 +27,7 @@ const registerSchema = z.object({
 
 const Page = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const [isLoading, setIsLoading] = useState(false);
   const email: string | null = useAppSelector(
     (state) => state.emailSlice.email,
   );
@@ -47,14 +48,20 @@ const Page = () => {
       dispatch(setEmail(email));
     }
     // console.log(values)
-    const response = await axios.post(
-      `https://intelli-space-v1.azurewebsites.net/api/auth/checkOtp`,
-      request,
-    );
-    if (response.data.status === false) {
-      toast.error(<div>Notification: {response.data.message}</div>);
-    } else {
-      router.push('/resetPassword');
+    setIsLoading(true);
+    try {
+      const response = await axios.post(
+        `https://intelli-space-v1.azurewebsites.net/api/auth/checkOtp`,
+        request,
+      );
+      if (response.data.status === false) {
+        toast.error(<div>Notification: {response.data.message}</div>);
+      } else {
+        router.push('/resetPassword');
+      }
+    } catch (e) {
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -102,13 +109,21 @@ const Page = () => {
                 <FormField
                   control={form.control}
                   name="otp"
-                  render={({ field }) => (
+                  render={({ field, fieldState }) => (
                     <FormItem className="mb-2 space-y-1">
                       <FormLabel>OTP code</FormLabel>
                       <FormControl>
-                        <Input placeholder="Enter OTP" {...field} />
+                        <Input
+                          className={`InputFormat ${fieldState.error ? 'ring-pink-500 text-pink-600 ring-2' : ''}`}
+                          placeholder="Enter OTP"
+                          {...field}
+                        />
                       </FormControl>
-                      <FormMessage />
+                      {fieldState.error && (
+                        <p className="errorFormat">
+                          {fieldState.error.message}
+                        </p>
+                      )}
                     </FormItem>
                   )}
                 />
