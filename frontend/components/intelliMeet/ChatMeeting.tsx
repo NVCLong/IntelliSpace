@@ -273,26 +273,23 @@ const ChatMeeting = () => {
 
   const handleDisconnect = () => {
     // @ts-ignore
-    if (localVideoRef.current.srcObject != null) {
-      // @ts-ignore
-      localVideoRef.current.srcObject.getTracks().forEach((track) => {
-        track.stop();
-      });
+    localVideoRef.current.srcObject.getTracks().forEach((track) => {
+      track.stop();
+    });
 
-      // @ts-ignore
-      peerConnection.destroy();
-      setPeerConnection(null);
+    // @ts-ignore
+    peerConnection.destroy();
+    setPeerConnection(null);
 
-      // @ts-ignore
-      stompClient.unsubscribe(`/topic/room/${code}`);
+    // @ts-ignore
+    stompClient.unsubscribe(`/topic/room/${code}`);
 
-      // @ts-ignore
-      localVideoRef.current.srcObject = null;
-      // @ts-ignore
-      remoteVideoRef.current.srcObject = null;
+    // @ts-ignore
+    localVideoRef.current.srcObject = null;
+    // @ts-ignore
+    remoteVideoRef.current.srcObject = null;
 
-      router.push('/intelliMeetHome');
-    }
+    router.push('/intelliMeetHome');
   };
 
   return (
