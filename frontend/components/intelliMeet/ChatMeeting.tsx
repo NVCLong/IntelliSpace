@@ -30,6 +30,11 @@ const ChatMeeting = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [isMicHovered, setIsMicHovered] = useState(false);
+  const [isCamHovered, setIsCamHovered] = useState(false);
+  const [isConnectHovered, setIsConnectHovered] = useState(false);
+  const [isChatHovered, setIsChatHovered] = useState(false);
+  const [isDisconnectHovered, setIsDisconnectHovered] = useState(false);
 
   const [isMuted, setIsMuted] = useState(true);
   const [isCameraOff, setIsCameraOff] = useState(true);
@@ -40,6 +45,14 @@ const ChatMeeting = () => {
   const [messages, setMessages] = useState<
     { sender: string; content: string; timestamp: string }[]
   >([]);
+  const messagesEndRef = useRef(null);
+
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      // @ts-ignore
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages]);
 
   const [nickName, setNickName] = useState('');
   const [stompClient, setStompClient] = useState(null);
@@ -60,10 +73,10 @@ const ChatMeeting = () => {
       setMessages((prevMessages) => [...prevMessages, newMessage]);
       if (newMessage.userid != userId) {
         if (!isChatOpen) {
-          toast(
+          toast.dark(
             <div className="flex items-center">
               <div className="mr-2 text-blue-500 ">
-                <FiMessageSquare size={20} />
+                <FiMessageSquare size={25} />
               </div>
               <div className="flex items-end">
                 <div className="flex-col">
@@ -328,7 +341,7 @@ const ChatMeeting = () => {
         />
       )}
 
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} className="">
         <ModalContent>
           {(onClose) => (
             <>
@@ -353,45 +366,90 @@ const ChatMeeting = () => {
       </Modal>
 
       <div className="grid sm:grid-cols-2 grid-cols-1 gap-4 p-4 sm:mt-3">
-        <video className="camFormat" ref={localVideoRef} autoPlay></video>
+        <div className="relative">
+          <video
+            className={`camFormat ${isCameraOff ? '' : 'flex'}`}
+            ref={localVideoRef}
+            autoPlay
+          ></video>
+
+          {!isCameraOff && (
+            <div className="absolute camOffFormat inset-0 flexCenter sm:flex-row flex-col bg-zinc-800 text-white">
+              <FiCameraOff size={25} className="mb-2 sm:mb-0 flexCenter" />
+              Camera is off
+            </div>
+          )}
+        </div>
+
         <video className="camFormat" ref={remoteVideoRef} autoPlay></video>
         <video className="camFormat" ref={remoteVideoRef} autoPlay></video>
         <video className="camFormat" ref={remoteVideoRef} autoPlay></video>
       </div>
 
-      <div className="fixed z-50 w-2/3 max-w-lg sm:max-w-xs h-12 bg-white border border-gray-200 rounded-full bottom-4">
+      <div className="fixed z-50 w-2/3 max-w-lg sm:max-w-xs h-12 border border-zinc-600 rounded-full bottom-4 bg-zinc-900">
         <div className="grid h-full sm:max-w-lg grid-cols-5 mx-auto ">
           <button
-            className="flexCenter hover:bg-gray-200 rounded-l-full border-r-1"
+            className="bottomBarFormat border-r-1 relative"
             onClick={handleMicControl}
+            onMouseEnter={() => setIsMicHovered(true)}
+            onMouseLeave={() => setIsMicHovered(false)}
           >
-            {!isMuted ? <FiMicOff size={20} /> : <FiMic size={20} />}
+            {!isMuted ? (
+              <FiMicOff className="text-red-500" size={20} />
+            ) : (
+              <FiMic size={20} />
+            )}
+            <span
+              className={`tooltip absolute bottom-full mb-2 px-2 py-2 text-sm text-white bg-zinc-800 rounded-lg opacity-0 ${isMicHovered ? 'opacity-100' : 'opacity-0'} transition-all duration-200 w-32`}
+            >
+              {!isMuted ? 'Turn on mic' : 'Turn off mic'}
+            </span>
           </button>
 
           <button
-            className="flexCenter hover:bg-gray-200 border-r-1"
+            className="bottomBarFormat border-r-1 relative"
             onClick={handleCameraControl}
+            onMouseEnter={() => setIsCamHovered(true)}
+            onMouseLeave={() => setIsCamHovered(false)}
           >
-            {!isCameraOff ? <FiCameraOff size={20} /> : <FiCamera size={20} />}
+            {!isCameraOff ? (
+              <FiCameraOff className="text-red-500" size={20} />
+            ) : (
+              <FiCamera size={20} />
+            )}
+            <span
+              className={`tooltip absolute bottom-full mb-2 px-2 py-2 text-sm text-white bg-zinc-800 rounded-lg opacity-0 ${isCamHovered ? 'opacity-100' : 'opacity-0'} transition-all duration-200 w-32`}
+            >
+              {!isCameraOff ? 'Turn on camera' : 'Turn off camera'}
+            </span>
           </button>
 
           <button
-            className="flexCenter hover:bg-gray-200 border-r-1"
+            className="bottomBarFormat border-r-1 relative"
             onClick={handleConnect}
             disabled={connected}
+            onMouseEnter={() => setIsConnectHovered(true)}
+            onMouseLeave={() => setIsConnectHovered(false)}
           >
             {!connected ? (
               <FiPlayCircle size={20} />
             ) : (
               <FiPlayCircle size={20} className="text-gray-20" />
             )}
+            <span
+              className={`tooltip absolute bottom-full mb-2 px-2 py-2 text-sm text-white bg-zinc-800 rounded-lg opacity-0 ${isConnectHovered ? 'opacity-100' : 'opacity-0'} transition-all duration-200 w-32`}
+            >
+              {!connected ? 'Connect' : ''}
+            </span>
           </button>
 
           <button
-            className="flexCenter hover:bg-gray-200 border-r-1"
+            className="bottomBarFormat border-r-1 relative"
             onClick={() => {
               handleOpenChat();
             }}
+            onMouseEnter={() => setIsChatHovered(true)}
+            onMouseLeave={() => setIsChatHovered(false)}
           >
             {!isChatOpen ? (
               <FiMessageSquare size={20} />
@@ -399,16 +457,28 @@ const ChatMeeting = () => {
               <FiMessageSquare
                 size={20}
                 fontSize={1.5}
-                className="text-blue-500 font-bold"
+                className="text-purple-500 font-bold"
               />
             )}
+            <span
+              className={`tooltip absolute bottom-full mb-2 px-2 py-2 text-sm text-white bg-zinc-800 rounded-lg opacity-0 ${isChatHovered ? 'opacity-100' : 'opacity-0'} transition-all duration-200 w-32`}
+            >
+              {!isChatOpen ? 'Open chat box' : 'Close chat box'}
+            </span>
           </button>
 
           <button
-            className="flexCenter rounded-r-full bg-red-600"
+            className="bottomBarFormat bg-red-500 rounded-r-full relative"
             onClick={handleDisconnect}
+            onMouseEnter={() => setIsDisconnectHovered(true)}
+            onMouseLeave={() => setIsDisconnectHovered(false)}
           >
             <FiPhoneOff size={20} className="text-white" />
+            <span
+              className={`tooltip absolute bottom-full mb-2 px-2 py-2 text-sm text-white bg-zinc-800 rounded-lg opacity-0 ${isDisconnectHovered ? 'opacity-100' : 'opacity-0'} transition-all duration-200 w-32`}
+            >
+              {!connected ? '' : 'Disconnect'}
+            </span>
           </button>
         </div>
       </div>
@@ -417,35 +487,38 @@ const ChatMeeting = () => {
       <div
         className={`fixed right-0 ${
           isChatOpen ? 'w-80' : 'w-0'
-        } transition-width duration-300 ease-in-out bg-white h-[80%] shadow-xl rounded-tl-2xl rounded-bl-2xl`}
+        } transition-width duration-300 ease-in-out bg-white h-[80%] shadow-xl rounded-tl-2xl rounded-bl-2xl bg-gradient-to-bl from-zinc-900 to-zinc-800 border-zinc-500 border-2 border-r-0`}
       >
         {isChatOpen && (
           <div className="z-1 h-[93%] p-4 flex flex-col ">
-            <p className="font-semibold text-xl mb-4">In-call messages</p>
-            <span className="bg-blue-100/30 text-center rounded-xl p-3 text-sm mb-4">
+            <p className="font-semibold text-xl mb-4 text-white">
+              In-call messages
+            </p>
+            <span className="bg-blue-100/20 text-center rounded-xl p-3 text-sm mb-4 text-white">
               Messages can only be seen by people in the call when the message
               is sent. All are deleted when the call ends.
             </span>
-            <div className="flex-1 overflow-y-auto">
+            <div className="flex-1 overflow-y-auto scroll-smooth">
               <div>
                 {messages.map((msg, index) => (
                   <div
                     key={index}
-                    className="break-words flex flex-col mb-2 bg-gradient-to-l from-slate-50 to-slate-100 rounded-xl p-2"
+                    className="break-words flex flex-col mb-2 bg-neutral-800 rounded-xl p-2 border-zinc-500 border-1"
                   >
                     <div className="flex space-x-2 items-center">
-                      <p className="text-gray-900 font-bold text-sm uppercase font-serif">
+                      <p className="font-bold text-sm uppercase font-serif text-white">
                         {msg.sender}
                       </p>{' '}
-                      <span className="text-gray-500 text-sm">
+                      <span className="text-gray-200 text-sm">
                         {msg.timestamp}
                       </span>
                     </div>
-                    <span className="ml-3 text-sm font-serif font-medium">
+                    <span className="ml-3 text-sm font-serif font-medium text-white">
                       {msg.content}
                     </span>
                   </div>
                 ))}
+                <div ref={messagesEndRef} />
               </div>
             </div>
             <div className="fixed bottom-28 flex pl-3 pt-2">
@@ -455,11 +528,11 @@ const ChatMeeting = () => {
                 onChange={handleInput}
                 onKeyUp={handleKeyPress}
                 placeholder="Type your message..."
-                className=" p-2 border border-slate-300 font-serif font-medium rounded-l-lg shadow-lg focus:border-blue-300"
+                className=" p-2 border border-slate-500 font-serif font-medium rounded-l-lg shadow-lg  text-white bg-gradient-to-bl from-zinc-900 to-zinc-800"
               />
               <button
                 onClick={handleSendMessage}
-                className={`p-4 text-white rounded-r-lg shadow-lg ${message.trim().length === 0 ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500'}`}
+                className={`p-4 text-white rounded-r-lg shadow-lg ${message.trim().length === 0 ? 'bg-zinc-600 cursor-not-allowed' : 'bg-purple-500'}`}
                 disabled={message.trim().length === 0}
               >
                 <FiSend />

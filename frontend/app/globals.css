@@ -67,6 +67,12 @@
     rounded-lg shadow-xl border-2 hover:border-2 hover:border-blue-300 duration-200 transition-all gap-2 object-cover;
 }
 
+.camOffFormat {
+    @apply min-w-[100px] min-h-[150px] max-w-[200px] max-h-[150px]
+    sm:min-w-[500px] sm:min-h-[300px] sm:max-w-[200px] sm:max-h-[150px] sm:gap-2
+    rounded-lg shadow-xl border-2 hover:border-2 hover:border-blue-300 duration-200 transition-all object-cover;
+}
+
 input {
     @apply font-serif font-medium;
 }
@@ -96,6 +102,11 @@ input {
 
 .errorFormat {
     @apply text-red-500 text-center text-sm;
+}
+
+
+.bottomBarFormat {
+    @apply flexCenter hover:text-gray-400 text-white border-zinc-600;
 }
 
 @layer utilities {
