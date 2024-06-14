@@ -68,7 +68,9 @@ const ChatMeeting = () => {
               <div className="flex items-end">
                 <div className="flex-col">
                   <div className="text-sm">{newMessage.timestamp}</div>
-                  <div className="mr-1 font-semibold">{newMessage.sender}:</div>
+                  <div className="mr-1 font-semibold font-serif">
+                    {newMessage.sender}:
+                  </div>
                 </div>
 
                 <div className="font-serif font-medium">
@@ -418,7 +420,7 @@ const ChatMeeting = () => {
         } transition-width duration-300 ease-in-out bg-white h-[80%] shadow-xl rounded-tl-2xl rounded-bl-2xl`}
       >
         {isChatOpen && (
-          <div className="z-1 h-[85%] p-4 flex flex-col ">
+          <div className="z-1 h-[93%] p-4 flex flex-col ">
             <p className="font-semibold text-xl mb-4">In-call messages</p>
             <span className="bg-blue-100/30 text-center rounded-xl p-3 text-sm mb-4">
               Messages can only be seen by people in the call when the message
@@ -432,7 +434,7 @@ const ChatMeeting = () => {
                     className="break-words flex flex-col mb-2 bg-gradient-to-l from-slate-50 to-slate-100 rounded-xl p-2"
                   >
                     <div className="flex space-x-2 items-center">
-                      <p className="text-gray-900 font-bold text-sm uppercase">
+                      <p className="text-gray-900 font-bold text-sm uppercase font-serif">
                         {msg.sender}
                       </p>{' '}
                       <span className="text-gray-500 text-sm">

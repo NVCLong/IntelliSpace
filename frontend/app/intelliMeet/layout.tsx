@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 const Dashboardlayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <Suspense>
-      <div className="bg-">
+      <div className="">
         <TopLoader />
         {children}
       </div>
