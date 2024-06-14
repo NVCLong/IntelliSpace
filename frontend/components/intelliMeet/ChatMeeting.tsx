@@ -79,6 +79,9 @@ const ChatMeeting = () => {
           );
         }
       }
+    } else if (newMessage.type === 'LEAVE') {
+      // @ts-ignore
+      remoteVideoRef.current.srcObject = null;
     }
   };
 
@@ -205,14 +208,12 @@ const ChatMeeting = () => {
       console.error('Peer instance not available.');
     } else {
       const call = peer.call(userId, stream);
-      console.log(call);
-      console.log(remoteVideoRef);
+
       call.on('stream', (userVideoStream: MediaStream) => {
         console.log('calling');
         console.log('Received userVideoStream:', userVideoStream);
 
         addVideoStream(remoteVideoRef, userVideoStream);
-        // addVideoStream(useReference, userVideoStream);
       });
 
       call.on('error', (error: any) => {
@@ -276,13 +277,24 @@ const ChatMeeting = () => {
     localVideoRef.current.srcObject.getTracks().forEach((track) => {
       track.stop();
     });
+    // @ts-ignore
+    stompClient.send(
+      `/app/sendMessage/${code}`,
+      {},
+      JSON.stringify({
+        type: 'LEAVE',
+        sender: userId,
+        content: null,
+        timestamp: null,
+      }),
+    );
 
     // @ts-ignore
     peerConnection.destroy();
     setPeerConnection(null);
 
     // @ts-ignore
-    await stompClient.disconnect();
+    stompClient.disconnect();
     // @ts-ignore
     stompClient.unsubscribe(`/topic/room/${code}`);
 
