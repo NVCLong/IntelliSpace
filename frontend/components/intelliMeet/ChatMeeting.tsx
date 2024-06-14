@@ -106,7 +106,7 @@ const ChatMeeting = () => {
   };
 
   useEffect(() => {
-    console.log(searchParams.get('roomId'));
+    // console.log(searchParams.get('roomId'));
     // @ts-ignore
     setCode(searchParams.get('roomId'));
 
@@ -151,13 +151,13 @@ const ChatMeeting = () => {
     setStompClient(stompClient); // Set stompClient immediately
 
     stompClient.connect({}, (frame) => {
-      console.log('Connected:', frame);
+      // console.log('Connected:', frame);
       setConnected(true);
       localStorage.setItem('nickName', nickName);
 
       // @ts-ignore
       peer.on('open', (id) => {
-        console.log('My peerId: ' + id);
+        // console.log('My peerId: ' + id);
         stompClient.send(
           `/app/sendMessage/${code}`,
           {},
@@ -181,7 +181,7 @@ const ChatMeeting = () => {
               onMessageReceived(message);
             } else if (parsedMessage.type === 'JOIN') {
               // When someone new joins, initiate a call to them
-              console.log(peerConnection);
+              // console.log(peerConnection);
               connectToNewUser(parsedMessage.peerId, stream, peer);
             }
           });
@@ -217,7 +217,7 @@ const ChatMeeting = () => {
     peer: Peer,
   ) => {
     // Use 'peer' directly
-    console.log('Other id ' + userId);
+    // console.log('Other id ' + userId);
 
     if (!peer) {
       console.error('Peer instance not available.');
@@ -225,8 +225,8 @@ const ChatMeeting = () => {
       const call = peer.call(userId, stream);
 
       call.on('stream', (userVideoStream: MediaStream) => {
-        console.log('calling');
-        console.log('Received userVideoStream:', userVideoStream);
+        // console.log('calling');
+        // console.log('Received userVideoStream:', userVideoStream);
 
         addVideoStream(remoteVideoRef, userVideoStream);
       });
@@ -275,7 +275,7 @@ const ChatMeeting = () => {
   };
 
   const handleMicControl = () => {
-    console.log(isMuted);
+    // console.log(isMuted);
     // @ts-ignore
     localVideoRef.current.srcObject.getAudioTracks()[0].enabled = !isMuted;
     setIsMuted(!isMuted);

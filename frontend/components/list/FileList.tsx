@@ -43,7 +43,7 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
   ) => {
     try {
       const fileData = await getFile(fileId, fileName, userId);
-      console.log(fileData);
+      // console.log(fileData);
       // @ts-ignore
       const url = window.URL.createObjectURL(fileData);
       const link = document.createElement('a');

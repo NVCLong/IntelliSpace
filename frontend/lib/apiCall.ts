@@ -125,7 +125,7 @@ export const updateFolder = async (
 ) => {
   try {
     const headers = await getHeader();
-    console.log(newFolder);
+    // console.log(newFolder);
     // @ts-ignore
     const response = await api.patch(
       `/folder/update/${storageId}/${folderId}`,

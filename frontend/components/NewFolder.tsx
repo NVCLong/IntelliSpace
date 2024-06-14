@@ -11,7 +11,7 @@ import {
   ModalHeader,
   useDisclosure,
 } from '@nextui-org/react';
-import { toast, ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export const NewFolder = (storageID: any) => {
@@ -35,14 +35,20 @@ export const NewFolder = (storageID: any) => {
       // console.log('create folder')
       const response = createRootFolder(storageID.storageID, request);
       // console.log(response)
-      toast.success('Create folder');
+      // toast.success('Create folder');
       // window.location.reload();
     } else {
       // console.log('create in sub folder')
       const response = createFolder(storageID.storageID, folderId, request);
       // console.log(response)
-      toast.success('Create in sub-folder');
+      // toast.success('Create in sub-folder');
       // window.location.reload();
+    }
+  };
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSubmit();
+      window.location.reload();
     }
   };
 
@@ -82,6 +88,7 @@ export const NewFolder = (storageID: any) => {
                   onChange={handleInput}
                   placeholder="Enter folder name"
                   variant="bordered"
+                  onKeyUp={handleKeyPress}
                 />
               </ModalBody>
 

@@ -58,14 +58,14 @@ export default function Page() {
           if (response) {
             setFolderList(response.rootFolders);
             setIsFetch(false);
-            console.log(response);
+            // console.log(response);
           }
         } else {
-          console.log('Fetching in subfolder');
+          // console.log('Fetching in subfolder');
           const response = await openFolder(storageID_temp, folderId);
           if (response) {
             if (response.parentFolder === null) {
-              console.log(response);
+              // console.log(response);
               setFolderList(response.subFolders);
               setIsFetch(false);
               setFileList(response.files);
@@ -74,7 +74,7 @@ export default function Page() {
               setFolderList(response.subFolders);
               setIsFetch(false);
               setFileList(response.files);
-              console.log(response);
+              // console.log(response);
               localStorage.setItem('parentFolder', response.parentFolder.id);
             }
           }

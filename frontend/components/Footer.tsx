@@ -55,15 +55,9 @@ const Footer = () => {
             <div className=" gap-5 ">
               <FooterColumn title={SOCIALS.title}>
                 <ul className="flex gap-4 regular-14 text-gray-30">
-                  {SOCIALS.links.map((link) => (
-                    <Link href="/" key={link}>
-                      <Image
-                        src={link}
-                        alt="logo"
-                        width={26}
-                        height={26}
-                        className="w-full h-auto"
-                      />
+                  {SOCIALS.links.map((link, index) => (
+                    <Link href={SOCIALS.href[index]} key={link}>
+                      <Image src={link} alt="logo" width="25" height="25" />
                     </Link>
                   ))}
                 </ul>

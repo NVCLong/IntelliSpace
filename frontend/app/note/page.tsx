@@ -24,7 +24,7 @@ export default function Page() {
       const response = await getAllNotes(userId);
       setNoteList(response);
       if (response === null) {
-        console.log('Null');
+        // console.log('Null');
       }
     } catch (error) {
       // @ts-ignore
@@ -43,10 +43,10 @@ export default function Page() {
       }
       const userId = localStorage.getItem('userId') || '';
       setUserId(userId);
-      console.log(userId === null);
+      // console.log(userId === null);
       handleFetchData(userId)
         .then(() => {
-          console.log('success');
+          // console.log('success');
         })
         .catch(() => {
           console.log('error');

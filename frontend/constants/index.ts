@@ -28,10 +28,10 @@ export const FOOTER_CONTACT_INFO = {
 
 export const SOCIALS = {
   title: 'Social',
-  links: ['/facebook.svg', '/instagram.svg', '/youtube.svg'],
+  links: ['/facebook.svg', '/instagram.svg', '/DataVizX.png'],
   href: [
     'https://www.facebook.com/Bionic7nm',
-    'https://www.instagram.com/tduy1706',
-    'https://www.youtube.com/',
+    'https://www.instagram.com/t.duy1706',
+    'https://datavizx.vercel.app/',
   ],
 };

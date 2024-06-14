@@ -66,7 +66,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
 
   const handleShareFolder = async (folderId: string) => {
     const response = await shareFolderCode(folderId, storageId, userId);
-    console.log(response);
+    // console.log(response);
     toast.success(
       <div>
         Code: {response}

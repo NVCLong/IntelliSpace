@@ -24,7 +24,7 @@ export default function Page() {
     try {
       // @ts-ignore
       const data = await getCode(userId);
-      console.log(data);
+      // console.log(data);
       toast.success(
         <div>
           Code: {data.roomId}
