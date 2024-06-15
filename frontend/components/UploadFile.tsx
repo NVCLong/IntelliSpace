@@ -33,9 +33,9 @@ export const UploadFile = () => {
       const response = await uploadFile(userId, folderId, storageId, file.file);
       if (response.toLowerCase().includes('is not enough')) {
         toast.error(`Submit failed: ${response}`);
-        // alert(response)
       }
       console.log(response);
+      window.location.reload();
     } else {
       toast.error('File is null');
       console.log('file is null');
@@ -130,7 +130,6 @@ export const UploadFile = () => {
                   color="primary"
                   onPress={(e) => {
                     handleSubmit();
-                    window.location.reload();
                   }}
                 >
                   Upload

@@ -184,15 +184,16 @@ export const createFolder = async (
 };
 
 export const uploadFile = async (
-  userId: string,
+  userId: string | null,
   folderId: string,
-  storageId: string,
+  storageId: string | null,
   file: string | Blob,
 ) => {
   try {
     // console.log('upload file ')
     // console.log(file)
     const form = new FormData();
+    // @ts-ignore
     form.append('file', file);
 
     const header = await getHeader();
