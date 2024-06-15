@@ -178,6 +178,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
                 placement="center"
+                backdrop="opaque"
               >
                 <ModalContent>
                   {(onClose) => (
