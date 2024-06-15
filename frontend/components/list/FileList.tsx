@@ -80,8 +80,8 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
                     <hr className="h-px bg-gray-200 border-0"></hr>
                     <ContextMenuItem
                       className="hover:bg-slate-600 "
-                      onClick={() => {
-                        handleMoveToTrash(file.id);
+                      onClick={async () => {
+                        await handleMoveToTrash(file.id);
                         window.location.reload();
                       }}
                     >
