@@ -145,9 +145,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
                       className="hover:bg-slate-600"
                       onClick={() => {
                         handleDelete(Number.parseInt(folder.id));
-                        setTimeout(() => {
-                          window.location.reload();
-                        }, 2000);
+                        window.location.reload();
                       }}
                     >
                       <ContextMenuLabel className="flex hover:text-white">
