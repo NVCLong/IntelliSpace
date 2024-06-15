@@ -35,6 +35,7 @@ export const NewFolder = (storageID: any) => {
       // console.log('create folder')
       const response = await createRootFolder(storageID.storageID, request);
       console.log(response);
+      window.location.reload();
     } else {
       // console.log('create in sub folder')
       const response = await createFolder(
@@ -42,6 +43,7 @@ export const NewFolder = (storageID: any) => {
         folderId,
         request,
       );
+      window.location.reload();
       console.log(response);
     }
   };
@@ -100,7 +102,6 @@ export const NewFolder = (storageID: any) => {
                   color="primary"
                   onPress={(e) => {
                     handleSubmit();
-                    window.location.reload();
                   }}
                 >
                   Create
