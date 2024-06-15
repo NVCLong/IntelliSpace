@@ -206,7 +206,6 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
                           color="primary"
                           onPress={(e) => {
                             handleUpdate(currentFolderId);
-                            window.location.reload();
                           }}
                         >
                           Edit
