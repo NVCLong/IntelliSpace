@@ -48,7 +48,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
   const handleDelete = (folderId: number) => {
     // @ts-ignore
     if (storageId !== null) {
-      const response = deleteFolder(storageId, folderId);
+      deleteFolder(storageId, folderId);
       // console.log(response)
     }
   };
@@ -67,7 +67,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
     };
     // @ts-ignore
     if (storageId !== null) {
-      const response = updateFolder(storageId, folderId, newFolder);
+      updateFolder(storageId, folderId, newFolder);
       // console.log(response)
     }
   };
