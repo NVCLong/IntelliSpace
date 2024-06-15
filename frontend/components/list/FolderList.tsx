@@ -84,6 +84,8 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
     // @ts-ignore
     if (storageId !== null) {
       await updateFolder(storageId, folderId, newFolder);
+      window.location.reload();
+
       // console.log(response)
     }
   };
