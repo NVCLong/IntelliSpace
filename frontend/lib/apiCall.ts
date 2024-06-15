@@ -187,12 +187,13 @@ export const uploadFile = async (
   userId: string | null,
   folderId: string,
   storageId: string | null,
-  file: *,
+  file: string | Blob,
 ) => {
   try {
     // console.log('upload file ')
     // console.log(file)
     const form = new FormData();
+    // @ts-ignore
     form.append('file', file);
 
     const header = await getHeader();
