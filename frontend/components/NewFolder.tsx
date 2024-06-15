@@ -27,17 +27,21 @@ export const NewFolder = (storageID: any) => {
   };
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const request = {
       name: folderName,
     };
     if (folderId == null) {
       // console.log('create folder')
-      const response = createRootFolder(storageID.storageID, request);
+      const response = await createRootFolder(storageID.storageID, request);
       console.log(response);
     } else {
       // console.log('create in sub folder')
-      const response = createFolder(storageID.storageID, folderId, request);
+      const response = await createFolder(
+        storageID.storageID,
+        folderId,
+        request,
+      );
       console.log(response);
     }
   };

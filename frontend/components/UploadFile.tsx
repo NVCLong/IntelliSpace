@@ -35,11 +35,10 @@ export const UploadFile = () => {
         toast.error(`Submit failed: ${response}`);
         // alert(response)
       }
-
-      // console.log(response)
+      console.log(response);
     } else {
       toast.error('File is null');
-      // console.log('file is null')
+      console.log('file is null');
     }
   };
 

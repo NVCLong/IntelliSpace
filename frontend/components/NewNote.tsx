@@ -41,7 +41,7 @@ export const NewNote = (userId: any) => {
     };
     // console.log(request)
     const response = await createNote(userId.userId, request);
-    // console.log(response)
+    console.log(response);
     toast.success('Create note');
     setNoteTitle('');
     setNoteContent('');
