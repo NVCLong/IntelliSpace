@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FiArrowUpCircle, FiShare } from 'react-icons/fi';
 import { uploadFile } from '@/lib/apiCall';
 import {
@@ -14,7 +14,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export const UploadFile = () => {
-  const [file, setFile] = React.useState({
+  const [file, setFile] = useState({
     file: null,
   });
   let folderId: string | null;
@@ -47,6 +47,7 @@ export const UploadFile = () => {
   ): void => {
     // @ts-ignore
     const selectedFile = event.target.files[0];
+    console.log(event.target.files);
 
     if (selectedFile) {
       toast.success('Have file');
@@ -60,8 +61,12 @@ export const UploadFile = () => {
       toast.error('No file selected.');
     }
   };
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const handleClose = () => {
+    setFile({ file: null });
+    onClose();
+  };
 
   return (
     <div className="">
@@ -123,7 +128,7 @@ export const UploadFile = () => {
               </ModalBody>
 
               <ModalFooter>
-                <Button color="danger" variant="flat" onPress={onClose}>
+                <Button color="danger" variant="flat" onPress={handleClose}>
                   Cancel
                 </Button>
                 <Button
