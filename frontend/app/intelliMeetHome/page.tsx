@@ -88,20 +88,21 @@ export default function Page() {
             things on track.
           </span>
 
-          <Input
-            className="shadow-lg max-w-96"
-            type="text"
-            placeholder="Enter room code"
-            value={code}
-            onChange={handleChangeCode}
-            onPaste={handlePasteFromClipboard}
-          />
-          <div
-            className="px-4 py-2 transition-all duration-200 rounded-full shadow-lg cursor-pointer bg-slate-200 flexCenter hover:bg-slate-400"
-            onClick={handlePasteFromClipboard}
-          >
-            <FiClipboard className="w-4 h-4 mr-2" />
-            <span>Paste from clipboard</span>
+          <div className="flex space-x-3">
+            <Input
+              className="shadow-lg max-w-96"
+              type="text"
+              placeholder="Enter room code"
+              value={code}
+              onChange={handleChangeCode}
+              onPaste={handlePasteFromClipboard}
+            />
+            <div
+              className="p-3 transition-all duration-200 rounded-xl shadow-lg cursor-pointer bg-slate-200 flexCenter hover:bg-slate-400"
+              onClick={handlePasteFromClipboard}
+            >
+              <FiClipboard className="w-4 h-4" />
+            </div>
           </div>
           <div className="flex-col space-y-3 flexCenter ">
             <div
