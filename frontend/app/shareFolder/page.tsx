@@ -53,6 +53,19 @@ export default function Page() {
     }
   }, []);
 
+  async function handlePasteFromClipboard() {
+    if (!navigator.clipboard) {
+      console.log('Clipboard API not available');
+      return;
+    }
+    try {
+      const text = await navigator.clipboard.readText();
+      setCode(text);
+    } catch (err) {
+      console.error('Failed to read clipboard contents: ', err);
+    }
+  }
+
   // @ts-ignore
   return (
     <motion.div
@@ -74,10 +87,14 @@ export default function Page() {
         <CardContent className="flexCenter sm:space-x-3 space-y-3 flex-col">
           <Input
             onChange={handleChangeCode}
-            // value={code}
+            onPaste={handlePasteFromClipboard}
+            value={code}
             className="shadow-lg"
             placeholder="Enter shared code"
           />
+          <Button onClick={handlePasteFromClipboard} className="shadow-lg">
+            Paste from clipboard
+          </Button>
           <Button onClick={handleAccess} className="shadow-lg">
             Access
           </Button>
