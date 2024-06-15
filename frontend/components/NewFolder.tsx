@@ -34,15 +34,11 @@ export const NewFolder = (storageID: any) => {
     if (folderId == null) {
       // console.log('create folder')
       const response = createRootFolder(storageID.storageID, request);
-      // console.log(response)
-      // toast.success('Create folder');
-      // window.location.reload();
+      console.log(response);
     } else {
       // console.log('create in sub folder')
       const response = createFolder(storageID.storageID, folderId, request);
-      // console.log(response)
-      // toast.success('Create in sub-folder');
-      // window.location.reload();
+      console.log(response);
     }
   };
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
