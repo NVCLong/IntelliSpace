@@ -77,13 +77,13 @@ const FolderList: React.FC<FolderListProps> = ({ folders, parentFolderId }) => {
     copy(response);
   };
 
-  const handleUpdate = (folderId: string) => {
+  const handleUpdate = async (folderId: string) => {
     const newFolder = {
       name: folderName,
     };
     // @ts-ignore
     if (storageId !== null) {
-      updateFolder(storageId, folderId, newFolder);
+      await updateFolder(storageId, folderId, newFolder);
       // console.log(response)
     }
   };
