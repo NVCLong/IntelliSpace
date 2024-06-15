@@ -42,10 +42,6 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
   const [fileId, setFileId] = useState('');
   const [fileName, setFileName] = useState('');
 
-  const handleMoveToTrash = async (fileId: string) => {
-    const data = await softDelete(fileId);
-    //  console.log(data)
-  };
   const handleInput = (e: {
     target: { value: React.SetStateAction<string> };
   }) => {

@@ -33,8 +33,7 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
     storageId: number,
     userId: number,
   ) => {
-    const data = await deletePermanently(fileId, storageId, userId);
-    //  console.log(data)
+    await deletePermanently(fileId, storageId, userId);
   };
 
   const handleDownload = async (fileId: string, fileName: string) => {

@@ -33,7 +33,7 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
   }
 
   const handleMoveToTrash = async (fileId: string) => {
-    const data = await softDelete(fileId);
+    await softDelete(fileId);
     //  console.log(data)
   };
 
@@ -43,7 +43,6 @@ const FileList: React.FC<FileListProps> = ({ files }) => {
   ) => {
     try {
       const fileData = await getFile(fileId, fileName, userId);
-      // console.log(fileData);
       // @ts-ignore
       const url = window.URL.createObjectURL(fileData);
       const link = document.createElement('a');
