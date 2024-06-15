@@ -5,7 +5,7 @@ import copy from 'copy-to-clipboard';
 import { getCode } from '@/lib/apiCall';
 import React, { SetStateAction, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { FiPlayCircle, FiPlusCircle } from 'react-icons/fi';
+import { FiClipboard, FiPlayCircle, FiPlusCircle } from 'react-icons/fi';
 import Image from 'next/image';
 import { Input } from '@/components/ui/input';
 
@@ -51,6 +51,20 @@ export default function Page() {
       router.push(`/intelliMeet?roomId=${code}`);
     }
   };
+
+  async function handlePasteFromClipboard() {
+    if (!navigator.clipboard) {
+      console.log('Clipboard API not available');
+      return;
+    }
+    try {
+      const text = await navigator.clipboard.readText();
+      setCode(text);
+    } catch (err) {
+      console.error('Failed to read clipboard contents: ', err);
+    }
+  }
+
   return (
     <>
       <ToastContainer
@@ -80,7 +94,15 @@ export default function Page() {
             placeholder="Enter room code"
             value={code}
             onChange={handleChangeCode}
+            onPaste={handlePasteFromClipboard}
           />
+          <div
+            className="px-4 py-2 transition-all duration-200 rounded-full shadow-lg cursor-pointer bg-slate-200 flexCenter hover:bg-slate-400"
+            onClick={handlePasteFromClipboard}
+          >
+            <FiClipboard className="w-4 h-4 mr-2" />
+            <span>Paste from clipboard</span>
+          </div>
           <div className="flex-col space-y-3 flexCenter ">
             <div
               className="px-4 py-2 transition-all duration-200 rounded-full shadow-lg cursor-pointer bg-slate-200 flexCenter hover:bg-slate-400"
