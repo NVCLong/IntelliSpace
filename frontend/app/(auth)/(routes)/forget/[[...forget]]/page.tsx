@@ -40,7 +40,7 @@ const Page = () => {
     setIsLoading(true);
     try {
       const response = await axios.post(
-        'https://intelli-space-v1.azurewebsites.net/api/auth/register',
+        'https://intelli-space-v1.azurewebsites.net/api/auth/resetPassword',
         values,
       );
       dispatch(setEmail(values.email));
