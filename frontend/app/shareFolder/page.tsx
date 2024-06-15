@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/input';
 import { motion } from 'framer-motion';
 import { getSharedFolder } from '@/lib/apiCall';
 import { useRouter } from 'next/navigation';
+import { FiClipboard } from 'react-icons/fi';
 
 export default function Page() {
   const router = useRouter();
@@ -93,7 +94,7 @@ export default function Page() {
             placeholder="Enter shared code"
           />
           <Button onClick={handlePasteFromClipboard} className="shadow-lg">
-            Paste from clipboard
+            <FiClipboard /> Paste from clipboard
           </Button>
           <Button onClick={handleAccess} className="shadow-lg">
             Access
